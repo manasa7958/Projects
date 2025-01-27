@@ -1,18 +1,19 @@
 # PS0: Hello SFML
 
 ## Contact
-Name:
+Name: Manasa Praveen
 
-Section:
+Section: 202
 
-Time to Complete:
+Time to Complete: 2 hours
 
 
 ## Description
-Explain what the project is supposed to do.
+The project is supposed to be a basic sfml project, that requires students to build a sprite (movable object) and program it to move and respond to keystrokes.
 
 ### Features
-Describe what your major decisions were and why you did things that way.
+I think one of the major decisions I had to make for this project was brainstorming a special feature. I had to think really hard about what I wanted to add to my sprite.
+Additionally, I also had a bit of trouble setting up my Ubuntu on my mac and had to figure out programs and substitutes that I can install to make things work for me. For example, Ubuntu cannot be installed on my laptop so I had to download UTM and set up a Linux virtual system on there. Homebrew also does not work on the Ubuntu (ARM64) so I had to work around that to make sure I was still able to run my code.
 
 ### Extra Feature
 Describe anything special you did.  This is required to earn points.
@@ -29,6 +30,7 @@ There are nine examples of academic misconduct, labeled (1) through (9). Other t
 
 ## Acknowledgements
 List all sources of help including the instructor or TAs, classmates, and web pages.
+https://www.sfml-dev.org/tutorials/2.4/start-linux.php - used the sfml documentation as my base code
 
 ### Credits
 List where you got any images or other resources.
