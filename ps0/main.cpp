@@ -36,17 +36,16 @@ int main()
 	
 	while (demoWindow.isOpen() && window.isOpen())
 	{
-		std::Event event;
-		while (event = demoWindow.pollEvent())
+		while (demoWindow.pollEvent())
 		{
-			if (event->is<sf::Event::Closed>())
+			if (std::optional event = event->is<sf::Event::Closed>())
 			{
 				demoWindow.close();
 			}
 		}
-		while (event = window.pollEvent())
+		while (window.pollEvent())
 		{
-			if (event->is<sf::Event::Closed>())
+			if (std::optional event = event->is<sf::Event::Closed>())
 			{
 				window.close();
 			}
