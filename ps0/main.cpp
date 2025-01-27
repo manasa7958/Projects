@@ -31,24 +31,28 @@ int main()
 			}
 		}
 		// Responding to keystrokes
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))  
 		{
-			shape.move(0.0f, -2.0f);
+			sprite.move(0.0f, -2.0f);
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 		{
-			shape.move(0.0f, 2.0f);
+			sprite.move(0.0f, 2.0f);
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 		{
-			shape.move(-2.0f, 0.0f);
+			sprite.move(-2.0f, 0.0f);
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 		{
-			shape.move(2.0f, 0.0f);
+			sprite.move(2.0f, 0.0f);
 		}
+		demoWindow.clear(); 
+		demoWindow.draw(shape);
+		demoWindow.display();
+		
 		window.clear(); 
-		window.draw(shape);
+		window.draw(sprite);
 		window.display();
 	}
 }
