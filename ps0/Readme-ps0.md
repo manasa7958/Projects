@@ -13,7 +13,7 @@ The project is supposed to be a basic sfml project, that requires students to bu
 
 ### Features
 I think one of the major decisions I had to make for this project was brainstorming a special feature. I had to think really hard about what I wanted to add to my sprite.
-Additionally, I also had a bit of trouble setting up my Ubuntu on my mac and had to figure out programs and substitutes that I can install to make things work for me. For example, Ubuntu cannot be installed on my laptop so I had to download UTM and set up a Linux virtual system on there. Homebrew also does not work on the Ubuntu (ARM64) so I had to work around that to make sure I was still able to run my code.
+Additionally, I also had a bit of trouble compiling my sfml works project. I had spent a bit of time trying to figure out why my main file will not compile, only to later realize it is because I had the wrong version in my Makefile:((
 
 ### Extra Feature
 Describe anything special you did.  This is required to earn points.
