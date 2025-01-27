@@ -26,6 +26,7 @@ What doesn't work.  Be honest.  You might be penalized if you claim something wo
 Read the University policy Academic Integrity, and answer the following question:
 
 There are nine examples of academic misconduct, labeled (1) through (9). Other than (1), "Seeks to claim credit for the work or efforts of another without authorization or citation," which of these do you think would most apply to this class, and why? Write approx. 100-200 words. Note: there is no single correct answer to this. I am looking for your opinion.
+I think clause 9 which states "Uses generative AI tools, such as chatbots, image generators, or code generators, to complete assignments, exams, or any other academic work without explicit permission from the instructor" very closely applies to this class. I think because of how readily available AI tools are often students use them not for enrichment purposes like learning concepts but rather to just get their work done. Especially, in computing where often complex code is being used and understanding the reasoning behind these lines of code are very important but by relying on AI tools to write code in your stead, a person robs themselves of the opportunity to think for themselves. I find that debugging in code can be tedious but is incredibly rewarding, and is a process that allows me to better comprehend my code and understand the underlying processes. However, in such cases AI tools can be used not to help debug but rather rewrite code completely, which defeats the purpose. 
 
 
 ## Acknowledgements
@@ -34,7 +35,6 @@ https://www.sfml-dev.org/tutorials/2.4/start-linux.php - used the sfml documenta
 
 https://docs.github.com/en/get-started/using-git/getting-changes-from-a-remote-repository - used this to figure out how to commit local changes onto my github repository and vice versa
 
-https://pngtree.com/freepng/cartoon-rocket-vector_13245076.html - used for my spaceship image (sprite)
-
 ### Credits
-List where you got any images or other resources.
+https://pngtree.com/freepng/cartoon-rocket-vector_13245076.html - used for my spaceship image (sprite)
+https://mixkit.co/free-sound-effects/rocket/ - used for the rocket launch audio
