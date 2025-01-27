@@ -31,6 +31,7 @@ There are nine examples of academic misconduct, labeled (1) through (9). Other t
 ## Acknowledgements
 List all sources of help including the instructor or TAs, classmates, and web pages.
 https://www.sfml-dev.org/tutorials/2.4/start-linux.php - used the sfml documentation as my base code
+https://docs.github.com/en/get-started/using-git/getting-changes-from-a-remote-repository - used this to figure out how to commit local changes onto my github repository and vice versa
 
 ### Credits
 List where you got any images or other resources.
