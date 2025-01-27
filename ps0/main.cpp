@@ -13,6 +13,11 @@ int main()
             if (event->is<sf::Event::Closed>())
                 window.close();
         }
+	// Responding to keystrokes
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+	{
+		shape.move(0, 1);
+	}
 
         window.clear();
         window.draw(shape);
