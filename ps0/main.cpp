@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
+#include <iostream>
 
 int main()
 {
@@ -12,23 +13,42 @@ int main()
 	sf::RenderWindow window(sf::VideoMode({800, 600}), "SFML works!");
 	
 	//Loading spaceship sprite
-	const sf::Texture texture("spaceship.png");
+	sf::Texture texture;
+	// Error is image doesn't load
+	if (!texture.loadFromFile("spaceship.png"))
+	{
+		std::cerr << "Error! Image could not be loaded" << std::endl;
+		return -1;
+	}
 	sf::Sprite sprite(texture);
 
 	// Load a music to play
-    	sf::Music music("launch.wav");
+    	sf::Music music;
+	// Error is image doesn't load
+	if (!music.openFromFile("launch.wav"))
+	{
+		std::cerr << "Error! Audio could not be loaded" << std::endl;
+		return -1;
+	}
 	
 	// Play the music
 	music.play();
 	
 	while (demoWindow.isOpen() && window.isOpen())
 	{
-		while (const std::optional event = demoWindow.pollEvent() || const std::optional event = window.pollEvent())
+		std::Event event;
+		while (event = demoWindow.pollEvent())
+		{
+			if (event->is<sf::Event::Closed>())
+			{
+				demoWindow.close();
+			}
+		}
+		while (event = window.pollEvent())
 		{
 			if (event->is<sf::Event::Closed>())
 			{
 				window.close();
-				demoWindow.close();
 			}
 		}
 		// Responding to keystrokes
