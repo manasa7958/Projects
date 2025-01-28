@@ -58,15 +58,15 @@ int main() {
     }
 
     // Responding to keystrokes
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left)) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
       sprite.move(sf::Vector2f(-speed, 0));
-    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up)) {
+    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
       sprite.move(
           sf::Vector2f(0, -speed));  // weird but the idea is we start at the top
                                      // left corner and +y means you move down
-    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down)) {
+    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
       sprite.move(sf::Vector2f(0, speed));
-    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right)) {
+    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
       sprite.move(sf::Vector2f(speed, 0));
     }
     demoWindow.clear();
