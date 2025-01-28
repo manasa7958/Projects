@@ -7,13 +7,13 @@
 
 int main() {
   // Demo Code
-  sf::RenderWindow demoWindow(sf::VideoMode({200, 200}), "SFML works!");
+  sf::RenderWindow demoWindow(sf::VideoMode(200, 200), "SFML works!");
   sf::CircleShape shape(100.f);
   shape.setFillColor(sf::Color::Green);
 
   // Extended Code - Idea is a spaceship going into space, New feature add some
   // audio for takeoff
-  sf::RenderWindow window(sf::VideoMode({800, 600}),
+  sf::RenderWindow window(sf::VideoMode(800, 600),
                           "Rocket launch is a success!");
 
   // Loading spaceship sprite
