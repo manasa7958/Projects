@@ -40,13 +40,13 @@ int main() {
   sf::Color color = sf::Color(165, 229, 255);
 
   while (demoWindow.isOpen() || window.isOpen()) {
-    while (const std::optional<sf::Event> event = demoWindow.pollEvent()) {
-      if (event->is<sf::Event::Closed>()) {
+    while (demoWindow.pollEvent(event)) {
+      if (event.type = sf::Event::Closed) {
         demoWindow.close();
       }
     }
-    while (const std::optional<sf::Event> event = window.pollEvent()) {
-      if (event->is<sf::Event::Closed>()) {
+    while (window.pollEvent(event)) {
+      if (event.type = sf::Event::Closed) {
         window.close();
       }
     }
