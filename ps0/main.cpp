@@ -37,16 +37,16 @@ int main()
 	
 	while (demoWindow.isOpen() || window.isOpen())
 	{
-		while (const std::optional event = demoWindow.pollEvent())
+		while (const std::optional<sf::Event> event = demoWindow.pollEvent())
 		{
-			if (std::optional event = event->is<sf::Event::Closed>())
+			if (event->is<sf::Event::Closed>())
 			{
 				demoWindow.close();
 			}
 		}
-		while (const std::optional event = window.pollEvent())
+		while (const std::optional<sf::Event> event = window.pollEvent())
 		{
-			if (std::optional event = event->is<sf::Event::Closed>())
+			if (event->is<sf::Event::Closed>())
 			{
 				window.close();
 			}
@@ -76,4 +76,5 @@ int main()
 		window.draw(sprite);
 		window.display();
 	}
+	return 0;
 }
