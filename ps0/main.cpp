@@ -36,6 +36,7 @@ int main()
 	music.play();
 
 	sf::Clock clock;
+	sf::Color color = sf::Color(165, 229, 255);
 	
 	while (demoWindow.isOpen() || window.isOpen())
 	{
@@ -56,7 +57,7 @@ int main()
 
 		if (clock.getElapsedTime().asSeconds() > 4.0f)
 		{
-			window.clear(sf::Color(0, 71, 100)); // changing background color to Storm
+			window.clear(color); // changing background color to Storm
 			clock.stop();
 		}
 		
@@ -81,7 +82,7 @@ int main()
 		demoWindow.draw(shape);
 		demoWindow.display();
 		
-		window.clear(sf::Color(165, 229, 255)); // changing background color to Lambent
+		window.clear(color); // changing background color to Lambent
 		window.draw(sprite);
 		window.display();
 	}
