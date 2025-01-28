@@ -10,7 +10,7 @@ int main()
 	shape.setFillColor(sf::Color::Green);
 
 	//Extended Code - Idea is a spaceship going into space, New feature add some audio for takeoff
-	sf::RenderWindow window(sf::VideoMode({800, 600}), "SFML works!");
+	sf::RenderWindow window(sf::VideoMode({800, 600}), "Rocket launch is a success!");
 	
 	//Loading spaceship sprite
 	sf::Texture texture;
@@ -21,6 +21,7 @@ int main()
 		return -1;
 	}
 	sf::Sprite sprite(texture);
+	sprite.setScale(0.3f, 0.3f);
 	float speed = 2.f; //speed for sprite
 
 	// Load launch music
@@ -72,7 +73,7 @@ int main()
 		demoWindow.draw(shape);
 		demoWindow.display();
 		
-		window.clear(); 
+		window.clear(sf::Color(165, 229, 255)); // changing background color to Lambent
 		window.draw(sprite);
 		window.display();
 	}
