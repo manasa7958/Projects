@@ -51,19 +51,19 @@ int main()
 			}
 		}
 		// Responding to keystrokes
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))  
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))  
 		{
 			sprite.move(0.0f, -2.0f);
 		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
 		{
 			sprite.move(0.0f, 2.0f);
 		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
 		{
 			sprite.move(-2.0f, 0.0f);
 		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right))
 		{
 			sprite.move(2.0f, 0.0f);
 		}
