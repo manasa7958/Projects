@@ -21,6 +21,7 @@ int main()
 		return -1;
 	}
 	sf::Sprite sprite(texture);
+	float speed = 2.f; //speed for sprite
 
 	// Load launch music
     	sf::Music music;
@@ -53,19 +54,19 @@ int main()
 		// Responding to keystrokes
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))  
 		{
-			sprite.move(0.0f, -2.0f);
+			sprite.move(sf::Vector2f(-speed, 0));
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
 		{
-			sprite.move(0.0f, 2.0f);
+			sprite.move(sf::Vector2f(-speed, 0));
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
 		{
-			sprite.move(-2.0f, 0.0f);
+			sprite.move(sf::Vector2f(-speed, 0));
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right))
 		{
-			sprite.move(2.0f, 0.0f);
+			sprite.move(sf::Vector2f(-speed, 0));
 		}
 		demoWindow.clear(); 
 		demoWindow.draw(shape);
