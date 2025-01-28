@@ -58,6 +58,7 @@ int main()
 		{
 			window.clear(sf::Color(0, 71, 100)); // changing background color to Storm
 			window.display();
+			clock.stop();
 		}
 		
 		// Responding to keystrokes
