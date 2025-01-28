@@ -1,7 +1,10 @@
+// Copyright 2025 Manasa Praveen
+
+#include <iostream>
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/System/Clock.hpp>
-#include <iostream>
+
 
 int main()
 {
