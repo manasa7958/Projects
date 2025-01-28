@@ -1,8 +1,8 @@
 // Copyright 2025 Manasa Praveen
-#include <iostream>
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Clock.hpp>
+#include <iostream>
 
 int main() {
   // Demo Code
@@ -24,7 +24,7 @@ int main() {
   }
   sf::Sprite sprite(texture);
   sprite.setScale(0.3f, 0.3f);
-  float speed = 1.f;  // speed for sprite
+  float speed = 1.f; // speed for sprite
 
   // Load launch music
   sf::Music music;
@@ -40,7 +40,7 @@ int main() {
 
   while (demoWindow.isOpen() || window.isOpen()) {
     sf::Event event;
-    
+
     while (demoWindow.pollEvent(event)) {
       if (event.type == sf::Event::Closed) {
         demoWindow.close();
@@ -54,15 +54,15 @@ int main() {
 
     if (clock.getElapsedTime().asSeconds() > 4.0f) {
       color = sf::Color(0, 71, 100);
-      window.clear(color);  // changing background color to Storm
+      window.clear(color); // changing background color to Storm
     }
 
     // Responding to keystrokes
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
       sprite.move(-speed, 0.0f);
     } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-      sprite.move(0.0f, -speed);  // weird but the idea is we start at the top
-                                     // left corner and +y means you move down
+      sprite.move(0.0f, -speed); // weird but the idea is we start at the top
+                                 // left corner and +y means you move down
     } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
       sprite.move(0.0f, speed);
     } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
@@ -72,7 +72,7 @@ int main() {
     demoWindow.draw(shape);
     demoWindow.display();
 
-    window.clear(color);  // changing background color to Lambent
+    window.clear(color); // changing background color to Lambent
     window.draw(sprite);
     window.display();
   }
