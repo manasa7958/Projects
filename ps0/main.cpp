@@ -25,7 +25,7 @@ int main() {
   }
   sf::Sprite sprite(texture);
   sprite.setScale(sf::Vector2f(0.3f, 0.3f));
-  float speed = 1.f; // speed for sprite
+  float speed = 1.f;  // speed for sprite
 
   // Load launch music
   sf::Music music;
@@ -53,7 +53,7 @@ int main() {
 
     if (clock.getElapsedTime().asSeconds() > 4.0f) {
       color = sf::Color(0, 71, 100);
-      window.clear(color); // changing background color to Storm
+      window.clear(color);  // changing background color to Storm
       clock.stop();
     }
 
@@ -62,8 +62,8 @@ int main() {
       sprite.move(sf::Vector2f(-speed, 0));
     } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up)) {
       sprite.move(
-          sf::Vector2f(0, -speed)); // weird but the idea is we start at the top
-                                    // left corner and +y means you move down
+          sf::Vector2f(0, -speed));  // weird but the idea is we start at the top
+                                     // left corner and +y means you move down
     } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down)) {
       sprite.move(sf::Vector2f(0, speed));
     } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right)) {
@@ -73,7 +73,7 @@ int main() {
     demoWindow.draw(shape);
     demoWindow.display();
 
-    window.clear(color); // changing background color to Lambent
+    window.clear(color);  // changing background color to Lambent
     window.draw(sprite);
     window.display();
   }
