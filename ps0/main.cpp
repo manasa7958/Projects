@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
+#include <SFML/System/Clock.hpp>
 #include <iostream>
 
 int main()
@@ -22,7 +23,7 @@ int main()
 	}
 	sf::Sprite sprite(texture);
 	sprite.setScale(sf::Vector2f(0.3f, 0.3f));
-	float speed = 2.f; //speed for sprite
+	float speed = 1.f; //speed for sprite
 
 	// Load launch music
     	sf::Music music;
@@ -32,9 +33,9 @@ int main()
 		std::cerr << "Error! Audio could not be loaded" << std::endl;
 		return -1;
 	}
-	
-	// Play the music
 	music.play();
+
+	sf:Clock clock;
 	
 	while (demoWindow.isOpen() || window.isOpen())
 	{
@@ -51,6 +52,11 @@ int main()
 			{
 				window.close();
 			}
+		}
+
+		if (clock.getElapsedTime().asSeconds() > 4.0f)
+		{
+			window.clear(sf::Color(0, 71, 100)); // changing background color to Storm
 		}
 		// Responding to keystrokes
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))  
