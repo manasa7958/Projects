@@ -61,7 +61,7 @@ int main() {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
       sprite.move(-speed, 0.0f);
     } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-      sprite.move(0.0f, -speedf);  // weird but the idea is we start at the top
+      sprite.move(0.0f, -speed);  // weird but the idea is we start at the top
                                      // left corner and +y means you move down
     } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
       sprite.move(0.0f, speed);
