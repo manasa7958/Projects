@@ -21,7 +21,7 @@ int main()
 		return -1;
 	}
 	sf::Sprite sprite(texture);
-	sprite.setScale(0.3f, 0.3f);
+	sprite.setScale(sf::Vector2f(0.3f, 0.3f));
 	float speed = 2.f; //speed for sprite
 
 	// Load launch music
