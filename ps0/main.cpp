@@ -2,7 +2,7 @@
 #include <iostream>
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
-#include <SFML/Clock.hpp>
+#include <SFML/System/Clock.hpp>
 
 int main() {
   // Demo Code
