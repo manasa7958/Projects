@@ -1,8 +1,8 @@
 // Copyright 2025 Manasa Praveen
 #include <iostream>
-#include <SFML/System/Audio.hpp>
-#include <SFML/System/Graphics.hpp>
-#include <SFML/System/Clock.hpp>
+#include <SFML/Audio.hpp>
+#include <SFML/Graphics.hpp>
+#include <SFML/Clock.hpp>
 
 int main() {
   // Demo Code
