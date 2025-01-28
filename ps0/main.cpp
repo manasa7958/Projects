@@ -1,7 +1,6 @@
 // Copyright 2025 Manasa Praveen
 
 #include <iostream>
-#include <SFML/Graphics.hpp>
 #include <SFML/System/Clock.hpp>
 
 int main() {
