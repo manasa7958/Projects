@@ -1,7 +1,4 @@
 // Copyright 2025 Manasa Praveen
-#ifndef SFML_SYSTEM_HPP
-#define SFML_SYSTEM_HPP
-
 #include <iostream>
 #include <SFML/System/Audio.hpp>
 #include <SFML/System/Graphics.hpp>
@@ -42,13 +39,15 @@ int main() {
   sf::Color color = sf::Color(165, 229, 255);
 
   while (demoWindow.isOpen() || window.isOpen()) {
+    sf::Event event;
+    
     while (demoWindow.pollEvent(event)) {
-      if (event.type = sf::Event::Closed) {
+      if (event.type == sf::Event::Closed) {
         demoWindow.close();
       }
     }
     while (window.pollEvent(event)) {
-      if (event.type = sf::Event::Closed) {
+      if (event.type == sf::Event::Closed) {
         window.close();
       }
     }
@@ -56,20 +55,18 @@ int main() {
     if (clock.getElapsedTime().asSeconds() > 4.0f) {
       color = sf::Color(0, 71, 100);
       window.clear(color);  // changing background color to Storm
-      clock.stop();
     }
 
     // Responding to keystrokes
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-      sprite.move(sf::Vector2f(-speed, 0));
+      sprite.move(-2.0f, 0.0f);
     } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-      sprite.move(
-          sf::Vector2f(0, -speed));  // weird but the idea is we start at the top
+      sprite.move(0.0f, -2.0f);  // weird but the idea is we start at the top
                                      // left corner and +y means you move down
     } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-      sprite.move(sf::Vector2f(0, speed));
+      sprite.move(0.0f, 2.0f);
     } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-      sprite.move(sf::Vector2f(speed, 0));
+      sprite.move(2.0f, 0.0f);
     }
     demoWindow.clear();
     demoWindow.draw(shape);
@@ -81,5 +78,3 @@ int main() {
   }
   return 0;
 }
-
-#endif // SFML_SYSTEM_HPP
