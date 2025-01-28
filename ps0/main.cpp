@@ -9,12 +9,12 @@ int main()
 	sf::CircleShape shape(100.f);
 	shape.setFillColor(sf::Color::Green);
 
-	//Extended Code - Idea is a spaceship going into space, New feature add some audio for takeoff and background changes in light blue to navy/black
+	//Extended Code - Idea is a spaceship going into space, New feature add some audio for takeoff
 	sf::RenderWindow window(sf::VideoMode({800, 600}), "SFML works!");
 	
 	//Loading spaceship sprite
 	sf::Texture texture;
-	// Error is image doesn't load
+	// Error if image doesn't load
 	if (!texture.loadFromFile("spaceship.png"))
 	{
 		std::cerr << "Error! Image could not be loaded" << std::endl;
@@ -22,9 +22,9 @@ int main()
 	}
 	sf::Sprite sprite(texture);
 
-	// Load a music to play
+	// Load launch music
     	sf::Music music;
-	// Error is image doesn't load
+	// Error if image doesn't load
 	if (!music.openFromFile("launch.wav"))
 	{
 		std::cerr << "Error! Audio could not be loaded" << std::endl;
@@ -34,16 +34,16 @@ int main()
 	// Play the music
 	music.play();
 	
-	while (demoWindow.isOpen() && window.isOpen())
+	while (demoWindow.isOpen() || window.isOpen())
 	{
-		while (demoWindow.pollEvent())
+		while (const std::optional event = demoWindow.pollEvent())
 		{
 			if (std::optional event = event->is<sf::Event::Closed>())
 			{
 				demoWindow.close();
 			}
 		}
-		while (window.pollEvent())
+		while (const std::optional event = window.pollEvent())
 		{
 			if (std::optional event = event->is<sf::Event::Closed>())
 			{
