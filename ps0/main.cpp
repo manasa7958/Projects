@@ -57,6 +57,7 @@ int main()
 
 		if (clock.getElapsedTime().asSeconds() > 4.0f)
 		{
+			color = sf::Color(0, 71, 100);
 			window.clear(color); // changing background color to Storm
 			clock.stop();
 		}
