@@ -35,7 +35,7 @@ int main()
 	}
 	music.play();
 
-	sf:Clock clock;
+	sf::Clock clock;
 	
 	while (demoWindow.isOpen() || window.isOpen())
 	{
