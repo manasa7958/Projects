@@ -1,6 +1,10 @@
 // Copyright 2025 Manasa Praveen
+#ifndef SFML_SYSTEM_HPP
+#define SFML_SYSTEM_HPP
 
 #include <iostream>
+#include <SFML/System/Audio.hpp>
+#include <SFML/System/Graphics.hpp>
 #include <SFML/System/Clock.hpp>
 
 int main() {
@@ -77,3 +81,5 @@ int main() {
   }
   return 0;
 }
+
+#endif // SFML_SYSTEM_HPP
