@@ -19,7 +19,7 @@ int main() {
   // Loading spaceship sprite
   sf::Texture texture;
   // Error if image doesn't load
-  if (!texture.loadFromFile("spaceship.png")) {
+  if (!texture.loadFromFile("sprite.png")) {
     std::cerr << "Error! Image could not be loaded" << std::endl;
     return -1;
   }
