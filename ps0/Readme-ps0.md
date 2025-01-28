@@ -9,10 +9,10 @@ Time to Complete: 3 hours
 
 
 ## Description
-The project is supposed to be a basic sfml project, that requires students to build a sprite (movable object) and program it to move and respond to keystrokes. We are laos given the liverty to add some new feature that goes beyond the scope of the project.
+The project is supposed to be a basic sfml project, that requires students to build a sprite (movable object) and program it to move and respond to keystrokes. We are also given the liberty to add some new feature that goes beyond the scope of the project.
 
 ### Features
-I think one of the major decisions I had to make for this project was brainstorming a special feature. I had to think really hard about what I wanted to add to my sprite. I ended uo adding audio to my spaceship launch, and I also added bkacground color that changes based on time. I used the Clock class in my project and when 4 seconds elapses the background color should change from a lighter blue to a darker blue.
+I think one of the major decisions I had to make for this project was brainstorming a special feature. I had to think really hard about what I wanted to add to my sprite. I ended up adding audio to my spaceship launch, and I also added background color that changes based on time. I used the Clock class in my project and when 4 seconds elapses the background color should change from a lighter blue to a darker blue.
 
 Additionally, I also had a bit of trouble compiling my sfml works project. I had spent a bit of time trying to figure out why my main file will not compile, only to later realize it is because I had the wrong version in my Makefile:((
 
@@ -20,8 +20,7 @@ Additionally, I also had a bit of trouble compiling my sfml works project. I had
 I not only added 1 special feature but 3 different ones to my project. I added an audio which I though paired well with the rocket photo, so I have an audio of a rocket launch. In addition to that I also used the Clock class and used the elapsedTime function to change the background color from light blue to dark blue.
 
 ### Issues
-What doesn't work.  Be honest.  You might be penalized if you claim something works and it doesn't.
-From what I have seen my code should completely work. I do have the sfml 3.0.0 and boost 1.87.0 versions just as a disclaimer if it doesn't work on some other devices it could be because of the version difference.
+From what I have seen my code should completely work. I do have the sfml 2.6.2 and boost 1.87.0 versions just as a disclaimer if it doesn't work on some other devices it could be because of the version difference.
 
 
 ## Integrity
@@ -35,9 +34,9 @@ I think clause 9 which states "Uses generative AI tools, such as chatbots, image
 ## Acknowledgements
 List all sources of help including the instructor or TAs, classmates, and web pages.
 
-https://www.sfml-dev.org/tutorials/2.4/start-linux.php - used the sfml documentation as my base code (had to use the 3.0.0 version because that's the version supported by my mac's homebrew)
-
+https://www.sfml-dev.org/tutorials/2.4/start-linux.php - used the sfml documentation as my base code (had to use the 2.6.2 version because that's the version supported by my mac's homebrew)
 https://docs.github.com/en/get-started/using-git/getting-changes-from-a-remote-repository - used this to figure out how to commit local changes onto my github repository and vice versa
+I also used our Discord channel to figure out how to install sfml version 2 because the default version for my mac is sfml 3.
 
 ### Credits
 https://pngtree.com/freepng/cartoon-rocket-vector_13245076.html - used for my spaceship image (sprite)
