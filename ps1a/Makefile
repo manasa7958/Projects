@@ -10,7 +10,7 @@ DEPS = FibLFSR.hpp
 # Your compiled .o files
 OBJECTS =  FibLFSR.o
 # The name of your program
-PROGRAM = sfml-app
+PROGRAM = test
 
 .PHONY: all clean lint
 
