@@ -6,9 +6,9 @@ INCLUDEDIR = -I/opt/homebrew/opt/boost/include/ -I/opt/homebrew/opt/sfml@2/inclu
 LIBDIR = -L/opt/homebrew/opt/boost/lib/ -L/opt/homebrew/opt/sfml@2/lib/
 
 # Your .hpp files
-DEPS = 
+DEPS = FibLFSR.hpp
 # Your compiled .o files
-OBJECTS = 
+OBJECTS =  FibLFSR.o
 # The name of your program
 PROGRAM = sfml-app
 
