@@ -26,7 +26,7 @@ all: $(PROGRAM) $(TEST) $(LIBRARY)
 $(PROGRAM): main.o $(OBJECTS)
 	$(CC) $(CFLAGS) -o $@ $^ $(LIBDIR) $(LIB)
 
-$(TEST): main.o $(OBJECTS)
+$(TEST): test.o $(OBJECTS)
 	$(CC) $(CFLAGS) -o $@ $^ $(LIBDIR) $(LIB)
 
 $(LIBRARY): $(OBJECTS)
