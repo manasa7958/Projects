@@ -31,3 +31,13 @@ BOOST_AUTO_TEST_CASE(testGenerateInstr) {
   FibLFSR l("1011011000110110");
   BOOST_REQUIRE_EQUAL(l.generate(9), 51);
 }
+
+
+BOOST_AUTO_TEST_CASE(testInvalidLength) {
+  BOOST_CHECK_THROW(FibLFSR("101101"), std::invalid_argument);
+  BOOST_CHECK_THROW(FibLFSR("10110110001101100"), std::invalid_argument);
+}
+BOOST_AUTO_TEST_CASE(testInvalidCharacters) {
+  BOOST_CHECK_THROW(FibLFSR("A011011000110110"), std::invalid_argument);
+  BOOST_CHECK_THROW(FibLFSR("A!@#$"), std::invalid_argument);
+}
