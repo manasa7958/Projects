@@ -14,6 +14,11 @@ class FibLFSR {
     int step();
     int generate(int k);
  private:
+    std:: string register_state;
+
+    static int TAP1;
+    static int TAP2;
+    static int TAP3;
 };
 
 std::ostream& operator<<(std::ostream&, const FibLFSR& lfsr);
