@@ -5,24 +5,27 @@ Name: Manasa Praveen
 
 Section: 202
 
-Time to Complete: 2 hours
+Time to Complete: 3 hours
 
 
 ## Description
 This is the first part of the project so all I am doing is making tests in my test.cpp file.
 
 ### Features
-I had to brainstorm what kinf of tests I want to implement, I made an InvalidInput test, EdgeCase Test, LFSROutput test
+I had to brainstorm what kinf of tests I want to implement, I made an InvalidInput test, EdgeCase Test, LFSROutput test, and modified the GeneratInstr test.
 
 #### Part a
+I made an InvalidInput test, EdgeCase Test, LFSROutput test, and modified the GeneratInstr test.
 
 #### Part b
 
 ### Issues
 What doesn't work.  Be honest.  You might be penalized if you claim something works and it doesn't.
+As of now I have been having some trouble when trying to run my tests.
 
 ### Tests
 Describe what is being tested in your Boost unit tests.
+The string is being tested to make sure that is is indeed 16-bit, does not contain an invalid characters, etc.
 
 ### Extra Credit
 Anything special you did. This is required to earn bonus points.
