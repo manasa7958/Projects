@@ -34,4 +34,4 @@ Anything special you did. This is required to earn bonus points.
 List all sources of help including the instructor or TAs, classmates, and web pages.
 
 ### Credits
-List where you got any images or other resources.
+https://stackoverflow.com/questions/5029840/convert-char-to-int-in-c-and-c  - I used this to figure how to store the seed in integer format
