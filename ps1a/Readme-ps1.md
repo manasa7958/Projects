@@ -5,14 +5,14 @@ Name: Manasa Praveen
 
 Section: 202
 
-Time to Complete:
+Time to Complete: 2 hours
 
 
 ## Description
-Explain what the project does.
+This is the first part of the project so all I am doing is making tests in my test.cpp file.
 
 ### Features
-Describe the representation you used and why you did things that way as well as any other interesting design decisions you made.
+I had to brainstorm what kinf of tests I want to implement, I made an InvalidInput test, EdgeCase Test, LFSROutput test
 
 #### Part a
 
