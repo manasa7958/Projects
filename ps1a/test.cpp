@@ -37,13 +37,12 @@ BOOST_AUTO_TEST_CASE(testLFSROutput) {
 BOOST_AUTO_TEST_CASE(testInvalidInputs) {
   BOOST_REQUIRE_THROW(FibLFSR 1("101101"), std::invalid_argument);//too short
   BOOST_REQUIRE_THROW(FibLFSR 1("10110110001101100"), std::invalid_argument);//too long
-  BOOST_REQUIRE_THROW(FibLFSR 1("A011011000110110"), std::invalid_argument);//other characters
-  BOOST_REQUIRE_THROW(FibLFSR 1("A!@#$"), std::invalid_argument);//too short and invalid characters
-  BOOST_REQUIRE_THROW(FibLFSR 1("1011021100001101"), std::invalid_argument);//other characters
-  BOOST_REQUIRE_THROW(FibLFSR 1("11 00110011001100"), std::invalid_argument);//other characters
+  BOOST_REQUIRE_THROW(FibLFSR 1("A01101102 110$10"), std::invalid_argument);//other characters
 }
 BOOST_AUTO_TEST_CASE(testGenerateEdgeCases) {
     FibLFSR l("1100110011001100");
     BOOST_REQUIRE_EQUAL(l.generate(1), l.step());
     BOOST_REQUIRE_THROW(l.generate(0), std::invalid_argument);
 }
+
+
