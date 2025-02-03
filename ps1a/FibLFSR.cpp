@@ -13,12 +13,12 @@ FibLFSR::FibLFSR(const std::string& seed) {
 }
 
 int FibLFSR::step() {
-    int bit0 = registerBits[0] - '0';
-    int bit1 = registerBits[TAP1] - '0';
-    int bit2 = registerBits[TAP2] - '0';
-    int bit3 = registerBits[TAP3] - '0';
-    
-    int newBit = bit0 ^ bit1 ^ bit2 ^ bit3;
+    int leftmostBit = registerBits[0] - '0';
+    int tapBit1 = registerBits[TAP1] - '0';
+    int tapBit2 = registerBits[TAP2] - '0';
+    int tapBit3 = registerBits[TAP3] - '0';
+
+    int newBit = leftmostBit ^ tapBit1 ^ tapBit2 ^ tapBit3;
     registerBits = registerBits.substr(1) + std::to_string(newBit);
     
     return newBit;
