@@ -13,6 +13,9 @@ class FibLFSR {
 
     int step();
     int generate(int k);
+
+    friend std::ostream& operator<<(std::ostream&, const FibLFSR& lfsr);
+
  private:
     std:: string registerBits;
 
@@ -21,5 +24,5 @@ class FibLFSR {
     static const int TAP3 = 10;
 };
 
-std::ostream& operator<<(std::ostream&, const FibLFSR& lfsr);
+
 }  // namespace PhotoMagic
