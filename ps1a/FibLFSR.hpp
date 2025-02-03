@@ -7,18 +7,14 @@ namespace PhotoMagic {
 class FibLFSR {
  public:
     explicit FibLFSR(const std::string& seed);
-    //explicit FibLFSR(unsigned int seed); // Optional
+    explicit FibLFSR(unsigned int seed); // Optional
 
-    //static FibLFSR fromPassword(const std::string& password); // Optional
+    static FibLFSR fromPassword(const std::string& password); // Optional
 
     int step();
     int generate(int k);
-
-    friend std::ostream& operator<<(std::ostream&, const FibLFSR& lfsr);
-
  private:
-    std:: string registerBits;
 };
 
-
+std::ostream& operator<<(std::ostream&, const FibLFSR& lfsr);
 }  // namespace PhotoMagic
