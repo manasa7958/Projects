@@ -39,10 +39,17 @@ BOOST_AUTO_TEST_CASE(testInvalidInputs) {
   BOOST_REQUIRE_THROW(FibLFSR 1("10110110001101100"), std::invalid_argument);//too long
   BOOST_REQUIRE_THROW(FibLFSR 1("A01101102 110$10"), std::invalid_argument);//other characters
 }
-BOOST_AUTO_TEST_CASE(testGenerateEdgeCases) {
+
+BOOST_AUTO_TEST_CASE(testEdgeCases) {
     FibLFSR l("1100110011001100");
     BOOST_REQUIRE_EQUAL(l.generate(1), l.step());
     BOOST_REQUIRE_THROW(l.generate(0), std::invalid_argument);
 }
 
+BOOST_AUTO_TEST_CASE(testNoThrowGenerate) {
+    FibLFSR l("1011011000110110");
+    BOOST_REQUIRE_NO_THROW(l.generate(1));
+    BOOST_REQUIRE_NO_THROW(l.generate(10));
+    BOOST_REQUIRE_NO_THROW(l.generate(16));
+}
 
