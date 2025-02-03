@@ -17,36 +17,24 @@ int FibLFSR::step() {
     int tapBit1 = registerBits[TAP1] - '0';
     int tapBit2 = registerBits[TAP2] - '0';
     int tapBit3 = registerBits[TAP3] - '0';
-
     int newBit = leftmostBit ^ tapBit1 ^ tapBit2 ^ tapBit3;
-
     registerBits = registerBits.substr(1) + std::to_string(newBit);
-
-    std::cout << "Step executed: " << registerBits << ", New Bit: " << newBit << std::endl; // Debug output
-
     return newBit;
 }
 
 int FibLFSR::generate(int k) {
     if (k <= 0) {
-        throw std::invalid_argument("k must be a positive integer.");
+        throw std::invalid_argument("k should be greater than 0");
     }
 
     int result = 0;
-    std::cout << "Generating " << k << " bits: ";
-
     for (int i = 0; i < k; i++) {
         int bit = step();
-        std::cout << bit;  // Debug output
-
-        // Correct shift and append bit to result
+        std::cout << bit;
         result = (result << 1) | bit;
     }
-
-    std::cout << " => " << result << std::endl;
     return result;
 }
-
 
 std::ostream& operator<<(std::ostream& os, const FibLFSR& lfsr) {
     os << lfsr.registerBits;
