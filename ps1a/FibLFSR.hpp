@@ -7,9 +7,9 @@ namespace PhotoMagic {
 class FibLFSR {
  public:
     explicit FibLFSR(const std::string& seed);
-    explicit FibLFSR(unsigned int seed); // Optional
+    //explicit FibLFSR(unsigned int seed); // Optional
 
-    static FibLFSR fromPassword(const std::string& password); // Optional
+    //static FibLFSR fromPassword(const std::string& password); // Optional
 
     int step();
     int generate(int k);
