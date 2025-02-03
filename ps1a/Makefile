@@ -12,12 +12,11 @@ OBJECTS =  FibLFSR.o
 # Your .a files
 LIBRARY = PhotoMagic.a
 # The name of your program
-PROGRAM = PhotoMagic
-TEST = test
+PROGRAM = test
 
 .PHONY: all clean lint
 
-all: $(PROGRAM) $(TEST) $(LIBRARY)
+all: $(PROGRAM) $(LIBRARY)
 
 # Wildcard recipe to make .o files from corresponding .cpp file
 %.o: %.cpp $(DEPS)
@@ -26,14 +25,12 @@ all: $(PROGRAM) $(TEST) $(LIBRARY)
 $(PROGRAM): test.o $(OBJECTS)
 	$(CC) $(CFLAGS) -o $@ $^ $(LIBDIR) $(LIB)
 
-$(TEST): test.o $(OBJECTS)
-	$(CC) $(CFLAGS) -o $@ $^ $(LIBDIR) $(LIB)
-
 $(LIBRARY): $(OBJECTS)
 	ar rcs $@ $^
 
 clean:
-	rm *.o $(PROGRAM) $(TEST) $(LIBRARY)
+	rm *.o $(PROGRAM) $(LIBRARY)
 
 lint:
 	cpplint *.cpp *.hpp
+
