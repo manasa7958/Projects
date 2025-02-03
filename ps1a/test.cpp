@@ -43,17 +43,15 @@ BOOST_AUTO_TEST_CASE(testNoThrow) {
 }
 
 BOOST_AUTO_TEST_CASE(testWrongInsert) {
-    FibLFSR l("1011011000110110");  
-    std::ostringstream ss1;
-    ss1 << l;
+    FibLFSR l("1011011000110110");
+    std::ostringstream ss1;
+    ss1 << l;
     std::string initial = ss1.str();
-    int newBit = l.step();
+    int newBit = l.step();
     std::string expected = initial.substr(1) + std::to_string(newBit);
-    
     std::ostringstream ss2;
-    ss2 << l;
+    ss2 << l;
     std::string actual = ss2.str();
-  
-    BOOST_REQUIRE_EQUAL(actual, expected);
+    BOOST_REQUIRE_EQUAL(actual, expected);
 }
 
