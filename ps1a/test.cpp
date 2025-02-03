@@ -24,6 +24,7 @@ BOOST_AUTO_TEST_CASE(testStepInstr) {
 
 BOOST_AUTO_TEST_CASE(testGenerateInstr) {
   FibLFSR l("1011011000110110");
+  BOOST_REQUIRE_EQUAL(l.generate(9), 51);
   BOOST_REQUIRE_THROW(l.generate(-1), std::invalid_argument);
 }
 
@@ -46,10 +47,24 @@ BOOST_AUTO_TEST_CASE(testEdgeCases) {
     BOOST_REQUIRE_THROW(l.generate(0), std::invalid_argument);
 }
 
+BOOST_AUTO_TEST_CASE(testStepFixedSequence) {
+    FibLFSR l("1011011000110110");
+    std::vector<int> expected = {0, 0, 0, 1, 1, 0, 0, 1, 1, 1};
+    for (int bit : expected) {
+        BOOST_REQUIRE_EQUAL(l.step(), bit);
+    }
+}
+BOOST_AUTO_TEST_CASE(testGenerateConsecutive) {
+    FibLFSR l("1011011000110110");
+    int first = l.generate(4);
+    int second = l.generate(4);
+    BOOST_REQUIRE_NE(first, second);
+}
+
 BOOST_AUTO_TEST_CASE(testNoThrowGenerate) {
     FibLFSR l("1011011000110110");
     BOOST_REQUIRE_NO_THROW(l.generate(1));
-    BOOST_REQUIRE_NO_THROW(l.generate(10));
+    BOOST_REQUIRE_NO_THROW(l.generate(5));
     BOOST_REQUIRE_NO_THROW(l.generate(16));
 }
 
