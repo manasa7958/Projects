@@ -16,9 +16,9 @@ class FibLFSR {
  private:
     std:: string registerBits;
 
-    static const int TAP1;
-    static const int TAP2;
-    static const int TAP3;
+    static const int TAP1 = 13;
+    static const int TAP2 = 12;
+    static const int TAP3 = 10;
 };
 
 std::ostream& operator<<(std::ostream&, const FibLFSR& lfsr);
