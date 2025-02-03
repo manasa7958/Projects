@@ -35,6 +35,10 @@ BOOST_AUTO_TEST_CASE(testLFSROutput) {
     BOOST_CHECK_EQUAL(ss.str(), "1011011000110110");
 }
 
-BOOST_AUTO_TEST_CASE(testNoThrow) {
-    BOOST_CHECK_NO_THROW(FibLFSR("1011011000110110"));
+BOOST_AUTO_TEST_CASE(testInvalidInputs) {
+  BOOST_CHECK_THROW(FibLFSR("2011011000110110"), std::invalid_argument);//invalid character (2)
+  BOOST_CHECK_THROW(FibLFSR("101101"), std::invalid_argument);//too short
+  BOOST_CHECK_THROW(FibLFSR("10110110001101100"), std::invalid_argument);//too long
+  BOOST_CHECK_THROW(FibLFSR(" 101101100011011"), std::invalid_argument);//invalid character (space)
 }
+
