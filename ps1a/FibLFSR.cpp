@@ -30,6 +30,7 @@ int FibLFSR::generate(int k) {
     }
     
     int result = 0;
+    std::cout << "Generating " << k << " bits: ";
     for (int i = 0; i < k; i++) {
         result = (result << 1) | step();
     }
