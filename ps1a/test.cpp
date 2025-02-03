@@ -48,10 +48,12 @@ BOOST_AUTO_TEST_CASE(testWrongInsert) {
     ss1 << l;
     std::string initial = ss1.str();
     int newBit = l.step();
+    std::string expected = initial.substr(1) + std::to_string(newBit);
     
     std::ostringstream ss2;
     ss2 << l;
-    std::string expected = initial.substr(1) + std::to_string(newBit);
-    BOOST_REQUIRE_EQUAL(ss2.str(), expected);
+    std::string actual = ss2.str();
+  
+    BOOST_REQUIRE_EQUAL(actual, expected);
 }
 
