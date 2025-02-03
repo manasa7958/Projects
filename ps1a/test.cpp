@@ -43,7 +43,7 @@ BOOST_AUTO_TEST_CASE(testNoThrow) {
 }
 
 BOOST_AUTO_TEST_CASE(testWrongInsert) {
-    FibLFSR l("1011011000110110");
+    FibLFSR l("1011011000110110");
     std::ostringstream ss1;
     ss1 << l;
     std::string initial = ss1.str();
