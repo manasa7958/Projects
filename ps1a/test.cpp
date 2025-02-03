@@ -41,3 +41,22 @@ BOOST_AUTO_TEST_CASE(testInvalidCharacters) {
   BOOST_CHECK_THROW(FibLFSR("A011011000110110"), std::invalid_argument);
   BOOST_CHECK_THROW(FibLFSR("A!@#$"), std::invalid_argument);
 }
+
+// Additional tests
+BOOST_AUTO_TEST_CASE(testConstructor) {
+    BOOST_REQUIRE_NO_THROW(FibLFSR("1100110011001100"));
+    BOOST_REQUIRE_THROW(FibLFSR("1234567890123456"), std::invalid_argument);
+    BOOST_REQUIRE_THROW(FibLFSR("11001"), std::invalid_argument);
+}
+
+BOOST_AUTO_TEST_CASE(testGenerate) {
+    FibLFSR l("1100110011001100");
+    int result = l.generate(4);
+    BOOST_REQUIRE_GE(result, 0);
+    BOOST_REQUIRE_LE(result, 15);
+}
+
+BOOST_AUTO_TEST_CASE(testExceptionHandling) {
+    FibLFSR l("1100110011001100");
+    BOOST_REQUIRE_THROW(l.generate(-1), std::invalid_argument);
+}
