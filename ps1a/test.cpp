@@ -29,7 +29,7 @@ BOOST_AUTO_TEST_CASE(testStepInstr) {
 
 BOOST_AUTO_TEST_CASE(testGenerateInstr) {
   FibLFSR l("1011011000110110");
-  BOOST_REQUIRE_EQUAL(l.generate(9), 51);
+  BOOST_REQUIRE_THROW(l.generate(-1), std::invalid_argument);
 }
 
 BOOST_AUTO_TEST_CASE(testInvalidLength) {
