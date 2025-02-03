@@ -27,3 +27,10 @@ BOOST_AUTO_TEST_CASE(testGenerateInstr) {
   BOOST_REQUIRE_EQUAL(l.generate(9), 51);
   BOOST_REQUIRE_THROW(l.generate(-1), std::invalid_argument);
 }
+
+BOOST_AUTO_TEST_CASE(testLFSROutput) {
+    FibLFSR l("1011011000110110");
+    std::stringstream ss;
+    ss << l;
+    BOOST_CHECK_EQUAL(ss.str(), "1011011000110110");
+}
