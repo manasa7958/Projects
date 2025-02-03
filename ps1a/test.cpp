@@ -34,3 +34,9 @@ BOOST_AUTO_TEST_CASE(testLFSROutput) {
     ss << l;
     BOOST_CHECK_EQUAL(ss.str(), "1011011000110110");
 }
+
+BOOST_AUTO_TEST_CASE(testNoThrow) {
+    FibLFSR l("1011011000110110");
+    BOOST_CHECK_NO_THROW(l.generate(1));
+    BOOST_CHECK_NO_THROW(l.generate(16));
+}
