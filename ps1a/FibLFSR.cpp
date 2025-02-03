@@ -29,19 +29,24 @@ int FibLFSR::step() {
 
 int FibLFSR::generate(int k) {
     if (k <= 0) {
-        throw std::invalid_argument("K should be greater than 0");
+        throw std::invalid_argument("k must be a positive integer.");
     }
-    
+
     int result = 0;
     std::cout << "Generating " << k << " bits: ";
+
     for (int i = 0; i < k; i++) {
         int bit = step();
         std::cout << bit;  // Debug output
+
+        // Correct shift and append bit to result
         result = (result << 1) | bit;
     }
+
     std::cout << " => " << result << std::endl;
     return result;
 }
+
 
 std::ostream& operator<<(std::ostream& os, const FibLFSR& lfsr) {
     os << lfsr.registerBits;
