@@ -43,12 +43,12 @@ std::ostream& operator<<(std::ostream& os, const FibLFSR& lfsr) {
 }
 
 int main() {
-    PhotoMagic::FibLFSR lfsr("");
-    std::cout <<Initl state: " " << lfsr <<std::endl;
+    PhotoMagic::FibLFSR lfsr("1011011000110110");
+    std::cout <<Initl state: "Initial state: " << lfsr <<std::endl;
     lfsr.step();
-    std::cout <<Initl state: " " << lfsr <<std::endl;
+    std::cout <<Initl state: "After 1 step: " << lfsr <<std::endl;
     int value = lfsr.generate(5);
-    std::cout <<Initl state: " " << lfsr <<std::endl;
+    std::cout <<Initl state: "5 Bit string " << lfsr <<std::endl;
     return 0;
 }
 
