@@ -5,33 +5,30 @@ LIB = -lsfml-graphics -lsfml-audio -lsfml-window -lsfml-system -lboost_unit_test
 INCLUDEDIR = -I/opt/homebrew/opt/boost/include/ -I/opt/homebrew/opt/sfml@2/include/
 LIBDIR = -L/opt/homebrew/opt/boost/lib/ -L/opt/homebrew/opt/sfml@2/lib/
 
-# Your .hpp files
 DEPS = FibLFSR.hpp
-# Your compiled .o files
 OBJECTS = FibLFSR.o
-# Your .a files
 LIBRARY = PhotoMagic.a
-# The name of your program
 PROGRAM = test
 
 .PHONY: all clean lint
 
-all: $(LIBRARY) $(PROGRAM)
+all: $(LIBRARY) $(PROGRAM) PhotoMagic
 
-FibLFSR.o: FibLFSR.cpp $(DEPS)
-	$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDEDIR)
+PhotoMagic: FibLFSR.o
+    $(CC) $(CFLAGS) -o PhotoMagic FibLFSR.o $(LIBDIR) $(LIB)
 
-test.o: test.cpp $(DEPS)
-	$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDEDIR)
+%.o: %.cpp $(DEPS)
+    $(CC) $(CFLAGS) -c $< -o $@ $(INCLUDEDIR)
 
 $(LIBRARY): $(OBJECTS)
-	ar rcs $@ $^
+    ar rcs $(LIBRARY) $(OBJECTS)
 
-$(PROGRAM): test.o $(OBJECTS) $(LIBRARY)
-	$(CC) $(CFLAGS) -o $@ $^ $(LIBDIR) $(LIB)
+$(PROGRAM): test.o $(LIBRARY)
+    $(CC) $(CFLAGS) -o $@ $^ $(LIBDIR) $(LIB)
 
 clean:
-	rm -f *.o ps1a/*.o $(PROGRAM) $(LIBRARY)
+    rm -f *.o $(PROGRAM) $(LIBRARY) PhotoMagic
 
 lint:
-	cpplint *.cpp ps1a/*.hpp
+    cpplint *.cpp *.hpp
+
