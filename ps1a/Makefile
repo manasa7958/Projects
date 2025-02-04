@@ -18,10 +18,11 @@ PROGRAM = test
 
 all: $(PROGRAM) $(LIBRARY)
 
-# Rule for ps1a/FibLFSR.o
 ps1a/FibLFSR.o: ps1a/FibLFSR.cpp $(DEPS)
 	$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDEDIR)
 
+test.o: test.cpp $(DEPS)
+	$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDEDIR)
 
 $(PROGRAM): test.o $(OBJECTS)
 	$(CC) $(CFLAGS) -o $@ $^ $(LIBDIR) $(LIB)
@@ -34,4 +35,3 @@ clean:
 
 lint:
 	cpplint *.cpp ps1a/*.hpp
-
