@@ -41,3 +41,14 @@ std::ostream& operator<<(std::ostream& os, const FibLFSR& lfsr) {
     os << registerBits;
     return os;
 }
+
+int main() {
+    PhotoMagic::FibLFSR lfsr("");
+    std::cout <<Initl state: " " << lfsr <<std::endl;
+    lfsr.step();
+    std::cout <<Initl state: " " << lfsr <<std::endl;
+    int value = lfsr.generate(5);
+    std::cout <<Initl state: " " << lfsr <<std::endl;
+    return 0;
+}
+
