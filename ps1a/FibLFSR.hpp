@@ -13,7 +13,7 @@ class FibLFSR {
 
     int step();
     int generate(int k);
-    void print(std::ostream& os) const;
+    std::ostream& print(std::ostream& os) const;
 
  private:
    std::string registerBits;
