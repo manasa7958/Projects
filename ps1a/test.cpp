@@ -1,8 +1,9 @@
 // Copyright 2025 Manasa Praveen
 
-#include "./FibLFSR.hpp"
 #include <iostream>
 #include <string>
+
+#include "./FibLFSR.hpp"
 
 #define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MODULE Main
@@ -29,27 +30,28 @@ BOOST_AUTO_TEST_CASE(testGenerateInstr) {
 }
 
 BOOST_AUTO_TEST_CASE(testLFSROutput) {
-    FibLFSR l("1011011000110110");
-    std::stringstream ss;
-    ss << l;
-    BOOST_CHECK_EQUAL(ss.str(), "1011011000110110");
+  FibLFSR l("1011011000110110");
+  std::stringstream ss;
+  ss << l;
+  BOOST_CHECK_EQUAL(ss.str(), "1011011000110110");
 }
 
 BOOST_AUTO_TEST_CASE(testNoThrow) {
-    BOOST_CHECK_NO_THROW(FibLFSR("1011011000110110"));//correct
-    BOOST_CHECK_THROW(FibLFSR("1a1101100A110"), std::invalid_argument);//invalid characters
-    BOOST_CHECK_THROW(FibLFSR("987"), std::invalid_argument);//too short
+  BOOST_CHECK_NO_THROW(FibLFSR("1011011000110110"));  // correct
+  BOOST_CHECK_THROW(FibLFSR("1a1101100A110"),
+                    std::invalid_argument);  // invalid characters
+  BOOST_CHECK_THROW(FibLFSR("987"), std::invalid_argument);  // too short
 }
 
 BOOST_AUTO_TEST_CASE(testWrongInsert) {
-    FibLFSR l("1011011000110110");
-    std::ostringstream ss1;
-    ss1 << l;
-    std::string initial = ss1.str();
-    int newBit = l.step();
-    std::string expected = initial.substr(1) + std::to_string(newBit);
-    std::ostringstream ss2;
-    ss2 << l;
-    std::string actual = ss2.str();
-    BOOST_REQUIRE_EQUAL(actual, expected);
+  FibLFSR l("1011011000110110");
+  std::ostringstream ss1;
+  ss1 << l;
+  std::string initial = ss1.str();
+  int newBit = l.step();
+  std::string expected = initial.substr(1) + std::to_string(newBit);
+  std::ostringstream ss2;
+  ss2 << l;
+  std::string actual = ss2.str();
+  BOOST_REQUIRE_EQUAL(actual, expected);
 }
