@@ -25,6 +25,7 @@ test.o: test.cpp $(DEPS)
 	$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDEDIR)
 
 $(LIBRARY): $(OBJECTS)
+	rm -f $@
 	ar rcs $@ $^
 
 $(TEST): test.o $(OBJECTS) $(LIBRARY)
@@ -35,3 +36,4 @@ clean:
 
 lint:
 	cpplint *.cpp *.hpp
+
