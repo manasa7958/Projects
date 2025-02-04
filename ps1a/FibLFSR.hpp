@@ -23,7 +23,6 @@ class FibLFSR {
 };
 
 inline std::ostream& operator<<(std::ostream&, const FibLFSR& lfsr){
-   lfsr.print(os);
-   return os;
+   return lfsr.print(os);
 }
 }  // namespace PhotoMagic
