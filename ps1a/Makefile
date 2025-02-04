@@ -23,7 +23,7 @@ all: $(PROGRAM) $(TEST) $(LIBRARY)
 %.o: %.cpp $(DEPS)
 	$(CC) $(CFLAGS) -c $< $(INCLUDEDIR)
 
-$(PROGRAM): main.o $(OBJECTS)
+$(PROGRAM): test.o $(OBJECTS)
 	$(CC) $(CFLAGS) -o $@ $^ $(LIBDIR) $(LIB)
 
 $(TEST): test.o $(OBJECTS)
