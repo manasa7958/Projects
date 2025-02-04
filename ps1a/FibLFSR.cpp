@@ -32,11 +32,11 @@ int FibLFSR::step() {
 }
 
 int FibLFSR::generate(int steps) {
-    if (k < 0) {
+    if (steps < 0) {
         throw std::invalid_argument("Number of steps should be non-negative.");
     }
     int result = 0;
-    for (int i = 0; i < k; ++i) {
+    for (int i = 0; i < steps; ++i) {
         result = (result << 1) | step(); // Correct bit accumulation
     }
     return result;
