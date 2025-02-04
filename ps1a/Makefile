@@ -8,20 +8,15 @@ DEPS = FibLFSR.hpp
 # Your compiled .o files
 OBJECTS = FibLFSR.o
 # The name of your program
-PROGRAM = PhotoMagic
 TEST = test
 
 .PHONY: all clean lint
-
 
 all: $(PROGRAM) $(TEST) PhotoMagic.a
 
 # Wildcard recipe to make .o files from corresponding .cpp file
 %.o: %.cpp $(DEPS)
 	$(CC) $(CFLAGS) -c $<
-
-$(PROGRAM): main.o $(OBJECTS)
-	$(CC) $(CFLAGS) -o $@ $^ $(LIB)
 
 $(TEST): test.o $(OBJECTS)
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB)
