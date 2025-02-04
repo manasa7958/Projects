@@ -9,7 +9,7 @@ Time to Complete: 3 hours
 
 
 ## Description
-This is the first part of the project so all I am doing is making tests in my test.cpp file.
+This 
 
 ### Features
 I had to brainstorm what kinf of tests I want to implement, I made an InvalidInput test, EdgeCase Test, LFSROutput test, and modified the GeneratInstr test.
