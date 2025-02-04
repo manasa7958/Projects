@@ -37,6 +37,10 @@ int FibLFSR::generate(int steps) {
     }
     return answer;
 }
+std::ostream& PhotoMagic::FibLFSR::print(std::ostream& os) const {
+    os << registerBits; // Output the registerBits string
+    return os;
+}
 }
 
 int main() {
