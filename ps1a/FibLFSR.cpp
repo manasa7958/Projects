@@ -1,5 +1,5 @@
 // Copyright 2025 Manasa Praveen
-#include "FibLFSR.hpp"
+#include "ps1a/FibLFSR.hpp"
 
 #include <iostream>
 #include <stdexcept>
