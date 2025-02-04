@@ -4,9 +4,6 @@
 #include "FibLFSR.hpp"
 
 namespace PhotoMagic {
-    const int FibLFSR::TAP13 = 13;
-    const int FibLFSR::TAP12 = 12;
-    const int FibLFSR::TAP10 = 10;
 
 FibLFSR::FibLFSR(const std::string& seed) {
     if (seed.length() != 16) {
@@ -19,16 +16,12 @@ FibLFSR::FibLFSR(const std::string& seed) {
 }
 int FibLFSR::step() {
     int leftBit = registerBits[0] - '0';
-    int newBit = leftBit ^ (registerBits[TAP13] - '0') ^ (registerBits[TAP12] - '0') ^ (registerBits[TAP10] - '0');
-    registerBits = registerBits.substr(1) + std::to_string(newBit);
-    return newBit;
-    /*int leftBit = registerBits[0] - '0';
-    int tap13 = registerBits[TAP13] - '0'; 
-    int tap12 = registerBits[TAP12] - '0'; 
-    int tap10 = registerBits[TAP10] - '0'; 
+    int tap13 = registerBits[13] - '0'; 
+    int tap12 = registerBits[12] - '0'; 
+    int tap10 = registerBits[10] - '0'; 
     int newBit = leftBit ^ tap13 ^ tap12 ^ tap10; //XOR here
     registerBits = registerBits.substr(1) + std::to_string(newBit);
-    return newBit;*/
+    return newBit;
 }
 
 int FibLFSR::generate(int steps) {
