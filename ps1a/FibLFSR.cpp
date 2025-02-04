@@ -30,7 +30,7 @@ int FibLFSR::generate(int steps) {
     }
     int answer = 0;
     for (int i = 0; i < steps; ++i) {
-        answer = (answer << 1) | step(); 
+        answer = (answer << 1) | step(); //adding new bit
     }
     return answer;
 }
