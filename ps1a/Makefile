@@ -22,9 +22,6 @@ all: $(PROGRAM) $(LIBRARY)
 ps1a/FibLFSR.o: ps1a/FibLFSR.cpp $(DEPS)
 	$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDEDIR)
 
-# Wildcard recipe to make .o files from corresponding .cpp file
-%.o: %.cpp $(DEPS)
-	$(CC) $(CFLAGS) -c $< $(INCLUDEDIR)
 
 $(PROGRAM): test.o $(OBJECTS)
 	$(CC) $(CFLAGS) -o $@ $^ $(LIBDIR) $(LIB)
