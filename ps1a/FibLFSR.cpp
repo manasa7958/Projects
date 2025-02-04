@@ -44,7 +44,6 @@ int main() {
     std::cout <<"Initial state: " << lfsr <<std::endl;
     lfsr.step();
     std::cout << "After 1 step: " << lfsr <<std::endl;
-    int value = lfsr.generate(5);
-    std::cout << "5 Bit string " << lfsr <<std::endl;
+    std::cout << "5 Bit string " << lfsr.generate(5) <<std::endl;
     return 0;
 }
