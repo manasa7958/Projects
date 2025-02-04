@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 #include <stdexcept>
-#include "FibLFSR.hpp"
+#include "./FibLFSR.hpp"
 
 namespace PhotoMagic {
 
