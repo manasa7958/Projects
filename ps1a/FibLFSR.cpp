@@ -7,38 +7,34 @@ namespace PhotoMagic {
 
 FibLFSR::FibLFSR(const std::string& seed) {
     if (seed.length() != 16) {
-        throw std::invalid_argument("Seed should be 16-bits"); //check to see seed is 16 bits
+        throw std::invalid_argument("Seed should be 16-bits"); //For length
     }
     if (!std::all_of(seed.begin(), seed.end(), [](char c) { return c == '0' || c == '1'; })) {
-        throw std::invalid_argument("Seed should contain 0 and 1 only"); //check to see seed contains only 1 and 0
+        throw std::invalid_argument("Seed should contain 0 and 1 only");  //For valid characters
     }
-    for (char c : seed) {
-        reg.push_back(c - '0'); //converting seed to integers
-    }
+    registerBits = seed; //was gonna try storing as integers but I just did string
 }
 int FibLFSR::step() {
-    int new_bit = reg[0];
-    for (int tap : taps) {
-        new_bit ^= reg[tap]; 
-    }
-    reg.erase(reg.begin());
-    reg.push_back(new_bit);
-    return new_bit;
+    int leftBit = registerBits[0] - '0';
+    int tap13 = registerBits[TAP1] - '0'; 
+    int tap12 = registerBits[TAP2] - '0'; 
+    int tap10 = registerBits[TAP3] - '0'; 
+    int newBit = leftBit ^ tap13 ^ tap12 ^ tap10; //XOR here
+    registerBits = registerBits.substr(1) + std::to_string(newBit);
+    return newBit;
 }
 
-int FibLFSR::generate(int k) {
-    if (k < 0) {
-        throw std::invalid_argument("Number of steps (k) must be non-negative.");
+int FibLFSR::generate(int steps) {
+    if (steps < 0) {
+        throw std::invalid_argument("Number of steps should be positive");
     }
-    int result = 0;
-    for (int i = 0; i < k; ++i) {
-        result = (result << 1) | step(); // Shift result left and add new bit
+    int answer = 0;
+    for (int i = 0; i < steps; ++i) {
+        answer = (answer << 1) | step(); 
     }
-    return result;
+    return answer;
 }
 std::ostream& operator<<(std::ostream& os, const FibLFSR& lfsr) {
-    for (int bit : lfsr.reg) {
-        os << bit;
-    }
+    os << lfsr.registerBits;
     return os;
 }
