@@ -42,8 +42,8 @@ int FibLFSR::generate(int steps) {
   }
   return answer;
 }
-std::ostream& operator<<(std::ostream& os, const FibLFSR& lfsr){
-  os << lfsr.registerBits;
-  return os;
+std::ostream& operator<<(std::ostream& os, const FibLFSR& lfsr) {
+    os << lfsr.registerBits;
+    return os;
 }
 }  // namespace PhotoMagic
