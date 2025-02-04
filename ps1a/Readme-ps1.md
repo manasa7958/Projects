@@ -18,11 +18,10 @@ I had to brainstorm what kind of tests I want to implement, I made an LFSROutput
 I made an LFSROutput test, noThrow test, wrongInsert test and modified the GeneratInstr test.
 
 #### Part b
-In the second part of the project I defined necessary function and modfied the private class in the hpp file. I had to write code for the generate and step functions mainly. 
+In the second part of the project I defined necessary function and modfied the private class in the hpp file. I had to write code for the generate and step functions mainly. I did have to rework my step function multiple times because i had been trying to declare my tap positions instead if using their indexes. This had caused quite a bit of errors but then I chose to directly use the indexes and that made my program compile correctly.
 
 ### Issues
-What doesn't work.  Be honest.  You might be penalized if you claim something works and it doesn't.
-As of now I have been having some trouble when trying to run my tests.
+As of now there are no issues. My program is compiling correctly and my linting all seems to right as well. 
 
 ### Tests
 Describe what is being tested in your Boost unit tests.
