@@ -33,7 +33,7 @@ $(LIBRARY): $(OBJECTS)
 	ar rcs $@ $^
 
 clean:
-	rm *.o $(PROGRAM) $(TEST) $(LIBRARY)
+	rm -f *.o $(PROGRAM) $(TEST) $(LIBRARY)
 
 lint:
 	cpplint *.cpp *.hpp
