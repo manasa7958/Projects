@@ -37,18 +37,14 @@ int FibLFSR::generate(int steps) {
     }
     return answer;
 }
-std::ostream& operator<<(std::ostream& os, const FibLFSR& lfsr) {
-    os << registerBits;
-    return os;
-}
 
 int main() {
     PhotoMagic::FibLFSR lfsr("1011011000110110");
-    std::cout <<Initl state: "Initial state: " << lfsr <<std::endl;
+    std::cout <<"Initial state: " << lfsr <<std::endl;
     lfsr.step();
-    std::cout <<Initl state: "After 1 step: " << lfsr <<std::endl;
+    std::cout << "After 1 step: " << lfsr <<std::endl;
     int value = lfsr.generate(5);
-    std::cout <<Initl state: "5 Bit string " << lfsr <<std::endl;
+    std::cout << "5 Bit string " << lfsr <<std::endl;
     return 0;
 }
 
