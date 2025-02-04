@@ -16,9 +16,9 @@ FibLFSR::FibLFSR(const std::string& seed) {
 }
 int FibLFSR::step() {
     int leftBit = registerBits[0] - '0';
-    int tap13 = registerBits[13] - '0'; 
-    int tap12 = registerBits[12] - '0'; 
-    int tap10 = registerBits[10] - '0'; 
+    int tap13 = registerBits[2] - '0'; //index is 2 at position 13 as seen in photo
+    int tap12 = registerBits[3] - '0'; //index is 3 at position 12 as seen in photo
+    int tap10 = registerBits[5] - '0'; //index is 5 at position 10 as seen in photo
     int newBit = leftBit ^ tap13 ^ tap12 ^ tap10; //XOR here
     registerBits = registerBits.substr(1) + std::to_string(newBit);
     return newBit;
