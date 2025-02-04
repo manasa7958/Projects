@@ -1,60 +1,64 @@
-// pixels.cpp: 
-// using SFML to load a file, manipulate its pixels, write it to disk
-
-
-// g++ -o pixels pixels.cpp -lsfml-graphics -lsfml-window
-
-#include <SFML/System.hpp>
-#include <SFML/Window.hpp>
+// main.cpp
 #include <SFML/Graphics.hpp>
+#include <iostream>
+#include "FibLFSR.hpp"
+#include "PhotoMagic.hpp"
 
-int main()
-{
-	sf::Image image;
-	if (!image.loadFromFile("cat.jpg"))
-		return -1;
+int main(int argc, char* argv[]) {
+    if (argc != 4) {
+        std::cerr << "Usage: " << argv[0] << " <input-file> <output-file> <seed>\n";
+        return 1;
+    }
 
-	// p is a pixelimage.getPixel(x, y);
-	sf::Color p;
+    std::string inputFile = argv[1];
+    std::string outputFile = argv[2];
+    std::string seed = argv[3];
 
-	// create photographic negative image of upper-left 200 px square
-	for (int x = 0; x<200; x++) {
-		for (int y = 0; y< 200; y++) {
-			p = image.getPixel(x, y);
-			p.r = 255 - p.r;
-			p.g = 255 - p.g;
-			p.b = 255 - p.b;
-			image.setPixel(x, y, p);
-		}
-	}
+    sf::Image image;
+    if (!image.loadFromFile(inputFile)) {
+        std::cerr << "Error loading file: " << inputFile << "\n";
+        return 1;
+    }
 
-	sf::Vector2u size = image.getSize();
-	sf::RenderWindow window(sf::VideoMode(size.x, size.y), "Meow");
+    FibLFSR lfsr(seed);
 
-	sf::Texture texture;
-	texture.loadFromImage(image);
+    // Display Original Image
+    sf::RenderWindow window1(sf::VideoMode(image.getSize().x, image.getSize().y), "Original Image");
+    sf::Texture texture1;
+    texture1.loadFromImage(image);
+    sf::Sprite sprite1(texture1);
 
-	sf::Sprite sprite;
-	sprite.setTexture(texture);
+    // Transform Image
+    PhotoMagic::transform(image, &lfsr);
 
-	while (window.isOpen())
-	{
-		sf::Event event;
-		while (window.pollEvent(event))
-		{
-			if (event.type == sf::Event::Closed)
-				window.close();
-		}
+    // Display Transformed Image
+    sf::RenderWindow window2(sf::VideoMode(image.getSize().x, image.getSize().y), "Transformed Image");
+    sf::Texture texture2;
+    texture2.loadFromImage(image);
+    sf::Sprite sprite2(texture2);
 
-		window.clear(sf::Color::White);
-		window.draw(sprite);
-		window.display();
-	}
+    while (window1.isOpen() && window2.isOpen()) {
+        sf::Event event;
+        while (window1.pollEvent(event)) {
+            if (event.type == sf::Event::Closed) window1.close();
+        }
+        while (window2.pollEvent(event)) {
+            if (event.type == sf::Event::Closed) window2.close();
+        }
 
-	// fredm: saving a PNG segfaults for me, though it does properly
-	//   write the file
-	if (!image.saveToFile("cat-out.bmp"))
-		return -1;
+        window1.clear();
+        window1.draw(sprite1);
+        window1.display();
 
-	return 0;
+        window2.clear();
+        window2.draw(sprite2);
+        window2.display();
+    }
+
+    if (!image.saveToFile(outputFile)) {
+        std::cerr << "Error saving file: " << outputFile << "\n";
+        return 1;
+    }
+
+    return 0;
 }
