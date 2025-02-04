@@ -22,7 +22,7 @@ class FibLFSR {
    static const int TAP10;
 };
 
-inline std::ostream& operator<<(std::ostream&, const FibLFSR& lfsr){
+inline std::ostream& operator<<(std::ostream& os, const FibLFSR& lfsr){
    return lfsr.print(os);
 }
 }  // namespace PhotoMagic
