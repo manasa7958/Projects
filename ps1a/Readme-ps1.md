@@ -12,12 +12,13 @@ Time to Complete: 3 hours
 The purpose of this project is to procude psedo-random bits by simulating a linear feedback shift register (LFSR). The project has been split into parts a and b, the first part requires us to create different tests that are implemented by the Boost.Test. In the second part of the project we need to define necessary functions like the generate and step functions. Our code is then tested to ensure that the appropriate results are obtained (in this project we use tap positions at 13, 12, and 10).
 
 ### Features
-I had to brainstorm what kind of tests I want to implement, I made an InvalidInput test, EdgeCase Test, LFSROutput test, and modified the GeneratInstr test.
+I had to brainstorm what kind of tests I want to implement, I made an LFSROutput test, noThrow test, wrongInsert test and modified the GeneratInstr test. I particularly struggled with the wringInsert test and had to resubmit my project multiple times to the autograder.
 
 #### Part a
-I made an InvalidInput test, EdgeCase Test, LFSROutput test, and modified the GeneratInstr test.
+I made an LFSROutput test, noThrow test, wrongInsert test and modified the GeneratInstr test.
 
 #### Part b
+In the second part of the project I defined necessary function and modfied the private class in the hpp file. I had to write code for the generate and step functions mainly. 
 
 ### Issues
 What doesn't work.  Be honest.  You might be penalized if you claim something works and it doesn't.
