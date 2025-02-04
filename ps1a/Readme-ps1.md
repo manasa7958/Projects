@@ -9,10 +9,10 @@ Time to Complete: 3 hours
 
 
 ## Description
-This 
+The purpose of this project is to procude psedo-random bits by simulating a linear feedback shift register (LFSR). The project has been split into parts a and b, the first part requires us to create different tests that are implemented by the Boost.Test. In the second part of the project we need to define necessary functions like the generate and step functions. Our code is then tested to ensure that the appropriate results are obtained (in this project we use tap positions at 13, 12, and 10).
 
 ### Features
-I had to brainstorm what kinf of tests I want to implement, I made an InvalidInput test, EdgeCase Test, LFSROutput test, and modified the GeneratInstr test.
+I had to brainstorm what kind of tests I want to implement, I made an InvalidInput test, EdgeCase Test, LFSROutput test, and modified the GeneratInstr test.
 
 #### Part a
 I made an InvalidInput test, EdgeCase Test, LFSROutput test, and modified the GeneratInstr test.
