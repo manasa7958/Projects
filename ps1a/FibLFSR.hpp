@@ -13,8 +13,14 @@ class FibLFSR {
 
     int step();
     int generate(int k);
+    std::ostream& print(std::ostream& os) const;
+
  private:
+   std::string registerBits;
+   static const int TAP13;
+   static const int TAP12;
+   static const int TAP10;
 };
 
-std::ostream& operator<<(std::ostream&, const FibLFSR& lfsr);
+inline std::ostream& operator<<(std::ostream&, const FibLFSR& lfsr);
 }  // namespace PhotoMagic
