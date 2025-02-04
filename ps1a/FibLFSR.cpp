@@ -4,6 +4,9 @@
 #include "FibLFSR.hpp"
 
 namespace PhotoMagic {
+    const int FibLFSR::TAP13 = 13;
+    const int FibLFSR::TAP12 = 12;
+    const int FibLFSR::TAP10 = 10;
 
 FibLFSR::FibLFSR(const std::string& seed) {
     if (seed.length() != 16) {
