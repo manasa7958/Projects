@@ -42,12 +42,3 @@ std::ostream& PhotoMagic::FibLFSR::print(std::ostream& os) const {
     return os;
 }
 }
-
-int main() {
-    PhotoMagic::FibLFSR lfsr("1011011000110110");
-    std::cout <<"Initial state: " << lfsr <<std::endl;
-    lfsr.step();
-    std::cout << "After 1 step: " << lfsr <<std::endl;
-    std::cout << "5 Bit string " << lfsr.generate(5) <<std::endl;
-    return 0;
-}
