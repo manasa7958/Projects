@@ -19,23 +19,35 @@ FibLFSR::FibLFSR(const std::string& seed) {
 }
 int FibLFSR::step() {
     int leftBit = registerBits[0] - '0';
+    int newBit = leftBit ^ (registerBits[TAP13] - '0') ^ (registerBits[TAP12] - '0') ^ (registerBits[TAP10] - '0');
+    registerBits = registerBits.substr(1) + std::to_string(newBit);
+    return newBit;
+    /*int leftBit = registerBits[0] - '0';
     int tap13 = registerBits[TAP13] - '0'; 
     int tap12 = registerBits[TAP12] - '0'; 
     int tap10 = registerBits[TAP10] - '0'; 
     int newBit = leftBit ^ tap13 ^ tap12 ^ tap10; //XOR here
     registerBits = registerBits.substr(1) + std::to_string(newBit);
-    return newBit;
+    return newBit;*/
 }
 
 int FibLFSR::generate(int steps) {
-    if (steps < 0) {
+    if (k < 0) {
+        throw std::invalid_argument("Number of steps should be non-negative.");
+    }
+    int result = 0;
+    for (int i = 0; i < k; ++i) {
+        result = (result << 1) | step(); // Correct bit accumulation
+    }
+    return result;
+    /*if (steps < 0) {
         throw std::invalid_argument("Number of steps should be positive");
     }
     int answer = 0;
     for (int i = 0; i < steps; ++i) {
         answer = (answer << 1) | step(); //adding new bit
     }
-    return answer;
+    return answer;*/
 }
 std::ostream& PhotoMagic::FibLFSR::print(std::ostream& os) const {
     os << registerBits; // Output the registerBits string
