@@ -32,6 +32,6 @@ Anything special you did. This is required to earn bonus points.
 ## Acknowledgements
 https://stackoverflow.com/questions/5029840/convert-char-to-int-in-c-and-c  - I used this to figure how to store the seed in integer format
 https://stackoverflow.com/questions/13865842/does-static-constexpr-variable-inside-a-function-make-sense - I was using this initially when I was trying to declare the tap psotions in my cpp instead of using the index
-
+https://cplusplus.com/reference/algorithm/ - had a faint idea of the functions but this helped
 ### Credits
 NO images or audio used in this project
