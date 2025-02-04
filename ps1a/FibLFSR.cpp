@@ -26,21 +26,13 @@ int FibLFSR::step() {
 
 int FibLFSR::generate(int steps) {
     if (steps < 0) {
-        throw std::invalid_argument("Number of steps should be non-negative.");
-    }
-    int result = 0;
-    for (int i = 0; i < steps; ++i) {
-        result = (result << 1) | step(); // Correct bit accumulation
-    }
-    return result;
-    /*if (steps < 0) {
         throw std::invalid_argument("Number of steps should be positive");
     }
     int answer = 0;
     for (int i = 0; i < steps; ++i) {
         answer = (answer << 1) | step(); //adding new bit
     }
-    return answer;*/
+    return answer;
 }
 std::ostream& PhotoMagic::FibLFSR::print(std::ostream& os) const {
     os << registerBits; // Output the registerBits string
