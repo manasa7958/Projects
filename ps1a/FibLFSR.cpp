@@ -37,6 +37,7 @@ int FibLFSR::generate(int steps) {
     }
     return answer;
 }
+}
 
 int main() {
     PhotoMagic::FibLFSR lfsr("1011011000110110");
@@ -47,4 +48,3 @@ int main() {
     std::cout << "5 Bit string " << lfsr <<std::endl;
     return 0;
 }
-
