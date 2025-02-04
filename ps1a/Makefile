@@ -18,6 +18,10 @@ PROGRAM = test
 
 all: $(PROGRAM) $(LIBRARY)
 
+# Rule for ps1a/FibLFSR.o
+ps1a/FibLFSR.o: ps1a/FibLFSR.cpp $(DEPS)
+	$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDEDIR)
+
 # Wildcard recipe to make .o files from corresponding .cpp file
 %.o: %.cpp $(DEPS)
 	$(CC) $(CFLAGS) -c $< $(INCLUDEDIR)
@@ -29,7 +33,7 @@ $(LIBRARY): $(OBJECTS)
 	ar rcs $@ $^
 
 clean:
-	rm -f *.o $(PROGRAM) $(LIBRARY)
+	rm -f *.o ps1a/*.o $(PROGRAM) $(LIBRARY)
 
 lint:
 	cpplint *.cpp ps1a/*.hpp
