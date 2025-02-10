@@ -1,8 +1,8 @@
 // Copyright 2025 Manasa Praveen
 #include "FibLFSR.hpp"
 
-#include <algorithm>
 #include <iostream>
+#include <algorithm>
 #include <stdexcept>
 #include <string>
 
