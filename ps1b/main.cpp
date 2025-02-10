@@ -13,7 +13,7 @@ int main(int argc, char* argv[]) {
   }
 
   std::string input = "cat.jpg";
-  std::string output = "cat-out.bmp";
+  std::string output = "cat-out.png";
   std::string seed = argv[1];
 
   sf::Image image;
