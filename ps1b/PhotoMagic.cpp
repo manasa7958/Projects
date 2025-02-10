@@ -15,7 +15,7 @@ void transform(sf::Image& img, FibLFSR* lfsr) {
       pixel.g ^= lfsr->generate(8);
       pixel.b ^= lfsr->generate(8);
 
-      img->setPixel(x, y, pixel);
+      img.setPixel(x, y, pixel);
     }
   }
 }
