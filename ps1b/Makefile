@@ -18,13 +18,13 @@ all: $(PROGRAM) $(TEST) PhotoMagic.a
 
 # Wildcard recipe to make .o files from corresponding .cpp file
 %.o: %.cpp $(DEPS)
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(INCLUDEDIR) -c $< -o $@
 
 $(PROGRAM): main.o $(OBJECTS)
-	$(CC) $(CFLAGS) -o $@ $^ $(LIB)
+	$(CC) $(CFLAGS) $(LIBDIR) -o $@ $^ $(LIB)
 
 $(TEST): test.o $(OBJECTS)
-	$(CC) $(CFLAGS) -o $@ $^ $(LIB)
+	$(CC) $(CFLAGS) $(LIBDIR) -o $@ $^ $(LIB)
 
 PhotoMagic.a: $(OBJECTS)
 	ar rcs $@ $(OBJECTS)
