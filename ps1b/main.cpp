@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 
-#include "FibLFSR.hpp"
+#include "./FibLFSR.hpp"
 #include "PhotoMagic.hpp"
 
 int main(int argc, char* argv[]) {
