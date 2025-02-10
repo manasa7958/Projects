@@ -5,5 +5,5 @@
 #include <algorithm>
 
 namespace PhotoMagic {
-void transform(sf::Image& img, FibLFSR* lfsr);
+void transform(sf::Image* img, FibLFSR* lfsr);
 }
