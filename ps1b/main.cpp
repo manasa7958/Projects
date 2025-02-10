@@ -1,6 +1,7 @@
 // Copyright 2025 Manasa Praveen
 #include "FibLFSR.hpp"
 #include "PhotoMagic.hpp"
+
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <string>
