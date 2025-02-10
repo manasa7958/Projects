@@ -23,7 +23,7 @@ int main(int argc, char* argv[]) {
 
   sf::Image og = image;
   PhotoMagic::FibLFSR lfsr(seed);
-  PhotoMagic::transform(&image, &lfsr);
+  PhotoMagic::transform(image, &lfsr);
 
   sf::Vector2u size = image.getSize();
   sf::RenderWindow window(sf::VideoMode(size.x, size.y), "Original Image");
