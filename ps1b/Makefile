@@ -1,4 +1,3 @@
-# Compiler and flags
 CC = g++
 CFLAGS = --std=c++17 -Wall -Werror -pedantic -g
 LIB = -lsfml-graphics -lsfml-audio -lsfml-window -lsfml-system -lboost_unit_test_framework
