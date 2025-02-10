@@ -4,9 +4,9 @@ CFLAGS = --std=c++17 -Wall -Werror -pedantic -g
 LIB = -lsfml-graphics -lsfml-audio -lsfml-window -lsfml-system -lboost_unit_test_framework
 
 # Your .hpp files
-DEPS = FibLFSR.hpp
+DEPS = FibLFSR.hpp PhotoMagic.hpp
 # Your compiled .o files
-OBJECTS = FibLFSR.o
+OBJECTS = FibLFSR.o PhotoMagic.o
 # The name of your program
 PROGRAM = PhotoMagic
 TEST = test
@@ -17,9 +17,9 @@ all: $(PROGRAM) $(TEST) PhotoMagic.a
 
 # Wildcard recipe to make .o files from corresponding .cpp file
 %.o: %.cpp $(DEPS)
-	$(CC) $(CFLAGS) -c $<
+	$(CC) $(CFLAGS) -c $< -o $@
 
-$(PROGRAM): test.o $(OBJECTS)
+$(PROGRAM): main.o $(OBJECTS)
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB)
 
 $(TEST): test.o $(OBJECTS)
