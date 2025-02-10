@@ -1,9 +1,7 @@
 // Copyright 2025 Manasa Praveen
-
+#include "FibLFSR.hpp"
 #include <iostream>
 #include <string>
-
-#include "FibLFSR.hpp"
 
 #define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MODULE Main
