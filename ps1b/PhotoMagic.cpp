@@ -1,5 +1,6 @@
 // Copyright 2025 Manasa Praveen
 #include "PhotoMagic.hpp"
+#include <algorithm>
 
 namespace PhotoMagic {
 
