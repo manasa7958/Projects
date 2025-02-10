@@ -1,4 +1,4 @@
-// main.cpp
+// Copyright 2025 Manasa Praveen
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "FibLFSR.hpp"
