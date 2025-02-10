@@ -23,8 +23,8 @@ int main(int argc, char* argv[]) {
     PhotoMagic::transform(image, &lfsr);
 
     sf::Vector2u size = image.getSize();
-    sf::RenderWindow window1(sf::VideoMode(size.x, size.y), "Original Image");
-    sf::RenderWindow window2(sf::VideoMode(size.x, size.y), "Transformed Image");
+    sf::RenderWindow window(sf::VideoMode(size.x, size.y), "Original Image");
+    sf::RenderWindow newWindow(sf::VideoMode(size.x, size.y), "Transformed Image");
 
     sf::Texture ogTexture, newTexture;
     ogTexture.loadFromImage(og);
