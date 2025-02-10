@@ -1,6 +1,7 @@
 // Copyright 2025 Manasa Praveen
 #pragma once
 #include "FibLFSR.hpp"
+#include <iostream>
 #include <algorithm>
 #include <SFML/Graphics.hpp>
 
