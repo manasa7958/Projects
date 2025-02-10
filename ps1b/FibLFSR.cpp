@@ -1,10 +1,10 @@
 // Copyright 2025 Manasa Praveen
 #include "FibLFSR.hpp"
 
+#include <algorithm>
 #include <iostream>
 #include <stdexcept>
 #include <string>
-#include <algorithm>
 
 namespace PhotoMagic {
 
@@ -44,7 +44,7 @@ int FibLFSR::generate(int steps) {
   return answer;
 }
 std::ostream& operator<<(std::ostream& os, const FibLFSR& lfsr) {
-    os << lfsr.registerBits;
-    return os;
+  os << lfsr.registerBits;
+  return os;
 }
 }  // namespace PhotoMagic
