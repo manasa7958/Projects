@@ -5,7 +5,7 @@
 namespace PhotoMagic {
 
 void transform(sf::Image* img, FibLFSR* lfsr) {
-  sf::Vector2u size = img.getSize();
+  sf::Vector2u size = img->getSize();
 
   for (unsigned int x = 0; x < size.x; ++x) {
     for (unsigned int y = 0; y < size.y; ++y) {
