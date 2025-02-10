@@ -1,4 +1,4 @@
-// PhotoMagic.cpp
+// Copyright 2025 Manasa Praveen
 #include "PhotoMagic.hpp"
 
 namespace PhotoMagic {
