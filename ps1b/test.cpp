@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 
-#include "./FibLFSR.hpp"
+#include "FibLFSR.hpp"
 
 #define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MODULE Main
