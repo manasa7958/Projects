@@ -10,6 +10,7 @@ Time to Complete: 5 hours
 
 ## Description
 Part a: The purpose of this project is to procude psedo-random bits by simulating a linear feedback shift register (LFSR). In part a of the project we need to define necessary functions like the generate and step functions. Our code is then tested to ensure that the appropriate results are obtained (in this project we use tap positions at 13, 12, and 10).
+
 Part b: The purpose of this project is to encode and decode the cat.jpg image using the base code that we had for part a. In this part we also use PhotoMagic and sfml to load the photo and encode messages inside of the image.
 
 ### Features
@@ -31,11 +32,9 @@ There are a couple of major things that are being tested, as outlined by the req
 Anything special you did. This is required to earn bonus points.
 
 ## Acknowledgements
-Part a:
 https://stackoverflow.com/questions/5029840/convert-char-to-int-in-c-and-c  - I used this to figure how to store the seed in integer format
 https://stackoverflow.com/questions/13865842/does-static-constexpr-variable-inside-a-function-make-sense - I was using this initially when I was trying to declare the tap psotions in my cpp instead of using the index
 https://cplusplus.com/reference/algorithm/ - had a faint idea of the functions but this helped
-Part b:
 
 ### Credits
 The cat.jpg file provided in class was used for this project
