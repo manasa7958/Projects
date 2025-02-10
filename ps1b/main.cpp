@@ -1,10 +1,10 @@
 // Copyright 2025 Manasa Praveen
-#include "FibLFSR.hpp"
-#include "PhotoMagic.hpp"
-
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <string>
+
+#include "FibLFSR.hpp"
+#include "PhotoMagic.hpp"
 
 int main(int argc, char* argv[]) {
   if (argc != 2) {
