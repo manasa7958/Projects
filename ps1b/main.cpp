@@ -19,7 +19,7 @@ int main(int argc, char* argv[]) {
     }
 
     sf::Image og = image;
-    FibLFSR lfsr(seed);
+    PhotoMagic::FibLFSR lfsr(seed);
     PhotoMagic::transform(image, &lfsr);
 
     sf::Vector2u size = image.getSize();
