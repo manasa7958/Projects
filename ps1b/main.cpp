@@ -8,20 +8,20 @@
 #include "PhotoMagic.hpp"
 
 int main(int argc, char* argv[]) {
-  if (argc != 2) {
-    return -1;
-  }
+  if (argc != 4) {  
+        return -1;
+    }
 
-  std::string input = "cat.jpg";
-  std::string output = "cat-out.png";
-  std::string seed = argv[1];
+    std::string input = argv[1];
+    std::string output = argv[2];
+    std::string seed = argv[3];
 
-  sf::Image image;
-  if (!image.loadFromFile(input)) {
-    return -1;
-  }
-
-  sf::Image og = image;
+    sf::Image image;
+    if (!image.loadFromFile(input)) {
+        std::cerr << "Error loading file: " << input << "\n";
+        return 1;
+    }
+  
   PhotoMagic::FibLFSR lfsr(seed);
   PhotoMagic::transform(image, &lfsr);
 
