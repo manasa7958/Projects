@@ -11,7 +11,6 @@ int main(int argc, char* argv[]) {
   if (argc != 4) {
     return -1;
   }
-  
   std::string input = argv[1];
   std::string output = argv[2];
   std::string seed = argv[3];
@@ -23,10 +22,8 @@ int main(int argc, char* argv[]) {
   }
 
   sf::Image og = image;
-  
   PhotoMagic::FibLFSR lfsr(seed);
   PhotoMagic::transform(image, &lfsr);
-
   sf::Vector2u size = image.getSize();
   sf::RenderWindow window(sf::VideoMode(size.x, size.y), "Original Image");
   sf::RenderWindow newWindow(sf::VideoMode(size.x, size.y),
