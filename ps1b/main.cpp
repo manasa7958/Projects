@@ -9,18 +9,20 @@
 
 int main(int argc, char* argv[]) {
   if (argc != 4) {  
-        return -1;
-    }
+    return -1;
+  }
+  
+  std::string input = argv[1];
+  std::string output = argv[2];
+  std::string seed = argv[3];
 
-    std::string input = argv[1];
-    std::string output = argv[2];
-    std::string seed = argv[3];
+  sf::Image image;
+  if (!image.loadFromFile(input)) {
+    std::cerr << "Error loading input file";
+    return -1;
+  }
 
-    sf::Image image;
-    if (!image.loadFromFile(input)) {
-        std::cerr << "Error loading file: " << input << "\n";
-        return 1;
-    }
+  sf::Image og = image;
   
   PhotoMagic::FibLFSR lfsr(seed);
   PhotoMagic::transform(image, &lfsr);
