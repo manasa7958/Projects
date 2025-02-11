@@ -2,8 +2,8 @@
 #pragma once
 #include <iostream>
 #include <algorithm>
-#include "FibLFSR.hpp"
 #include <SFML/Graphics.hpp>
+#include "FibLFSR.hpp"
 
 namespace PhotoMagic {
 void transform(sf::Image& img, FibLFSR* lfsr);
