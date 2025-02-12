@@ -5,6 +5,7 @@
 
 int main(int argc, char* argv[]) {
     if (argc != 3) {
+        std::cerr << "Need to enter " << argv[0] << " lenght depth\n";
         return -1;
     }
     
