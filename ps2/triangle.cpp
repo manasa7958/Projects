@@ -1,4 +1,4 @@
-// triangle.cpp
+// Copyright 2025 Manasa Praveen
 #include "triangle.hpp"
 #include <cmath>
 
