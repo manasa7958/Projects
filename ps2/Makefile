@@ -5,16 +5,15 @@ INCLUDEDIR = -I. -I/opt/homebrew/opt/boost/include/ -I/opt/homebrew/opt/sfml@2/i
 LIBDIR = -L/opt/homebrew/opt/boost/lib/ -L/opt/homebrew/opt/sfml@2/lib/
 
 # Your .hpp files
-DEPS = FibLFSR.hpp PhotoMagic.hpp
+DEPS = triangle.hpp
 # Your compiled .o files
-OBJECTS = FibLFSR.o PhotoMagic.o
+OBJECTS = triangle.o
 # The name of your program
-PROGRAM = PhotoMagic
-TEST = test
+PROGRAM = Triangle
 
 .PHONY: all clean lint
 
-all: $(PROGRAM) $(TEST) PhotoMagic.a
+all: $(PROGRAM)
 
 # Wildcard recipe to make .o files from corresponding .cpp file
 %.o: %.cpp $(DEPS)
@@ -22,12 +21,6 @@ all: $(PROGRAM) $(TEST) PhotoMagic.a
 
 $(PROGRAM): main.o $(OBJECTS)
 	$(CC) $(CFLAGS) $(LIBDIR) -o $@ $^ $(LIB)
-
-$(TEST): test.o $(OBJECTS)
-	$(CC) $(CFLAGS) $(LIBDIR) -o $@ $^ $(LIB)
-
-PhotoMagic.a: $(OBJECTS)
-	ar rcs $@ $(OBJECTS)
 
 clean:
 	rm *.o $(PROGRAM)
