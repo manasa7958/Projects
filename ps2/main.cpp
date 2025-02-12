@@ -1,7 +1,7 @@
 // Copyright 2025 Manasa Praveen
+#include <iostream>
 #include <SFML/Graphics.hpp>
 #include "triangle.hpp"
-#include <iostream>
 
 int main(int argc, char* argv[]) {
     if (argc != 3) {
