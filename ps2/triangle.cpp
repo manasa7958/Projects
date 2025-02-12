@@ -1,6 +1,6 @@
 // Copyright 2025 Manasa Praveen
-#include "triangle.hpp"
 #include <cmath>
+#include "triangle.hpp"
 
 //Constructor intialization
 Triangle::Triangle(double length, int depth) : length(length), depth(depth) {
