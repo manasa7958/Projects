@@ -24,7 +24,11 @@ void Triangle::fractal(sf::Vector2f v1, sf::Vector2f v2, sf::Vector2f v3, int le
         triangle[0].position = v1;
         triangle[1].position = v2;
         triangle[2].position = v3;
+        triangle[0].color = color;
+        triangle[1].color = color;
+        triangle[2].color = color;
         triangles.push_back(triangle);
+        
         return;
     }
     
