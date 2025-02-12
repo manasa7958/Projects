@@ -19,6 +19,8 @@ void Triangle::generate() {
 void Triangle::fractal(sf::Vector2f v1, sf::Vector2f v2, sf::Vector2f v3, int level) {
     if (level == 0) {
         sf::VertexArray triangle(sf::Triangles, 3);
+        sf::Color color = sf::Color(255 - level * 20, 50 + level * 30, 150 + level * 10);
+        
         triangle[0].position = v1;
         triangle[1].position = v2;
         triangle[2].position = v3;
