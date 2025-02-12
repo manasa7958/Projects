@@ -1,4 +1,4 @@
-// triangle.hpp
+// Copyright 2025 Manasa Praveen
 #ifndef TRIANGLE_HPP
 #define TRIANGLE_HPP
 
