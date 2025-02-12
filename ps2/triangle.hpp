@@ -3,17 +3,18 @@
 #define TRIANGLE_HPP
 
 #include <SFML/Graphics.hpp>
+#include <vector>
 
 class Triangle : public sf::Drawable {
 public:
     Triangle(double length, int depth);
-    void generate();
+    void generate(); //to draw big triangle
 
 private:
     double length;
     int depth;
-    std::vector<sf::VertexArray> triangles;
-    void fractal(sf::Vector2f p1, sf::Vector2f p2, sf::Vector2f p3, int level);
+    std::vector<sf::VertexArray> triangles; //this holds the three vertices of each triangle
+    void fractal(sf::Vector2f v1, sf::Vector2f v2, sf::Vector2f v3, int level); // for smaller triangles (recursive funciton)
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 };
 
