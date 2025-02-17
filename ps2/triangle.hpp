@@ -13,9 +13,9 @@ public:
 private:
     double length;
     int depth;
+    int maxDepth;
     float angle;
     std::vector<sf::VertexArray> triangles;
-    
     void fractal(std::array<sf::Vector2f, 3> vertices, int level);
     sf::Vector2f rotatePoint(sf::Vector2f point, sf::Vector2f center, float angle);
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
