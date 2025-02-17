@@ -21,8 +21,8 @@ sf::Vector2f Triangle::rotatePoint(sf::Vector2f point, sf::Vector2f center, floa
     float sinA = sin(radians);
     
     sf::Vector2f rotated;
-    rotated.x = 0;
-    rotated.y = 0;
+    rotated.x = cosA * (point.x - center.x) - sinA * (point.y - center.y) + center.x;
+    rotated.y = sinA * (point.x - center.x) + cosA * (point.y - center.y) + center.y;
     return rotated;
 }
 
