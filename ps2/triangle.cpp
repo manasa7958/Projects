@@ -9,15 +9,18 @@ Triangle::Triangle(double length, int depth, float rotation)
 
 void Triangle::generate() {
     sf::Vector2f center(400, 300);
-    sf::Vector2f v1(400, 100); //top
-    sf::Vector2f v2(400 - length / 2, 100 + length * sqrt(3) / 2); //bottom left
-    sf::Vector2f v3(400 + length / 2, 100 + length * sqrt(3) / 2); //bottom right
-    fractal(v1, v2, v3, depth);
+
+    // Apply rotation if needed
+    sf::Vector2f v1 = rotatePoint({400, 100}, center, angle); //top
+    sf::Vector2f v2 = rotatePoint({400 - length / 2, 100 + length * sqrt(3) / 2}, center, angle); //bottom left
+    sf::Vector2f v3 = rotatePoint({400 + length / 2, 100 + length * sqrt(3) / 2}, center, angle); //bottom right
+
+    fractal(std::array<sf::Vector2f, 3>{v1, v2, v3}, depth);
 }
 
 sf::Vector2f Triangle::rotatePoint(sf::Vector2f point, sf::Vector2f center, float angle) {
-    float radians = angle * M_PI / 180.0f; //degrees to radians
-    float cosA = cos(radians);
+    float radians = angle * M_PI / 180.0f;
+    float cosA = cos(radians); //degrees to radians
     float sinA = sin(radians);
     
     sf::Vector2f rotated;
@@ -42,7 +45,6 @@ void Triangle::fractal(std::array<sf::Vector2f, 3> vertices, int level) {
     sf::Vector2f mid1 = (vertices[0] + vertices[1]) / 2.0f;
     sf::Vector2f mid2 = (vertices[1] + vertices[2]) / 2.0f;
     sf::Vector2f mid3 = (vertices[2] + vertices[0]) / 2.0f;
-
     fractal(std::array<sf::Vector2f, 3>{vertices[0], mid1, mid3}, level - 1);
     fractal(std::array<sf::Vector2f, 3>{mid1, vertices[1], mid2}, level - 1);
     fractal(std::array<sf::Vector2f, 3>{mid3, mid2, vertices[2]}, level - 1);
