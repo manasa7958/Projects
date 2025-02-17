@@ -13,7 +13,7 @@ int main(int argc, char* argv[]) {
     int depth = std::stoi(argv[2]);
     
     sf::RenderWindow window(sf::VideoMode(800, 600), "Triangle Fractal");
-    Triangle fractalTriangle(length, depth);
+    float rotation = 0.0f;
     
     while (window.isOpen()) {
         sf::Event event;
@@ -21,12 +21,12 @@ int main(int argc, char* argv[]) {
             if (event.type == sf::Event::Closed)
                 window.close();
         }
+        rotation += 0.5f;
+        Triangle fractalTriangle(length, depth, rotation);
         
         window.clear();
         window.draw(fractalTriangle);
         window.display();
     }
-    
     return 0;
 }
-
