@@ -22,4 +22,3 @@ private:
 };
 
 #endif // TRIANGLE_HPP
-
