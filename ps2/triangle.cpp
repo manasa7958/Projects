@@ -3,7 +3,7 @@
 #include "triangle.hpp"
 
 Triangle::Triangle(double length, int depth, float rotation)
-    : length(length), depth(depth), maxDepth(depth), angle(rotation) {
+    : length(length), depth(depth), angle(rotation) {
     generate();
 }
 
