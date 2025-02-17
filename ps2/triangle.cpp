@@ -16,7 +16,7 @@ void Triangle::generate() {
 }
 
 //recursive function
-void Triangle::fractal(sf::Vector2f v1, sf::Vector2f v2, sf::Vector2f v3, int level) {
+void Triangle::fractal(std::array<sf::Vector2f, 3> vertices, int level) {
     if (level == 0) {
         sf::VertexArray triangle(sf::Triangles, 3);
         for (int i = 0; i < 3; i++) {
@@ -26,13 +26,13 @@ void Triangle::fractal(sf::Vector2f v1, sf::Vector2f v2, sf::Vector2f v3, int le
         return;
     }
     
-    sf::Vector2f mid1((v1 + v2) / 2.0f);
-    sf::Vector2f mid2((v2 + v3) / 2.0f);
-    sf::Vector2f mid3((v3 + v1) / 2.0f);
-    
-    fractal(v1, mid1, mid3, level - 1);
-    fractal(mid1, v2, mid2, level - 1);
-    fractal(mid3, mid2, v3, level - 1);
+    sf::Vector2f mid1 = (vertices[0] + vertices[1]) / 2.0f;
+    sf::Vector2f mid2 = (vertices[1] + vertices[2]) / 2.0f;
+    sf::Vector2f mid3 = (vertices[2] + vertices[0]) / 2.0f;
+
+    fractal({vertices[0], mid1, mid3}, level - 1);
+    fractal({mid1, vertices[1], mid2}, level - 1);
+    fractal({mid3, mid2, vertices[2]}, level - 1);
 }
 
 //draw the triangles
