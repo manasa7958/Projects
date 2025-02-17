@@ -8,10 +8,22 @@ Triangle::Triangle(double length, int depth, float rotation)
 }
 
 void Triangle::generate() {
+    sf::Vector2f center(400, 300);
     sf::Vector2f v1(400, 100); //top
     sf::Vector2f v2(400 - length / 2, 100 + length * sqrt(3) / 2); //bottom left
     sf::Vector2f v3(400 + length / 2, 100 + length * sqrt(3) / 2); //bottom right
     fractal(v1, v2, v3, depth);
+}
+
+sf::Vector2f Triangle::rotatePoint(sf::Vector2f point, sf::Vector2f center, float angle) {
+    float radians = angle * M_PI / 180.0f;
+    float cosA = cos(radians);
+    float sinA = sin(radians);
+    
+    sf::Vector2f rotated;
+    rotated.x = cosA * (point.x - center.x) - sinA * (point.y - center.y) + center.x;
+    rotated.y = sinA * (point.x - center.x) + cosA * (point.y - center.y) + center.y;
+    return rotated;
 }
 
 //recursive fractal function
