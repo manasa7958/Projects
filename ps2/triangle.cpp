@@ -16,13 +16,13 @@ void Triangle::generate() {
 }
 
 sf::Vector2f Triangle::rotatePoint(sf::Vector2f point, sf::Vector2f center, float angle) {
-    float radians = angle * M_PI / 180.0f;
+    float radians = angle * M_PI / 180.0f; //degrees to radians
     float cosA = cos(radians);
     float sinA = sin(radians);
     
     sf::Vector2f rotated;
-    rotated.x = cosA * (point.x - center.x) - sinA * (point.y - center.y) + center.x;
-    rotated.y = sinA * (point.x - center.x) + cosA * (point.y - center.y) + center.y;
+    rotated.x = 0;
+    rotated.y = 0;
     return rotated;
 }
 
@@ -48,7 +48,6 @@ void Triangle::fractal(std::array<sf::Vector2f, 3> vertices, int level) {
     fractal({mid3, mid2, vertices[2]}, level - 1);
 }
 
-//draw the triangles
 void Triangle::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     for (const auto& triangle : triangles) {
         target.draw(triangle, states);
