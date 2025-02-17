@@ -13,7 +13,6 @@ public:
 private:
     double length;
     int depth;
-    int maxDepth;
     float angle;
     std::vector<sf::VertexArray> triangles;
     void fractal(std::array<sf::Vector2f, 3> vertices, int level);
