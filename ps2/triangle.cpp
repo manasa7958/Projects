@@ -28,12 +28,12 @@ sf::Vector2f Triangle::rotatePoint(sf::Vector2f point, sf::Vector2f center, floa
 
 //recursive fractal function
 void Triangle::fractal(std::array<sf::Vector2f, 3> vertices, int level) {
+    sf::Color color = sf::Color(50 + level * 20, 100 + level * 15, 255 - level * 10); 
     if (level == 0) {
         sf::VertexArray triangle(sf::Triangles, 3);
-        sf::Color color = sf::Color(255 - level * 20, 50 + level * 30, 150 + level * 10); 
         for (int i = 0; i < 3; i++) {
             triangle[i].position = vertices[i];
-            triangle[i].color = color[level]
+            triangle[i].color = color;
         }
         triangles.push_back(triangle);
         return;
@@ -43,9 +43,9 @@ void Triangle::fractal(std::array<sf::Vector2f, 3> vertices, int level) {
     sf::Vector2f mid2 = (vertices[1] + vertices[2]) / 2.0f;
     sf::Vector2f mid3 = (vertices[2] + vertices[0]) / 2.0f;
 
-    fractal({vertices[0], mid1, mid3}, level - 1);
-    fractal({mid1, vertices[1], mid2}, level - 1);
-    fractal({mid3, mid2, vertices[2]}, level - 1);
+    fractal(std::array<sf::Vector2f, 3>{vertices[0], mid1, mid3}, level - 1);
+    fractal(std::array<sf::Vector2f, 3>{mid1, vertices[1], mid2}, level - 1);
+    fractal(std::array<sf::Vector2f, 3>{mid3, mid2, vertices[2]}, level - 1);
 }
 
 void Triangle::draw(sf::RenderTarget& target, sf::RenderStates states) const {
