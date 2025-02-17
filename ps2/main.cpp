@@ -21,7 +21,7 @@ int main(int argc, char* argv[]) {
             if (event.type == sf::Event::Closed)
                 window.close();
         }
-        rotation += 0.5f;
+        rotation = rotation + 0.5f;
         Triangle fractalTriangle(length, depth, rotation);
         
         window.clear();
