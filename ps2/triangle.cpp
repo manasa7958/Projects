@@ -8,15 +8,17 @@ Triangle::Triangle(double length, int depth, float rotation)
 }
 
 void Triangle::generate() {
-    sf::Vector2f center(400, 300);
-
-    // Apply rotation if needed
-    sf::Vector2f v1 = rotatePoint({400, 100}, center, angle); //top
-    sf::Vector2f v2 = rotatePoint({400 - length / 2, 100 + length * sqrt(3) / 2}, center, angle); //bottom left
-    sf::Vector2f v3 = rotatePoint({400 + length / 2, 100 + length * sqrt(3) / 2}, center, angle); //bottom right
-
+    sf::Vector2f center(400.0f, 300.0f);
+    sf::Vector2f v1 = rotatePoint(sf::Vector2f(400.0f, 100.0f), center, angle);
+    sf::Vector2f v2 = rotatePoint(sf::Vector2f(400.0f - static_cast<float>(length) / 2.0f, 
+                                               100.0f + static_cast<float>(length) * static_cast<float>(sqrt(3)) / 2.0f), 
+                                  center, angle);
+    sf::Vector2f v3 = rotatePoint(sf::Vector2f(400.0f + static_cast<float>(length) / 2.0f, 
+                                               100.0f + static_cast<float>(length) * static_cast<float>(sqrt(3)) / 2.0f), 
+                                  center, angle);
     fractal(std::array<sf::Vector2f, 3>{v1, v2, v3}, depth);
 }
+
 
 sf::Vector2f Triangle::rotatePoint(sf::Vector2f point, sf::Vector2f center, float angle) {
     float radians = angle * M_PI / 180.0f;
