@@ -2,12 +2,11 @@
 #include <cmath>
 #include "triangle.hpp"
 
-//Constructor intialization
-Triangle::Triangle(double length, int depth) : length(length), depth(depth) {
+Triangle::Triangle(double length, int depth, float rotation)
+    : length(length), depth(depth), angle(rotation) {
     generate();
 }
 
-//generate function defintion for the main triangle
 void Triangle::generate() {
     sf::Vector2f v1(400, 100); //top
     sf::Vector2f v2(400 - length / 2, 100 + length * sqrt(3) / 2); //bottom left
@@ -15,7 +14,7 @@ void Triangle::generate() {
     fractal(v1, v2, v3, depth);
 }
 
-//recursive function
+//recursive fractal function
 void Triangle::fractal(std::array<sf::Vector2f, 3> vertices, int level) {
     if (level == 0) {
         sf::VertexArray triangle(sf::Triangles, 3);
