@@ -9,13 +9,16 @@ Triangle::Triangle(double length, int depth, float rotation)
 
 void Triangle::generate() {
     sf::Vector2f center(400.0f, 300.0f);
-    sf::Vector2f v1 = rotatePoint(sf::Vector2f(400.0f, 100.0f), center, angle);
-    sf::Vector2f v2 = rotatePoint(sf::Vector2f(400.0f - static_cast<float>(length) / 2.0f, 
+
+    // Rotate only ONCE and store it
+    static sf::Vector2f v1 = rotatePoint(sf::Vector2f(400.0f, 100.0f), center, angle);
+    static sf::Vector2f v2 = rotatePoint(sf::Vector2f(400.0f - static_cast<float>(length) / 2.0f, 
                                                100.0f + static_cast<float>(length) * static_cast<float>(sqrt(3)) / 2.0f), 
                                   center, angle);
-    sf::Vector2f v3 = rotatePoint(sf::Vector2f(400.0f + static_cast<float>(length) / 2.0f, 
+    static sf::Vector2f v3 = rotatePoint(sf::Vector2f(400.0f + static_cast<float>(length) / 2.0f, 
                                                100.0f + static_cast<float>(length) * static_cast<float>(sqrt(3)) / 2.0f), 
                                   center, angle);
+
     fractal(std::array<sf::Vector2f, 3>{v1, v2, v3}, depth);
 }
 
