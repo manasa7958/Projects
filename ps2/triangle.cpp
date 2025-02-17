@@ -3,7 +3,7 @@
 #include "triangle.hpp"
 
 Triangle::Triangle(double length, int depth, float rotation)
-    : length(length), depth(depth), angle(rotation) {
+    : length(length), depth(depth), maxDepth(depth), angle(rotation) {
     generate();
 }
 
@@ -36,20 +36,27 @@ sf::Vector2f Triangle::rotatePoint(sf::Vector2f point, sf::Vector2f center, floa
 
 //recursive fractal function
 void Triangle::fractal(std::array<sf::Vector2f, 3> vertices, int level) {
-    sf::Color color = sf::Color(50 + level * 20, 100 + level * 15, 255 - level * 10); 
+    float depthRatio = static_cast<float>(level) / static_cast<float>(maxDepth);
+    sf::Color color = sf::Color(
+        static_cast<sf::Uint8>(255 * depthRatio),
+        static_cast<sf::Uint8>(255 * (1 - depthRatio)),
+        static_cast<sf::Uint8>(255 * fabs(sin(depthRatio * M_PI)))
+    );
+
     if (level == 0) {
         sf::VertexArray triangle(sf::Triangles, 3);
         for (int i = 0; i < 3; i++) {
             triangle[i].position = vertices[i];
-            triangle[i].color = color;
+            triangle[i].color = color;  // Apply color
         }
         triangles.push_back(triangle);
         return;
     }
-    
+
     sf::Vector2f mid1 = (vertices[0] + vertices[1]) / 2.0f;
     sf::Vector2f mid2 = (vertices[1] + vertices[2]) / 2.0f;
     sf::Vector2f mid3 = (vertices[2] + vertices[0]) / 2.0f;
+
     fractal(std::array<sf::Vector2f, 3>{vertices[0], mid1, mid3}, level - 1);
     fractal(std::array<sf::Vector2f, 3>{mid1, vertices[1], mid2}, level - 1);
     fractal(std::array<sf::Vector2f, 3>{mid3, mid2, vertices[2]}, level - 1);
