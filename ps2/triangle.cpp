@@ -3,7 +3,7 @@
 #include "triangle.hpp"
 
 //Constructor intialization
-Triangle::Triangle(double length, int iterate) : length(length), iterate(iterate) {
+Triangle::Triangle(double length, int depth) : length(length), depth(depth) {
     generate();
 }
 
@@ -12,7 +12,7 @@ void Triangle::generate() {
     sf::Vector2f v1(400, 100); //top
     sf::Vector2f v2(400 - length / 2, 100 + length * sqrt(3) / 2); //bottom left
     sf::Vector2f v3(400 + length / 2, 100 + length * sqrt(3) / 2); //bottom right
-    fractal(v1, v2, v3, iterate);
+    fractal(v1, v2, v3, depth);
 }
 
 //recursive function
