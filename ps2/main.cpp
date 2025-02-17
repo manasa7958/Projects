@@ -8,7 +8,6 @@ int main(int argc, char* argv[]) {
         std::cerr << "Need to enter " << argv[0] << " lenght depth\n";
         return -1;
     }
-    
     double length = std::stod(argv[1]);
     int depth = std::stoi(argv[2]);
     
