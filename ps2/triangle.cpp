@@ -2,7 +2,7 @@
 #include <cmath>
 #include "triangle.hpp"
 
-Triangle::Triangle(float x, float y, float size, int depth) : m_x(x), m_y(y), m_size(size, depth(depth) {
+Triangle::Triangle(float x, float y, float size) : m_x(x), m_y(y), m_size(size) {
     // Create main triangle
     m_triangles.push_back(createTriangle(x, y, size));
     generateFractal(x, y, size, depth); // Increased depth to 3 to generate 1/8th sized triangles
