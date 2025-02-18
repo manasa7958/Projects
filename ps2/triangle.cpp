@@ -1,5 +1,5 @@
 // Copyright 2025 Manasa Praveen
-/*#include <cmath>
+#include <cmath>
 #include "triangle.hpp"
 
 Triangle::Triangle(float x, float y, float size) : m_x(x), m_y(y), m_size(size) {
