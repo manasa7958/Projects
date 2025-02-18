@@ -1,6 +1,6 @@
 // Copyright 2025 Manasa Praveen and Ponita Ty
-#ifndef TRIANGLE_HPP
-#define TRIANGLE_HPP
+#ifndef PS2_TRIANGLE_HPP
+#define PS2_TRIANGLE_HPP
 #include <vector>
 #include <SFML/Graphics.hpp>
 
@@ -30,4 +30,4 @@ class Triangle : public sf::Drawable {
   float m_size;
   int m_depth;
 };
-#endif  // TRIANGLE_HPP
+#endif  // PS2_TRIANGLE_HPP
