@@ -3,30 +3,28 @@
 
 #include <cmath>
 
-// Define five different colors for the fractal
+//Five colors!
 const sf::Color COLORS[5] = {
-    sf::Color::Magenta, // Depth % 5 == 0
-    sf::Color::Blue, // Depth % 5 == 1
-    sf::Color::Yellow, // Depth % 5 == 2
-    sf::Color::Green, // Depth % 5 == 3
-    sf::Color::Red // Depth % 5 == 3
+    sf::Color::Magenta, // depth % 5 == 0
+    sf::Color::Blue, // depth % 5 == 1
+    sf::Color::Yellow, // depth % 5 == 2
+    sf::Color::Green, // depth % 5 == 3
+    sf::Color::Red // depth % 5 == 3
 };
 
 Triangle::Triangle(float x, float y, float size, int depth)
     : m_x(x), m_y(y), m_size(size), m_depth(depth) {
-  // Create the main triangle with the first color
   m_triangles.push_back(createTriangle(x, y, size, COLORS[depth % 5]));
   generateFractal(x, y, size, depth);
 }
 
 void Triangle::generateFractal(float x, float y, float size, int depth) {
-  if (depth <= 0) return;
-
+  if (depth <= 0){
+      return;
+  }
   float height = size * std::sqrt(3.0f) / 2.0f;
   float childSize = size / 2.0f;
   float childHeight = childSize * std::sqrt(3.0f) / 2.0f;
-
-  // Calculate new triangle positions
   float bottomX = x;
   float bottomY = y;
   float topLeftX = x - size / 2;
@@ -34,17 +32,14 @@ void Triangle::generateFractal(float x, float y, float size, int depth) {
   float topRightX = x + size / 2;
   float topRightY = y - height;
 
-  // Add three child triangles with different colors
   m_triangles.push_back(
       createTriangle(topLeftX, topLeftY, childSize, COLORS[(depth - 1) % 5]));
   generateFractal(topLeftX, topLeftY, childSize, depth - 1);
-
   m_triangles.push_back(createTriangle(topRightX + childSize / 2,
                                        topRightY + childHeight, childSize,
                                        COLORS[(depth - 1) % 5]));
   generateFractal(topRightX + childSize / 2, topRightY + childHeight, childSize,
                   depth - 1);
-
   m_triangles.push_back(createTriangle(bottomX - childSize / 2,
                                        bottomY + childHeight, childSize,
                                        COLORS[(depth - 1) % 5]));
@@ -59,9 +54,9 @@ sf::ConvexShape Triangle::createTriangle(float x, float y, float size,
 
   float height = size * std::sqrt(3.0f) / 2.0f;
 
-  triangle.setPoint(0, sf::Vector2f(x, y));                      // Bottom point
-  triangle.setPoint(1, sf::Vector2f(x - size / 2, y - height));  // Top left
-  triangle.setPoint(2, sf::Vector2f(x + size / 2, y - height));  // Top right
+  triangle.setPoint(0, sf::Vector2f(x, y)); // Bottom
+  triangle.setPoint(1, sf::Vector2f(x - size / 2, y - height)); // Top left
+  triangle.setPoint(2, sf::Vector2f(x + size / 2, y - height)); // Top right
 
   triangle.setFillColor(color);
   triangle.setOutlineColor(sf::Color::Black);
