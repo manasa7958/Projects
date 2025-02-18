@@ -89,12 +89,11 @@ void Triangle::generateFractal(float x, float y, float size, int depth) {
         float newSize = size / 2;
         float height = newSize * sqrt(3) / 2;  
 
-        generateFractal(x, y, newSize, depth - 1);                      // Bottom-left triangle
-        generateFractal(x + newSize, y, newSize, depth - 1);            // Bottom-right triangle
-        generateFractal(x - newSize / 2 + size / 2, y - height, newSize, depth - 1);  // Top vertex (shift left)
+        generateFractal(x, y, newSize, depth - 1);                             // Left vertex
+        generateFractal(x + newSize, y, newSize, depth - 1);                   // Right vertex
+        generateFractal(x + newSize / 2, y - height, newSize, depth - 1);      // Top vertex (shift left)
     }
 }
-
 
 void Triangle::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     for (const auto& triangle : triangles) {
