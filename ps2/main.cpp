@@ -24,13 +24,13 @@ int main(int argc, char* argv[]) {
             depth = 5;
         }
     }
-    float windowWidth = size * 1.5;
-    float windowHeight = size * std::sqrt(3.0f) * 1.1;
-    // Create window
+    // Calculate appropriate window size dynamically
+    float margin = 50.0f; // Extra padding to avoid touching edges
+    float windowWidth = size * 2 + margin;
+    float windowHeight = size * std::sqrt(3.0f) + margin;
+    
     sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "Triangle Fractal");
-
-    // Create fractal with user-specified size and depth
-    Triangle fractal(windowWidth / 2.0f, windowHeight * 0.8f, size, depth);
+    Triangle fractal(windowWidth / 2.0f, windowHeight - margin / 2.0f, size, depth);
     //Triangle fractal(400.0f, 400.0f, size, depth);
 
     while (window.isOpen()) {
