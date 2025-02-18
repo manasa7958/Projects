@@ -5,7 +5,7 @@
 Triangle::Triangle(float x, float y, float size) : m_x(x), m_y(y), m_size(size) {
     // Create main triangle
     m_triangles.push_back(createTriangle(x, y, size));
-    generateFractal(x, y, size, depth); // Increased depth to 3 to generate 1/8th sized triangles
+    generateFractal(x, y, size, 3); // Increased depth to 3 to generate 1/8th sized triangles
 }
 
 void Triangle::setPosition(float x, float y) {
@@ -14,7 +14,7 @@ void Triangle::setPosition(float x, float y) {
     // Clear and recreate triangles at new position
     m_triangles.clear();
     m_triangles.push_back(createTriangle(x, y, m_size));
-    generateFractal(x, y, m_size, depth);
+    generateFractal(x, y, m_size, 3);
 }
 
 void Triangle::generateFractal(float x, float y, float size, int depth) {
