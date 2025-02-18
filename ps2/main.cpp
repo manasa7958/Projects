@@ -20,8 +20,8 @@ int main(int argc, char* argv[]) {
       N = 5;
     }
   }
-  unsigned int windowWidth = 500;
-  unsigned int windowHeight = 500;
+  unsigned int windowWidth = 700;
+  unsigned int windowHeight = 700;
 
   sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight),
                           "Triangle Fractal");
