@@ -24,9 +24,6 @@ void Triangle::generateFractal(float x, float y, float size, int depth) {
     float childSize = size / 2.0f;
     float childHeight = childSize * std::sqrt(3.0f) / 2.0f;
 
-    // Determine the color based on depth
-    sf::Color color = COLORS[depth % 4];
-
     // Calculate new triangle positions
     float bottomX = x;
     float bottomY = y;
