@@ -3,7 +3,7 @@
 
 #include <cmath>
 
-// Define four different colors for the fractal
+// Define five different colors for the fractal
 const sf::Color COLORS[5] = {
     sf::Color::Magenta, // Depth % 5 == 0
     sf::Color::Blue, // Depth % 5 == 1
