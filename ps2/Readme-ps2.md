@@ -32,6 +32,7 @@ We added color to the program, so that it changes based on the depth of the frac
 
 ## Pair Programming
 How did working with a partner affect your work?
+
 I think working with a partner helped both of us. I think when we struggled with different things we were able to brainstorm and form ideas a lot more quickly because we were working with one another. It also definitely helped lessen the workload, since the PS2 project is notorious for being time-consuming working with a partner helped make the project feel less overwhelming. 
 
 ## Acknowledgements
