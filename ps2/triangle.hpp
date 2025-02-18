@@ -29,3 +29,4 @@ private:
     float m_size;
     int m_depth;
 };
+#endif // TRIANGLE_HPP
