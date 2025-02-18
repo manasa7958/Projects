@@ -24,15 +24,18 @@ int main(int argc, char* argv[]) {
             depth = 5;
         }
     }
+
     // Calculate appropriate window size dynamically
     float margin = 50.0f; // Extra padding to avoid touching edges
-    float windowWidth = size * 3 + margin;
-    float windowHeight = size * 3 + margin;
-    //float windowHeight = size * std::sqrt(3.0f) + margin;
+    float windowWidth = size * 2 + margin;
+    float windowHeight = size * std::sqrt(3.0f) + margin;
+    
+    // Adjust size so that the fractal fits within the window
+    float scaleFactor = std::min((windowWidth - margin) / (size * 2), (windowHeight - margin) / (size * std::sqrt(3.0f)));
+    float adjustedSize = size * scaleFactor;
     
     sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "Triangle Fractal");
-    Triangle fractal(windowWidth / 2.0f, windowHeight - margin / 2.0f, size, depth);
-    //Triangle fractal(400.0f, 400.0f, size, depth);
+    Triangle fractal(windowWidth / 2.0f, windowHeight - margin / 2.0f, adjustedSize, depth);
 
     while (window.isOpen()) {
         sf::Event event;
