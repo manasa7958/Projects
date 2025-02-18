@@ -8,9 +8,10 @@
 class Triangle : public sf::Drawable {
 public:
     // Constructor with position and size
-    Triangle(float x, float y, float size);
+    Triangle(float x, float y, float size, int depth);
     // Set the position of the triangle
     void setPosition(float x, float y);
+    void setDepth(int depth);
 
 private:
     // Helper to create a single triangle
@@ -26,6 +27,7 @@ private:
     std::vector<sf::ConvexShape> m_triangles;
     float m_x, m_y;
     float m_size;
+    int m_depth;
 };
 
 #endif // TRIANGLE_HPP
