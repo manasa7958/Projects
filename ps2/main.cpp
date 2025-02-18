@@ -2,23 +2,39 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include "triangle.hpp"
+#include <cstdlib> // For std::atoi
 
-int main() {
-    int depth;
-    std::cout << "Enter the fractal depth (recommended 1-7 for performance): ";
-    std::cin >> depth;
-    
-    if (depth < 0) {
-        std::cout << "Invalid depth! Using default depth of 5.\n";
-        depth = 5;
+int main(int argc, char* argv[]) {
+    // Default values
+    float size = 200.0f;
+    int depth = 5;
+
+    // Check if the user provided arguments
+    if (argc == 3) {
+        size = std::atof(argv[1]); // Convert first argument to float (size)
+        depth = std::atoi(argv[2]); // Convert second argument to int (depth)
+
+        // Validate inputs
+        if (size <= 0) {
+            std::cerr << "Invalid size! Using default size of 200.\n";
+            size = 200.0f;
+        }
+        if (depth < 0) {
+            std::cerr << "Invalid depth! Using default depth of 5.\n";
+            depth = 5;
+        }
+    } else {
+        std::cout << "Usage: ./Triangle <size> <depth>\n";
+        std::cout << "Example: ./Triangle 400 5\n";
+        std::cout << "Using default values: size = " << size << ", depth = " << depth << "\n";
     }
 
     // Create window
     sf::RenderWindow window(sf::VideoMode(800, 600), "Triangle Fractal");
-    
-    // Create fractal with user-specified depth
-    Triangle fractal(400.0f, 400.0f, 200.0f, depth);
-    
+
+    // Create fractal with user-specified size and depth
+    Triangle fractal(400.0f, 400.0f, size, depth);
+
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
@@ -30,6 +46,6 @@ int main() {
         window.draw(fractal);
         window.display();
     }
-    
+
     return 0;
 }
