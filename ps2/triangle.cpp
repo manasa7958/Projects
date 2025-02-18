@@ -35,12 +35,12 @@ void Triangle::generateFractal(float x, float y, float size, int depth) {
     // Top-left child
     m_triangles.push_back(createTriangle(topLeftX, topLeftY, childSize));
     generateFractal(topLeftX, topLeftY, childSize, depth - 1);
-    
-    // Top-right child (shifted right by half its width)
+    
+    // Top-right child (shifted right by half its width)
     m_triangles.push_back(createTriangle(topRightX + childSize/2, topRightY + childHeight, childSize));
     generateFractal(topRightX + childSize/2, topRightY + childHeight, childSize, depth - 1);
-    
-    // Bottom child
+    
+    // Bottom child
     m_triangles.push_back(createTriangle(bottomX - childSize/2, bottomY + childHeight, childSize));
     generateFractal(bottomX - childSize/2, bottomY + childHeight, childSize, depth - 1);
 }
