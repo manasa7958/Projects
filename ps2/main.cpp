@@ -3,7 +3,7 @@
 #include <cstdlib>
 #include <algorithm>
 #include <SFML/Graphics.hpp>
-#include "./ps2/triangle.hpp"
+#include "./triangle.hpp"
 
 int main(int argc, char* argv[]) {
   float L = 300.0f;  // size
