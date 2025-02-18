@@ -29,7 +29,7 @@ Additionally, we were also struggling with the mathematical calculations for a b
 Also, initially while building this program we were hardcoding the depth and not using user input but once we were able to get the other mathematical calculations we were able to change the program so that it uses the depth indicated by the user. 
 
 ### Extra Credit
-We added color to the program so that it changes based on the depth of the fractal. We created a color array that stores four different colors (magenta, blue, yellow, and green) and then employed modulo 4 to assign specific colors based on depth.
+We added color to the program so that it changes based on the depth of the fractal. We created a color array that stores five different colors (magenta, blue, yellow, green, and red) and then employed modulo 5 to assign specific colors based on depth.
 
 ## Pair Programming
 How did working with a partner affect your work?
