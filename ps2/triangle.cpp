@@ -87,17 +87,15 @@ void Triangle::generateFractal(float x, float y, float size, int depth) {
         triangles.push_back(triangle);
     } else {
         float newSize = size / 2;
-        // Recursive calls to place the child triangles at the correct vertices
-        float height = size * sqrt(3) / 2;  // Calculate height of equilateral triangle
+        float height = newSize * sqrt(3) / 2;  // Corrected height calculation!
 
-// Place child triangles at the actual three vertices of the parent triangle
+        // Place child triangles at the correct three vertices
         generateFractal(x, y, newSize, depth - 1);                      // Bottom-left vertex
         generateFractal(x + newSize, y, newSize, depth - 1);            // Bottom-right vertex
         generateFractal(x + newSize / 2, y - height, newSize, depth - 1); // Top vertex
-
-
     }
 }
+
 
 void Triangle::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     for (const auto& triangle : triangles) {
