@@ -80,21 +80,21 @@ Triangle::Triangle(float x, float y, float size, int depth) {
 void Triangle::generateFractal(float x, float y, float size, int depth) {
     if (depth == 0) {
         sf::ConvexShape triangle(3);
-        triangle.setPoint(0, sf::Vector2f(x, y));
-        triangle.setPoint(1, sf::Vector2f(x + size / 2, y - size * sqrt(3) / 2));
-        triangle.setPoint(2, sf::Vector2f(x + size, y));
+        triangle.setPoint(0, sf::Vector2f(x, y));  // Bottom-left vertex
+        triangle.setPoint(1, sf::Vector2f(x + size / 2, y - size * sqrt(3) / 2));  // Top vertex
+        triangle.setPoint(2, sf::Vector2f(x + size, y));  // Bottom-right vertex
         triangle.setFillColor(sf::Color::White);
         triangles.push_back(triangle);
     } else {
         float newSize = size / 2;
-        float height = newSize * sqrt(3) / 2;  // Correct height calculation
+        float height = newSize * sqrt(3) / 2;  
 
-        // Corrected positions to ensure triangles form at the vertices
-        generateFractal(x - newSize / 2, y + height / 2, newSize, depth - 1); // Bottom-left vertex
-        generateFractal(x + newSize / 2, y + height / 2, newSize, depth - 1); // Bottom-right vertex
-        generateFractal(x, y - height, newSize, depth - 1);                   // Top vertex
+        generateFractal(x, y, newSize, depth - 1);                      // Bottom-left triangle
+        generateFractal(x + newSize, y, newSize, depth - 1);            // Bottom-right triangle
+        generateFractal(x - newSize / 2 + size / 2, y - height, newSize, depth - 1);  // Top vertex (shift left)
     }
 }
+
 
 void Triangle::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     for (const auto& triangle : triangles) {
