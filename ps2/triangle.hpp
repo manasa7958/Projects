@@ -26,7 +26,7 @@ private:
     std::vector<sf::ConvexShape> m_triangles;
     float m_x, m_y;
     float m_size;
-    int depth
+    int depth;
 };
 
 #endif // TRIANGLE_HPP
