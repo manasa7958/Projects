@@ -29,11 +29,25 @@ int main(int argc, char* argv[]) {
         std::cout << "Using default values: size = " << size << ", depth = " << depth << "\n";
     }
 
-    // Create window
-    sf::RenderWindow window(sf::VideoMode(800, 600), "Triangle Fractal");
+    // Calculate window dimensions dynamically based on size
+    float height = size * std::sqrt(3.0f) / 2.0f; // Triangle height
+    int windowWidth = std::max(static_cast<int>(size * 1.2f), 800);  // Ensure a minimum width
+    int windowHeight = std::max(static_cast<int>(height * 1.2f), 600); // Ensure a minimum height
 
-    // Create fractal with user-specified size and depth
-    Triangle fractal(400.0f, 400.0f, size, depth);
+    // Cap window size to prevent excessive scaling
+    int maxWindowSize = 1200;
+    if (windowWidth > maxWindowSize || windowHeight > maxWindowSize) {
+        float scaleFactor = static_cast<float>(maxWindowSize) / std::max(windowWidth, windowHeight);
+        windowWidth *= scaleFactor;
+        windowHeight *= scaleFactor;
+        size *= scaleFactor;
+    }
+
+    // Create a rescaled window
+    sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "Triangle Fractal");
+
+    // Center the triangle within the new window dimensions
+    Triangle fractal(windowWidth / 2.0f, windowHeight * 0.75f, size, depth);
 
     while (window.isOpen()) {
         sf::Event event;
