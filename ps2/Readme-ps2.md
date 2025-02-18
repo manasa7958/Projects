@@ -2,11 +2,9 @@
 
 ## Contact
 Name: Manasa Praveen
-
 Section: 202
 
 Partner Name: Ponita Ty
-
 Partner Section: 202
 
 Time to Complete: ~8 hours
