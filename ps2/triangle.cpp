@@ -90,9 +90,10 @@ void Triangle::generateFractal(float x, float y, float size, int depth) {
         float height = newSize * sqrt(3) / 2;
         
         // Recursive calls to place the child triangles at the correct vertices
-        generateFractal(x, y, newSize, depth - 1);
-        generateFractal(x + newSize, y, newSize, depth - 1);
-        generateFractal(x + newSize / 2, y - height, newSize, depth - 1);
+        generateFractal(x, y, newSize, depth - 1);               // Bottom-left vertex
+        generateFractal(x + newSize, y, newSize, depth - 1);     // Bottom-right vertex
+        generateFractal(x + newSize / 2, y - height / 2, newSize, depth - 1); // Top vertex
+
     }
 }
 
