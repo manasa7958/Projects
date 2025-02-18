@@ -30,7 +30,7 @@ We really struggled with dynamically scaling the triangle fractal and were stuck
 Also, initially while building this program we were hardcoding the depth and not using user input but once we were able to get the other mathematical calculations we were able to change the program so that it uses the depth indicated by the user. 
 
 ### Extra Credit
-We added color to the program, so that it changes based on the depth of the fractal. I used four different colors and then employed modulo 4 to assign specific color based on the number of the level.
+We added color to the program, so that it changes based on the depth of the fractal. We created a color array that stores four different colors (magenta, blue, yellow and green) and then employed modulo 4 to assign specific color based on the number of the level.
 
 ## Pair Programming
 How did working with a partner affect your work?
