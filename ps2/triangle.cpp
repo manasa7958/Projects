@@ -4,17 +4,18 @@
 #include <cmath>
 
 // Define four different colors for the fractal
-const sf::Color COLORS[4] = {
-    sf::Color::Magenta,  // Depth % 4 == 0
-    sf::Color::Blue,     // Depth % 4 == 1
-    sf::Color::Yellow,   // Depth % 4 == 2
-    sf::Color::Green     // Depth % 4 == 3
+const sf::Color COLORS[5] = {
+    sf::Color::Magenta, // Depth % 5 == 0
+    sf::Color::Blue, // Depth % 5 == 1
+    sf::Color::Yellow, // Depth % 5 == 2
+    sf::Color::Green, // Depth % 5 == 3
+    sf::Color::Red // Depth % 5 == 3
 };
 
 Triangle::Triangle(float x, float y, float size, int depth)
     : m_x(x), m_y(y), m_size(size), m_depth(depth) {
   // Create the main triangle with the first color
-  m_triangles.push_back(createTriangle(x, y, size, COLORS[depth % 4]));
+  m_triangles.push_back(createTriangle(x, y, size, COLORS[depth % 5]));
   generateFractal(x, y, size, depth);
 }
 
