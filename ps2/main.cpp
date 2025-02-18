@@ -40,7 +40,6 @@ int main(int argc, char* argv[]){
     window.draw(fractal);
     window.display();
   }
-
-    return 0;
+  return 0;
 }
 
