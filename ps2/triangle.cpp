@@ -1,5 +1,5 @@
 // Copyright 2025 Manasa Praveen and Ponita Ty
-#include "./triangle.hpp"
+#include "triangle.hpp"
 
 #include <cmath>
 
