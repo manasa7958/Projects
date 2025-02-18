@@ -46,7 +46,7 @@ void Triangle::generateFractal(float x, float y, float size, int depth) {
 }
 
 sf::ConvexShape Triangle::createTriangle(float x, float y, float size) const {
-    sf::ConvexShape triangle;
+    sf::ConvexShape triangle;
     triangle.setPointCount(3);
     
     float height = size * std::sqrt(3.0f) / 2.0f;
@@ -65,5 +65,5 @@ sf::ConvexShape Triangle::createTriangle(float x, float y, float size) const {
 void Triangle::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     for (const auto& triangle : m_triangles) {
         target.draw(triangle, states);
-    }
+    }
 }
