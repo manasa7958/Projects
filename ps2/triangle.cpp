@@ -36,18 +36,18 @@ void Triangle::generateFractal(float x, float y, float size, int depth) {
 
   // Add three child triangles with different colors
   m_triangles.push_back(
-      createTriangle(topLeftX, topLeftY, childSize, COLORS[(depth - 1) % 4]));
+      createTriangle(topLeftX, topLeftY, childSize, COLORS[(depth - 1) % 5]));
   generateFractal(topLeftX, topLeftY, childSize, depth - 1);
 
   m_triangles.push_back(createTriangle(topRightX + childSize / 2,
                                        topRightY + childHeight, childSize,
-                                       COLORS[(depth - 1) % 4]));
+                                       COLORS[(depth - 1) % 5]));
   generateFractal(topRightX + childSize / 2, topRightY + childHeight, childSize,
                   depth - 1);
 
   m_triangles.push_back(createTriangle(bottomX - childSize / 2,
                                        bottomY + childHeight, childSize,
-                                       COLORS[(depth - 1) % 4]));
+                                       COLORS[(depth - 1) % 5]));
   generateFractal(bottomX - childSize / 2, bottomY + childHeight, childSize,
                   depth - 1);
 }
