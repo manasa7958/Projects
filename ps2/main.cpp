@@ -64,13 +64,8 @@ int main(int argc, char* argv[]) {
 #include <SFML/Graphics.hpp>
 
 int main() {
-    // Create window
     sf::RenderWindow window(sf::VideoMode(800, 600), "Level 2 Triangle Fractal");
-    
-    // Create triangle at center of window
     Triangle fractal(400.0f, 400.0f, 200.0f);
-    
-    // Generate level 2 triangles
     fractal.generateLevel2();
     
     while (window.isOpen()) {
