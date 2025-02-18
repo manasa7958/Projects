@@ -68,9 +68,10 @@ void Triangle::draw(sf::RenderTarget& target, sf::RenderStates states) const {
         target.draw(triangle, states);
     }
 }*/
+
 // triangle.cpp
-#include <cmath>
 #include "triangle.hpp"
+#include <cmath>
 
 Triangle::Triangle(float x, float y, float size, int depth) {
     generateFractal(x, y, size, depth);
@@ -86,9 +87,12 @@ void Triangle::generateFractal(float x, float y, float size, int depth) {
         triangles.push_back(triangle);
     } else {
         float newSize = size / 2;
+        float height = newSize * sqrt(3) / 2;
+        
+        // Recursive calls to place the child triangles at the correct vertices
         generateFractal(x, y, newSize, depth - 1);
         generateFractal(x + newSize, y, newSize, depth - 1);
-        generateFractal(x + newSize / 2, y - newSize * sqrt(3) / 2, newSize, depth - 1);
+        generateFractal(x + newSize / 2, y - height, newSize, depth - 1);
     }
 }
 
@@ -97,3 +101,4 @@ void Triangle::draw(sf::RenderTarget& target, sf::RenderStates states) const {
         target.draw(triangle, states);
     }
 }
+
