@@ -4,7 +4,7 @@
 Name: Manasa Praveen
 Section: 202
 
-Partner Name: N/A
+Partner Name: Ponita
 Partner Section:
 
 Time to Complete: 8 hours
