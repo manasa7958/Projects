@@ -8,7 +8,7 @@
 class Triangle : public sf::Drawable {
 public:
     // Constructor with position and size
-    Triangle(float x, float y, float size, int depth);
+    Triangle(float x, float y, float size);
     // Set the position of the triangle
     void setPosition(float x, float y);
 
