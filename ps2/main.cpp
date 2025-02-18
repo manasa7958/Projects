@@ -1,5 +1,5 @@
 // Copyright 2025 Manasa Praveen
-#include <iostream>
+/*#include <iostream>
 #include <SFML/Graphics.hpp>
 #include "triangle.hpp"
 
@@ -25,6 +25,35 @@ int main(int argc, char* argv[]) {
         
         window.clear();
         window.draw(fractalTriangle);
+        window.display();
+    }
+    return 0;
+}*/
+
+// main.cpp
+#include <iostream>
+#include <SFML/Graphics.hpp>
+#include "triangle.hpp"
+
+int main(int argc, char* argv[]) {
+    if (argc != 3) {
+        std::cerr << "Usage: ./Triangle <size> <depth>\n";
+        return 1;
+    }
+    float size = std::stof(argv[1]);
+    int depth = std::stoi(argv[2]);
+
+    sf::RenderWindow window(sf::VideoMode(800, 800), "Triangle Fractal");
+    Triangle fractal(200, 600, size, depth);
+
+    while (window.isOpen()) {
+        sf::Event event;
+        while (window.pollEvent(event)) {
+            if (event.type == sf::Event::Closed)
+                window.close();
+        }
+        window.clear();
+        window.draw(fractal);
         window.display();
     }
     return 0;
