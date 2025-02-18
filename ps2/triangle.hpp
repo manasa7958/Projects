@@ -49,19 +49,13 @@ private:
 
 class Triangle : public sf::Drawable {
 public:
-    // Constructor with position and size
     Triangle(float x, float y, float size);
-    // Set the position of the triangle
     void setPosition(float x, float y);
-    // Generate level 2 triangles
     void generateLevel2();
 
 private:
-    // Helper to create a single triangle
     sf::ConvexShape createTriangle(float x, float y, float size) const; 
-    // Override draw method from sf::Drawable
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-    // Member variables
     std::vector<sf::ConvexShape> m_triangles;
     float m_x, m_y;
     float m_size;
