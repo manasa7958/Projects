@@ -21,7 +21,7 @@ class Triangle : public sf::Drawable {
   void generateFractal(float x, float y, float size, int depth);
 
   // Override draw method from sf::Drawable
-  virtual void draw(sf::RenderTarget& target,
+  void draw(sf::RenderTarget& target,
                     sf::RenderStates states) const override;
 
   // Member variables
