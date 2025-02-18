@@ -15,7 +15,6 @@ PROGRAM = Triangle
 
 all: $(PROGRAM)
 
-# Wildcard recipe to make .o files from corresponding .cpp file
 %.o: %.cpp $(DEPS)
 	$(CC) $(CFLAGS) $(INCLUDEDIR) -c $< -o $@
 
