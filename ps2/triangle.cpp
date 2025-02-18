@@ -3,13 +3,13 @@
 
 #include <cmath>
 
-//Five colors!
+// Five colors!
 const sf::Color COLORS[5] = {
-    sf::Color::Magenta, // depth % 5 == 0
-    sf::Color::Blue, // depth % 5 == 1
-    sf::Color::Yellow, // depth % 5 == 2
-    sf::Color::Green, // depth % 5 == 3
-    sf::Color::Red // depth % 5 == 3
+    sf::Color::Magenta,  // depth % 5 == 0
+    sf::Color::Blue,     // depth % 5 == 1
+    sf::Color::Yellow,   // depth % 5 == 2
+    sf::Color::Green,    // depth % 5 == 3
+    sf::Color::Red       // depth % 5 == 3
 };
 
 Triangle::Triangle(float x, float y, float size, int depth)
@@ -19,8 +19,8 @@ Triangle::Triangle(float x, float y, float size, int depth)
 }
 
 void Triangle::generateFractal(float x, float y, float size, int depth) {
-  if (depth <= 0){
-      return;
+  if (depth <= 0) {
+    return;
   }
   float height = size * std::sqrt(3.0f) / 2.0f;
   float childSize = size / 2.0f;
@@ -54,9 +54,9 @@ sf::ConvexShape Triangle::createTriangle(float x, float y, float size,
 
   float height = size * std::sqrt(3.0f) / 2.0f;
 
-  triangle.setPoint(0, sf::Vector2f(x, y)); // Bottom
-  triangle.setPoint(1, sf::Vector2f(x - size / 2, y - height)); // Top left
-  triangle.setPoint(2, sf::Vector2f(x + size / 2, y - height)); // Top right
+  triangle.setPoint(0, sf::Vector2f(x, y));                      // Bottom
+  triangle.setPoint(1, sf::Vector2f(x - size / 2, y - height));  // Top left
+  triangle.setPoint(2, sf::Vector2f(x + size / 2, y - height));  // Top right
 
   triangle.setFillColor(color);
   triangle.setOutlineColor(sf::Color::Black);
