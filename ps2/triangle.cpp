@@ -105,7 +105,7 @@ void Triangle::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 #include "triangle.hpp"
 #include <cmath>
 
-Triangle::Triangle(float x, float y, float size) : m_x(x), m_y(y), m_size(size) {
+Triangle::Triangle(float x, float y, float size, int depth) : m_x(x), m_y(y), m_size(size), m_depth(depth) {
     m_triangles.push_back(createTriangle(x, y, size));
 }
 
@@ -138,6 +138,23 @@ void Triangle::generateLevel2() {
     // Add child triangle at bottom vertex
     // Adjust position so the top-right vertex touches the bottom vertex of main triangle
     m_triangles.push_back(createTriangle(bottomX - childSize/2, bottomY + childHeight, childSize));
+}
+void Triangle::generateFractal(float x, float y, float size, int depth) {
+    if (depth == 0) {
+        sf::ConvexShape triangle(3);
+        triangle.setPoint(0, sf::Vector2f(x, y));  // Bottom-left vertex
+        triangle.setPoint(1, sf::Vector2f(x + size / 2, y - size * sqrt(3) / 2));  // Top vertex
+        triangle.setPoint(2, sf::Vector2f(x + size, y));  // Bottom-right vertex
+        triangle.setFillColor(sf::Color::White);
+        triangles.push_back(triangle);
+    } else {
+        float newSize = size / 2;
+        float height = newSize * sqrt(3) / 2;  
+
+        generateFractal(x, y, newSize, depth - 1);                             // Left vertex
+        generateFractal(x + newSize, y, newSize, depth - 1);                   // Right vertex
+        generateFractal(x + newSize / 2, y - height, newSize, depth - 1);      // Top vertex (shift left)
+    }
 }
 
 sf::ConvexShape Triangle::createTriangle(float x, float y, float size) const {
