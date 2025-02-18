@@ -134,7 +134,7 @@ void Triangle::generateLevel2() {
     // Add child triangle at top-right vertex
     // Position adjusted so its top-left point connects with main triangle's top-right vertex
     // Shifted right by half the child's width (childSize/2)
-    m_triangles.push_back(createTriangle(topRightX + childSize/2, topRightY + childHeight, childSize)); 
+    m_triangles.push_back(createTriangle(topRightX + childSize/2, topRightY + childHeight, childSize));
     // Add child triangle at bottom vertex
     // Adjust position so the top-right vertex touches the bottom vertex of main triangle
     m_triangles.push_back(createTriangle(bottomX - childSize/2, bottomY + childHeight, childSize));
