@@ -7,7 +7,7 @@
 
 class Triangle : public sf::Drawable {
 public:
-    Triangle(double length, int depth, float rotation = 0.0f);
+    Triangle(double length, int depth);
     void generate();
 
 private:
@@ -16,7 +16,6 @@ private:
     float angle;
     std::vector<sf::VertexArray> triangles;
     void fractal(std::array<sf::Vector2f, 3> vertices, int level);
-    sf::Vector2f rotatePoint(sf::Vector2f point, sf::Vector2f center, float angle);
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 };
 
@@ -49,15 +48,16 @@ private:
 
 class Triangle : public sf::Drawable {
 public:
-    Triangle(float x, float y, float size);
+    Triangle(float x, float y, float size, int depth);
     void setPosition(float x, float y);
     void generateLevel2();
 
 private:
-    sf::ConvexShape createTriangle(float x, float y, float size) const;
-    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-    std::vector<sf::ConvexShape> m_triangles;
     float m_x, m_y;
     float m_size;
+    int depth;
+    std::vector<sf::ConvexShape> m_triangles;
+    sf::ConvexShape createTriangle(float x, float y, float size) const;
+    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 };
 #endif // TRIANGLE_HPP
