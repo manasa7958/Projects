@@ -54,7 +54,7 @@ public:
     void generateLevel2();
 
 private:
-    sf::ConvexShape createTriangle(float x, float y, float size) const; 
+    sf::ConvexShape createTriangle(float x, float y, float size) const;
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
     std::vector<sf::ConvexShape> m_triangles;
     float m_x, m_y;
