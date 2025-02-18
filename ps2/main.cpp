@@ -23,7 +23,7 @@ int main(int argc, char* argv[]){
   
   sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "Triangle Fractal");
   
-  float triangleHeight = J * std::sqrt(3.0f) / 2.0f;
+  float triangleHeight = L * std::sqrt(3.0f) / 2.0f;
   float scaleForWidth = windowWidth / (L * 2.0f);
   float scaleForHeight = windowHeight / (triangleHeight * 2.0f);
   float scale = std::min(scaleForWidth, scaleForHeight);
