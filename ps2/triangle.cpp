@@ -145,9 +145,9 @@ sf::ConvexShape Triangle::createTriangle(float x, float y, float size) const {
     triangle.setPointCount(3);
     
     float height = size * std::sqrt(3.0f) / 2.0f;
-    triangle.setPoint(0, sf::Vector2f(x, y));                  // Bottom point
-    triangle.setPoint(1, sf::Vector2f(x - size/2, y - height)); // Top left
-    triangle.setPoint(2, sf::Vector2f(x + size/2, y - height)); // Top right
+    triangle.setPoint(0, sf::Vector2f(x, y));
+    triangle.setPoint(1, sf::Vector2f(x - size/2, y - height));
+    triangle.setPoint(2, sf::Vector2f(x + size/2, y - height));
     triangle.setFillColor(sf::Color::White);
     triangle.setOutlineColor(sf::Color::Black);
     triangle.setOutlineThickness(2.0f);
