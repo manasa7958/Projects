@@ -15,7 +15,7 @@ public:
 
 private:
     // Helper to create a single triangle
-    sf::ConvexShape createTriangle(float x, float y, float size) const;
+    sf::ConvexShape createTriangle(float x, float y, float size, sf::Color color) const;
     
     // Recursive function to generate fractal pattern
     void generateFractal(float x, float y, float size, int depth);
@@ -29,5 +29,3 @@ private:
     float m_size;
     int m_depth;
 };
-
-#endif // TRIANGLE_HPP
