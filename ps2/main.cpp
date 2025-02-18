@@ -31,9 +31,9 @@ int main(int argc, char* argv[]) {
 }*/
 
 // main.cpp
-#include <iostream>
 #include <SFML/Graphics.hpp>
 #include "triangle.hpp"
+#include <iostream>
 
 int main(int argc, char* argv[]) {
     if (argc != 3) {
@@ -44,7 +44,7 @@ int main(int argc, char* argv[]) {
     int depth = std::stoi(argv[2]);
 
     sf::RenderWindow window(sf::VideoMode(800, 800), "Triangle Fractal");
-    Triangle fractal(200, 600, size, depth);
+    Triangle fractal(400, 600, size, depth);
 
     while (window.isOpen()) {
         sf::Event event;
@@ -58,3 +58,4 @@ int main(int argc, char* argv[]) {
     }
     return 0;
 }
+
