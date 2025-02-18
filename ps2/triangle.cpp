@@ -4,10 +4,10 @@
 
 // Define four different colors for the fractal
 const sf::Color COLORS[4] = {
-    sf::Color::Red,     // Depth % 4 == 0
+    sf::Color::Magenta,     // Depth % 4 == 0
     sf::Color::Blue,    // Depth % 4 == 1
-    sf::Color::Green,   // Depth % 4 == 2
-    sf::Color::Yellow   // Depth % 4 == 3
+    sf::Color::Yellow,   // Depth % 4 == 2
+    sf::Color::Cyan   // Depth % 4 == 3
 };
 
 Triangle::Triangle(float x, float y, float size, int depth) 
