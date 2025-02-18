@@ -2,10 +2,11 @@
 #include <cmath>
 #include "triangle.hpp"
 
-Triangle::Triangle(float x, float y, float size) : m_x(x), m_y(y), m_size(size) {
+Triangle::Triangle(float x, float y, float size, int depth) 
+    : m_x(x), m_y(y), m_size(size), m_depth(depth) {
     // Create main triangle
     m_triangles.push_back(createTriangle(x, y, size));
-    generateFractal(x, y, size, 5); // Increased depth to 3 to generate 1/8th sized triangles
+    generateFractal(x, y, size, depth);
 }
 
 void Triangle::setPosition(float x, float y) {
@@ -14,14 +15,24 @@ void Triangle::setPosition(float x, float y) {
     // Clear and recreate triangles at new position
     m_triangles.clear();
     m_triangles.push_back(createTriangle(x, y, m_size));
-    generateFractal(x, y, m_size, 5);
+    generateFractal(x, y, m_size, m_depth);
+}
+
+void Triangle::setDepth(int depth) {
+    m_depth = depth;
+    // Recreate fractal with new depth
+    m_triangles.clear();
+    m_triangles.push_back(createTriangle(m_x, m_y, m_size));
+    generateFractal(m_x, m_y, m_size, depth);
 }
 
 void Triangle::generateFractal(float x, float y, float size, int depth) {
     if (depth <= 0) return;
+
     float height = size * std::sqrt(3.0f) / 2.0f;
     float childSize = size / 2.0f;
     float childHeight = childSize * std::sqrt(3.0f) / 2.0f;
+    
     // Calculate vertices of current triangle
     float bottomX = x;
     float bottomY = y;
@@ -31,16 +42,12 @@ void Triangle::generateFractal(float x, float y, float size, int depth) {
     float topRightY = y - height;
     
     // Add three child triangles at the vertices
-    
-    // Top-left child
     m_triangles.push_back(createTriangle(topLeftX, topLeftY, childSize));
     generateFractal(topLeftX, topLeftY, childSize, depth - 1);
     
-    // Top-right child (shifted right by half its width)
     m_triangles.push_back(createTriangle(topRightX + childSize/2, topRightY + childHeight, childSize));
     generateFractal(topRightX + childSize/2, topRightY + childHeight, childSize, depth - 1);
     
-    // Bottom child
     m_triangles.push_back(createTriangle(bottomX - childSize/2, bottomY + childHeight, childSize));
     generateFractal(bottomX - childSize/2, bottomY + childHeight, childSize, depth - 1);
 }
@@ -67,3 +74,4 @@ void Triangle::draw(sf::RenderTarget& target, sf::RenderStates states) const {
         target.draw(triangle, states);
     }
 }
+
