@@ -60,3 +60,8 @@ sf::ConvexShape Triangle::createTriangle(float x, float y, float size, sf::Color
     return triangle;
 }
 
+void Triangle::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+    for (const auto& triangle : m_triangles) {
+        target.draw(triangle, states);
+    }
+}
