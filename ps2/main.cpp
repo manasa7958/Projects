@@ -12,11 +12,11 @@ int main(int argc, char* argv[]) {
     L = std::atof(argv[1]);
     N = std::atoi(argv[2]);
     if (L <= 0) {
-      std::cerr << "Invalid! Using default size.\n";
+      std::cerr << "Error, using default size.\n";
       L = 200.0f;
     }
     if (N < 0) {
-      std::cerr << "Invalid! Using default depth.\n";
+      std::cerr << "Error, using default depth.\n";
       N = 5;
     }
   }
