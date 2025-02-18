@@ -1,7 +1,8 @@
 // Copyright 2025 Manasa Praveen and Ponita Ty
+#include <iostream>
 #include <SFML/Graphics.hpp>
 #include <cstdlib>
-#include <iostream>
+#include <algorithm>
 
 #include "triangle.hpp"
 int main(int argc, char* argv[]) {
