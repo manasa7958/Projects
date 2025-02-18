@@ -65,21 +65,17 @@ int main(int argc, char* argv[]) {
 
 int main() {
     sf::RenderWindow window(sf::VideoMode(800, 600), "Level 2 Triangle Fractal");
-    Triangle fractal(400.0f, 400.0f, 200.0f);
-    fractal.generateLevel2();
-    
-    while (window.isOpen()) {
-        sf::Event event;
-        while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
-        
-        window.clear(sf::Color::White);
-        window.draw(fractal);
-        window.display();
-    }
-    
-    return 0;
+    Triangle fractal(400.0f, 400.0f, 200.0f);
+    fractal.generateLevel2();
+    while (window.isOpen()) {
+        sf::Event event;
+        while (window.pollEvent(event)) {
+            if (event.type == sf::Event::Closed)
+                window.close();
+        }
+        window.clear(sf::Color::White);
+        window.draw(fractal);
+        window.display();
+    }
+    return 0;
 }
-
