@@ -3,8 +3,8 @@
 #include <SFML/Graphics.hpp>
 #include <cstdlib>
 #include <algorithm>
-
 #include "triangle.hpp"
+
 int main(int argc, char* argv[]) {
   float L = 300.0f;  // size
   int N = 3;         // depth
