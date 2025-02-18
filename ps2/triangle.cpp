@@ -105,66 +105,57 @@ void Triangle::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 #include "triangle.hpp"
 #include <cmath>
 
-Triangle::Triangle(float x, float y, float size)
-    : m_x(x), m_y(y), m_size(size) {
-    // Create main triangle
-    m_triangles.push_back(createTriangle(x, y, size));
+Triangle::Triangle(float x, float y, float size) : m_x(x), m_y(y), m_size(size) {
+    m_triangles.push_back(createTriangle(x, y, size));
 }
 
 void Triangle::setPosition(float x, float y) {
-    m_x = x;
-    m_y = y;
-    // Clear and recreate triangles at new position
-    m_triangles.clear();
-    m_triangles.push_back(createTriangle(x, y, m_size));
-    generateLevel2();
+    m_x = x;
+    m_y = y;
+    // Clear and recreate triangles at new position
+    m_triangles.clear();
+    m_triangles.push_back(createTriangle(x, y, m_size));
+    generateLevel2();
 }
 
 void Triangle::generateLevel2() {
-    float mainHeight = m_size * std::sqrt(3.0f) / 2.0f;
-    float childSize = m_size / 2.0f;
-    float childHeight = childSize * std::sqrt(3.0f) / 2.0f;
-    
-    // Get vertices of main triangle
-    float bottomX = m_x;
-    float bottomY = m_y;
-    float topLeftX = m_x - m_size/2;
-    float topLeftY = m_y - mainHeight;
-    float topRightX = m_x + m_size/2;
-    float topRightY = m_y - mainHeight;
-    
-    // Add child triangle at top-left vertex
-    m_triangles.push_back(createTriangle(topLeftX, topLeftY, childSize));
-    
-    // Add child triangle at top-right vertex
-    // Position adjusted so its top-left point connects with main triangle's top-right vertex
-    // Shifted right by half the child's width (childSize/2)
-    m_triangles.push_back(createTriangle(topRightX + childSize/2, topRightY + childHeight, childSize));
-    
-    // Add child triangle at bottom vertex
-    // Adjust position so the top-right vertex touches the bottom vertex of main triangle
-    m_triangles.push_back(createTriangle(bottomX - childSize/2, bottomY + childHeight, childSize));
+    float mainHeight = m_size * std::sqrt(3.0f) / 2.0f;
+    float childSize = m_size / 2.0f;
+    float childHeight = childSize * std::sqrt(3.0f) / 2.0f;
+    // Get vertices of main triangle
+    float bottomX = m_x;
+    float bottomY = m_y;
+    float topLeftX = m_x - m_size/2;
+    float topLeftY = m_y - mainHeight;
+    float topRightX = m_x + m_size/2;
+    float topRightY = m_y - mainHeight;
+    // Add child triangle at top-left vertex
+    m_triangles.push_back(createTriangle(topLeftX, topLeftY, childSize));
+    // Add child triangle at top-right vertex
+    // Position adjusted so its top-left point connects with main triangle's top-right vertex
+    // Shifted right by half the child's width (childSize/2)
+    m_triangles.push_back(createTriangle(topRightX + childSize/2, topRightY + childHeight, childSize)); 
+    // Add child triangle at bottom vertex
+    // Adjust position so the top-right vertex touches the bottom vertex of main triangle
+    m_triangles.push_back(createTriangle(bottomX - childSize/2, bottomY + childHeight, childSize));
 }
 
 sf::ConvexShape Triangle::createTriangle(float x, float y, float size) const {
-    sf::ConvexShape triangle;
-    triangle.setPointCount(3);
-    
-    float height = size * std::sqrt(3.0f) / 2.0f;
-    
-    triangle.setPoint(0, sf::Vector2f(x, y));                  // Bottom point
-    triangle.setPoint(1, sf::Vector2f(x - size/2, y - height)); // Top left
-    triangle.setPoint(2, sf::Vector2f(x + size/2, y - height)); // Top right
-    
-    triangle.setFillColor(sf::Color::White);
-    triangle.setOutlineColor(sf::Color::Black);
-    triangle.setOutlineThickness(2.0f);
-    
-    return triangle;
+    sf::ConvexShape triangle;
+    triangle.setPointCount(3);
+    
+    float height = size * std::sqrt(3.0f) / 2.0f;
+    triangle.setPoint(0, sf::Vector2f(x, y));                  // Bottom point
+    triangle.setPoint(1, sf::Vector2f(x - size/2, y - height)); // Top left
+    triangle.setPoint(2, sf::Vector2f(x + size/2, y - height)); // Top right
+    triangle.setFillColor(sf::Color::White);
+    triangle.setOutlineColor(sf::Color::Black);
+    triangle.setOutlineThickness(2.0f);
+    return triangle;
 }
 
 void Triangle::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-    for (const auto& triangle : m_triangles) {
-        target.draw(triangle, states);
-    }
+    for (const auto& triangle : m_triangles) {
+        target.draw(triangle, states);
+    }
 }
