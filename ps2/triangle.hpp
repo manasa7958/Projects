@@ -1,9 +1,8 @@
 // Copyright 2025 Manasa Praveen and Ponita Ty
 #ifndef TRIANGLE_HPP
 #define TRIANGLE_HPP
-
-#include <SFML/Graphics.hpp>
 #include <vector>
+#include <SFML/Graphics.hpp>
 
 class Triangle : public sf::Drawable {
  public:
