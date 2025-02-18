@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include "triangle.hpp"
 #include <cstdlib> // For std::atoi
+#include <algorithm> // For std::min and std::max
 
 int main(int argc, char* argv[]) {
     // Default values
@@ -32,33 +33,30 @@ int main(int argc, char* argv[]) {
     // Define base window size
     const int BASE_WINDOW_WIDTH = 800;
     const int BASE_WINDOW_HEIGHT = 600;
+    const int MAX_WINDOW_SIZE = 1200;
 
     // Calculate the height of the triangle based on requested size
     float requestedHeight = requestedSize * std::sqrt(3.0f) / 2.0f;
 
-    // Define maximum allowable window size
-    int maxWindowSize = 1200;
-    
-    // Dynamically adjust window size based on input size
+    // Determine window size dynamically
     int windowWidth = std::max(static_cast<int>(requestedSize * 1.2f), BASE_WINDOW_WIDTH);
     int windowHeight = std::max(static_cast<int>(requestedHeight * 1.2f), BASE_WINDOW_HEIGHT);
 
     // Cap window size to avoid extreme values
-    if (windowWidth > maxWindowSize || windowHeight > maxWindowSize) {
-        float scaleFactor = static_cast<float>(maxWindowSize) / std::max(windowWidth, windowHeight);
-        windowWidth *= scaleFactor;
-        windowHeight *= scaleFactor;
-        requestedSize *= scaleFactor;
-    }
+    windowWidth = std::min(windowWidth, MAX_WINDOW_SIZE);
+    windowHeight = std::min(windowHeight, MAX_WINDOW_SIZE);
 
-    // If the requested size is too small, scale up to fit a reasonable portion of the window
-    float minSize = 100.0f;
-    if (requestedSize < minSize) {
-        float scaleFactor = minSize / requestedSize;
-        requestedSize *= scaleFactor;
-    }
+    // Determine the maximum size that fits within the window
+    float maxTriangleWidth = windowWidth * 0.8f;  // 80% of window width
+    float maxTriangleHeight = windowHeight * 0.8f; // 80% of window height
 
-    // Create the SFML window with adjusted size
+    // Determine the scaling factor
+    float scaleFactor = std::min(maxTriangleWidth / requestedSize, maxTriangleHeight / requestedHeight);
+
+    // Apply the scaling factor to ensure it fits
+    float adjustedSize = requestedSize * scaleFactor;
+
+    // Create the SFML window
     sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "Triangle Fractal");
 
     // Center the fractal properly in the new window
@@ -66,7 +64,7 @@ int main(int argc, char* argv[]) {
     float baseY = windowHeight * 0.75f;  // Position the base near the bottom
 
     // Create the fractal with the adjusted size
-    Triangle fractal(centerX, baseY, requestedSize, depth);
+    Triangle fractal(centerX, baseY, adjustedSize, depth);
 
     while (window.isOpen()) {
         sf::Event event;
