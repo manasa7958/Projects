@@ -23,10 +23,6 @@ int main(int argc, char* argv[]) {
             std::cerr << "Invalid depth! Using default depth of 5.\n";
             depth = 5;
         }
-    } else {
-        std::cout << "Usage: ./Triangle <size> <depth>\n";
-        std::cout << "Example: ./Triangle 400 5\n";
-        std::cout << "Using default values: size = " << size << ", depth = " << depth << "\n";
     }
 
     // Create window
