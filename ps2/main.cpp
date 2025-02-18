@@ -16,20 +16,22 @@ int main(int argc, char* argv[]) {
 
         // Validate inputs
         if (size <= 0) {
-            std::cerr << "Invalid size! Using default size of 200.\n";
+            std::cerr << "Invalid! Using default size.\n";
             size = 200.0f;
         }
         if (depth < 0) {
-            std::cerr << "Invalid depth! Using default depth of 5.\n";
+            std::cerr << "Invalid! Using default depth.\n";
             depth = 5;
         }
     }
-
+    float windowWidth = size * 1.5;
+    float windowHeight = size * std::sqrt(3.0f) * 1.1;
     // Create window
-    sf::RenderWindow window(sf::VideoMode(800, 600), "Triangle Fractal");
+    sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "Triangle Fractal");
 
     // Create fractal with user-specified size and depth
-    Triangle fractal(400.0f, 400.0f, size, depth);
+    Triangle fractal(windowWidth / 2.0f, windowHeight * 0.8f, size, depth);
+    //Triangle fractal(400.0f, 400.0f, size, depth);
 
     while (window.isOpen()) {
         sf::Event event;
