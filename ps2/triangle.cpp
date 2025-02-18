@@ -1,5 +1,5 @@
 // Copyright 2025 Manasa Praveen
-#include <cmath>
+/*#include <cmath>
 #include "triangle.hpp"
 
 Triangle::Triangle(double length, int depth, float rotation)
@@ -61,6 +61,35 @@ void Triangle::fractal(std::array<sf::Vector2f, 3> vertices, int level) {
     fractal(tri1, level - 1);
     fractal(tri2, level - 1);
     fractal(tri3, level - 1);
+}
+
+void Triangle::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+    for (const auto& triangle : triangles) {
+        target.draw(triangle, states);
+    }
+}*/
+// triangle.cpp
+#include <cmath>
+#include "triangle.hpp"
+
+Triangle::Triangle(float x, float y, float size, int depth) {
+    generateFractal(x, y, size, depth);
+}
+
+void Triangle::generateFractal(float x, float y, float size, int depth) {
+    if (depth == 0) {
+        sf::ConvexShape triangle(3);
+        triangle.setPoint(0, sf::Vector2f(x, y));
+        triangle.setPoint(1, sf::Vector2f(x + size / 2, y - size * sqrt(3) / 2));
+        triangle.setPoint(2, sf::Vector2f(x + size, y));
+        triangle.setFillColor(sf::Color::White);
+        triangles.push_back(triangle);
+    } else {
+        float newSize = size / 2;
+        generateFractal(x, y, newSize, depth - 1);
+        generateFractal(x + newSize, y, newSize, depth - 1);
+        generateFractal(x + newSize / 2, y - newSize * sqrt(3) / 2, newSize, depth - 1);
+    }
 }
 
 void Triangle::draw(sf::RenderTarget& target, sf::RenderStates states) const {
