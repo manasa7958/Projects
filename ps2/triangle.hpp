@@ -2,9 +2,6 @@
 #ifndef PS2_TRIANGLE_HPP_
 #define PS2_TRIANGLE_HPP_
 
-#include <cstdlib> 
-
-#include <iostream>
 #include <vector>
 
 #include <SFML/Graphics.hpp>
