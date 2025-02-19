@@ -1,7 +1,13 @@
 // Copyright 2025 Manasa Praveen and Ponita Ty
-#include <iostream>
-#include <SFML/Graphics.hpp>
 #include "triangle.hpp"
+
+#include <cstdlib>
+
+#include <iostream>
+#include <algorithm>
+
+#include <SFML/Graphics.hpp>
+
 
 int main(int argc, char* argv[]) {
   float L = 300.0f;  // size
