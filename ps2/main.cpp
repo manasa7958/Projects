@@ -9,7 +9,7 @@
 
 int main(int argc, char* argv[]) {
   float L = 300.0f;  // size
-  int N = 5;         // depth
+  int N = 3;         // depth
   if (argc == 3) {
     L = std::atof(argv[1]);
     N = std::atoi(argv[2]);
@@ -19,7 +19,7 @@ int main(int argc, char* argv[]) {
     }
     if (N < 0) {
       std::cerr << "Error, using default depth.\n";
-      N = 5;
+      N = 3;
     }
   }
   unsigned int windowWidth = 900;
