@@ -7,7 +7,7 @@ LIBDIR = -L/opt/homebrew/opt/boost/lib/ -L/opt/homebrew/opt/sfml@2/lib/
 # Your .hpp files
 DEPS = triangle.hpp
 # Your compiled .o files
-OBJECTS = triangle.o
+OBJECTS = main.o triangle.o
 # The name of your program
 PROGRAM = Triangle
 
