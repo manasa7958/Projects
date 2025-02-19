@@ -1,5 +1,6 @@
 // Copyright 2025 Manasa Praveen and Ponita Ty
 #include <cstdlib>
+#include <cmath>
 #include <iostream>
 #include <algorithm>
 #include <SFML/Graphics.hpp>
