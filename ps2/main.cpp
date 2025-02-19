@@ -9,7 +9,7 @@
 
 int main(int argc, char* argv[]) {
   float L = 300.0f;  // size
-  int N = 3;         // depth
+  int N = 5;         // depth
   if (argc == 3) {
     L = std::atof(argv[1]);
     N = std::atoi(argv[2]);
