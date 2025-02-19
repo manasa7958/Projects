@@ -1,6 +1,7 @@
 // Copyright 2025 Manasa Praveen and Ponita Ty
-#include <cmath>
 #include "triangle.hpp"
+#include <cmath>
+
 
 // Five colors!
 const sf::Color COLORS[5] = {
