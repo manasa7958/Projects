@@ -1,7 +1,9 @@
 // Copyright 2025 Manasa Praveen and Ponita Ty
 #ifndef PS2_TRIANGLE_HPP_
 #define PS2_TRIANGLE_HPP_
+
 #include <vector>
+
 #include <SFML/Graphics.hpp>
 
 class Triangle : public sf::Drawable {
