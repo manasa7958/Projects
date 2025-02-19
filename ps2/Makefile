@@ -22,7 +22,7 @@ $(PROGRAM): main.o $(OBJECTS)
 	$(CC) $(CFLAGS) $(LIBDIR) -o $@ $^ $(LIB)
 
 clean:
-	rm *.o $(PROGRAM)
+	rm -f *.o $(PROGRAM)
 
 lint:
 	cpplint *.cpp *.hpp
