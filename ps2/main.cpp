@@ -1,7 +1,7 @@
 // Copyright 2025 Manasa Praveen and Ponita Ty
+#include <cstdlib>
 #include <iostream>
 #include <algorithm>
-#include <cstdlib>
 #include <SFML/Graphics.hpp>
 #include "triangle.hpp"
 
