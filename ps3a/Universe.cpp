@@ -17,8 +17,15 @@ double Universe::radius() const { return 0; }
 const CelestialBody& Universe::operator[](size_t index) const {
     throw std::out_of_range("Index out of range"); 
 }
+void Universe::draw(sf::RenderTarget& window, sf::RenderStates states) const {
+    for (const auto& body : bodies) {
+        window.draw(*body, states);
+    }
 
 }  // namespace NB
+
+}  // namespace NB
+
 /*
 namespace NB {
 
