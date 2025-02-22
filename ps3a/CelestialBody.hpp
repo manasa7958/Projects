@@ -9,21 +9,22 @@ class CelestialBody : public sf::Drawable {
 public:
     explicit CelestialBody(); // Required
 
-    sf::Vector2f getPosition() const; // ✅ FIX: Changed from position() to getPosition()
-    sf::Vector2f getVelocity() const; // ✅ FIX: Changed from velocity() to getVelocity()
-    float getMass() const; // ✅ FIX: Changed from mass() to getMass()
+    sf::Vector2f getPosition() const; // ✅ Getter for position
+    sf::Vector2f getVelocity() const; // ✅ Getter for velocity
+    float getMass() const; // ✅ Getter for mass
 
 protected:
     void draw(sf::RenderTarget& window, sf::RenderStates states) const override; // SFML Drawing
 
 private:
-    sf::Vector2f position;  // ✅ Member variable
-    sf::Vector2f velocity;  // ✅ Member variable
-    float mass;  // ✅ Member variable
+    sf::Vector2f position;  // ✅ Position of the celestial body
+    sf::Vector2f velocity;  // ✅ Velocity of the celestial body
+    float mass;  // ✅ Mass of the celestial body
     std::string imageFile;  // ✅ Store the planet's image filename
-};
 
-std::istream& operator>>(std::istream& is, CelestialBody& uni);
-std::ostream& operator<<(std::ostream& os, const CelestialBody& uni);
+    // ✅ Friend functions to allow direct access to private members
+    friend std::istream& operator>>(std::istream& is, CelestialBody& uni);
+    friend std::ostream& operator<<(std::ostream& os, const CelestialBody& uni);
+};
 
 }  // namespace NB
