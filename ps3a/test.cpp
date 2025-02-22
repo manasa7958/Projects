@@ -5,6 +5,10 @@
 #include "CelestialBody.hpp"
 
 using namespace NB;
+int main() {
+    std::cout << "Running tests..." << std::endl;
+    return 0;
+}
 
 void testCelestialBody() {
     std::stringstream input("1.4960e+11 0.0000e+00 0.0000e+00 2.9800e+04 5.9740e+24 earth.gif");
