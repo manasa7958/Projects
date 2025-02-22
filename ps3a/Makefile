@@ -30,7 +30,7 @@ NBODY.a: $(OBJECTS)
 	ar rcs $@ $(OBJECTS)
 
 clean:
-	rm *.o $(PROGRAM)
+	rm *.o $(PROGRAM) $(TEST)
 
 lint:
 	cpplint *.cpp *.hpp
