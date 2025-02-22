@@ -4,11 +4,9 @@ LIB = -lsfml-graphics -lsfml-audio -lsfml-window -lsfml-system -lboost_unit_test
 INCLUDEDIR = -I. -I/opt/homebrew/opt/boost/include/ -I/opt/homebrew/opt/sfml@2/include/
 LIBDIR = -L/opt/homebrew/opt/boost/lib/ -L/opt/homebrew/opt/sfml@2/lib/
 
-# Your .hpp files
+# Source files
 DEPS = Universe.hpp CelestialBody.hpp
-# Your compiled .o files
-OBJECTS = Universe.o CelestialBody.o
-# The name of your program
+OBJECTS = build/Universe.o build/CelestialBody.o
 PROGRAM = NBODY
 TEST = test
 
