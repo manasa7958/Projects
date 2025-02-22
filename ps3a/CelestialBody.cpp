@@ -21,7 +21,7 @@ std::ostream& operator<<(std::ostream& out, const CelestialBody& body) {
     return out;
 }
 
-// Getter methods (renamed to match header file)
+// Getter methods
 sf::Vector2f CelestialBody::getPosition() const { return position; }
 sf::Vector2f CelestialBody::getVelocity() const { return velocity; }
 float CelestialBody::getMass() const { return mass; }
