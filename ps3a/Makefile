@@ -10,25 +10,26 @@ OBJECTS = build/Universe.o build/CelestialBody.o
 PROGRAM = NBODY
 TEST = test
 
-.PHONY: all clean lint
-
 all: $(PROGRAM) $(TEST) NBODY.a
 
-# Wildcard recipe to make .o files from corresponding .cpp file
-%.o: %.cpp $(DEPS)
+.PHONY: all clean lint
+
+build:
+	mkdir -p build
+
+# Compile all .cpp files to .o
+build/%.o: %.cpp $(DEPS) | build
 	$(CC) $(CFLAGS) $(INCLUDEDIR) -c $< -o $@
 
-$(PROGRAM): main.o $(OBJECTS)
+$(PROGRAM): build/main.o $(OBJECTS)
 	$(CC) $(CFLAGS) $(LIBDIR) -o $@ $^ $(LIB)
 
-$(TEST): test.o $(OBJECTS)
+$(TEST): build/test.o $(OBJECTS)
 	$(CC) $(CFLAGS) $(LIBDIR) -o $@ $^ $(LIB)
-
-NBODY.a: $(OBJECTS)
-	ar rcs $@ $(OBJECTS)
 
 clean:
-	rm *.o $(PROGRAM) $(TEST)
+	rm -rf build $(PROGRAM) $(TEST)
 
 lint:
 	cpplint *.cpp *.hpp
+
