@@ -1,6 +1,8 @@
 #pragma once
 
 #include <iostream>
+#include <vector>
+#include <memory>
 
 #include <SFML/Graphics.hpp>
 
@@ -21,7 +23,8 @@ class Universe: public sf::Drawable {
  protected:
     void draw(sf::RenderTarget& window, sf::RenderStates states) const override; // From sf::Drawable
  private:
-    // Fields and helper functions go here
+    double universeRadius; 
+    std::vector<std::shared_ptr<CelestialBody>> bodies;  
 };
 
 std::istream& operator>>(std::istream& is, Universe& uni);
