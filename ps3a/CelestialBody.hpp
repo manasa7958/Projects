@@ -16,7 +16,10 @@ class CelestialBody: public sf::Drawable {
  protected:
     void draw(sf::RenderTarget& window, sf::RenderStates states) const override; // From sf::Drawable
  private:
-    // Fields and helper methods go here
+    sf::Vector2f position;  // ✅ FIX: Declare position
+    sf::Vector2f velocity;  // ✅ FIX: Declare velocity
+    float mass;  // ✅ FIX: Declare mass
+    std::string imageFile;  // ✅ FIX: Declare image filename
 };
 
 std::istream& operator>>(std::istream& is, CelestialBody& uni);
