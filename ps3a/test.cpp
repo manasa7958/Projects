@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cassert>
+#include <sstream>
 #include <cmath>  // Needed for fabs()
 #include "Universe.hpp"
 #include "CelestialBody.hpp"
