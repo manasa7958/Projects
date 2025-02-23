@@ -12,23 +12,21 @@ TEST = test
 
 all: $(PROGRAM) $(TEST) NBODY.a
 
-.PHONY: all clean lint
-
-build:
-	mkdir -p build
-
-# Compile all .cpp files to .o
-build/%.o: %.cpp $(DEPS) | build
+# Wildcard recipe to make .o files from corresponding .cpp file
+%.o: %.cpp $(DEPS)
 	$(CC) $(CFLAGS) $(INCLUDEDIR) -c $< -o $@
 
-$(PROGRAM): build/main.o $(OBJECTS)
+$(PROGRAM): main.o $(OBJECTS)
 	$(CC) $(CFLAGS) $(LIBDIR) -o $@ $^ $(LIB)
 
-$(TEST): build/test.o $(OBJECTS)
+$(TEST): test.o $(OBJECTS)
 	$(CC) $(CFLAGS) $(LIBDIR) -o $@ $^ $(LIB)
+
+NBODY.a: $(OBJECTS)
+	ar rcs $@ $(OBJECTS)
 
 clean:
-	rm -rf build $(PROGRAM) $(TEST)
+	rm *.o $(PROGRAM) $(TEST)
 
 lint:
 	cpplint *.cpp *.hpp
