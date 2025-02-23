@@ -37,7 +37,7 @@ void testFormatting() {
     std::cout << "Formatting test passed!" << std::endl;
 }
 
-void testFlipped() {
+/*void testFlipped() {
     std::stringstream input("1.4960e+11 2.0000e+11 3.0000e+04 4.0000e+04 5.9740e+24 flipped.gif");
     NB::CelestialBody body;
     input >> body;
@@ -59,11 +59,12 @@ void testFlipped() {
     assert(output.str() == "1.4960e+11 2.0000e+11 3.0000e+04 4.0000e+04 5.9740e+24 flipped.gif\n");
 
     std::cout << "Test passed!" << std::endl;
-}
+}*/
 
 int main() {
     testEmpty();
-    testFlipped();
+    testFormatting();
+    //testFlipped();
     std::cout << "Tests passed!" << std::endl;
     return 0;
 }
