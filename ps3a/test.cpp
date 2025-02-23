@@ -1,3 +1,11 @@
+#define BOOST_TEST_MODULE NBodyTests  // Defines the test module name
+#include <boost/test/included/unit_test.hpp>
+#include <sstream>
+#include <cmath>
+#include "Universe.hpp"
+#include "CelestialBody.hpp"
+
+const double EPSILON = 1e-6;  // Small tolerance for floating-point comparisons
 #include <iostream>
 #include <cassert>
 #include <sstream>
@@ -72,3 +80,5 @@ int main() {
     std::cout << "Tests passed!" << std::endl;
     return 0;
 }
+
+
