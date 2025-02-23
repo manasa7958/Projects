@@ -6,7 +6,7 @@
 #include "Universe.hpp"
 #include "CelestialBody.hpp"
 
-const double EPSILON = 1e-6;
+//const double EPSILON = 1e-6;
 
 void testEmpty() {
     std::stringstream input("0 1.0e+11\n");
