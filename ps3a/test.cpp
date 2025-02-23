@@ -10,8 +10,6 @@
 #define BOOST_TEST_MODULE NBodyTests
 #include <boost/test/unit_test.hpp>
 
-const double EPSILON = 1e-6;
-
 BOOST_AUTO_TEST_CASE(testEmptyUniverse) {
     std::stringstream input("0 1.0e+11\n");
     NB::Universe universe;
