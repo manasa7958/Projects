@@ -18,6 +18,9 @@ TEST = test
 $(BUILD_DIR):
 	mkdir -p $(BUILD_DIR)
 
+# Default target: Compile everything
+all: $(PROGRAM) $(TEST) NBODY.a
+
 # Compile .cpp files into .o files inside build/
 $(BUILD_DIR)/%.o: %.cpp $(DEPS) | $(BUILD_DIR)
 	$(CC) $(CFLAGS) $(INCLUDEDIR) -c $< -o $@
