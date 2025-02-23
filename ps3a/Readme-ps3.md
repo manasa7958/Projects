@@ -1,8 +1,10 @@
 # PS3: N-Body Simulation
 
 ## Contact
-Name:
-Section:
+Name: Manasa Praveen
+
+Section: 202
+
 Time to Complete:
 
 
