@@ -3,6 +3,11 @@
 #include "CelestialBody.hpp"
 
 int main() {
-    std::cout << "N-Body Simulation: Test Run" << std::endl;
+    testCelestialBody();
+    testIOOperators();
+    testUniverse();
+    testUniverseIndexing();
+    testEmptyUniverse();
+    std::cout << "All tests passed!" << std::endl;
     return 0;
 }
