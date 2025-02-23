@@ -7,8 +7,7 @@ CelestialBody::CelestialBody() : pos(0, 0), vel(0, 0), m(0), imageFile("") {}
 
 // Overloaded input operator >>
 std::istream& operator>>(std::istream& in, CelestialBody& body) {
-    in >> std::scientific >> std::setprecision(4)
-       >> body.pos.x >> body.pos.y
+    in >> body.pos.x >> body.pos.y
        >> body.vel.x >> body.vel.y
        >> body.m >> body.imageFile;
     return in;
@@ -16,8 +15,7 @@ std::istream& operator>>(std::istream& in, CelestialBody& body) {
 
 // Overloaded output operator <<
 std::ostream& operator<<(std::ostream& out, const CelestialBody& body) {
-    out << std::scientific << std::setprecision(4)
-        << body.pos.x << " " << body.pos.y << " "
+    out << body.pos.x << " " << body.pos.y << " "
         << body.vel.x << " " << body.vel.y << " "
         << body.m << " " << body.imageFile << std::endl;
     return out;
