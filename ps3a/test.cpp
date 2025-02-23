@@ -13,3 +13,9 @@ void testEmpty() {
     assert(universe.size() == 0);
     std::cout << "Empty Universe test passed!" << std::endl;
 }
+
+int main() {
+    testEmpty();  
+    std::cout << "Tests passed!" << std::endl;
+    return 0;
+}
