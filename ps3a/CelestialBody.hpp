@@ -14,10 +14,10 @@ class CelestialBody: public sf::Drawable {
  protected:
     void draw(sf::RenderTarget& window, sf::RenderStates states) const override; // From sf::Drawable
  private:
-    sf::Vector2f pos;  // Position of the celestial body
-    sf::Vector2f vel;  // Velocity of the celestial body
-    float m;  // Mass of the celestial body
-    std::string imageFile;  // Store the planet's image filename
+    sf::Vector2f pos;  // Position variable
+    sf::Vector2f vel;  // Velocity variable
+    float m;  // Mass variable
+    std::string imageFile;  // Store the image filename
 
     // Friend functions to allow direct access to private members
     friend std::istream& operator>>(std::istream& is, CelestialBody& uni);
