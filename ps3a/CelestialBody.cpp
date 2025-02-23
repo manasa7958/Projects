@@ -1,3 +1,4 @@
+#include <iomanip>
 #include "CelestialBody.hpp"
 
 namespace NB {
@@ -13,11 +14,12 @@ std::istream& operator>>(std::istream& in, CelestialBody& body) {
     return in;
 }
 
-// Overloaded output operator <<
 std::ostream& operator<<(std::ostream& out, const CelestialBody& body) {
-    out << body.pos.x << " " << body.pos.y << " "
+    out << std::scientific << std::setprecision(4) << std::uppercase
+        << body.pos.x << " " << body.pos.y << " "
         << body.vel.x << " " << body.vel.y << " "
-        << body.m << " " << body.imageFile << std::endl;
+        << body.m << " " << body.imageFile << "\n";  // Ensure newline!
+
     return out;
 }
 
