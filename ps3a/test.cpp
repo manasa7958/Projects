@@ -25,16 +25,16 @@ BOOST_AUTO_TEST_CASE(testFlippedValues) {
     NB::CelestialBody body;
     input >> body;
     
-    NB::CelestialBody expected;
-    expected.pos = sf::Vector2f(1.1111e+11, 2.2222e+11);
-    expected.vel = sf::Vector2f(3.3333e+04, 4.4444e+04);
-    expected.m = 5.5555e+24;
-    expected.imageFile = "flipped.gif";
+    double expected_x_pos = 1.1111e+11;
+    double expected_y_pos = 2.2222e+11;
+    double expected_x_vel = 3.3333e+04;
+    double expected_y_vel = 4.4444e+04;
+    double expected_mass = 5.5555e+24;
+    std::string expected_image = "flipped.gif";
     
-    BOOST_REQUIRE_CLOSE(body.position().x, expected.position().x, 0.001f);
-    BOOST_REQUIRE_CLOSE(body.position().y, expected.position().y, 0.001f);
-    BOOST_REQUIRE_CLOSE(body.velocity().x, expected.velocity().x, 0.001f);
-    BOOST_REQUIRE_CLOSE(body.velocity().y, expected.velocity().y, 0.001f);
-    BOOST_REQUIRE_CLOSE(body.mass(), expected.mass(), 0.001f);
-    BOOST_REQUIRE(body.imageFile == expected.imageFile);
+    BOOST_REQUIRE_CLOSE(body.position().x, expected_x_pos, 0.001f);
+    BOOST_REQUIRE_CLOSE(body.position().y, expected_y_pos, 0.001f);
+    BOOST_REQUIRE_CLOSE(body.velocity().x, expected_x_vel, 0.001f);
+    BOOST_REQUIRE_CLOSE(body.velocity().y, expected_y_vel, 0.001f);
+    BOOST_REQUIRE_CLOSE(body.mass(), expected_mass, 0.001f);
 }
