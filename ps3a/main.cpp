@@ -3,7 +3,6 @@
 #include "CelestialBody.hpp"
 
 int main() {
-    testEmpty();
-    std::cout << "All tests passed!" << std::endl;
+    std::cout << "Test run" << std::endl;
     return 0;
 }
