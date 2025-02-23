@@ -5,11 +5,11 @@ namespace NB {
 Universe::Universe() : universeRadius(0) {}
 
 std::istream& operator>>(std::istream& in, Universe& universe) {
-    return in;  // Do nothing, just allow compilation
+    return in;  // need to write
 }
 
 std::ostream& operator<<(std::ostream& out, const Universe& universe) {
-    return out;  // Do nothing
+    return out;  // need to write
 }
 
 size_t Universe::size() const { return 0; }
