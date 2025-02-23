@@ -17,7 +17,7 @@ class Universe: public sf::Drawable {
  protected:
     void draw(sf::RenderTarget& window, sf::RenderStates states) const override; // From sf::Drawable
  private:
-    double universeRadius; 
+    double universeRadius; // Radius variable
     std::vector<std::shared_ptr<CelestialBody>> bodies;  
 };
 
