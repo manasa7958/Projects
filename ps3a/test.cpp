@@ -36,3 +36,34 @@ BOOST_AUTO_TEST_CASE(testFlippedValues) {
     BOOST_REQUIRE_CLOSE(body.velocity().y, expected_y_vel, 0.001f);
     BOOST_REQUIRE_CLOSE(body.mass(), expected_mass, 0.001f);
 }
+
+BOOST_AUTO_TEST_CASE(testFormatting) {
+    std::stringstream input("1.4960e+11 0.0000e+00 0.0000e+00 2.9800e+04 5.9740e+24 earth.gif");
+    NB::CelestialBody body;
+    input >> body;  // Read from input
+
+    std::stringstream output;
+    output << std::scientific << std::setprecision(4);  // Ensure formatting
+    output << body;
+
+    std::string expected = "1.4960e+11 0.0000e+00 0.0000e+00 2.9800e+04 5.9740e+24 earth.gif\n";
+    std::string actual = output.str();
+
+    // Debugging output: print expected vs. actual output
+    std::cout << "Expected Output: \"" << expected << "\" (size: " << expected.size() << ")\n";
+    std::cout << "Actual Output:   \"" << actual << "\" (size: " << actual.size() << ")\n";
+
+    // Compare character by character if mismatch
+    if (actual != expected) {
+        std::cout << "Formatting Mismatch! Debugging...\n";
+        for (size_t i = 0; i < std::min(expected.size(), actual.size()); i++) {
+            if (expected[i] != actual[i]) {
+                std::cout << "Mismatch at position " << i 
+                          << ": expected '" << expected[i] 
+                          << "', got '" << actual[i] << "'\n";
+            }
+        }
+    }
+
+    BOOST_TEST(actual == expected);
+}
