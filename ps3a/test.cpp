@@ -57,3 +57,20 @@ BOOST_AUTO_TEST_CASE(testFormatting) {
   BOOST_CHECK_CLOSE(body2.velocity().y, body.velocity().y, 0.001f);
   BOOST_CHECK_CLOSE(body2.mass(), body.mass(), 0.001f);
 }
+
+BOOST_AUTO_TEST_CASE(testNumPlanets1) {
+    std::stringstream input("5 2.50e+11\n"
+                            "1.4960e+11 0.0000e+00 0.0000e+00 2.9800e+04 5.9740e+24 earth.gif\n"
+                            "2.2790e+11 0.0000e+00 0.0000e+00 2.4100e+04 6.4190e+23 mars.gif\n"
+                            "5.7900e+10 0.0000e+00 0.0000e+00 4.7900e+04 3.3020e+23 mercury.gif\n"
+                            "0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00 1.9890e+30 sun.gif\n"
+                            "1.0820e+11 0.0000e+00 0.0000e+00 3.5000e+04 4.8690e+24 venus.gif\n");
+
+    NB::Universe universe;
+    input >> universe;
+
+    std::cout << "Number of planets read: " << universe.size() << std::endl;
+
+    BOOST_REQUIRE_EQUAL(universe.size(), 5);
+    BOOST_REQUIRE_NO_THROW(universe[0]);
+}
