@@ -14,29 +14,22 @@ TEST = test
 $(BUILD_DIR):
 	mkdir -p $(BUILD_DIR)
 
-all: $(PROGRAM) $(TEST) ./NBody.a
+all: $(PROGRAM) $(TEST) NBODY.a
 
 $(BUILD_DIR)/%.o: %.cpp $(DEPS) | $(BUILD_DIR)
 	$(CC) $(CFLAGS) $(INCLUDEDIR) -c $< -o $@
 
-$(BUILD_DIR)/main.o: main.cpp $(DEPS) | $(BUILD_DIR)
-	$(CC) $(CFLAGS) $(INCLUDEDIR) -c main.cpp -o $(BUILD_DIR)/main.o
-
-$(BUILD_DIR)/test.o: test.cpp $(DEPS) | $(BUILD_DIR)
-	$(CC) $(CFLAGS) $(INCLUDEDIR) -c test.cpp -o $(BUILD_DIR)/test.o
-
-$(PROGRAM): $(BUILD_DIR)/main.o $(OBJECTS) ./NBody.a
+$(PROGRAM): $(BUILD_DIR)/main.o $(OBJECTS)
 	$(CC) $(CFLAGS) $(LIBDIR) -o $@ $^ $(LIB)
 
-$(TEST): $(BUILD_DIR)/test.o $(OBJECTS) ./NBody.a
+$(TEST): $(BUILD_DIR)/test.o $(OBJECTS)
 	$(CC) $(CFLAGS) $(LIBDIR) -o $@ $^ $(LIB)
 
 NBODY.a: $(OBJECTS)
-	ar rcs ./NBody.a $(OBJECTS)
+	ar rcs $@ $(OBJECTS)
 
 clean:
-	rm -f $(BUILD_DIR)/*.o $(PROGRAM) $(TEST) ./NBody.a
+	rm -rf $(BUILD_DIR) $(PROGRAM) $(TEST) NBODY.a
 
-# Linting
 lint:
 	cpplint *.cpp *.hpp
