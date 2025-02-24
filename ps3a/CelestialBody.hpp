@@ -2,6 +2,8 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 
+class TestAccess;
+
 namespace NB {
 class CelestialBody: public sf::Drawable {
 public:
