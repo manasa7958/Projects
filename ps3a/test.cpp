@@ -3,6 +3,7 @@
 #include <iomanip>
 #include <iostream>
 #include <sstream>
+#include <string>
 
 #include "CelestialBody.hpp"
 #include "Universe.hpp"
