@@ -25,7 +25,7 @@ class Universe : public sf::Drawable {
             sf::RenderStates states) const override;  // From sf::Drawable
  private:
   double universeRadius;  // Radius variable
-  std::vector<std::shared_ptr<CelestialBody>> bodies;
+  std::vector<std::shared_ptr<CelestialBody>> bodies;  // Smart pointer 
 };
 
 std::istream& operator>>(std::istream& is, Universe& uni);
