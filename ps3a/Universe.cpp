@@ -1,3 +1,4 @@
+// Copyright 2025 Manasa Praveen
 #include "Universe.hpp"
 
 namespace NB {
