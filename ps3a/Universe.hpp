@@ -15,8 +15,11 @@ class Universe : public sf::Drawable {
   size_t size() const;                              // Optional
   double radius() const;                            // Optional
   const CelestialBody& operator[](size_t i) const;  // Optional
-  void step(
-      double dt);  // Implemented in part b, behavior for part a is undefined
+  void step(double dt);
+  void setRadius(double r) { universeRadius = r; }
+  void addBody(std::shared_ptr<CelestialBody> body) { bodies.push_back(body); }
+  void clearBodies() { bodies.clear(); }
+
  protected:
   void draw(sf::RenderTarget& window,
             sf::RenderStates states) const override;  // From sf::Drawable
