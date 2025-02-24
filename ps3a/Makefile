@@ -8,7 +8,7 @@ BUILD_DIR = build
 
 DEPS = Universe.hpp CelestialBody.hpp
 OBJECTS = $(BUILD_DIR)/Universe.o $(BUILD_DIR)/CelestialBody.o
-PROGRAM = NBODY
+PROGRAM = NBody
 TEST = test
 
 $(BUILD_DIR):
