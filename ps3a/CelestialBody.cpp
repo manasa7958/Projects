@@ -5,7 +5,7 @@ namespace NB {
 CelestialBody::CelestialBody() : pos(0, 0), vel(0, 0), m(0), imageFile("") {
     if (loadImage) {
         if (!texture.loadFromFile(imageFile)) {
-            std::cerr << "Failed to load image " << imageFile;
+            std::cerr << "Can't load image " << imageFile;
         }
     }
 }
