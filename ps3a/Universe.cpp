@@ -27,7 +27,7 @@ std::ostream& operator<<(std::ostream& out, const Universe& universe) {
   return out;  // need to write
 }
 size_t Universe::size() const { 
-  return bodies.size; 
+  return bodies.size(); 
 }
 double Universe::radius() const { 
   return universeRadius; 
