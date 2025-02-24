@@ -20,12 +20,10 @@ private:
     float m;  // Mass variable
     std::string imageFile;  // Store the image filename
 
-    // Friend functions to allow direct access to private members
     friend std::istream& operator>>(std::istream& in, CelestialBody& body);
     friend std::ostream& operator<<(std::ostream& out, const CelestialBody& body);
 };
 
-// Function declarations
 std::istream& operator>>(std::istream& in, CelestialBody& body);
 std::ostream& operator<<(std::ostream& out, const CelestialBody& body);
 }  // namespace NB
