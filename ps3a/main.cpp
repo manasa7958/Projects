@@ -1,3 +1,4 @@
+// Copyright 2025 Manasa Praveen
 #include <iostream>
 #include "Universe.hpp"
 #include "CelestialBody.hpp"
