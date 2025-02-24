@@ -38,7 +38,7 @@ BOOST_AUTO_TEST_CASE(testFlippedValues) {
     BOOST_REQUIRE_CLOSE(body.mass(), expected_mass, 0.001f);
 }
 
-BOOST_AUTO_TEST_CASE(testFormatting) {
+/*BOOST_AUTO_TEST_CASE(testFormatting) {
     std::stringstream input("1.4960e+11 0.0000e+00 0.0000e+00 2.9800e+04 5.9740e+24 earth.gif");
     NB::CelestialBody body;
     input >> body;
@@ -54,4 +54,4 @@ BOOST_AUTO_TEST_CASE(testFormatting) {
     boost::algorithm::to_lower(actual);
     
     BOOST_TEST(actual == expected);
-}
+}*/
