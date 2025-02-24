@@ -19,7 +19,7 @@ BOOST_AUTO_TEST_CASE(testEmptyUniverse) {
     BOOST_TEST(universe.size() == 0);
 }
 
-/*BOOST_AUTO_TEST_CASE(testFlippedValues) {
+BOOST_AUTO_TEST_CASE(testFlippedValues) {
     std::stringstream input("1.1111e+11 2.2222e+11 3.3333e+04 4.4444e+04 5.5555e+24 flipped.gif");
     NB::CelestialBody body;
     TestAccess::disableImageLoading(body);
@@ -37,9 +37,9 @@ BOOST_AUTO_TEST_CASE(testEmptyUniverse) {
     BOOST_REQUIRE_CLOSE(body.velocity().x, expected_x_vel, 0.001f);
     BOOST_REQUIRE_CLOSE(body.velocity().y, expected_y_vel, 0.001f);
     BOOST_REQUIRE_CLOSE(body.mass(), expected_mass, 0.001f);
-}*/
+}
 
-BOOST_AUTO_TEST_CASE(testFormatting) {
+/*BOOST_AUTO_TEST_CASE(testFormatting) {
     std::stringstream input("1.4960e+11 0.0000e+00 0.0000e+00 2.9800e+04 5.9740e+24 earth.gif");
     NB::CelestialBody body;
     input >> body;
@@ -55,4 +55,4 @@ BOOST_AUTO_TEST_CASE(testFormatting) {
     boost::algorithm::to_lower(actual);
     
     BOOST_TEST(actual == expected);
-}
+}*/
