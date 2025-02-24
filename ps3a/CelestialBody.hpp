@@ -26,6 +26,13 @@ private:
     friend class TestAccess;
 };
 
+class TestAccess {
+public:
+    static void disableImageLoading(CelestialBody& body) {
+        body.loadImage = false;  // ✅ Allow tests to disable image loading
+    }
+};
+
 std::istream& operator>>(std::istream& in, CelestialBody& body);
 std::ostream& operator<<(std::ostream& out, const CelestialBody& body);
 }  // namespace NB
