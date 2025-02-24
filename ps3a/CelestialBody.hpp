@@ -2,8 +2,6 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 
-class TestAccess;
-
 namespace NB {
 class CelestialBody: public sf::Drawable {
 public:
@@ -28,10 +26,6 @@ private:
     friend class ::TestAccess;
 };
 
-std::istream& operator>>(std::istream& in, CelestialBody& body);
-std::ostream& operator<<(std::ostream& out, const CelestialBody& body);
-}  // namespace NB
-
 class TestAccess {
 public:
     static void disableImageLoading(NB::CelestialBody& body) {
@@ -39,4 +33,8 @@ public:
         body.imageFile = "test_placeholder.png";
     }
 };
+
+std::istream& operator>>(std::istream& in, CelestialBody& body);
+std::ostream& operator<<(std::ostream& out, const CelestialBody& body);
+}  // namespace NB
 
