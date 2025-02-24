@@ -3,8 +3,6 @@
 #include <SFML/Graphics.hpp>
 
 namespace NB {
-class TestAccess;
-
 class CelestialBody: public sf::Drawable {
 public:
     explicit CelestialBody(); 
@@ -20,23 +18,13 @@ private:
     sf::Vector2f vel;  // Velocity variable
     float m;  // Mass variable
     std::string imageFile;  // Store the image filename
-    sf::Texture texture;
-    bool loadImage = true;
 
+    // Friend functions to allow direct access to private members
     friend std::istream& operator>>(std::istream& in, CelestialBody& body);
     friend std::ostream& operator<<(std::ostream& out, const CelestialBody& body);
-    friend class NB::TestAccess;
 };
 
-class TestAccess {
-public:
-    static void disableImageLoading(NB::CelestialBody& body) {
-        body.loadImage = false;
-        body.imageFile = "test_placeholder.png";
-    }
-};
-
+// Function declarations
 std::istream& operator>>(std::istream& in, CelestialBody& body);
 std::ostream& operator<<(std::ostream& out, const CelestialBody& body);
 }  // namespace NB
-
