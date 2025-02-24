@@ -14,7 +14,7 @@ TEST = test
 $(BUILD_DIR):
 	mkdir -p $(BUILD_DIR)
 
-all: $(PROGRAM) $(TEST) NBODY.a
+all: $(PROGRAM) $(TEST) NBody.a
 
 $(BUILD_DIR)/%.o: %.cpp $(DEPS) | $(BUILD_DIR)
 	$(CC) $(CFLAGS) $(INCLUDEDIR) -c $< -o $@
@@ -29,7 +29,7 @@ NBODY.a: $(OBJECTS)
 	ar rcs $@ $(OBJECTS)
 
 clean:
-	rm -rf $(BUILD_DIR) $(PROGRAM) $(TEST) NBODY.a
+	rm -rf $(BUILD_DIR) $(PROGRAM) $(TEST) NBody.a
 
 lint:
 	cpplint *.cpp *.hpp
