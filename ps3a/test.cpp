@@ -53,5 +53,4 @@ BOOST_AUTO_TEST_CASE(testFormatting) {
     BOOST_CHECK_CLOSE(body2.velocity().x, body.velocity().x, 0.001f);
     BOOST_CHECK_CLOSE(body2.velocity().y, body.velocity().y, 0.001f);
     BOOST_CHECK_CLOSE(body2.mass(), body.mass(), 0.001f);
-    //BOOST_CHECK(body2.NB::CelestialBody::getImageFile() == body.NB::CelestialBody::getImageFile());
 }
