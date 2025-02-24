@@ -55,3 +55,19 @@ BOOST_AUTO_TEST_CASE(testFlippedValues) {
     
     BOOST_TEST(actual == expected);
 }*/
+BOOST_AUTO_TEST_CASE(testFormatting) {
+    std::stringstream input("1.4960e+11 0.0000e+00 0.0000e+00 2.9800e+04 5.9740e+24 earth.gif");
+    NB::CelestialBody body;
+    input >> body;
+    std::stringstream output;
+    output << body;
+    NB::CelestialBody body2;
+    output >> body2;
+    
+    BOOST_CHECK_CLOSE(body2.position().x, body.position().x, 0.001f);
+    BOOST_CHECK_CLOSE(body2.position().y, body.position().y, 0.001f);
+    BOOST_CHECK_CLOSE(body2.velocity().x, body.velocity().x, 0.001f);
+    BOOST_CHECK_CLOSE(body2.velocity().y, body.velocity().y, 0.001f);
+    BOOST_CHECK_CLOSE(body2.mass(), body.mass(), 0.001f);
+    BOOST_CHECK(body2.getImageFile() == body.getImageFile());
+}
