@@ -25,7 +25,7 @@ private:
 
     friend std::istream& operator>>(std::istream& in, CelestialBody& body);
     friend std::ostream& operator<<(std::ostream& out, const CelestialBody& body);
-    friend class TestAccess;
+    friend class NB::TestAccess;
 };
 
 class TestAccess {
