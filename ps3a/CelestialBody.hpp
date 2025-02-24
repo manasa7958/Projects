@@ -3,6 +3,8 @@
 #include <SFML/Graphics.hpp>
 
 namespace NB {
+class TestAccess;
+
 class CelestialBody: public sf::Drawable {
 public:
     explicit CelestialBody(); 
@@ -23,7 +25,7 @@ private:
 
     friend std::istream& operator>>(std::istream& in, CelestialBody& body);
     friend std::ostream& operator<<(std::ostream& out, const CelestialBody& body);
-    friend class ::TestAccess;
+    friend class TestAccess;
 };
 
 class TestAccess {
