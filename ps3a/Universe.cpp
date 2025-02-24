@@ -33,7 +33,10 @@ double Universe::radius() const {
   return universeRadius;
 }
 const CelestialBody& Universe::operator[](size_t index) const {
-  throw std::out_of_range("Index out of range");
+  if (index >= bodies.size()) {
+    throw std::out_of_range("Index out of range");
+  }
+  return *bodies[index];
 }
 void Universe::draw(sf::RenderTarget& window, sf::RenderStates states) const {
   for (const auto& body : bodies) {
