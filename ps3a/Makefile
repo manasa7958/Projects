@@ -14,7 +14,7 @@ TEST = test
 $(BUILD_DIR):
 	mkdir -p $(BUILD_DIR)
 
-all: $(PROGRAM) $(TEST) NBODY.a
+all: $(PROGRAM) $(TEST) ./NBody.a
 
 $(BUILD_DIR)/%.o: %.cpp $(DEPS) | $(BUILD_DIR)
 	$(CC) $(CFLAGS) $(INCLUDEDIR) -c $< -o $@
@@ -25,17 +25,18 @@ $(BUILD_DIR)/main.o: main.cpp $(DEPS) | $(BUILD_DIR)
 $(BUILD_DIR)/test.o: test.cpp $(DEPS) | $(BUILD_DIR)
 	$(CC) $(CFLAGS) $(INCLUDEDIR) -c test.cpp -o $(BUILD_DIR)/test.o
 
-$(PROGRAM): $(BUILD_DIR)/main.o $(OBJECTS)
+$(PROGRAM): $(BUILD_DIR)/main.o $(OBJECTS) ./NBody.a
 	$(CC) $(CFLAGS) $(LIBDIR) -o $@ $^ $(LIB)
 
-$(TEST): $(BUILD_DIR)/test.o $(OBJECTS)
+$(TEST): $(BUILD_DIR)/test.o $(OBJECTS) ./NBody.a
 	$(CC) $(CFLAGS) $(LIBDIR) -o $@ $^ $(LIB)
 
 NBODY.a: $(OBJECTS)
-	ar rcs $@ $(OBJECTS)
+	ar rcs ./NBody.a $(OBJECTS)
 
 clean:
-	rm -rf $(BUILD_DIR) $(PROGRAM) $(TEST) NBODY.a
+	rm -f $(BUILD_DIR)/*.o $(PROGRAM) $(TEST) ./NBody.a
 
+# Linting
 lint:
 	cpplint *.cpp *.hpp
