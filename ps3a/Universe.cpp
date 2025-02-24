@@ -26,11 +26,11 @@ std::ostream& operator<<(std::ostream& out, const Universe& universe) {
   }
   return out;
 }
-size_t Universe::size() const { 
-  return bodies.size(); 
+size_t Universe::size() const {
+  return bodies.size();
 }
-double Universe::radius() const { 
-  return universeRadius; 
+double Universe::radius() const {
+  return universeRadius;
 }
 const CelestialBody& Universe::operator[](size_t index) const {
   throw std::out_of_range("Index out of range");
