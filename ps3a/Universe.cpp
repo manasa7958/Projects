@@ -24,7 +24,7 @@ std::ostream& operator<<(std::ostream& out, const Universe& universe) {
   for (size_t i = 0; i < universe.size(); ++i) {
     out << universe[i];
   }
-  return out;  // need to write
+  return out;
 }
 size_t Universe::size() const { 
   return bodies.size(); 
