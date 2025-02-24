@@ -4,26 +4,27 @@
 
 namespace NB {
 class CelestialBody: public sf::Drawable {
- public:
-    explicit CelestialBody(); // Required
+public:
+    explicit CelestialBody(); 
 
-    sf::Vector2f position() const; // Optional
-    sf::Vector2f velocity() const; // Optional
-    float mass() const; // Optional
+    sf::Vector2f position() const { return pos; }
+    sf::Vector2f velocity() const { return vel; }
+    float mass() const { return m; }
 
- protected:
-    void draw(sf::RenderTarget& window, sf::RenderStates states) const override; // From sf::Drawable
- private:
+protected:
+    void draw(sf::RenderTarget& window, sf::RenderStates states) const override;
+private:
     sf::Vector2f pos;  // Position variable
     sf::Vector2f vel;  // Velocity variable
     float m;  // Mass variable
     std::string imageFile;  // Store the image filename
 
     // Friend functions to allow direct access to private members
-    friend std::istream& operator>>(std::istream& is, CelestialBody& uni);
-    friend std::ostream& operator<<(std::ostream& os, const CelestialBody& uni);
+    friend std::istream& operator>>(std::istream& in, CelestialBody& body);
+    friend std::ostream& operator<<(std::ostream& out, const CelestialBody& body);
 };
 
-std::istream& operator>>(std::istream& is, CelestialBody& uni);
-std::ostream& operator<<(std::ostream& os, const CelestialBody& uni);
+// Function declarations
+std::istream& operator>>(std::istream& in, CelestialBody& body);
+std::ostream& operator<<(std::ostream& out, const CelestialBody& body);
 }  // namespace NB
