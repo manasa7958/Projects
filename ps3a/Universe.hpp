@@ -3,6 +3,7 @@
 #include <iostream>
 #include <memory>
 #include <vector>
+#include <string>
 #include <SFML/Graphics.hpp>
 #include "CelestialBody.hpp"
 
