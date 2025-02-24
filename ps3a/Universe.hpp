@@ -1,10 +1,9 @@
 // Copyright 2025 Manasa Praveen
 #pragma once
-#include <SFML/Graphics.hpp>
 #include <iostream>
 #include <memory>
 #include <vector>
-
+#include <SFML/Graphics.hpp>
 #include "CelestialBody.hpp"
 
 namespace NB {
