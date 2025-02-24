@@ -32,7 +32,7 @@ std::ostream& operator<<(std::ostream& out, const CelestialBody& body);
 
 class TestAccess {
 public:
-    static void disableImageLoading(CelestialBody& body) {
+    static void disableImageLoading(NB::CelestialBody& body) {
         body.loadImage = false;
     }
 };
