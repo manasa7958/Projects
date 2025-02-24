@@ -9,20 +9,20 @@ std::istream& operator>>(std::istream& in, Universe& universe) {
   size_t n;
   double radius;
   in >> n >> radius;
-  universe.universeRadius = radius;
-  universe.bodies.clear();
+  universe.setRadius(radius);
+  universe.clearBodies();
 
-  for (size_t i = 0; i < n; i++) {
+  for (size_t i = 0; i < n; ++i) {
     auto body = std::make_shared<CelestialBody>();
     in >> *body;
-    universe.bodies.push_back(body);
+    universe.addBody(body);
   }
   return in;
 }
 std::ostream& operator<<(std::ostream& out, const Universe& universe) {
-  out << universe.bodies.size() << " " << universe.universeRadius << "\n";
-  for (const auto &body : universe.bodies) {
-    out << *body;
+  out << universe.size() << " " << universe.radius() << "\n";
+  for (size_t i = 0; i < universe.size(); ++i) {
+    out << universe[i];
   }
   return out;  // need to write
 }
