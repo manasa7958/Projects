@@ -29,7 +29,7 @@ private:
 class TestAccess {
 public:
     static void disableImageLoading(CelestialBody& body) {
-        body.loadImage = false;  // ✅ Allow tests to disable image loading
+        body.loadImage = false;
     }
 };
 
