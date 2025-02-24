@@ -26,6 +26,10 @@ private:
     friend class TestAccess;
 };
 
+std::istream& operator>>(std::istream& in, CelestialBody& body);
+std::ostream& operator<<(std::ostream& out, const CelestialBody& body);
+}  // namespace NB
+
 class TestAccess {
 public:
     static void disableImageLoading(CelestialBody& body) {
@@ -33,6 +37,3 @@ public:
     }
 };
 
-std::istream& operator>>(std::istream& in, CelestialBody& body);
-std::ostream& operator<<(std::ostream& out, const CelestialBody& body);
-}  // namespace NB
