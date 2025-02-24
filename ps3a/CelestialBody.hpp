@@ -36,6 +36,7 @@ class TestAccess {
 public:
     static void disableImageLoading(NB::CelestialBody& body) {
         body.loadImage = false;
+        body.imageFile = "test_placeholder.png";
     }
 };
 
