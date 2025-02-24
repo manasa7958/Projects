@@ -24,7 +24,6 @@ private:
     friend std::ostream& operator<<(std::ostream& out, const CelestialBody& body);
 };
 
-// Function declarations
 std::istream& operator>>(std::istream& in, CelestialBody& body);
 std::ostream& operator<<(std::ostream& out, const CelestialBody& body);
 }  // namespace NB
