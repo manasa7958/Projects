@@ -2,14 +2,7 @@
 #include "CelestialBody.hpp"
 
 namespace NB {
-CelestialBody::CelestialBody() : pos(0, 0), vel(0, 0), m(0), imageFile("") {
-    if (loadImage && !imageFile.empty()) {
-        if (!texture.loadFromFile(imageFile)) {
-            std::cerr << "Can't load image " << imageFile;
-        }
-    }
-}
-
+CelestialBody::CelestialBody() : pos(0, 0), vel(0, 0), m(0), imageFile("") {}
 
 std::istream& operator>>(std::istream& in, CelestialBody& body) {
     in >> body.pos.x >> body.pos.y
