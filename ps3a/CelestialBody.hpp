@@ -18,8 +18,8 @@ private:
     sf::Vector2f vel;  // Velocity variable
     float m;  // Mass variable
     std::string imageFile;  // Store the image filename
+    bool loadImage = true;
 
-    // Friend functions to allow direct access to private members
     friend std::istream& operator>>(std::istream& in, CelestialBody& body);
     friend std::ostream& operator<<(std::ostream& out, const CelestialBody& body);
 };
