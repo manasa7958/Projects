@@ -1,7 +1,8 @@
 // Copyright 2025 Manasa Praveen
 #pragma once
-#include <SFML/Graphics.hpp>
 #include <iostream>
+#include <string>
+#include <SFML/Graphics.hpp>
 
 namespace NB {
 class CelestialBody : public sf::Drawable {
