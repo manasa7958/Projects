@@ -19,7 +19,6 @@ out << std::scientific << std::setprecision(4) << std::uppercase << body.pos.x
 return out;
 }
 
-void CelestialBody::draw(sf::RenderTarget& window,
-                         sf::RenderStates states) const {}
+void CelestialBody::draw(sf::RenderTarget& window, sf::RenderStates states) const {}
 
 }  // namespace NB
