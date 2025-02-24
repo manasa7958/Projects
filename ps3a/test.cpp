@@ -22,6 +22,7 @@ BOOST_AUTO_TEST_CASE(testEmptyUniverse) {
 BOOST_AUTO_TEST_CASE(testFlippedValues) {
     std::stringstream input("1.1111e+11 2.2222e+11 3.3333e+04 4.4444e+04 5.5555e+24 flipped.gif");
     NB::CelestialBody body;
+    body.loadImage = false; 
     input >> body;
     
     double expected_x_pos = 1.1111e+11;
