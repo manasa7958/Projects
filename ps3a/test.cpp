@@ -1,6 +1,5 @@
 #include <iostream>
 #include <sstream>
-#include <iomanip>
 #include <cmath> 
 
 #include "Universe.hpp"
@@ -9,7 +8,7 @@
 #define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MODULE NBodyTests
 #include <boost/test/unit_test.hpp>
-#include <boost/algorithm/string.hpp>  // Include Boost's string utilities
+#include <boost/algorithm/string.hpp>
 
 BOOST_AUTO_TEST_CASE(testEmptyUniverse) {
     std::stringstream input("0 1.0e+11\n");
@@ -49,15 +48,9 @@ BOOST_AUTO_TEST_CASE(testFormatting) {
 
     std::string expected = "1.4960e+11 0.0000e+00 0.0000e+00 2.9800e+04 5.9740e+24 earth.gif\n";
     std::string actual = output.str();
-
-    // Convert both to lowercase before comparison
-    boost::algorithm::to_lower(expected);
+    
+    boost::algorithm::to_lower(expected); //using because error was e and E mismatch
     boost::algorithm::to_lower(actual);
-
-    // Debugging output
-    std::cout << "Expected Output: \"" << expected << "\" (size: " << expected.size() << ")\n";
-    std::cout << "Actual Output:   \"" << actual << "\" (size: " << actual.size() << ")\n";
-
-    // Compare the normalized strings
+    
     BOOST_TEST(actual == expected);
 }
