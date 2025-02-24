@@ -18,6 +18,7 @@ private:
     sf::Vector2f vel;  // Velocity variable
     float m;  // Mass variable
     std::string imageFile;  // Store the image filename
+    sf::Texture texture;
     bool loadImage = true;
 
     friend std::istream& operator>>(std::istream& in, CelestialBody& body);
