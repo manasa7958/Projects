@@ -10,7 +10,6 @@ public:
     sf::Vector2f position() const { return pos; }
     sf::Vector2f velocity() const { return vel; }
     float mass() const { return m; }
-    std::string getImageFile() const;
 
 protected:
     void draw(sf::RenderTarget& window, sf::RenderStates states) const override;
