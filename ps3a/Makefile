@@ -25,7 +25,7 @@ $(PROGRAM): $(BUILD_DIR)/main.o $(OBJECTS)
 $(TEST): $(BUILD_DIR)/test.o $(OBJECTS)
 	$(CC) $(CFLAGS) $(LIBDIR) -o $@ $^ $(LIB)
 
-NBODY.a: $(OBJECTS)
+NBody.a: $(OBJECTS)
 	ar rcs $@ $(OBJECTS)
 
 clean:
