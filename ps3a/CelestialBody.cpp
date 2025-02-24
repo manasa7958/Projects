@@ -4,6 +4,10 @@
 namespace NB {
 CelestialBody::CelestialBody() : pos(0, 0), vel(0, 0), m(0), imageFile("") {}
 
+std::string CelestialBody::getImageFile() const {
+    return imageFile;
+}
+
 std::istream& operator>>(std::istream& in, CelestialBody& body) {
     in >> body.pos.x >> body.pos.y
        >> body.vel.x >> body.vel.y
