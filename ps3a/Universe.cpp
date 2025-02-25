@@ -4,6 +4,14 @@
 namespace NB {
 
 Universe::Universe() : universeRadius(0) {}
+Universe::Universe() : universeRadius(0) {
+    if (!backgroundTexture.loadFromFile("background.jpg")) {
+        std::cerr << "Failed to load background image" << std::endl;
+    } else {
+        backgroundSprite.setTexture(backgroundTexture);
+    }
+}
+
 std::istream& operator>>(std::istream& in, Universe& universe) {
     size_t n;
     double radius;
@@ -48,11 +56,12 @@ const CelestialBody& Universe::operator[](size_t index) const {
 }
 
 void Universe::draw(sf::RenderTarget& window, sf::RenderStates states) const {
-  if (bodies.empty()) {
+    window.draw(backgroundSprite);
+    if (bodies.empty()) {
     std::cerr << "No celestial bodies found!";
-      }
-  for (const auto& body : bodies) {
-    window.draw(*body, states);
-  }
+    }
+    for (const auto& body : bodies) {
+        window.draw(*body, states);
+    }
 }
 }  // namespace NB
