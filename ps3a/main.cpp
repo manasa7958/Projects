@@ -38,7 +38,7 @@ int main() {
   std::cout << "Finished reading planets.txt" << std::endl;
 
   // DEBUG: Check how many celestial bodies were loaded
-  std::cout << "Number of celestial bodies: " << universe.getSize() << std::endl;
+  std::cout << "Number of celestial bodies: " << universe.size() << std::endl;
 
   sf::RenderWindow window(sf::VideoMode(800, 800), "Simulation");
 
