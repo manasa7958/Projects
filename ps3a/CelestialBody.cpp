@@ -60,24 +60,27 @@ std::ostream& operator<<(std::ostream& out, const CelestialBody& body) {
 bool CelestialBody::loadTexture(double universeRadius) {
     texture = std::make_shared<sf::Texture>();
     if (!texture->loadFromFile(imageFile)) {
-        std::cerr << "❌ Failed to load image: " << imageFile << std::endl;
+        std::cerr << "❌ Error: Could not load texture for " << imageFile << std::endl;
         return false;
     }
 
     sprite.setTexture(*texture);
 
+    // ✅ Debug print: Check if the texture is actually loading
+    std::cout << "✅ Successfully loaded texture: " << imageFile << std::endl;
+
     // ✅ Scale position to fit within the 800x800 SFML window
-    const double SCALE_FACTOR = 400.0 / universeRadius;  // Normalize positions
+    const double SCALE_FACTOR = 400.0 / universeRadius;
     float screenX = pos.x * SCALE_FACTOR + 400;  // Centered in the window
     float screenY = pos.y * SCALE_FACTOR + 400;
 
     sprite.setPosition(screenX, screenY);
 
-    std::cout << "✅ Successfully loaded texture: " << imageFile
-              << " | Screen Position: (" << screenX << ", " << screenY << ")" << std::endl;
+    // ✅ Debug print: Check if positions are within window range
+    std::cout << "🎯 Planet " << imageFile << " Screen Position: (" << screenX << ", " << screenY << ")" << std::endl;
+
     return true;
 }
-
 void CelestialBody::draw(sf::RenderTarget& window, sf::RenderStates states) const {
     window.draw(sprite, states);
 }
