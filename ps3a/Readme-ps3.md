@@ -9,14 +9,14 @@ Time to Complete: 9 hours
 
 
 ## Description
-Explain what the project does.
+In this project we are trying to make a static universe using SFML. In this project files are read, so in the example scrrenshot we had to include in the project the program reads planet.txt and then generates a window with planets (bodies) in the corresponding positions. Each planet has data correspnding to their position, velocity, mass, and an image as well. In part A of the project the main focus is on rendering the images in their respective positions.
 
 ### Features
-Describe what your major decisions were and why you did things that way.
+I think having CelestBody and Universe hpp files already set up it was easier to build based on that. The CelestialBody files mainly focus on individual bodies or planets. It includes methods to read, write and draw the planets, as well as scale them. The Universe fules focuses on the project as a whole including making the window, reading planet data, and drawing the background. Deciding when to use smart pointers and where to use was something I had to figure out. I decided to make std::shared_ptr<CelestialBody> as a shared smart pointer for both the CelestialBody and Universe files. This helps prevent memory leaks and also the efficiency of coding. The scaling was also another feature that I had to spend quite some time on and used a lot of guessing and checking to get the proportions right. 
 
 ### Memory
 Describe how you managed the lifetimes of your objects, including if you used smart pointers.
-I did use smart pointers in this project as it was suggested by the rubric. I had to look up how to use smart pointers and understand them because I was not very confident in using them. 
+I did use smart pointers in this project as it was suggested by the rubric. I had to look up how to use smart pointers and understand them because I was not very confident in using them. Using shared pointers helps with deletion, because this makes it so that manual deletion is not really needed. It also helps with the prevention of memory leaks, and makes it a lot easier to code because I don't have to create two of the same pointer for the files and instead can share them. 
 
 ### Issues
 I had a lot of trouble with generating the planets into my window because for some reason the planets were not being diaplyed correctly. So then I had to debug my files to figure out if there was an issue with the files being read correctly, or if the drawable function was being called appropriately. I also had to check if positioning was the problem. In the end the scaling was indeed one of the biggest concerns which was why the planets were not being displayed correctly on my end. 
