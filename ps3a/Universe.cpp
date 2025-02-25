@@ -49,7 +49,7 @@ void Universe::draw(sf::RenderTarget& window, sf::RenderStates states) const {
   std::cout << "Drawing universe..." << std::endl;  // Debug message
   for (const auto& body : bodies) {
     window.draw(*body, states);
-    std::cout << "Drawing body: " << body.getImage() << std::endl;  // Debug each planet
+    //std::cout << "Drawing body: " << body.getImage() << std::endl;  // Debug each planet
   }
 }
 }  // namespace NB
