@@ -34,9 +34,7 @@ bool CelestialBody::loadTexture(double universeRadius) {
   sprite.setPosition(screenX, screenY);
   return true;
 }
-\
-void CelestialBody::draw(sf::RenderTarget& window,
-                         sf::RenderStates states) const {
+void CelestialBody::draw(sf::RenderTarget& window, sf::RenderStates states) const {
   window.draw(sprite, states);
 }
 
