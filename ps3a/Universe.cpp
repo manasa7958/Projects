@@ -48,7 +48,7 @@ const CelestialBody& Universe::operator[](size_t index) const {
 void Universe::draw(sf::RenderTarget& window, sf::RenderStates states) const {
   std::cout << "Drawing universe... Bodies in universe: " << bodies.size() << std::endl;  // Debug message
   if (bodies.empty()) {
-    std::cerr << "⚠️ No celestial bodies found! Check if planets were read correctly."
+    std::cerr << "⚠️ No celestial bodies found! Check if planets were read correctly.";
       }
   for (const auto& body : bodies) {
     std::cout << "Drawing body at (" << body->position().x << ", " << body->position().y << ")" << std::endl;
