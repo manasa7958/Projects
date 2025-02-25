@@ -66,18 +66,18 @@ bool CelestialBody::loadTexture(double universeRadius) {
 
     sprite.setTexture(*texture);
 
-    // ✅ Adjust scaling factor based on universe radius
-    const double SCALE_FACTOR = 200.0 / universeRadius;  // Reduce if needed
+    // ✅ Adjust scale factor so planets fit in the 800x800 window
+    const double SCALE_FACTOR = 400.0 / universeRadius;
 
-    // Convert simulation coordinates to screen coordinates
-    float screenX = (pos.x * SCALE_FACTOR) + 400;  // Centered in window
+    // Convert real-world coordinates to screen coordinates
+    float screenX = (pos.x * SCALE_FACTOR) + 400;  // Center in window
     float screenY = (pos.y * SCALE_FACTOR) + 400;
 
     sprite.setPosition(screenX, screenY);
 
-    // ✅ Debug info
+    // ✅ Debug output to verify correct positioning
     std::cout << "🎯 Planet " << imageFile << " at (" << pos.x << ", " << pos.y << ")"
-              << " → Screen (" << screenX << ", " << screenY << ")" << std::endl;
+              << " → Screen Position: (" << screenX << ", " << screenY << ")" << std::endl;
 
     return true;
 }
