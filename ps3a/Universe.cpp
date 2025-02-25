@@ -4,28 +4,6 @@
 namespace NB {
 
 Universe::Universe() : universeRadius(0) {}
-
-/*std::istream& operator>>(std::istream& in, Universe& universe) {
-  size_t n;
-  double radius;
-
-  in >> n >> radius;  
-  universe.setRadius(radius);  
-  universe.clearBodies();  
-
-  if (n == 0) {
-    return in;
-  }
-
-  for (size_t i = 0; i < n; ++i) {
-    auto body = std::make_shared<CelestialBody>();
-    in >> *body;
-    universe.addBody(body);
-  }
-
-  return in;
-}*/
-
 std::istream& operator>>(std::istream& in, Universe& universe) {
     size_t n;
     double radius;
@@ -34,18 +12,15 @@ std::istream& operator>>(std::istream& in, Universe& universe) {
     universe.clearBodies();
 
     if (n == 0) return in;
-
     for (size_t i = 0; i < n; ++i) {
         auto body = std::make_shared<CelestialBody>();
         in >> *body;
         
-        // ✅ Ensure texture loads AFTER position is set
         if (!body->loadTexture(radius)) {
-          std::cerr << "❌ Failed to load texture for " << body->getImageFile() << std::endl;
+          std::cerr << "Failed to load texture" << std::endl;
         }
         universe.addBody(body);
     }
-
     return in;
 }
 
@@ -56,25 +31,27 @@ std::ostream& operator<<(std::ostream& out, const Universe& universe) {
   }
   return out;
 }
+
 size_t Universe::size() const {
   return bodies.size();
 }
+
 double Universe::radius() const {
   return universeRadius;
 }
+
 const CelestialBody& Universe::operator[](size_t index) const {
   if (index >= bodies.size()) {
     throw std::out_of_range("Index out of range");
   }
   return *bodies[index];
 }
+
 void Universe::draw(sf::RenderTarget& window, sf::RenderStates states) const {
-  std::cout << "Drawing universe... Bodies in universe: " << bodies.size() << std::endl;  // Debug message
   if (bodies.empty()) {
-    std::cerr << "⚠️ No celestial bodies found! Check if planets were read correctly.";
+    std::cerr << "No celestial bodies found!";
       }
   for (const auto& body : bodies) {
-    std::cout << "Drawing body at (" << body->position().x << ", " << body->position().y << ")" << std::endl;
     window.draw(*body, states);
   }
 }
