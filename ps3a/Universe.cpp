@@ -55,11 +55,4 @@ void Universe::draw(sf::RenderTarget& window, sf::RenderStates states) const {
     window.draw(*body, states);
   }
 }
-void NB::Universe::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-    std::cout << "Drawing universe... Bodies in universe: " << bodies.size() << std::endl;
-    for (const auto& body : bodies) {
-        std::cout << "Drawing body at (" << body->getX() << ", " << body->getY() << ")" << std::endl;
-        target.draw(*body);
-    }
-}
 }  // namespace NB
