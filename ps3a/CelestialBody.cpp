@@ -66,22 +66,23 @@ bool CelestialBody::loadTexture(double universeRadius) {
 
     sprite.setTexture(*texture);
 
-    // ✅ Debug print: Check if the texture is actually loading
-    std::cout << "✅ Successfully loaded texture: " << imageFile << std::endl;
+    // ✅ Adjust scaling factor based on universe radius
+    const double SCALE_FACTOR = 200.0 / universeRadius;  // Reduce if needed
 
-    // ✅ Scale position to fit within the 800x800 SFML window
-    const double SCALE_FACTOR = 400.0 / universeRadius;
-    float screenX = pos.x * SCALE_FACTOR + 400;  // Centered in the window
-    float screenY = pos.y * SCALE_FACTOR + 400;
+    // Convert simulation coordinates to screen coordinates
+    float screenX = (pos.x * SCALE_FACTOR) + 400;  // Centered in window
+    float screenY = (pos.y * SCALE_FACTOR) + 400;
 
     sprite.setPosition(screenX, screenY);
 
-    // ✅ Debug print: Check if positions are within window range
-    std::cout << "🎯 Planet " << imageFile << " Screen Position: (" << screenX << ", " << screenY << ")" << std::endl;
+    // ✅ Debug info
+    std::cout << "🎯 Planet " << imageFile << " at (" << pos.x << ", " << pos.y << ")"
+              << " → Screen (" << screenX << ", " << screenY << ")" << std::endl;
 
     return true;
 }
 void CelestialBody::draw(sf::RenderTarget& window, sf::RenderStates states) const {
+    std::cout << "🖌️ Drawing sprite at " << sprite.getPosition().x << ", " << sprite.getPosition().y << std::endl;
     window.draw(sprite, states);
 }
 
