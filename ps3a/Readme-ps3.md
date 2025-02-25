@@ -5,7 +5,7 @@ Name: Manasa Praveen
 
 Section: 202
 
-Time to Complete:
+Time to Complete: 9 hours
 
 
 ## Description
