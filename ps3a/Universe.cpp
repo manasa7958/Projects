@@ -46,10 +46,20 @@ const CelestialBody& Universe::operator[](size_t index) const {
   return *bodies[index];
 }
 void Universe::draw(sf::RenderTarget& window, sf::RenderStates states) const {
-  std::cout << "Drawing universe..." << std::endl;  // Debug message
+  std::cout << "Drawing universe... Bodies in universe: " << bodies.size() << std::endl;  // Debug message
+  if (bodies.empty()) {
+    std::cerr << "⚠️ No celestial bodies found! Check if planets were read correctly."
+      }
   for (const auto& body : bodies) {
+    std::cout << "Drawing body at (" << body->position().x << ", " << body->position().y << ")" << std::endl;
     window.draw(*body, states);
-    //std::cout << "Drawing body: " << body.getImage() << std::endl;  // Debug each planet
   }
+}
+void NB::Universe::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+    std::cout << "Drawing universe... Bodies in universe: " << bodies.size() << std::endl;
+    for (const auto& body : bodies) {
+        std::cout << "Drawing body at (" << body->getX() << ", " << body->getY() << ")" << std::endl;
+        target.draw(*body);
+    }
 }
 }  // namespace NB
