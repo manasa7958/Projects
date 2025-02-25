@@ -26,8 +26,10 @@ bool CelestialBody::loadTexture() {
   }
   sprite.setTexture(*texture);
   sprite.setPosition(pos.x, pos.y);
+  std::cout << "✅ Successfully loaded texture: " << imageFile << std::endl;
   return true;
 }
+
 void CelestialBody::draw(sf::RenderTarget& window, sf::RenderStates states) const {
     window.draw(sprite, states);
 }
