@@ -41,9 +41,8 @@ std::istream& operator>>(std::istream& in, Universe& universe) {
         
         // ✅ Ensure texture loads AFTER position is set
         if (!body->loadTexture(radius)) {
-            std::cerr << "❌ Failed to load texture for " << body->imageFile << std::endl;
+          std::cerr << "❌ Failed to load texture for " << body->getImageFile() << std::endl;
         }
-
         universe.addBody(body);
     }
 
