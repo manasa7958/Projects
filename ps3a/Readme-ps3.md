@@ -21,9 +21,9 @@ Describe how you managed the lifetimes of your objects, including if you used sm
 What did you have trouble with?  What did you learn?  What doesn't work?  Be honest.  You might be penalized if you claim something works and it doesn't.
 
 ### Extra Credit
-Anything special you did.  This is required to earn bonus points.
-If you created your own universe file.  Describe it here and explain why it is interesting.
+I added a background image to the SFML window. I also made sure to dynamically scale the background. I downloaded a jpg image from the internet that I thought would be appropriate as a background for the planets and then 
 
 ## Acknowledgements
-List all sources of help including the instructor or TAs, classmates, and web pages.
-If you used images or other resources than the ones provided, list them here.
+https://www.istockphoto.com/photos/galaxy-sky - background image
+https://www.geeksforgeeks.org/iomanip-in-cpp/ - to learn about iomanip
+https://www.learncpp.com/cpp-tutorial/introduction-to-smart-pointers-move-semantics/ - learning about smart pointers
