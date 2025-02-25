@@ -28,5 +28,7 @@ I added a background image to the SFML window. I also made sure to dynamically s
 
 ## Acknowledgements
 https://www.istockphoto.com/photos/galaxy-sky - background image
+
 https://www.geeksforgeeks.org/iomanip-in-cpp/ - to learn about iomanip
+
 https://www.learncpp.com/cpp-tutorial/introduction-to-smart-pointers-move-semantics/ - learning about smart pointers
