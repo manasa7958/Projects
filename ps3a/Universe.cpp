@@ -5,10 +5,9 @@ namespace NB {
 Universe::Universe() : universeRadius(0) {
     if (!backgroundTexture.loadFromFile("background.jpg")) {
         std::cerr << "Failed to load background image" << std::endl;
-    }
-    else {
+    } else {
         backgroundSprite.setTexture(backgroundTexture);
-        sf::Vector2u textureSize = backgroundTexture.getSize();  
+        sf::Vector2u textureSize = backgroundTexture.getSize();
         sf::Vector2u windowSize(800, 800);
         float scaleX = static_cast<float>(windowSize.x) / textureSize.x;
         float scaleY = static_cast<float>(windowSize.y) / textureSize.y;
@@ -27,7 +26,6 @@ std::istream& operator>>(std::istream& in, Universe& universe) {
     for (size_t i = 0; i < n; ++i) {
         auto body = std::make_shared<CelestialBody>();
         in >> *body;
-        
         if (!body->loadTexture(radius)) {
           std::cerr << "Failed to load texture" << std::endl;
         }
