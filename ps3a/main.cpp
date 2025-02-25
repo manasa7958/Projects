@@ -8,6 +8,7 @@
 int main() {
   NB::Universe universe;
   std::cin >> universe;
+  std::cout << "Finished reading planets.txt" << std::endl;
   sf::RenderWindow window(sf::VideoMode(800, 800), "Simulation");
   while (window.isOpen()) {
     sf::Event event;
