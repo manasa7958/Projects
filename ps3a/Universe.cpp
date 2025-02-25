@@ -5,7 +5,7 @@ namespace NB {
 
 Universe::Universe() : universeRadius(0) {}
 
-std::istream& operator>>(std::istream& in, Universe& universe) {
+/*std::istream& operator>>(std::istream& in, Universe& universe) {
   size_t n;
   double radius;
 
@@ -24,6 +24,30 @@ std::istream& operator>>(std::istream& in, Universe& universe) {
   }
 
   return in;
+}*/
+
+std::istream& operator>>(std::istream& in, Universe& universe) {
+    size_t n;
+    double radius;
+    in >> n >> radius;
+    universe.setRadius(radius);
+    universe.clearBodies();
+
+    if (n == 0) return in;
+
+    for (size_t i = 0; i < n; ++i) {
+        auto body = std::make_shared<CelestialBody>();
+        in >> *body;
+        
+        // ✅ Ensure texture loads AFTER position is set
+        if (!body->loadTexture(radius)) {
+            std::cerr << "❌ Failed to load texture for " << body->imageFile << std::endl;
+        }
+
+        universe.addBody(body);
+    }
+
+    return in;
 }
 
 std::ostream& operator<<(std::ostream& out, const Universe& universe) {
