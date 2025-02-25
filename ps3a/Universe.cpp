@@ -2,8 +2,6 @@
 #include "Universe.hpp"
 
 namespace NB {
-
-Universe::Universe() : universeRadius(0) {}
 Universe::Universe() : universeRadius(0) {
     if (!backgroundTexture.loadFromFile("background.jpg")) {
         std::cerr << "Failed to load background image" << std::endl;
