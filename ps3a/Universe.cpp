@@ -5,8 +5,14 @@ namespace NB {
 Universe::Universe() : universeRadius(0) {
     if (!backgroundTexture.loadFromFile("background.jpg")) {
         std::cerr << "Failed to load background image" << std::endl;
-    } else {
+    }
+    else {
         backgroundSprite.setTexture(backgroundTexture);
+        sf::Vector2u textureSize = backgroundTexture.getSize();  
+        sf::Vector2u windowSize(800, 800);
+        float scaleX = static_cast<float>(windowSize.x) / textureSize.x;
+        float scaleY = static_cast<float>(windowSize.y) / textureSize.y;
+        backgroundSprite.setScale(scaleX, scaleY);
     }
 }
 
