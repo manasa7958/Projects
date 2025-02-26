@@ -6,7 +6,7 @@
 #include <SFML/Graphics.hpp>
 
 int main() {
-  NB::Universe universe;
+  Universe universe;
   std::cin >> universe;
   sf::RenderWindow window(sf::VideoMode(800, 800), "The Solar System!");
   while (window.isOpen()) {
