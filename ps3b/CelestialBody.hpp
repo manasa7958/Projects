@@ -16,7 +16,8 @@ class CelestialBody : public sf::Drawable {
   std::string getImageFile() const { return imageFile; }
 
   bool loadTexture(double universeRadius);
-
+  void setVelocity(const sf::Vector2f& newVelocity) { vel = newVelocity; }
+  void setPosition(const sf::Vector2f& newPosition) { pos = newPosition; }
  protected:
   void draw(sf::RenderTarget& window, sf::RenderStates states) const override;
 
@@ -27,7 +28,6 @@ class CelestialBody : public sf::Drawable {
   std::string imageFile;
   std::shared_ptr<sf::Texture> texture;
   sf::Sprite sprite;
-
   friend std::istream& operator>>(std::istream& in, CelestialBody& body);
   friend std::ostream& operator<<(std::ostream& out, const CelestialBody& body);
 };
