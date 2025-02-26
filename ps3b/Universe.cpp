@@ -59,30 +59,40 @@ const CelestialBody& Universe::operator[](size_t index) const {
   }
   return *bodies[index];
 }
-
 void NB::Universe::step(double dt) {
     std::vector<sf::Vector2f> newVelocities(bodies.size());
     std::vector<sf::Vector2f> newPositions(bodies.size());
+
+    // Compute net force on each body
     for (size_t i = 0; i < bodies.size(); i++) {
-        sf::Vector2f netForce(0, 0);
+        sf::Vector2f netForce(0.f, 0.f);
         for (size_t j = 0; j < bodies.size(); j++) {
             if (i == j) continue;
+            
+            // Compute the pairwise force
             sf::Vector2f diff = bodies[j]->position() - bodies[i]->position();
-            double distance = std::sqrt(diff.x * diff.x + diff.y * diff.y);
-            if (distance == 0) continue;  // Avoid division by zero
+            float distance = std::sqrt(diff.x * diff.x + diff.y * diff.y);
+            if (distance == 0.f) continue;  // Avoid division by zero
 
-            double forceMagnitude = (6.67430e-11 * bodies[i]->mass() * bodies[j]->mass()) / (distance * distance);
-            sf::Vector2f force = forceMagnitude * (diff / static_cast<float>(distance));
+            float forceMagnitude = static_cast<float>((6.67430e-11 * bodies[i]->mass() * bodies[j]->mass()) / (distance * distance));
+            sf::Vector2f force = (diff / distance) * forceMagnitude; // Convert correctly
             netForce += force;
         }
+
+        // Compute acceleration
         sf::Vector2f acceleration = netForce / bodies[i]->mass();
+
+        // Update velocity using leapfrog method
         newVelocities[i] = bodies[i]->velocity() + (acceleration * static_cast<float>(dt));
+
+        // Update position
         newPositions[i] = bodies[i]->position() + (newVelocities[i] * static_cast<float>(dt));
     }
 
+    // Apply new velocities and positions using setters
     for (size_t i = 0; i < bodies.size(); i++) {
-        bodies[i]->vel = newVelocities[i];
-        bodies[i]->pos = newPositions[i];
+        bodies[i]->setVelocity(newVelocities[i]);
+        bodies[i]->setPosition(newPositions[i]);
     }
 }
 void Universe::draw(sf::RenderTarget& window, sf::RenderStates states) const {
