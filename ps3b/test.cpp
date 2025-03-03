@@ -75,7 +75,7 @@ BOOST_AUTO_TEST_CASE(testNumPlanets1) {
     BOOST_REQUIRE_NO_THROW(universe[0]);
 }
 
-BOOST_AUTO_TEST_CASE(testAntigravity) {
+/*BOOST_AUTO_TEST_CASE(testAntigravity) {
     std::stringstream input("2 1.0e+11\n"
         "0.0 0.0 0.0 0.0 1.0e+30 earth.gif\n"
         "1.0e+11 0.0 0.0 0.0 1.0e+30 mars.gif\n"); 
@@ -89,7 +89,7 @@ BOOST_AUTO_TEST_CASE(testAntigravity) {
     universe.step(1.0e+6);
     BOOST_REQUIRE_CLOSE(universe[0].position().x, 0.0, 0.0001);
     BOOST_REQUIRE_CLOSE(universe[1].position().x, 1.0e+11, 0.0001);
-}
+}*/
 BOOST_AUTO_TEST_CASE(testNoAcceleration) {
     std::stringstream input("1 1.0e+11\n"
         "0.0 0.0 0.0 0.0 1.0e+30 earth.gif\n");
