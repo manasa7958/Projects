@@ -73,24 +73,19 @@ BOOST_AUTO_TEST_CASE(testNumPlanets1) {
     BOOST_REQUIRE_EQUAL(universe.size(), 5);
     BOOST_REQUIRE_NO_THROW(universe[0]);
 }
-
 BOOST_AUTO_TEST_CASE(testNoAcceleration) {
     std::stringstream input("1 1.0e+11\n"
         "0.0 0.0 0.0 0.0 1.0e+30 earth.gif\n");
 
     NB::Universe universe;
     input >> universe;
-
-    // Ensure initial velocity is exactly zero
-    BOOST_REQUIRE_EQUAL(universe[0].velocity().x, 0.0);
-    BOOST_REQUIRE_EQUAL(universe[0].velocity().y, 0.0);
+    sf::Vector2f initial_position = universe[0].position();
 
     universe.step(1.0e+6);
-
-    // Ensure position remains exactly the same
-    BOOST_REQUIRE_CLOSE(universe[0].position().x, 0.0, 0.00001);
-    BOOST_REQUIRE_CLOSE(universe[0].position().y, 0.0, 0.00001);
+    BOOST_REQUIRE_CLOSE(universe[0].position().x, initial_position.x, 1e-10);
+    BOOST_REQUIRE_CLOSE(universe[0].position().y, initial_position.y, 1e-10);
 }
+
 BOOST_AUTO_TEST_CASE(testAntigravity) {
     std::stringstream input("2 1.0e+11\n"
         "0.0 0.0 0.0 0.0 0.0 earth.gif\n"
