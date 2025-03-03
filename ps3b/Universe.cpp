@@ -61,7 +61,7 @@ const CelestialBody& Universe::operator[](size_t index) const {
     return *bodies[index];
 }
 
-void NB::Universe::step(double dt) {
+/*void NB::Universe::step(double dt) {
     std::vector<sf::Vector2f> newVelocities(bodies.size());
     std::vector<sf::Vector2f> newPositions(bodies.size());
 
@@ -105,8 +105,55 @@ void NB::Universe::step(double dt) {
         bodies[i]->setVelocity(newVelocities[i]);
         bodies[i]->setPosition(newPositions[i]);
     }
-}
+}*/
+void NB::Universe::step(double dt) {
+    std::vector<sf::Vector2f> newVelocities(bodies.size());
+    std::vector<sf::Vector2f> newPositions(bodies.size());
 
+    for (size_t i = 0; i < bodies.size(); i++) {
+        std::cerr << "Body " << i << " Initial Position: (" << bodies[i]->position().x << ", " << bodies[i]->position().y << ")\n";
+        std::cerr << "Body " << i << " Initial Velocity: (" << bodies[i]->velocity().x << ", " << bodies[i]->velocity().y << ")\n";
+
+        if (bodies[i]->mass() == 0) {
+            newPositions[i] = bodies[i]->position();
+            newVelocities[i] = bodies[i]->velocity();
+            std::cerr << "Skipping massless body " << i << "\n";
+            continue;  
+        }
+
+        sf::Vector2f netForce(0.f, 0.f);
+        for (size_t j = 0; j < bodies.size(); j++) {
+            if (i == j) continue;
+            if (bodies[j]->mass() == 0) continue;
+
+            sf::Vector2f diff = bodies[j]->position() - bodies[i]->position();
+            float distance = std::sqrt(diff.x * diff.x + diff.y * diff.y);
+            
+            if (distance < 1e-6 || distance > 1.0e+15) {
+                std::cerr << "Ignoring force computation for Body " << i << " due to distance threshold\n";
+                continue;
+            }
+
+            float forceMagnitude = (6.67430e-11 * bodies[i]->mass() * bodies[j]->mass()) / (distance * distance);
+            sf::Vector2f force = (diff / distance) * (-forceMagnitude);
+            netForce += force;
+        }
+
+        std::cerr << "Body " << i << " Net Force: (" << netForce.x << ", " << netForce.y << ")\n";
+
+        sf::Vector2f acceleration = netForce / bodies[i]->mass();
+        newVelocities[i] = bodies[i]->velocity() + (acceleration * static_cast<float>(dt));
+        newPositions[i] = bodies[i]->position() + (newVelocities[i] * static_cast<float>(dt));
+    }
+
+    for (size_t i = 0; i < bodies.size(); i++) {
+        bodies[i]->setVelocity(newVelocities[i]);
+        bodies[i]->setPosition(newPositions[i]);
+
+        std::cerr << "Body " << i << " New Position: (" << bodies[i]->position().x << ", " << bodies[i]->position().y << ")\n";
+        std::cerr << "Body " << i << " New Velocity: (" << bodies[i]->velocity().x << ", " << bodies[i]->velocity().y << ")\n";
+    }
+}
 void Universe::draw(sf::RenderTarget& window, sf::RenderStates states) const {
     window.draw(backgroundSprite);
     if (bodies.empty()) {
