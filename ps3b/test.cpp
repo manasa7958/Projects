@@ -98,10 +98,10 @@ BOOST_AUTO_TEST_CASE(testAntigravity) {
     input >> universe;
     universe.step(1.0e+6);
 
-    // Ensure objects do not move
     BOOST_REQUIRE_SMALL(universe[0].position().x, 1e-2);
     BOOST_REQUIRE_SMALL(universe[0].position().y, 1e-2);
     BOOST_REQUIRE_CLOSE(universe[1].position().x, 1.0e+11, 0.001);
+
 }
 
 BOOST_AUTO_TEST_CASE(testInvertedGravity) {
