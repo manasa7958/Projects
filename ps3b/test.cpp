@@ -81,10 +81,12 @@ BOOST_AUTO_TEST_CASE(testNoAcceleration) {
 
     NB::Universe universe;
     input >> universe;
-    universe.step(1.0e+6);
+    BOOST_REQUIRE_EQUAL(universe[0].velocity().x, 0.0);
+    BOOST_REQUIRE_EQUAL(universe[0].velocity().y, 0.0);
 
-    BOOST_TEST(universe[0].position().x == 0.0);
-    BOOST_TEST(universe[0].position().y == 0.0);
+    universe.step(1.0e+6);
+    BOOST_REQUIRE_EQUAL(universe[0].position().x, 0.0);
+    BOOST_REQUIRE_EQUAL(universe[0].position().y, 0.0);
 }
 
 BOOST_AUTO_TEST_CASE(testAntigravity) {
