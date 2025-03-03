@@ -1,6 +1,7 @@
 // Copyright 2025 Manasa Praveen
 #include <iostream>
 #include <memory>
+#include <cmath>
 #include "Universe.hpp"
 
 namespace NB {
