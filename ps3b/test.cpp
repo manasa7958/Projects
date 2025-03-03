@@ -77,30 +77,30 @@ BOOST_AUTO_TEST_CASE(testNumPlanets1) {
 BOOST_AUTO_TEST_CASE(testNoAcceleration) {
     std::stringstream input("1 1.0e+11\n"
         "0.0 0.0 0.0 0.0 1.0e+30 earth.gif\n");
-
     NB::Universe universe;
     input >> universe;
+
     sf::Vector2f initial_position = universe[0].position();
     sf::Vector2f initial_velocity = universe[0].velocity();
-    
+
     std::cerr << "TEST: Initial Position: (" << initial_position.x << ", " << initial_position.y << ")\n";
     std::cerr << "TEST: Initial Velocity: (" << initial_velocity.x << ", " << initial_velocity.y << ")\n";
 
     for (int i = 0; i < 10; i++) {
         universe.step(1.0e+6);
     }
-
     sf::Vector2f final_position = universe[0].position();
     sf::Vector2f final_velocity = universe[0].velocity();
-
-    // Debugging output
+    
     std::cerr << "TEST: Final Position: (" << final_position.x << ", " << final_position.y << ")\n";
     std::cerr << "TEST: Final Velocity: (" << final_velocity.x << ", " << final_velocity.y << ")\n";
-    BOOST_REQUIRE_SMALL(final_velocity.x, 1e-10);
-    BOOST_REQUIRE_SMALL(final_velocity.y, 1e-10);
-    BOOST_REQUIRE_CLOSE(final_position.x, initial_position.x, 1e-6);
-    BOOST_REQUIRE_CLOSE(final_position.y, initial_position.y, 1e-6);
+    
+    BOOST_REQUIRE_SMALL(static_cast<double>(final_velocity.x), 1e-10);
+    BOOST_REQUIRE_SMALL(static_cast<double>(final_velocity.y), 1e-10);
+    BOOST_REQUIRE_CLOSE(static_cast<double>(final_position.x), static_cast<double>(initial_position.x), 1e-6);
+    BOOST_REQUIRE_CLOSE(static_cast<double>(final_position.y), static_cast<double>(initial_position.y), 1e-6);
 }
+
 
 BOOST_AUTO_TEST_CASE(testExtraCredit) {
     std::stringstream input("2 1.0e+11\n"
