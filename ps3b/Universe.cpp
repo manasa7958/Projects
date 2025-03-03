@@ -70,10 +70,10 @@ void NB::Universe::step(double dt) {
 
             sf::Vector2f diff = bodies[j]->position() - bodies[i]->position();
             float distance = std::sqrt(diff.x * diff.x + diff.y * diff.y);
-            if (distance == 0.f) continue;  // Avoid division by zero
+            if (distance == 0.f) continue;
 
-            float forceMagnitude = static_cast<float>((6.67430e-11 * bodies[i]->mass() * bodies[j]->mass()) / (distance * distance));
-            sf::Vector2f force = (diff / distance) * forceMagnitude; // Convert correctly
+            float forceMagnitude = (6.67430e-11 * bodies[i]->mass() * bodies[j]->mass()) / (distance * distance);
+            sf::Vector2f force = (diff / distance) * forceMagnitude; 
             netForce += force;
         }
 
