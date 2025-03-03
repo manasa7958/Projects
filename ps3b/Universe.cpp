@@ -86,22 +86,27 @@ const CelestialBody& Universe::operator[](size_t index) const {
         bodies[i]->setPosition(newPositions[i]);
     }
 }*/
+
 void NB::Universe::step(double dt) {
     std::vector<sf::Vector2f> newVelocities(bodies.size());
     std::vector<sf::Vector2f> newPositions(bodies.size());
 
     for (size_t i = 0; i < bodies.size(); i++) {
+        if (bodies[i]->mass() == 0) {
+            std::cerr << "Skipping force computation for massless Body " << i << "\n";
+            continue;  // Skip massless objects
+        }
+
         sf::Vector2f netForce(0.f, 0.f);
         for (size_t j = 0; j < bodies.size(); j++) {
             if (i == j) continue;
+            if (bodies[j]->mass() == 0) continue;  // Skip interactions with massless objects
 
             sf::Vector2f diff = bodies[j]->position() - bodies[i]->position();
             float distance = std::sqrt(diff.x * diff.x + diff.y * diff.y);
-            if (distance == 0.f) continue;  // Avoid division by zero
 
-            // Ensure distance is positive
-            if (distance < 1e-6) {
-                std::cerr << "Warning: Distance too small, skipping force computation\n";
+            if (distance < 1e-6 || distance > 1.0e+15) {
+                std::cerr << "Ignoring force computation for Body " << i << " due to distance threshold\n";
                 continue;
             }
 
@@ -110,12 +115,15 @@ void NB::Universe::step(double dt) {
             netForce += force;
         }
 
-        // Debugging output: Print forces
+        // Debugging output
         std::cerr << "Body " << i << " Net Force: (" << netForce.x << ", " << netForce.y << ")\n";
 
-        sf::Vector2f acceleration = netForce / bodies[i]->mass();
-        newVelocities[i] = bodies[i]->velocity() + (acceleration * static_cast<float>(dt));
-        newPositions[i] = bodies[i]->position() + (newVelocities[i] * static_cast<float>(dt));
+        // Apply force to velocity only if mass is nonzero
+        if (bodies[i]->mass() != 0) {
+            sf::Vector2f acceleration = netForce / bodies[i]->mass();
+            newVelocities[i] = bodies[i]->velocity() + (acceleration * static_cast<float>(dt));
+            newPositions[i] = bodies[i]->position() + (newVelocities[i] * static_cast<float>(dt));
+        }
     }
 
     for (size_t i = 0; i < bodies.size(); i++) {
