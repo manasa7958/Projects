@@ -63,14 +63,11 @@ const CelestialBody& Universe::operator[](size_t index) const {
 void NB::Universe::step(double dt) {
     std::vector<sf::Vector2f> newVelocities(bodies.size());
     std::vector<sf::Vector2f> newPositions(bodies.size());
-
-    // Compute net force on each body
     for (size_t i = 0; i < bodies.size(); i++) {
         sf::Vector2f netForce(0.f, 0.f);
         for (size_t j = 0; j < bodies.size(); j++) {
             if (i == j) continue;
-            
-            // Compute the pairwise force
+
             sf::Vector2f diff = bodies[j]->position() - bodies[i]->position();
             float distance = std::sqrt(diff.x * diff.x + diff.y * diff.y);
             if (distance == 0.f) continue;  // Avoid division by zero
@@ -80,17 +77,10 @@ void NB::Universe::step(double dt) {
             netForce += force;
         }
 
-        // Compute acceleration
         sf::Vector2f acceleration = netForce / bodies[i]->mass();
-
-        // Update velocity using leapfrog method
         newVelocities[i] = bodies[i]->velocity() + (acceleration * static_cast<float>(dt));
-
-        // Update position
         newPositions[i] = bodies[i]->position() + (newVelocities[i] * static_cast<float>(dt));
     }
-
-    // Apply new velocities and positions using setters
     for (size_t i = 0; i < bodies.size(); i++) {
         bodies[i]->setVelocity(newVelocities[i]);
         bodies[i]->setPosition(newPositions[i]);
