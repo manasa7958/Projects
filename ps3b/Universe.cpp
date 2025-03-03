@@ -91,17 +91,16 @@ void NB::Universe::step(double dt) {
             sf::Vector2f force = (diff / distance) * (-forceMagnitude);
             netForce += force;
         }
-
-        // Debugging output
         std::cerr << "Body " << i << " Net Force: (" << netForce.x << ", " << netForce.y << ")\n";
 
-        // Compute acceleration and update velocity for massive objects
         sf::Vector2f acceleration = netForce / bodies[i]->mass();
         newVelocities[i] = bodies[i]->velocity() + (acceleration * static_cast<float>(dt));
+        if (dt < 0) {
+            newVelocities[i] = bodies[i]->velocity() - (acceleration * static_cast<float>(-dt));
+        }
         newPositions[i] = bodies[i]->position() + (newVelocities[i] * static_cast<float>(dt));
-    }
 
-    // Apply updated velocities and positions
+    }
     for (size_t i = 0; i < bodies.size(); i++) {
         bodies[i]->setVelocity(newVelocities[i]);
         bodies[i]->setPosition(newPositions[i]);
