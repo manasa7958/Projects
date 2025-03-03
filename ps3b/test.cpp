@@ -86,7 +86,7 @@ BOOST_AUTO_TEST_CASE(testNoAcceleration) {
     BOOST_REQUIRE_CLOSE(universe[0].position().y, initial_position.y, 1e-10);
 }
 
-BOOST_AUTO_TEST_CASE(testAntigravity) {
+/*BOOST_AUTO_TEST_CASE(testAntigravity) {
     std::stringstream input("2 1.0e+11\n"
         "0.0 0.0 0.0 0.0 0.0 earth.gif\n"
         "1.0e+11 0.0 0.0 0.0 0.0 mars.gif\n");
@@ -99,8 +99,8 @@ BOOST_AUTO_TEST_CASE(testAntigravity) {
     BOOST_REQUIRE_CLOSE(universe[0].position().x, 0.0, 0.0001);
     BOOST_REQUIRE_CLOSE(universe[0].position().y, 0.0, 0.0001);
     BOOST_REQUIRE_CLOSE(universe[1].position().x, 1.0e+11, 0.0001);
-}
-/*BOOST_AUTO_TEST_CASE(testInvertedGravity) {
+}*/
+BOOST_AUTO_TEST_CASE(testInvertedGravity) {
     std::stringstream input("2 1.0e+11\n"
         "0.0 0.0 0.0 0.0 1.0e+30 sun.gif\n"
         "1.0e+11 0.0 0.0 0.0 1.0e+30 mercury.gif\n");
@@ -115,4 +115,4 @@ BOOST_AUTO_TEST_CASE(testAntigravity) {
     // Objects should move apart
     BOOST_REQUIRE(universe[0].position().x < 0.0);
     BOOST_REQUIRE(universe[1].position().x > 1.0e+11);
-}*/
+}
