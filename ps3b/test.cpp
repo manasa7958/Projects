@@ -87,23 +87,18 @@ BOOST_AUTO_TEST_CASE(testNumPlanets1) {
 }*/
 BOOST_AUTO_TEST_CASE(testNoAcceleration) {
     std::stringstream input("1 1.0e+11\n"
-        "0.0 0.0 0.0 0.0 1.0e+30 earth.gif\n");  // Large mass, zero velocity
+        "0.0 0.0 0.0 0.0 1.0e+30 earth.gif\n");
 
     NB::Universe universe;
     input >> universe;
-
-    // Capture the initial position and velocity
+    
     sf::Vector2f initial_position = universe[0].position();
     sf::Vector2f initial_velocity = universe[0].velocity();
 
-    // Run the simulation step
     universe.step(1.0e+6);
 
-    // Ensure the velocity is still zero
     BOOST_REQUIRE_EQUAL(universe[0].velocity().x, initial_velocity.x);
     BOOST_REQUIRE_EQUAL(universe[0].velocity().y, initial_velocity.y);
-
-    // Ensure the position has not changed
     BOOST_REQUIRE_CLOSE(universe[0].position().x, initial_position.x, 1e-10);
     BOOST_REQUIRE_CLOSE(universe[0].position().y, initial_position.y, 1e-10);
 }
