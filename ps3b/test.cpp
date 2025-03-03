@@ -73,36 +73,39 @@ BOOST_AUTO_TEST_CASE(testNumPlanets1) {
     BOOST_REQUIRE_EQUAL(universe.size(), 5);
     BOOST_REQUIRE_NO_THROW(universe[0]);
 }
-/*BOOST_AUTO_TEST_CASE(testNoAcceleration) {
-    std::stringstream input("1 1.0e+11\n"
-        "0.0 0.0 0.0 0.0 1.0e+30 earth.gif\n");
 
-    NB::Universe universe;
-    input >> universe;
-    sf::Vector2f initial_position = universe[0].position();
-
-    universe.step(1.0e+6);
-    BOOST_REQUIRE_CLOSE(universe[0].position().x, initial_position.x, 1e-10);
-    BOOST_REQUIRE_CLOSE(universe[0].position().y, initial_position.y, 1e-10);
-}*/
 BOOST_AUTO_TEST_CASE(testNoAcceleration) {
     std::stringstream input("1 1.0e+11\n"
-        "0.0 0.0 0.0 0.0 1.0e+30 earth.gif\n");
+        "0.0 0.0 0.0 0.0 1.0e+30 earth.gif\n");  // Large mass, no velocity
 
     NB::Universe universe;
     input >> universe;
-    
+
+    // Capture initial values
     sf::Vector2f initial_position = universe[0].position();
     sf::Vector2f initial_velocity = universe[0].velocity();
 
+    // Debugging output
+    std::cout << "Initial Position: (" << initial_position.x << ", " << initial_position.y << ")\n";
+    std::cout << "Initial Velocity: (" << initial_velocity.x << ", " << initial_velocity.y << ")\n";
+
     universe.step(1.0e+6);
 
-    BOOST_REQUIRE_EQUAL(universe[0].velocity().x, initial_velocity.x);
-    BOOST_REQUIRE_EQUAL(universe[0].velocity().y, initial_velocity.y);
-    BOOST_REQUIRE_CLOSE(universe[0].position().x, initial_position.x, 1e-10);
-    BOOST_REQUIRE_CLOSE(universe[0].position().y, initial_position.y, 1e-10);
-}
+    sf::Vector2f final_position = universe[0].position();
+    sf::Vector2f final_velocity = universe[0].velocity();
 
+    // Debugging output
+    std::cout << "Final Position: (" << final_position.x << ", " << final_position.y << ")\n";
+    std::cout << "Final Velocity: (" << final_velocity.x << ", " << final_velocity.y << ")\n";
+
+    // Check velocity remains zero
+    BOOST_REQUIRE_EQUAL(final_velocity.x, 0.0f);
+    BOOST_REQUIRE_EQUAL(final_velocity.y, 0.0f);
+
+    // Check position remains unchanged with strict precision
+    BOOST_REQUIRE_CLOSE(final_position.x, initial_position.x, 1e-10);
+    BOOST_REQUIRE_CLOSE(final_position.y, initial_position.y, 1e-10);
+}
 BOOST_AUTO_TEST_CASE(testExtraCredit) {
     std::stringstream input("2 1.0e+11\n"
         "0.0 0.0 0.0 0.0 0.0 earth.gif\n"
