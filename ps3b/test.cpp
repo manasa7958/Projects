@@ -80,14 +80,17 @@ BOOST_AUTO_TEST_CASE(testNoAcceleration) {
 
     NB::Universe universe;
     input >> universe;
+
+    // Ensure initial velocity is exactly zero
     BOOST_REQUIRE_EQUAL(universe[0].velocity().x, 0.0);
     BOOST_REQUIRE_EQUAL(universe[0].velocity().y, 0.0);
 
     universe.step(1.0e+6);
-    BOOST_REQUIRE_CLOSE(universe[0].position().x, 0.0, 0.0001);
-    BOOST_REQUIRE_CLOSE(universe[0].position().y, 0.0, 0.0001);
-}
 
+    // Ensure position remains exactly the same
+    BOOST_REQUIRE_CLOSE(universe[0].position().x, 0.0, 0.00001);
+    BOOST_REQUIRE_CLOSE(universe[0].position().y, 0.0, 0.00001);
+}
 BOOST_AUTO_TEST_CASE(testAntigravity) {
     std::stringstream input("2 1.0e+11\n"
         "0.0 0.0 0.0 0.0 0.0 earth.gif\n"
