@@ -1,4 +1,4 @@
-/ Copyright 2025 Manasa Praveen
+// Copyright 2025 Manasa Praveen
 #include <cmath>
 #include <iomanip>
 #include <iostream>
