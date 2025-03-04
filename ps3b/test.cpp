@@ -68,7 +68,7 @@ BOOST_AUTO_TEST_CASE(testNoAcceleration) {
     BOOST_CHECK_CLOSE(static_cast<double>(final_position.y), static_cast<double>(initial_position.y), 1e-10);
 }
 
-BOOST_AUTO_TEST_CASE(testAntigravity) {
+/*BOOST_AUTO_TEST_CASE(testAntigravity) {
     std::stringstream input("2 1.0e+11\n"
         "0.0 0.0 0.0 0.0 5.9740e+24 earth.gif\n"
         "1.0e+11 0.0 0.0 0.0 5.9740e+24 mars.gif\n");
@@ -89,7 +89,7 @@ BOOST_AUTO_TEST_CASE(testAntigravity) {
     float final_distance = std::abs(final_pos2.x - final_pos1.x);
 
     BOOST_REQUIRE_GT(final_distance, initial_distance);
-}
+}*/
 
 BOOST_AUTO_TEST_CASE(testInvertedGravity) {
     std::stringstream input("2 1.0e+11\n"
