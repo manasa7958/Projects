@@ -131,8 +131,7 @@ void NB::Universe::step(double dt) {
                 continue;
             }
 
-            float forceMagnitude = (6.67430e-11 * bodies[i]->mass() * bodies[j]->mass()) / (distance * distance);
-            sf::Vector2f force = (diff / distance) * forceMagnitude;
+            sf::Vector2f force = (diff / distance) * (-forceMagnitude);
             netForce += force;
         }
 
