@@ -19,7 +19,7 @@ class Universe : public sf::Drawable {
   void clearBodies() { bodies.clear(); }
   void addBody(std::shared_ptr<CelestialBody> body) { bodies.push_back(body); }
   void step(double dt);
-
+  sf::Vector2f getNetForce(size_t index) const;
   const CelestialBody& operator[](size_t index) const;
 
  protected:
