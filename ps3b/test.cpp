@@ -140,30 +140,6 @@ BOOST_AUTO_TEST_CASE(testAntigrav) {
 
     BOOST_REQUIRE(after_normal_pos1.x > initial_pos1.x);
     BOOST_REQUIRE(after_normal_pos2.x < initial_pos2.x);
-}
-
-BOOST_AUTO_TEST_CASE(testInvertedGravity) {
-    std::stringstream input("2 1.0e+11\n"
-        "0.0 0.0 0.0 0.0 1.0e+30 sun.gif\n"
-        "1.0e+11 0.0 0.0 0.0 1.0e+30 mercury.gif\n");
-
-    NB::Universe universe;
-    input >> universe;
-
-    sf::Vector2f initial_pos1 = universe[0].position();
-    sf::Vector2f initial_pos2 = universe[1].position();
-
-    // Negative time step should reverse gravity
-    for (int i = 0; i < 10; i++) {
-        universe.step(-1.0e+6);
-    }
-
-    sf::Vector2f final_pos1 = universe[0].position();
-    sf::Vector2f final_pos2 = universe[1].position();
-
-    // With negative time step, first body should move left, second body should move right
-    BOOST_REQUIRE(final_pos1.x < initial_pos1.x);
-    BOOST_REQUIRE(final_pos2.x > initial_pos2.x);
 }*/
 
 BOOST_AUTO_TEST_CASE(testExtraCredit) {
