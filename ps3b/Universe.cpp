@@ -65,51 +65,33 @@ void NB::Universe::step(double dt) {
     std::vector<sf::Vector2f> newVelocities(bodies.size());
     std::vector<sf::Vector2f> newPositions(bodies.size());
 
-    if (bodies.size() == 1) {
-        std::cerr << "DEBUG: Single-body system, skipping force calculations.\n";
-        return;
-    }
-
+    float dtSign = (dt >= 0) ? 1.0f : -1.0f;
+    
     for (size_t i = 0; i < bodies.size(); i++) {
         if (bodies[i]->mass() == 0) {
-            std::cerr << "Massless Body " << i << " retains its original position.\n";
             newPositions[i] = bodies[i]->position();
             newVelocities[i] = bodies[i]->velocity();
             continue;
         }
-
+        
         sf::Vector2f netForce(0.f, 0.f);
         for (size_t j = 0; j < bodies.size(); j++) {
             if (i == j || bodies[j]->mass() == 0) continue;
-
+            
             sf::Vector2f diff = bodies[j]->position() - bodies[i]->position();
             float distance = std::sqrt(diff.x * diff.x + diff.y * diff.y);
+            
+            if (distance < 1e-6) continue;
 
-            if (distance < 1e-6 || distance > 1.0e+15) {
-                continue;
-            }
-
-            float forceMagnitude = (6.67430e-11 * bodies[i]->mass() * bodies[j]->mass())
-                                  / (distance * distance);
-
-            sf::Vector2f force = (diff / distance) * (-forceMagnitude);  // Ensure attraction
+            float forceMagnitude = (6.67430e-11 * bodies[i]->mass() * bodies[j]->mass()) / (distance * distance);
+            sf::Vector2f force = (diff / distance) * forceMagnitude * dtSign;
             netForce += force;
         }
 
         sf::Vector2f acceleration = netForce / bodies[i]->mass();
-        if (dt < 0) {
-            acceleration = -acceleration;  // Reverse acceleration for negative time step
-        }
-
-        float absDt = std::abs(dt);
-        sf::Vector2f halfStepVelocity = bodies[i]->velocity() + (acceleration * static_cast<float>(absDt * 0.5));
-        
-        sf::Vector2f deltaPosition = halfStepVelocity * static_cast<float>(absDt);
-        if (dt < 0) {
-            deltaPosition = -deltaPosition;  // Reverse motion if dt < 0
-        }
-        newPositions[i] = bodies[i]->position() + deltaPosition;
-        newVelocities[i] = halfStepVelocity + (acceleration * static_cast<float>(absDt * 0.5));
+        sf::Vector2f halfStepVelocity = bodies[i]->velocity() + (acceleration * static_cast<float>(dt * 0.5));
+        newPositions[i] = bodies[i]->position() + (halfStepVelocity * static_cast<float>(dt));
+        newVelocities[i] = halfStepVelocity + (acceleration * static_cast<float>(dt * 0.5));
     }
 
     for (size_t i = 0; i < bodies.size(); i++) {
