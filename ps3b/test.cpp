@@ -112,6 +112,45 @@ BOOST_AUTO_TEST_CASE(testInvertedGravity) {
 
     sf::Vector2f initial_pos1 = universe[0].position();
     sf::Vector2f initial_pos2 = universe[1].position();
+
+    sf::Vector2f force_before_step;
+    sf::Vector2f force_after_step;
+
+    for (int i = 0; i < 10; i++) {
+        universe.step(-1.0e+6);
+    }
+
+    sf::Vector2f final_pos1 = universe[0].position();
+    sf::Vector2f final_pos2 = universe[1].position();
+
+    std::cerr << "TEST: Initial Position 1: (" << initial_pos1.x << ", " << initial_pos1.y << ")\n";
+    std::cerr << "TEST: Initial Position 2: (" << initial_pos2.x << ", " << initial_pos2.y << ")\n";
+    std::cerr << "TEST: Final Position 1: (" << final_pos1.x << ", " << final_pos1.y << ")\n";
+    std::cerr << "TEST: Final Position 2: (" << final_pos2.x << ", " << final_pos2.y << ")\n";
+
+    sf::Vector2f netForce1 = universe[0].velocity();
+    sf::Vector2f netForce2 = universe[1].velocity();
+
+    std::cerr << "TEST: Net Force on Body 1: (" << netForce1.x << ", " << netForce1.y << ")\n";
+    std::cerr << "TEST: Net Force on Body 2: (" << netForce2.x << ", " << netForce2.y << ")\n";
+
+    BOOST_REQUIRE_LT(final_pos1.x, initial_pos1.x);
+    BOOST_REQUIRE_GT(final_pos2.x, initial_pos2.x);
+
+    BOOST_REQUIRE_GT(netForce1.x, 0);
+    BOOST_REQUIRE_LT(netForce2.x, 0);
+}
+/*
+BOOST_AUTO_TEST_CASE(testInvertedGravity) {
+    std::stringstream input("2 1.0e+11\n"
+        "0.0 0.0 0.0 0.0 1.0e+30 sun.gif\n"
+        "1.0e+11 0.0 0.0 0.0 1.0e+30 mercury.gif\n");
+
+    NB::Universe universe;
+    input >> universe;
+
+    sf::Vector2f initial_pos1 = universe[0].position();
+    sf::Vector2f initial_pos2 = universe[1].position();
     for (int i = 0; i < 10; i++) {
         universe.step(-1.0e+6);
     }
@@ -125,7 +164,7 @@ BOOST_AUTO_TEST_CASE(testInvertedGravity) {
     BOOST_REQUIRE(final_pos1.x < initial_pos1.x);
     BOOST_REQUIRE(final_pos2.x > initial_pos2.x);
 }
-
+*/
 BOOST_AUTO_TEST_CASE(testExtraCredit) {
     std::stringstream input("2 1.0e+11\n"
         "0.0 0.0 0.0 0.0 0.0 earth.gif\n"
