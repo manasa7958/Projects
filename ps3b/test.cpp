@@ -61,11 +61,10 @@ BOOST_AUTO_TEST_CASE(testSingleBodyNoMotion) {
     BOOST_CHECK_EQUAL(final_vel.x, initial_vel.x);
     BOOST_CHECK_EQUAL(final_vel.y, initial_vel.y);
 }
-
 BOOST_AUTO_TEST_CASE(testTwoBodyAttraction) {
     std::stringstream input("2 1.0e+11\n"
-        "0.0 0.0 0.0 0.0 0.0 earth.gif\n"
-        "1.0e+11 0.0 0.0 0.0 0.0 mars.gif\n");
+        "-1.0e+11 0.0 0.0 0.0 5.974e+24 earth.gif\n"
+        "1.0e+11 0.0 0.0 0.0 5.974e+24 mars.gif\n");
 
     NB::Universe universe;
     input >> universe;
@@ -80,8 +79,8 @@ BOOST_AUTO_TEST_CASE(testTwoBodyAttraction) {
     sf::Vector2f final_pos1 = universe[0].position();
     sf::Vector2f final_pos2 = universe[1].position();
 
-    BOOST_CHECK_LT(final_pos1.x, initial_pos1.x); // Body 1 moves left
-    BOOST_CHECK_GT(final_pos2.x, initial_pos2.x); // Body 2 moves right
+    BOOST_CHECK_MESSAGE(final_pos1.x > initial_pos1.x, "Body 1 should move right.");
+    BOOST_CHECK_MESSAGE(final_pos2.x < initial_pos2.x, "Body 2 should move left.");
 }
 
 BOOST_AUTO_TEST_CASE(testMultiBodyBalance) {
