@@ -49,8 +49,8 @@ BOOST_AUTO_TEST_CASE(testNoAcceleration) {
     sf::Vector2f initial_position = universe[0].position();
     sf::Vector2f initial_velocity = universe[0].velocity();
 
-    std::cerr << "TEST: Initial Position: (" << initial_position.x << ", " << initial_position.y << ")\n";
-    std::cerr << "TEST: Initial Velocity: (" << initial_velocity.x << ", " << initial_velocity.y << ")\n";
+    std::cerr << "Initial Position: (" << initial_position.x << ", " << initial_position.y << ")\n";
+    std::cerr << "Initial Velocity: (" << initial_velocity.x << ", " << initial_velocity.y << ")\n";
 
     for (int i = 0; i < 10; i++) {
         universe.step(1.0e+6);
@@ -64,32 +64,11 @@ BOOST_AUTO_TEST_CASE(testNoAcceleration) {
 
     BOOST_CHECK_SMALL(static_cast<double>(final_velocity.x), 1e-10);
     BOOST_CHECK_SMALL(static_cast<double>(final_velocity.y), 1e-10);
-    BOOST_CHECK_CLOSE(static_cast<double>(final_position.x), static_cast<double>(initial_position.x), 1e-10);
-    BOOST_CHECK_CLOSE(static_cast<double>(final_position.y), static_cast<double>(initial_position.y), 1e-10);
+    BOOST_CHECK_CLOSE(static_cast<double>(final_position.x), 
+        static_cast<double>(initial_position.x), 1e-10);
+    BOOST_CHECK_CLOSE(static_cast<double>(final_position.y), 
+        static_cast<double>(initial_position.y), 1e-10);
 }
-
-/*BOOST_AUTO_TEST_CASE(testAntigravity) {
-    std::stringstream input("2 1.0e+11\n"
-        "0.0 0.0 0.0 0.0 5.9740e+24 earth.gif\n"
-        "1.0e+11 0.0 0.0 0.0 5.9740e+24 mars.gif\n");
-
-    NB::Universe universe;
-    input >> universe;
-
-    sf::Vector2f initial_pos1 = universe[0].position();
-    sf::Vector2f initial_pos2 = universe[1].position();
-    float initial_distance = std::abs(initial_pos2.x - initial_pos1.x);
-
-    for (int i = 0; i < 10; i++) {
-        universe.step(-1.0e+6);
-    }
-
-    sf::Vector2f final_pos1 = universe[0].position();
-    sf::Vector2f final_pos2 = universe[1].position();
-    float final_distance = std::abs(final_pos2.x - final_pos1.x);
-
-    BOOST_REQUIRE_GT(final_distance, initial_distance);
-}*/
 
 BOOST_AUTO_TEST_CASE(testInvertedGravity) {
     std::stringstream input("2 1.0e+11\n"
