@@ -49,8 +49,8 @@ BOOST_AUTO_TEST_CASE(testNoAcceleration) {
     sf::Vector2f initial_position = universe[0].position();
     sf::Vector2f initial_velocity = universe[0].velocity();
 
-    std::cerr << "TEST: Initial Position: (" << initial_position.x << ", " << initial_position.y << ")\n";
-    std::cerr << "TEST: Initial Velocity: (" << initial_velocity.x << ", " << initial_velocity.y << ")\n";
+    std::cerr << "Initial Position: (" << initial_position.x << ", " << initial_position.y << ")\n";
+    std::cerr << "Initial Velocity: (" << initial_velocity.x << ", " << initial_velocity.y << ")\n";
 
     for (int i = 0; i < 10; i++) {
         universe.step(1.0e+6);
