@@ -90,7 +90,7 @@ void NB::Universe::step(double dt) {
         }
 
         sf::Vector2f acceleration = netForce / bodies[i]->mass();
-        sf::Vector2f halfStepVelocity = bodies[i]->velocity() 
+        sf::Vector2f halfStepVelocity = bodies[i]->velocity()
         + (acceleration * static_cast<float>(dt * 0.5));
         newPositions[i] = bodies[i]->position() + (halfStepVelocity * static_cast<float>(dt));
         newVelocities[i] = halfStepVelocity + (acceleration * static_cast<float>(dt * 0.5));
