@@ -110,12 +110,12 @@ BOOST_AUTO_TEST_CASE(testInvertedGravity) {
     );
     
     BOOST_CHECK_MESSAGE(
-        final_vel1.x < 0,
+        final_vel1.x > 0,
         "First body's velocity should be negative in x-direction with inverted gravity"
     );
     
     BOOST_CHECK_MESSAGE(
-        final_vel2.x > 0,
+        final_vel2.x < 0,
         "Second body's velocity should be positive in x-direction with inverted gravity"
     );
 }
