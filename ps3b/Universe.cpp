@@ -92,24 +92,24 @@ void NB::Universe::step(double dt) {
             float forceMagnitude = (6.67430e-11 * bodies[i]->mass() * bodies[j]->mass())
                                   / (distance * distance);
 
-            sf::Vector2f force = (diff / distance) * forceMagnitude;
-            sf::Vector2f acceleration = force / bodies[i]->mass();
-            if (dt < 0) {
-                acceleration = -acceleration;  // Reverse acceleration for negative dt
-            }
+            sf::Vector2f force = (diff / distance) * (-forceMagnitude);  // Ensure attraction
             netForce += force;
         }
 
         sf::Vector2f acceleration = netForce / bodies[i]->mass();
+        if (dt < 0) {
+            acceleration = -acceleration;  // Reverse acceleration for negative time step
+        }
 
         float absDt = std::abs(dt);
         sf::Vector2f halfStepVelocity = bodies[i]->velocity() + (acceleration * static_cast<float>(absDt * 0.5));
-        newPositions[i] = bodies[i]->position() + (halfStepVelocity * static_cast<float>(absDt));
-        newVelocities[i] = halfStepVelocity + (acceleration * static_cast<float>(absDt * 0.5));
-
+        
+        sf::Vector2f deltaPosition = halfStepVelocity * static_cast<float>(absDt);
         if (dt < 0) {
-            newVelocities[i] = -newVelocities[i];  // Reverse velocity if dt is negative
+            deltaPosition = -deltaPosition;  // Reverse motion if dt < 0
         }
+        newPositions[i] = bodies[i]->position() + deltaPosition;
+        newVelocities[i] = halfStepVelocity + (acceleration * static_cast<float>(absDt * 0.5));
     }
 
     for (size_t i = 0; i < bodies.size(); i++) {
@@ -117,6 +117,7 @@ void NB::Universe::step(double dt) {
         bodies[i]->setPosition(newPositions[i]);
     }
 }
+
 
 void Universe::draw(sf::RenderTarget& window, sf::RenderStates states) const {
     window.draw(backgroundSprite);
