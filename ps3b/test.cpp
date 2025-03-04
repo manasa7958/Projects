@@ -117,7 +117,7 @@ BOOST_AUTO_TEST_CASE(testAntigravity) {
     BOOST_REQUIRE_GT(final_distance, initial_distance);
 }
 */
-BOOST_AUTO_TEST_CASE(testNoAccelerationTwo) {
+BOOST_AUTO_TEST_CASE(testInvertedGravity) {
     std::stringstream input("2 1.0e+11\n"
         "0.0 0.0 0.0 0.0 1.0e+30 sun.gif\n"
         "1.0e+11 0.0 0.0 0.0 1.0e+30 mercury.gif\n");
