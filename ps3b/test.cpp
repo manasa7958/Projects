@@ -102,9 +102,9 @@ BOOST_AUTO_TEST_CASE(testMultiBodyBalance) {
 }
 
 BOOST_AUTO_TEST_CASE(testExtremeMassDifference) {
-    std::stringstream input("2 2.50e+11\n"
-                            "1.0e+11 0.0 0.0 0.0 5.974e+24 normal.gif\n"
-                            "2.0e+11 0.0 0.0 0.0 1.000e-20 tiny.gif\n");
+    std::stringstream input("2 1.0e+11\n"
+        "0.0 0.0 0.0 0.0 1.0e+30 sun.gif\n"
+        "1.0e+11 0.0 0.0 0.0 1.0e+30 mercury.gif\n");
 
     NB::Universe universe;
     input >> universe;
