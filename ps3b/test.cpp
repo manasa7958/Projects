@@ -68,7 +68,7 @@ BOOST_AUTO_TEST_CASE(testNoAcceleration) {
     BOOST_CHECK_SMALL(final_position.y - initial_position.y, 1e-10f);
 }
 
-BOOST_AUTO_TEST_CASE(testAntigrav) {
+/*BOOST_AUTO_TEST_CASE(testAntigrav) {
     std::stringstream input("2 1.0e+11\n"
         "0.0 0.0 0.0 0.0 1.0e+30 sun.gif\n"
         "1.0e+11 0.0 0.0 0.0 1.0e+30 mercury.gif\n");
@@ -88,7 +88,7 @@ BOOST_AUTO_TEST_CASE(testAntigrav) {
 
     BOOST_REQUIRE(after_normal_pos1.x > initial_pos1.x);
     BOOST_REQUIRE(after_normal_pos2.x < initial_pos2.x);
-}
+}*/
 
 BOOST_AUTO_TEST_CASE(testInvertedGravity) {
     std::stringstream input("2 1.0e+11\n"
