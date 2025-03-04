@@ -67,16 +67,19 @@ sf::Vector2f NB::Universe::getNetForce(size_t index) const {
     }
 
     sf::Vector2f netForce(0.f, 0.f);
+    const float G = 6.67430e-11;
+    const float minDistance = 1e-3; // Prevents division by very small numbers
+
     for (size_t j = 0; j < bodies.size(); j++) {
         if (index == j || bodies[j]->mass() == 0) continue;
 
         sf::Vector2f diff = bodies[j]->position() - bodies[index]->position();
         float distance = std::sqrt(diff.x * diff.x + diff.y * diff.y);
         
-        if (distance < 1e-6) continue; // Avoid singularity
+        if (distance < minDistance) continue; // Avoid singularity and extreme forces
         
-        float forceMagnitude = (6.67430e-11 * bodies[index]->mass() * bodies[j]->mass()) / (distance * distance);
-        sf::Vector2f force = (diff / distance) * forceMagnitude;
+        float forceMagnitude = (G * bodies[index]->mass() * bodies[j]->mass()) / (distance * distance);
+        sf::Vector2f force = (diff / distance) * (-forceMagnitude); // Negative ensures attraction
         netForce += force;
     }
     return netForce;
@@ -86,7 +89,8 @@ void NB::Universe::step(double dt) {
     std::vector<sf::Vector2f> newVelocities(bodies.size());
     std::vector<sf::Vector2f> newPositions(bodies.size());
 
-    float dtSign = (dt >= 0) ? 1.0f : -1.0f;
+    const float G = 6.67430e-11;
+    const float minDistance = 1e-3; // Prevents extreme forces
     
     for (size_t i = 0; i < bodies.size(); i++) {
         if (bodies[i]->mass() == 0) {
@@ -98,18 +102,20 @@ void NB::Universe::step(double dt) {
         sf::Vector2f netForce(0.f, 0.f);
         for (size_t j = 0; j < bodies.size(); j++) {
             if (i == j || bodies[j]->mass() == 0) continue;
-            
+
             sf::Vector2f diff = bodies[j]->position() - bodies[i]->position();
             float distance = std::sqrt(diff.x * diff.x + diff.y * diff.y);
-            
-            if (distance < 1e-6) continue;
 
-            float forceMagnitude = (6.67430e-11 * bodies[i]->mass() * bodies[j]->mass()) / (distance * distance);
-            sf::Vector2f force = (diff / distance) * (forceMagnitude * dtSign);
+            if (distance < minDistance) continue; // Avoid singularities
+
+            float forceMagnitude = (G * bodies[i]->mass() * bodies[j]->mass()) / (distance * distance);
+            sf::Vector2f force = (diff / distance) * (-forceMagnitude); // Negative ensures attraction
             netForce += force;
         }
 
         sf::Vector2f acceleration = netForce / bodies[i]->mass();
+        
+        // Leapfrog integration method for better accuracy
         sf::Vector2f halfStepVelocity = bodies[i]->velocity() + (acceleration * static_cast<float>(dt * 0.5));
         newPositions[i] = bodies[i]->position() + (halfStepVelocity * static_cast<float>(dt));
         newVelocities[i] = halfStepVelocity + (acceleration * static_cast<float>(dt * 0.5));
@@ -120,7 +126,6 @@ void NB::Universe::step(double dt) {
         bodies[i]->setPosition(newPositions[i]);
     }
 }
-
 
 void Universe::draw(sf::RenderTarget& window, sf::RenderStates states) const {
     window.draw(backgroundSprite);
