@@ -86,9 +86,9 @@ BOOST_AUTO_TEST_CASE(testTwoBodyAttraction) {
 
 BOOST_AUTO_TEST_CASE(testMultiBodyBalance) {
     std::stringstream input("3 2.50e+11\n"
-                            "0.0 1.0e+11 0.0 0.0 5.974e+24 body1.gif\n"
-                            "8.6603e+10 -5.0000e+10 0.0 0.0 5.974e+24 body2.gif\n"
-                            "-8.6603e+10 -5.0000e+10 0.0 0.0 5.974e+24 body3.gif\n");
+                            "0.0 0.0 0.0 0.0 1.0e+30 sun.gif\n"
+                            "-8.6603e+10 -5.0000e+10 0.0 0.0 5.974e+24 earth.gif\n"
+                            "8.6603e+10 -5.0000e+10 0.0 0.0 5.974e+24 mercury.gif\n");
 
     NB::Universe universe;
     input >> universe;
