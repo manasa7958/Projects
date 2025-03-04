@@ -103,7 +103,7 @@ BOOST_AUTO_TEST_CASE(testMultiBodyBalance) {
 BOOST_AUTO_TEST_CASE(testExtremeMassDifference) {
     std::stringstream input("2 1.0e+11\n"
         "0.0 0.0 0.0 0.0 1.0e+30 sun.gif\n"
-        "1.0e+11 0.0 0.0 0.0 1.0e+30 mercury.gif\n");
+        "1.0e+11 0.0 0.0 0.0 1.0e+10 asteroid.gif\n");
 
     NB::Universe universe;
     input >> universe;
@@ -114,10 +114,8 @@ BOOST_AUTO_TEST_CASE(testExtremeMassDifference) {
     float accel1 = std::abs(universe[0].velocity().x) / dt;
     float accel2 = std::abs(universe[1].velocity().x) / dt;
 
-    BOOST_CHECK(accel1 >= 0.0f);
-    BOOST_CHECK(accel2 >= 0.0f);
-    BOOST_CHECK(accel1 < 1e30f);
-    BOOST_CHECK(accel2 < 1e30f);
+    BOOST_CHECK_MESSAGE(accel1 < 1e10f, "Acceleration is too large for a small object.");
+    BOOST_CHECK_MESSAGE(accel2 < 1e10f, "Acceleration is too large for a massive object.");
 }
 
 BOOST_AUTO_TEST_CASE(testExtraCredit) {
@@ -134,7 +132,7 @@ BOOST_AUTO_TEST_CASE(testExtraCredit) {
     BOOST_REQUIRE_CLOSE(static_cast<double>(universe[1].position().x), 1.0e+11, 0.0001);
 }
 
-BOOST_AUTO_TEST_CASE(testFixedDeltaAndLeapfrog) {
+/*BOOST_AUTO_TEST_CASE(testFixedDeltaAndLeapfrog) {
     std::stringstream input("2 1.0e+11\n"
         "0.0 0.0 0.0 0.0 1.0e+30 sun.gif\n"
         "1.0e+11 0.0 0.0 0.0 1.0e+30 mercury.gif\n");
@@ -148,4 +146,25 @@ BOOST_AUTO_TEST_CASE(testFixedDeltaAndLeapfrog) {
 
     BOOST_REQUIRE(universe[0].position().x < 0.0);
     BOOST_REQUIRE(universe[1].position().x > 1.0e+11);
+}*/
+BOOST_AUTO_TEST_CASE(testFixedDeltaAndLeapfrog) {
+    std::stringstream input("2 1.0e+11\n"
+        "0.0 0.0 0.0 0.0 1.0e+30 sun.gif\n"
+        "1.0e+11 0.0 0.0 0.0 1.0e+30 mercury.gif\n");
+
+    NB::Universe universe;
+    input >> universe;
+
+    sf::Vector2f initial_pos1 = universe[0].position();
+    sf::Vector2f initial_pos2 = universe[1].position();
+
+    for (int i = 0; i < 10; ++i) {
+        universe.step(-1.0e+6);
+    }
+
+    sf::Vector2f final_pos1 = universe[0].position();
+    sf::Vector2f final_pos2 = universe[1].position();
+
+    BOOST_CHECK_MESSAGE(final_pos1.x < initial_pos1.x, "Body 1 should move left.");
+    BOOST_CHECK_MESSAGE(final_pos2.x > initial_pos2.x, "Body 2 should move right.");
 }
