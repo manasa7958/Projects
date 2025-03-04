@@ -66,10 +66,10 @@ BOOST_AUTO_TEST_CASE(testNoAcceleration) {
     std::cerr << "TEST: Final Position: (" << final_position.x << ", " << final_position.y << ")\n";
     std::cerr << "TEST: Final Velocity: (" << final_velocity.x << ", " << final_velocity.y << ")\n";
 
-    BOOST_CHECK_SMALL(final_velocity.x, 1e-10);
-    BOOST_CHECK_SMALL(final_velocity.y, 1e-10);
-    BOOST_CHECK_SMALL(final_position.x - initial_position.x, 1e-10);
-    BOOST_CHECK_SMALL(final_position.y - initial_position.y, 1e-10);
+    BOOST_CHECK_SMALL(static_cast<double>(final_velocity.x), 1e-10);
+    BOOST_CHECK_SMALL(static_cast<double>(final_velocity.y), 1e-10);
+    BOOST_CHECK_SMALL(static_cast<double>(final_position.x - initial_position.x), 1e-10);
+    BOOST_CHECK_SMALL(static_cast<double>(final_position.y - initial_position.y), 1e-10);
 }
 
 BOOST_AUTO_TEST_CASE(testAntigrav) {
@@ -97,7 +97,6 @@ BOOST_AUTO_TEST_CASE(testAntigrav) {
     
     BOOST_CHECK_GT(force1.y, 0); // Should be positive (attracting downward)
     BOOST_CHECK_LT(force2.y, 0); // Should be negative (attracting upward)
-
     BOOST_REQUIRE(final_pos1.y < initial_pos1.y);
     BOOST_REQUIRE(final_pos2.y > initial_pos2.y);
 }
