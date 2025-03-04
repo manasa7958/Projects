@@ -130,13 +130,12 @@ void NB::Universe::step(double dt) {
                 std::cerr << "Ignoring force computation for Body " << i << " due to distance threshold\n";
                 continue;
             }
-
-            sf::Vector2f force = (diff / distance) * (-forceMagnitude);
+            float forceMagnitude = (6.67430e-11 * bodies[i]->mass() * bodies[j]->mass()) / (distance * distance);
+            sf::Vector2f force = (diff / distance) * forceMagnitude;  // Ensure attraction, not repulsion
             netForce += force;
         }
 
         sf::Vector2f acceleration = netForce / bodies[i]->mass();
-        
         sf::Vector2f halfStepVelocity = bodies[i]->velocity() + (acceleration * static_cast<float>(dt * 0.5));
         newPositions[i] = bodies[i]->position() + (halfStepVelocity * static_cast<float>(dt));
         newVelocities[i] = halfStepVelocity + (acceleration * static_cast<float>(dt * 0.5));
