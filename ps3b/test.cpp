@@ -74,7 +74,7 @@ BOOST_AUTO_TEST_CASE(testNumPlanets1) {
     BOOST_REQUIRE_NO_THROW(universe[0]);
 }
 
-/*BOOST_AUTO_TEST_CASE(testNoAcceleration) {
+BOOST_AUTO_TEST_CASE(testNoAcceleration) {
     std::stringstream input("1 1.0e+11\n"
         "0.0 0.0 0.0 0.0 1.0e+30 earth.gif\n");
 
@@ -100,9 +100,9 @@ BOOST_AUTO_TEST_CASE(testNumPlanets1) {
     BOOST_CHECK_EQUAL(final_velocity.y, 0.0f);
     BOOST_CHECK_EQUAL(final_position.x, initial_position.x);
     BOOST_CHECK_EQUAL(final_position.y, initial_position.y);
-}*/
+}
 
-BOOST_AUTO_TEST_CASE(testInvertedGravity) {
+/*BOOST_AUTO_TEST_CASE(testInvertedGravity) {
     std::stringstream input("2 1.0e+11\n"
         "0.0 0.0 0.0 0.0 1.0e+30 sun.gif\n"
         "1.0e+11 0.0 0.0 0.0 1.0e+30 mercury.gif\n");
@@ -140,7 +140,6 @@ BOOST_AUTO_TEST_CASE(testInvertedGravity) {
     BOOST_REQUIRE_GT(netForce1.x, 0);
     BOOST_REQUIRE_LT(netForce2.x, 0);
 }
-/*
 BOOST_AUTO_TEST_CASE(testInvertedGravity) {
     std::stringstream input("2 1.0e+11\n"
         "0.0 0.0 0.0 0.0 1.0e+30 sun.gif\n"
