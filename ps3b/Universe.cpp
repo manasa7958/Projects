@@ -61,6 +61,27 @@ const CelestialBody& Universe::operator[](size_t index) const {
     return *bodies[index];
 }
 
+sf::Vector2f NB::Universe::getNetForce(size_t index) const {
+    if (index >= bodies.size()) {
+        throw std::out_of_range("Index out of range");
+    }
+
+    sf::Vector2f netForce(0.f, 0.f);
+    for (size_t j = 0; j < bodies.size(); j++) {
+        if (index == j || bodies[j]->mass() == 0) continue;
+
+        sf::Vector2f diff = bodies[j]->position() - bodies[index]->position();
+        float distance = std::sqrt(diff.x * diff.x + diff.y * diff.y);
+        
+        if (distance < 1e-6) continue; // Avoid singularity
+        
+        float forceMagnitude = (6.67430e-11 * bodies[index]->mass() * bodies[j]->mass()) / (distance * distance);
+        sf::Vector2f force = (diff / distance) * forceMagnitude;
+        netForce += force;
+    }
+    return netForce;
+}
+
 void NB::Universe::step(double dt) {
     std::vector<sf::Vector2f> newVelocities(bodies.size());
     std::vector<sf::Vector2f> newPositions(bodies.size());
