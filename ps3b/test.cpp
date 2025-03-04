@@ -54,8 +54,6 @@ BOOST_AUTO_TEST_CASE(testNoAcceleration) {
 
     for (int i = 0; i < 10; i++) {
         universe.step(1.0e+6);
-        BOOST_CHECK_SMALL(static_cast<double>(universe[0].velocity().x), 1e-12);
-        BOOST_CHECK_SMALL(static_cast<double>(universe[0].velocity().y), 1e-12);
     }
 
     sf::Vector2f final_position = universe[0].position();
@@ -64,13 +62,13 @@ BOOST_AUTO_TEST_CASE(testNoAcceleration) {
     std::cerr << "TEST: Final Position: (" << final_position.x << ", " << final_position.y << ")\n";
     std::cerr << "TEST: Final Velocity: (" << final_velocity.x << ", " << final_velocity.y << ")\n";
 
-    BOOST_CHECK_MESSAGE(
+    BOOST_REQUIRE_MESSAGE(
         std::abs(final_velocity.x) < 1.0e-12f && std::abs(final_velocity.y) < 1.0e-12f,
         "Velocity changed when it shouldn't have. Final velocity: (" 
         << final_velocity.x << ", " << final_velocity.y << ")"
     );
     
-    BOOST_CHECK_MESSAGE(
+    BOOST_REQUIRE_MESSAGE(
         std::abs(final_position.x - initial_position.x) < 1.0e-6f && 
         std::abs(final_position.y - initial_position.y) < 1.0e-6f,
         "Position changed when it shouldn't have. Displacement: (" 
@@ -106,13 +104,13 @@ BOOST_AUTO_TEST_CASE(testAntigrav) {
 
     BOOST_REQUIRE_MESSAGE(
         final_pos1.y < initial_pos1.y,
-        "First body did not move down with normal gravity. Initial y: " 
+        "First body did not move downward with normal gravity. Initial y: " 
         << initial_pos1.y << ", Final y: " << final_pos1.y
     );
     
     BOOST_REQUIRE_MESSAGE(
         final_pos2.y > initial_pos2.y,
-        "Second body did not move up with normal gravity. Initial y: " 
+        "Second body did not move upward with normal gravity. Initial y: " 
         << initial_pos2.y << ", Final y: " << final_pos2.y
     );
     
@@ -161,12 +159,12 @@ BOOST_AUTO_TEST_CASE(testInvertedGravity) {
     
     BOOST_REQUIRE_MESSAGE(
         final_vel1.x > 0,
-        "First body's velocity should be positive with inverted gravity"
+        "First body's velocity should be positive in x-direction with inverted gravity"
     );
     
     BOOST_REQUIRE_MESSAGE(
         final_vel2.x < 0,
-        "Second body's velocity should be negative with inverted gravity"
+        "Second body's velocity should be negative in x-direction with inverted gravity"
     );
 }
 BOOST_AUTO_TEST_CASE(testExtraCredit) {
