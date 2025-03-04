@@ -40,35 +40,52 @@ BOOST_AUTO_TEST_CASE(testFlippedValues) {
 }
 
 BOOST_AUTO_TEST_CASE(testNoAcceleration) {
+    // Create a universe with a single body at the origin with no velocity
     std::stringstream input("1 1.0e+11\n"
         "0.0 0.0 0.0 0.0 1.0e+30 earth.gif\n");
 
     NB::Universe universe;
     input >> universe;
 
+    // Record initial position and velocity
     sf::Vector2f initial_position = universe[0].position();
     sf::Vector2f initial_velocity = universe[0].velocity();
 
     std::cerr << "TEST: Initial Position: (" << initial_position.x << ", " << initial_position.y << ")\n";
     std::cerr << "TEST: Initial Velocity: (" << initial_velocity.x << ", " << initial_velocity.y << ")\n";
 
+    // Step the simulation multiple times
     for (int i = 0; i < 10; i++) {
         universe.step(1.0e+6);
     }
 
+    // Record final position and velocity
     sf::Vector2f final_position = universe[0].position();
     sf::Vector2f final_velocity = universe[0].velocity();
 
     std::cerr << "TEST: Final Position: (" << final_position.x << ", " << final_position.y << ")\n";
     std::cerr << "TEST: Final Velocity: (" << final_velocity.x << ", " << final_velocity.y << ")\n";
 
-    BOOST_CHECK_SMALL(final_velocity.x, 1.0e-10f);
-    BOOST_CHECK_SMALL(final_velocity.y, 1.0e-10f);
-    BOOST_CHECK_SMALL(final_position.x - initial_position.x, 1.0e-10f);
-    BOOST_CHECK_SMALL(final_position.y - initial_position.y, 1.0e-10f);
+    // With a single body and no external forces, there should be no forces or acceleration
+    // The velocity should remain exactly zero (or very close to it)
+    BOOST_CHECK_MESSAGE(
+        std::abs(final_velocity.x) < 1.0e-10f && std::abs(final_velocity.y) < 1.0e-10f,
+        "Velocity changed when it shouldn't have. Final velocity: (" 
+        << final_velocity.x << ", " << final_velocity.y << ")"
+    );
+    
+    // The position should remain unchanged (or very close to it)
+    BOOST_CHECK_MESSAGE(
+        std::abs(final_position.x - initial_position.x) < 1.0e-10f && 
+        std::abs(final_position.y - initial_position.y) < 1.0e-10f,
+        "Position changed when it shouldn't have. Displacement: (" 
+        << (final_position.x - initial_position.x) << ", " 
+        << (final_position.y - initial_position.y) << ")"
+    );
 }
 
 BOOST_AUTO_TEST_CASE(testInvertedGravity) {
+    // Create universe with two bodies: one at origin, one at distance
     std::stringstream input("2 1.0e+11\n"
         "0.0 0.0 0.0 0.0 1.0e+30 sun.gif\n"
         "1.0e+11 0.0 0.0 0.0 1.0e+30 mercury.gif\n");
@@ -76,95 +93,100 @@ BOOST_AUTO_TEST_CASE(testInvertedGravity) {
     NB::Universe universe;
     input >> universe;
 
+    // Record initial positions
     sf::Vector2f initial_pos1 = universe[0].position();
     sf::Vector2f initial_pos2 = universe[1].position();
+    sf::Vector2f initial_vel1 = universe[0].velocity();
+    sf::Vector2f initial_vel2 = universe[1].velocity();
 
+    // With negative time step, gravity should be inverted
     for (int i = 0; i < 10; i++) {
         universe.step(-1.0e+6);
     }
 
+    // Get final positions and velocities
     sf::Vector2f final_pos1 = universe[0].position();
     sf::Vector2f final_pos2 = universe[1].position();
+    sf::Vector2f final_vel1 = universe[0].velocity();
+    sf::Vector2f final_vel2 = universe[1].velocity();
 
-    BOOST_REQUIRE(final_pos1.x < initial_pos1.x);
-    BOOST_REQUIRE(final_pos2.x > initial_pos2.x);
-}
-
-/*
-BOOST_AUTO_TEST_CASE(testNoAcceleration) {
-    std::stringstream input("1 1.0e+11\n"
-        "0.0 0.0 0.0 0.0 1.0e+30 earth.gif\n");
-
-    NB::Universe universe;
-    input >> universe;
-
-    sf::Vector2f initial_position = universe[0].position();
-    sf::Vector2f initial_velocity = universe[0].velocity();
-
-    std::cerr << "TEST: Initial Position: (" << initial_position.x << ", " << initial_position.y << ")\n";
-    std::cerr << "TEST: Initial Velocity: (" << initial_velocity.x << ", " << initial_velocity.y << ")\n";
+    // Check if bodies moved in correct directions with inverted gravity
+    // First body should move left (negative x direction)
+    BOOST_CHECK_MESSAGE(
+        final_pos1.x < initial_pos1.x,
+        "First body did not move left with negative time step. Initial x: " 
+        << initial_pos1.x << ", Final x: " << final_pos1.x
+    );
     
-    for (int i = 0; i < 10; i++) {
-        universe.step(1.0e+6);
-    }
-
-    sf::Vector2f final_position = universe[0].position();
-    sf::Vector2f final_velocity = universe[0].velocity();
-
-    std::cerr << "TEST: Final Position: (" << final_position.x << ", " << final_position.y << ")\n";
-    std::cerr << "TEST: Final Velocity: (" << final_velocity.x << ", " << final_velocity.y << ")\n";
-
-    BOOST_CHECK_SMALL(final_velocity.x, 1e-10f);
-    BOOST_CHECK_SMALL(final_velocity.y, 1e-10f);
-    BOOST_CHECK_SMALL(final_position.x - initial_position.x, 1e-10f);
-    BOOST_CHECK_SMALL(final_position.y - initial_position.y, 1e-10f);
+    // Second body should move right (positive x direction)
+    BOOST_CHECK_MESSAGE(
+        final_pos2.x > initial_pos2.x,
+        "Second body did not move right with negative time step. Initial x: " 
+        << initial_pos2.x << ", Final x: " << final_pos2.x
+    );
+    
+    // Ensure velocities also changed in correct directions
+    BOOST_CHECK_MESSAGE(
+        final_vel1.x < 0,
+        "First body's velocity should be negative in x-direction with inverted gravity"
+    );
+    
+    BOOST_CHECK_MESSAGE(
+        final_vel2.x > 0,
+        "Second body's velocity should be positive in x-direction with inverted gravity"
+    );
 }
 
 BOOST_AUTO_TEST_CASE(testAntigrav) {
+    // Create universe with two bodies along y-axis to test attraction
     std::stringstream input("2 1.0e+11\n"
         "0.0 0.0 0.0 0.0 1.0e+30 sun.gif\n"
-        "1.0e+11 0.0 0.0 0.0 1.0e+30 mercury.gif\n");
+        "0.0 1.0e+11 0.0 0.0 1.0e+30 mercury.gif\n");
 
     NB::Universe universe;
     input >> universe;
 
     sf::Vector2f initial_pos1 = universe[0].position();
     sf::Vector2f initial_pos2 = universe[1].position();
+    sf::Vector2f initial_vel1 = universe[0].velocity();
+    sf::Vector2f initial_vel2 = universe[1].velocity();
 
+    // Step with positive time - normal gravity should make bodies attract
     for (int i = 0; i < 10; i++) {
         universe.step(1.0e+6);
     }
 
-    sf::Vector2f after_normal_pos1 = universe[0].position();
-    sf::Vector2f after_normal_pos2 = universe[1].position();
-
-    BOOST_REQUIRE(after_normal_pos1.x > initial_pos1.x);
-    BOOST_REQUIRE(after_normal_pos2.x < initial_pos2.x);
-}
-
-BOOST_AUTO_TEST_CASE(testInvertedGravity) {
-    std::stringstream input("2 1.0e+11\n"
-        "0.0 0.0 0.0 0.0 1.0e+30 sun.gif\n"
-        "1.0e+11 0.0 0.0 0.0 1.0e+30 mercury.gif\n");
-
-    NB::Universe universe;
-    input >> universe;
-
-    sf::Vector2f initial_pos1 = universe[0].position();
-    sf::Vector2f initial_pos2 = universe[1].position();
-
-    // Negative time step should reverse gravity
-    for (int i = 0; i < 10; i++) {
-        universe.step(-1.0e+6);
-    }
-
     sf::Vector2f final_pos1 = universe[0].position();
     sf::Vector2f final_pos2 = universe[1].position();
+    sf::Vector2f final_vel1 = universe[0].velocity();
+    sf::Vector2f final_vel2 = universe[1].velocity();
 
-    // With negative time step, first body should move left, second body should move right
-    BOOST_REQUIRE(final_pos1.x < initial_pos1.x);
-    BOOST_REQUIRE(final_pos2.x > initial_pos2.x);
-}*/
+    // With normal gravity, bodies should attract each other
+    // First body should move up (positive y)
+    BOOST_CHECK_MESSAGE(
+        final_pos1.y > initial_pos1.y,
+        "First body did not move up with normal gravity. Initial y: " 
+        << initial_pos1.y << ", Final y: " << final_pos1.y
+    );
+    
+    // Second body should move down (negative y)
+    BOOST_CHECK_MESSAGE(
+        final_pos2.y < initial_pos2.y,
+        "Second body did not move down with normal gravity. Initial y: " 
+        << initial_pos2.y << ", Final y: " << final_pos2.y
+    );
+    
+    // Check velocity directions too
+    BOOST_CHECK_MESSAGE(
+        final_vel1.y > 0,
+        "First body should have positive y-velocity with normal gravity"
+    );
+    
+    BOOST_CHECK_MESSAGE(
+        final_vel2.y < 0,
+        "Second body should have negative y-velocity with normal gravity"
+    );
+}
 
 BOOST_AUTO_TEST_CASE(testExtraCredit) {
     std::stringstream input("2 1.0e+11\n"
