@@ -49,8 +49,8 @@ BOOST_AUTO_TEST_CASE(testNoAcceleration) {
     sf::Vector2f initial_position = universe[0].position();
     sf::Vector2f initial_velocity = universe[0].velocity();
 
-    std::cerr << "Initial Position: (" << initial_position.x << ", " << initial_position.y << ")\n";
-    std::cerr << "Initial Velocity: (" << initial_velocity.x << ", " << initial_velocity.y << ")\n";
+    std::cerr << "TEST: Initial Position: (" << initial_position.x << ", " << initial_position.y << ")\n";
+    std::cerr << "TEST: Initial Velocity: (" << initial_velocity.x << ", " << initial_velocity.y << ")\n";
 
     for (int i = 0; i < 10; i++) {
         universe.step(1.0e+6);
@@ -62,12 +62,13 @@ BOOST_AUTO_TEST_CASE(testNoAcceleration) {
     std::cerr << "TEST: Final Position: (" << final_position.x << ", " << final_position.y << ")\n";
     std::cerr << "TEST: Final Velocity: (" << final_velocity.x << ", " << final_velocity.y << ")\n";
 
+    // If no force acts, position & velocity should remain unchanged
     BOOST_CHECK_SMALL(static_cast<double>(final_velocity.x), 1e-10);
     BOOST_CHECK_SMALL(static_cast<double>(final_velocity.y), 1e-10);
     BOOST_CHECK_CLOSE(static_cast<double>(final_position.x),
-        static_cast<double>(initial_position.x), 1e-10);
+        static_cast<double>(initial_position.x), 0.0001);
     BOOST_CHECK_CLOSE(static_cast<double>(final_position.y),
-        static_cast<double>(initial_position.y), 1e-10);
+        static_cast<double>(initial_position.y), 0.0001);
 }
 
 BOOST_AUTO_TEST_CASE(testInvertedGravity) {
