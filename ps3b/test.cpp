@@ -68,6 +68,32 @@ BOOST_AUTO_TEST_CASE(testNoAcceleration) {
     BOOST_CHECK_CLOSE(static_cast<double>(final_position.y), static_cast<double>(initial_position.y), 1e-10);
 }
 
+BOOST_AUTO_TEST_CASE(testAntigravity) {
+    std::stringstream input("2 1.0e+11\n"
+        "0.0 0.0 0.0 0.0 0.0 earth.gif\n"
+        "1.0e+11 0.0 0.0 0.0 0.0 mars.gif\n");
+
+    NB::Universe universe;
+    input >> universe;
+
+    sf::Vector2f initial_pos1 = universe[0].position();
+    sf::Vector2f initial_pos2 = universe[1].position();
+    float initial_distance = std::abs(initial_pos2.x - initial_pos1.x);
+
+    for (int i = 0; i < 10; i++) {
+        universe.step(1.0e+6);
+    }
+
+    sf::Vector2f final_pos1 = universe[0].position();
+    sf::Vector2f final_pos2 = universe[1].position();
+    float final_distance = std::abs(final_pos2.x - final_pos1.x);
+
+    std::cerr << "TEST: Initial Distance: " << initial_distance << "\n";
+    std::cerr << "TEST: Final Distance: " << final_distance << "\n";
+
+    BOOST_REQUIRE_CLOSE(static_cast<double>(final_distance), static_cast<double>(initial_distance), 0.0001);
+}
+
 /*BOOST_AUTO_TEST_CASE(testAntigravity) {
     std::stringstream input("2 1.0e+11\n"
         "0.0 0.0 0.0 0.0 5.9740e+24 earth.gif\n"
