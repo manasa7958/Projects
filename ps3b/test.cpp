@@ -64,9 +64,9 @@ BOOST_AUTO_TEST_CASE(testNoAcceleration) {
 
     BOOST_CHECK_SMALL(static_cast<double>(final_velocity.x), 1e-10);
     BOOST_CHECK_SMALL(static_cast<double>(final_velocity.y), 1e-10);
-    BOOST_CHECK_CLOSE(static_cast<double>(final_position.x), 
+    BOOST_CHECK_CLOSE(static_cast<double>(final_position.x),
         static_cast<double>(initial_position.x), 1e-10);
-    BOOST_CHECK_CLOSE(static_cast<double>(final_position.y), 
+    BOOST_CHECK_CLOSE(static_cast<double>(final_position.y),
         static_cast<double>(initial_position.y), 1e-10);
 }
 
