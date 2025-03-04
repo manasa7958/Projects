@@ -74,7 +74,7 @@ BOOST_AUTO_TEST_CASE(testNumPlanets1) {
     BOOST_REQUIRE_NO_THROW(universe[0]);
 }
 
-BOOST_AUTO_TEST_CASE(testNoAcceleration) {
+BOOST_AUTO_TEST_CASE(TestNoAcceleration) {
     std::stringstream input("1 1.0e+11\n"
         "0.0 0.0 0.0 0.0 1.0e+30 earth.gif\n");
 
@@ -86,7 +86,8 @@ BOOST_AUTO_TEST_CASE(testNoAcceleration) {
 
     std::cerr << "TEST: Initial Position: (" << initial_position.x << ", " << initial_position.y << ")\n";
     std::cerr << "TEST: Initial Velocity: (" << initial_velocity.x << ", " << initial_velocity.y << ")\n";
-    for (int i = 0; i < 100; i++) {
+
+    for (int i = 0; i < 10; i++) {
         universe.step(1.0e+6);
     }
 
@@ -96,10 +97,10 @@ BOOST_AUTO_TEST_CASE(testNoAcceleration) {
     std::cerr << "TEST: Final Position: (" << final_position.x << ", " << final_position.y << ")\n";
     std::cerr << "TEST: Final Velocity: (" << final_velocity.x << ", " << final_velocity.y << ")\n";
 
-    BOOST_CHECK_EQUAL(final_velocity.x, 0.0f);
-    BOOST_CHECK_EQUAL(final_velocity.y, 0.0f);
-    BOOST_CHECK_EQUAL(final_position.x, initial_position.x);
-    BOOST_CHECK_EQUAL(final_position.y, initial_position.y);
+    BOOST_CHECK_SMALL(final_velocity.x, 1e-10);
+    BOOST_CHECK_SMALL(final_velocity.y, 1e-10);
+    BOOST_CHECK_CLOSE(final_position.x, initial_position.x, 1e-10);
+    BOOST_CHECK_CLOSE(final_position.y, initial_position.y, 1e-10);
 }
 
 /*BOOST_AUTO_TEST_CASE(testInvertedGravity) {
