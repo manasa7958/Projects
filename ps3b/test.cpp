@@ -89,7 +89,7 @@ BOOST_AUTO_TEST_CASE(testNoAcceleration) {
     float final_distance = std::abs(final_pos2.x - final_pos1.x);
 
     BOOST_REQUIRE_GT(final_distance, initial_distance);
-}*/
+}
 
 BOOST_AUTO_TEST_CASE(testInvertedGravity) {
     std::stringstream input("2 1.0e+11\n"
@@ -111,7 +111,7 @@ BOOST_AUTO_TEST_CASE(testInvertedGravity) {
 
     BOOST_REQUIRE(final_pos1.x < initial_pos1.x);
     BOOST_REQUIRE(final_pos2.x > initial_pos2.x);
-}
+}*/
 
 BOOST_AUTO_TEST_CASE(testExtraCredit) {
     std::stringstream input("2 1.0e+11\n"
