@@ -64,10 +64,12 @@ const CelestialBody& Universe::operator[](size_t index) const {
 void NB::Universe::step(double dt) {
     std::vector<sf::Vector2f> newVelocities(bodies.size());
     std::vector<sf::Vector2f> newPositions(bodies.size());
-    
-    // Get the sign of dt to handle direction correctly for inverted gravity
-    float dtSign = (dt >= 0) ? 1.0f : -1.0f;
-    
+
+    if (bodies.size() == 1) {
+        std::cerr << "DEBUG: Single-body system, skipping force calculations.\n";
+        return;
+    }
+
     for (size_t i = 0; i < bodies.size(); i++) {
         if (bodies[i]->mass() == 0) {
             std::cerr << "Massless Body " << i << " retains its original position.\n";
@@ -75,36 +77,40 @@ void NB::Universe::step(double dt) {
             newVelocities[i] = bodies[i]->velocity();
             continue;
         }
-        
+
         sf::Vector2f netForce(0.f, 0.f);
         for (size_t j = 0; j < bodies.size(); j++) {
             if (i == j || bodies[j]->mass() == 0) continue;
-            
+
             sf::Vector2f diff = bodies[j]->position() - bodies[i]->position();
             float distance = std::sqrt(diff.x * diff.x + diff.y * diff.y);
-            
+
             if (distance < 1e-6 || distance > 1.0e+15) {
                 continue;
             }
-            
+
             float forceMagnitude = (6.67430e-11 * bodies[i]->mass() * bodies[j]->mass())
                                   / (distance * distance);
-            
-            // Apply the sign of dt to force direction for inverted gravity
-            sf::Vector2f force = (diff / distance) * forceMagnitude * dtSign;
+
+            sf::Vector2f force = (diff / distance) * forceMagnitude;
+            if (dt < 0) {
+                force = -force;  // Reverse force for negative time step
+            }
             netForce += force;
         }
-        
+
         sf::Vector2f acceleration = netForce / bodies[i]->mass();
-        
-        // Use abs(dt) for time calculations but preserve the sign effect through force
+
         float absDt = std::abs(dt);
-        sf::Vector2f halfStepVelocity = bodies[i]->velocity()
-            + (acceleration * static_cast<float>(absDt * 0.5));
+        sf::Vector2f halfStepVelocity = bodies[i]->velocity() + (acceleration * static_cast<float>(absDt * 0.5));
         newPositions[i] = bodies[i]->position() + (halfStepVelocity * static_cast<float>(absDt));
         newVelocities[i] = halfStepVelocity + (acceleration * static_cast<float>(absDt * 0.5));
+
+        if (dt < 0) {
+            newVelocities[i] = -newVelocities[i];  // Reverse velocity if dt is negative
+        }
     }
-    
+
     for (size_t i = 0; i < bodies.size(); i++) {
         bodies[i]->setVelocity(newVelocities[i]);
         bodies[i]->setPosition(newPositions[i]);
