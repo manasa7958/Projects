@@ -83,14 +83,15 @@ void NB::Universe::step(double dt) {
             if (distance < 1e-6 || distance > 1.0e+15) {
                 continue;
             }
-            float forceMagnitude = (6.67430e-11 * bodies[i]->mass() * bodies[j]->mass()) 
+            float forceMagnitude = (6.67430e-11 * bodies[i]->mass() * bodies[j]->mass())
             / (distance * distance);
             sf::Vector2f force = (diff / distance) * forceMagnitude;
             netForce += force;
         }
 
         sf::Vector2f acceleration = netForce / bodies[i]->mass();
-        sf::Vector2f halfStepVelocity = bodies[i]->velocity() + (acceleration * static_cast<float>(dt * 0.5));
+        sf::Vector2f halfStepVelocity = bodies[i]->velocity() 
+        + (acceleration * static_cast<float>(dt * 0.5));
         newPositions[i] = bodies[i]->position() + (halfStepVelocity * static_cast<float>(dt));
         newVelocities[i] = halfStepVelocity + (acceleration * static_cast<float>(dt * 0.5));
     }
