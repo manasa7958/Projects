@@ -62,12 +62,20 @@ BOOST_AUTO_TEST_CASE(testNoAcceleration) {
     std::cerr << "TEST: Final Position: (" << final_position.x << ", " << final_position.y << ")\n";
     std::cerr << "TEST: Final Velocity: (" << final_velocity.x << ", " << final_velocity.y << ")\n";
 
+    sf::Vector2f accel = (final_velocity - initial_velocity) / static_cast<float>(1.0e+6);
+    
+    BOOST_REQUIRE_MESSAGE(
+        std::abs(accel.x) < 1.0e-12f && std::abs(accel.y) < 1.0e-12f,
+        "Acceleration is not zero when it should be. Calculated acceleration: (" 
+        << accel.x << ", " << accel.y << ")"
+    );
+
     BOOST_REQUIRE_MESSAGE(
         std::abs(final_velocity.x) < 1.0e-12f && std::abs(final_velocity.y) < 1.0e-12f,
         "Velocity changed when it shouldn't have. Final velocity: (" 
         << final_velocity.x << ", " << final_velocity.y << ")"
     );
-    
+
     BOOST_REQUIRE_MESSAGE(
         std::abs(final_position.x - initial_position.x) < 1.0e-6f && 
         std::abs(final_position.y - initial_position.y) < 1.0e-6f,
@@ -76,6 +84,7 @@ BOOST_AUTO_TEST_CASE(testNoAcceleration) {
         << (final_position.y - initial_position.y) << ")"
     );
 }
+
 BOOST_AUTO_TEST_CASE(testAntigrav) {
     std::stringstream input("2 1.0e+11\n"
         "0.0 0.0 0.0 0.0 1.0e+30 sun.gif\n"
