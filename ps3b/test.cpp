@@ -64,8 +64,8 @@ BOOST_AUTO_TEST_CASE(testSingleBodyNoMotion) {
 
 BOOST_AUTO_TEST_CASE(testTwoBodyAttraction) {
     std::stringstream input("2 1.0e+11\n"
-                            "-1.0e+11 0.0 0.0 0.0 5.974e+24 body1.gif\n"
-                            "1.0e+11 0.0 0.0 0.0 5.974e+24 body2.gif\n");
+        "0.0 0.0 0.0 0.0 0.0 earth.gif\n"
+        "1.0e+11 0.0 0.0 0.0 0.0 mars.gif\n");
 
     NB::Universe universe;
     input >> universe;
