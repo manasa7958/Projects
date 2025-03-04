@@ -64,13 +64,11 @@ void NB::Universe::step(double dt) {
     std::vector<sf::Vector2f> newVelocities(bodies.size());
     std::vector<sf::Vector2f> newPositions(bodies.size());
 
-    const float G = 6.67430e-11;
-    const float minDistance = 1e-3;  // Avoids division by zero
-    float dtSign = (dt >= 0) ? 1.0f : -1.0f;  // Handles negative time steps for gravity inversion
+    double dtSign = (dt >= 0) ? 1.0 : -1.0;
+    double absDt = std::abs(dt);  // Ensure time step remains positive
 
     for (size_t i = 0; i < bodies.size(); i++) {
         if (bodies[i]->mass() == 0) {
-            // Massless bodies retain original state
             newPositions[i] = bodies[i]->position();
             newVelocities[i] = bodies[i]->velocity();
             continue;
@@ -81,24 +79,24 @@ void NB::Universe::step(double dt) {
             if (i == j || bodies[j]->mass() == 0) continue;
 
             sf::Vector2f diff = bodies[j]->position() - bodies[i]->position();
-            float distance = std::sqrt(diff.x * diff.x + diff.y * diff.y);
+            double distanceSquared = static_cast<double>(diff.x * diff.x + diff.y * diff.y);
+            double distance = std::sqrt(distanceSquared);
 
-            if (distance < minDistance) {
-                distance = minDistance;  // Prevents singularity
-            }
+            if (distance < 1e-6) continue;  // Avoid singularities
 
-            float forceMagnitude = (G * bodies[i]->mass() * bodies[j]->mass()) / (distance * distance);
-            sf::Vector2f force = (diff / distance) * (forceMagnitude * dtSign);  // Reverse force when dt < 0
+            double forceMagnitude = (6.67430e-11 * bodies[i]->mass() * bodies[j]->mass()) / distanceSquared;
+            sf::Vector2f force = (diff / static_cast<float>(distance)) * static_cast<float>(forceMagnitude * dtSign);
             netForce += force;
         }
 
-        sf::Vector2f acceleration = netForce / bodies[i]->mass();
-        sf::Vector2f halfStepVelocity = bodies[i]->velocity() + (acceleration * static_cast<float>(dt * 0.5));
-        newPositions[i] = bodies[i]->position() + (halfStepVelocity * static_cast<float>(dt));
-        newVelocities[i] = halfStepVelocity + (acceleration * static_cast<float>(dt * 0.5));
+        sf::Vector2f acceleration = netForce / static_cast<float>(bodies[i]->mass());
+
+        // Leapfrog integration
+        sf::Vector2f halfStepVelocity = bodies[i]->velocity() + acceleration * static_cast<float>(absDt * 0.5);
+        newPositions[i] = bodies[i]->position() + halfStepVelocity * static_cast<float>(absDt);
+        newVelocities[i] = halfStepVelocity + acceleration * static_cast<float>(absDt * 0.5);
     }
 
-    // Apply updated velocities and positions
     for (size_t i = 0; i < bodies.size(); i++) {
         bodies[i]->setVelocity(newVelocities[i]);
         bodies[i]->setPosition(newPositions[i]);
