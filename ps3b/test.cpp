@@ -105,6 +105,8 @@ BOOST_AUTO_TEST_CASE(testInvertedGravity) {
     // Get final positions and velocities
     sf::Vector2f final_pos1 = universe[0].position();
     sf::Vector2f final_pos2 = universe[1].position();
+    sf::Vector2f final_vel1 = universe[0].velocity();
+    sf::Vector2f final_vel2 = universe[1].velocity();
 
     // Check if bodies moved in correct directions with inverted gravity
     // First body should move left (negative x direction)
@@ -144,8 +146,6 @@ BOOST_AUTO_TEST_CASE(testAntigrav) {
 
     sf::Vector2f initial_pos1 = universe[0].position();
     sf::Vector2f initial_pos2 = universe[1].position();
-    sf::Vector2f initial_vel1 = universe[0].velocity();
-    sf::Vector2f initial_vel2 = universe[1].velocity();
 
     // Step with positive time - normal gravity should make bodies attract
     for (int i = 0; i < 10; i++) {
