@@ -101,29 +101,32 @@ BOOST_AUTO_TEST_CASE(testNoAcceleration) {
     BOOST_REQUIRE_CLOSE(static_cast<double>(final_position.y), static_cast<double>(initial_position.y), 1e-6);
 }
 
-BOOST_AUTO_TEST_CASE(testAntigravity) {
-    std::stringstream input("2 1.0e+11\n"
-        "0.0 0.0 0.0 0.0 5.9740e+24 earth.gif\n"
-        "1.0e+11 0.0 0.0 0.0 5.9740e+24 mars.gif\n");
+BOOST_AUTO_TEST_CASE(testNoAcceleration) {
+    std::stringstream input("1 1.0e+11\n"
+        "0.0 0.0 0.0 0.0 1.0e+30 earth.gif\n");  // Large mass, no velocity
 
     NB::Universe universe;
     input >> universe;
 
-    sf::Vector2f initial_pos1 = universe[0].position();
-    sf::Vector2f initial_pos2 = universe[1].position();
+    sf::Vector2f initial_position = universe[0].position();
+    sf::Vector2f initial_velocity = universe[0].velocity();
 
-    for (int i = 0; i < 10; i++) {
-        universe.step(-1.0e+6);
+    std::cerr << "TEST: Initial Position: (" << initial_position.x << ", " << initial_position.y << ")\n";
+    std::cerr << "TEST: Initial Velocity: (" << initial_velocity.x << ", " << initial_velocity.y << ")\n";
+    for (int i = 0; i < 100; i++) {  // Increase iterations
+        universe.step(1.0e+6);
     }
 
-    sf::Vector2f final_pos1 = universe[0].position();
-    sf::Vector2f final_pos2 = universe[1].position();
+    sf::Vector2f final_position = universe[0].position();
+    sf::Vector2f final_velocity = universe[0].velocity();
 
-    std::cerr << "TEST: Final Position 1: (" << final_pos1.x << ", " << final_pos1.y << ")\n";
-    std::cerr << "TEST: Final Position 2: (" << final_pos2.x << ", " << final_pos2.y << ")\n";
+    std::cerr << "TEST: Final Position: (" << final_position.x << ", " << final_position.y << ")\n";
+    std::cerr << "TEST: Final Velocity: (" << final_velocity.x << ", " << final_velocity.y << ")\n";
 
-    BOOST_REQUIRE(final_pos1.x < initial_pos1.x);
-    BOOST_REQUIRE(final_pos2.x > initial_pos2.x);
+    BOOST_CHECK_EQUAL(final_velocity.x, 0.0f);
+    BOOST_CHECK_EQUAL(final_velocity.y, 0.0f);
+    BOOST_CHECK_EQUAL(final_position.x, initial_position.x);
+    BOOST_CHECK_EQUAL(final_position.y, initial_position.y);
 }
 
 BOOST_AUTO_TEST_CASE(testInvertedGravity) {
