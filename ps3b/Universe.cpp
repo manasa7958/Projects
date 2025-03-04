@@ -93,8 +93,9 @@ void NB::Universe::step(double dt) {
                                   / (distance * distance);
 
             sf::Vector2f force = (diff / distance) * forceMagnitude;
+            sf::Vector2f acceleration = force / bodies[i]->mass();
             if (dt < 0) {
-                force = -force;  // Reverse force for negative time step
+                acceleration = -acceleration;  // Reverse acceleration for negative dt
             }
             netForce += force;
         }
