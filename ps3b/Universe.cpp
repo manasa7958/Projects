@@ -60,8 +60,51 @@ const CelestialBody& Universe::operator[](size_t index) const {
     }
     return *bodies[index];
 }
-
 void NB::Universe::step(double dt) {
+    std::vector<sf::Vector2f> newVelocities(bodies.size());
+    std::vector<sf::Vector2f> newPositions(bodies.size());
+
+    const float G = 6.67430e-11;
+    const float minDistance = 1e-3;  // Avoids division by zero
+    float dtSign = (dt >= 0) ? 1.0f : -1.0f;  // Handles negative time steps for gravity inversion
+
+    for (size_t i = 0; i < bodies.size(); i++) {
+        if (bodies[i]->mass() == 0) {
+            // Massless bodies retain original state
+            newPositions[i] = bodies[i]->position();
+            newVelocities[i] = bodies[i]->velocity();
+            continue;
+        }
+
+        sf::Vector2f netForce(0.f, 0.f);
+        for (size_t j = 0; j < bodies.size(); j++) {
+            if (i == j || bodies[j]->mass() == 0) continue;
+
+            sf::Vector2f diff = bodies[j]->position() - bodies[i]->position();
+            float distance = std::sqrt(diff.x * diff.x + diff.y * diff.y);
+
+            if (distance < minDistance) {
+                distance = minDistance;  // Prevents singularity
+            }
+
+            float forceMagnitude = (G * bodies[i]->mass() * bodies[j]->mass()) / (distance * distance);
+            sf::Vector2f force = (diff / distance) * (forceMagnitude * dtSign);  // Reverse force when dt < 0
+            netForce += force;
+        }
+
+        sf::Vector2f acceleration = netForce / bodies[i]->mass();
+        sf::Vector2f halfStepVelocity = bodies[i]->velocity() + (acceleration * static_cast<float>(dt * 0.5));
+        newPositions[i] = bodies[i]->position() + (halfStepVelocity * static_cast<float>(dt));
+        newVelocities[i] = halfStepVelocity + (acceleration * static_cast<float>(dt * 0.5));
+    }
+
+    // Apply updated velocities and positions
+    for (size_t i = 0; i < bodies.size(); i++) {
+        bodies[i]->setVelocity(newVelocities[i]);
+        bodies[i]->setPosition(newPositions[i]);
+    }
+}
+/*void NB::Universe::step(double dt) {
     std::vector<sf::Vector2f> newVelocities(bodies.size());
     std::vector<sf::Vector2f> newPositions(bodies.size());
 
@@ -100,7 +143,7 @@ void NB::Universe::step(double dt) {
         bodies[i]->setVelocity(newVelocities[i]);
         bodies[i]->setPosition(newPositions[i]);
     }
-}
+}*/
 
 void Universe::draw(sf::RenderTarget& window, sf::RenderStates states) const {
     window.draw(backgroundSprite);
