@@ -59,36 +59,16 @@ BOOST_AUTO_TEST_CASE(testNoAcceleration) {
     sf::Vector2f final_position = universe[0].position();
     sf::Vector2f final_velocity = universe[0].velocity();
 
-    std::cerr << "Final Position: (" << final_position.x << ", " << final_position.y << ")\n";
-    std::cerr << "Final Velocity: (" << final_velocity.x << ", " << final_velocity.y << ")\n";
+    std::cerr << "TEST: Final Position: (" << final_position.x << ", " << final_position.y << ")\n";
+    std::cerr << "TEST: Final Velocity: (" << final_velocity.x << ", " << final_velocity.y << ")\n";
 
-    BOOST_REQUIRE_SMALL(static_cast<double>(final_velocity.x), 1e-10);
-    BOOST_REQUIRE_SMALL(static_cast<double>(final_velocity.y), 1e-10);
-    BOOST_REQUIRE_CLOSE(static_cast<double>(final_position.x), static_cast<double>(initial_position.x), 1e-10);
-    BOOST_REQUIRE_CLOSE(static_cast<double>(final_position.y), static_cast<double>(initial_position.y), 1e-10);
+    BOOST_CHECK_SMALL(static_cast<double>(final_velocity.x), 1e-10);
+    BOOST_CHECK_SMALL(static_cast<double>(final_velocity.y), 1e-10);
+    BOOST_CHECK_CLOSE(static_cast<double>(final_position.x),
+        static_cast<double>(initial_position.x), 1e-10);
+    BOOST_CHECK_CLOSE(static_cast<double>(final_position.y),
+        static_cast<double>(initial_position.y), 1e-10);
 }
-
-/*BOOST_AUTO_TEST_CASE(testAntigravity) {
-    std::stringstream input("2 1.0e+11\n"
-        "0.0 0.0 0.0 0.0 1.0e+30 sun.gif\n"
-        "1.0e+11 0.0 0.0 0.0 1.0e+30 mercury.gif\n");
-
-    NB::Universe universe;
-    input >> universe;
-
-    for (int i = 0; i < 10; i++) {
-        universe.step(1.0e+6);
-    }
-
-    sf::Vector2f pos1 = universe[0].position();
-    sf::Vector2f pos2 = universe[1].position();
-
-    std::cerr << "Final Position 1: (" << pos1.x << ", " << pos1.y << ")\n";
-    std::cerr << "Final Position 2: (" << pos2.x << ", " << pos2.y << ")\n";
-
-    BOOST_REQUIRE(pos1.x > 0.0);  // Sun should NOT move left
-    BOOST_REQUIRE(pos2.x < 1.0e+11);  // Mercury should move left (towards the Sun)
-}*/
 
 BOOST_AUTO_TEST_CASE(testInvertedGravity) {
     std::stringstream input("2 1.0e+11\n"
@@ -107,9 +87,6 @@ BOOST_AUTO_TEST_CASE(testInvertedGravity) {
 
     sf::Vector2f final_pos1 = universe[0].position();
     sf::Vector2f final_pos2 = universe[1].position();
-
-    std::cerr << "Final Position 1: (" << final_pos1.x << ", " << final_pos1.y << ")\n";
-    std::cerr << "Final Position 2: (" << final_pos2.x << ", " << final_pos2.y << ")\n";
 
     BOOST_REQUIRE(final_pos1.x < initial_pos1.x);
     BOOST_REQUIRE(final_pos2.x > initial_pos2.x);
