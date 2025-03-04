@@ -59,10 +59,9 @@ BOOST_AUTO_TEST_CASE(testNoAcceleration) {
     sf::Vector2f final_position = universe[0].position();
     sf::Vector2f final_velocity = universe[0].velocity();
     
-    // 🚨 NEW: Check forces are exactly zero
     sf::Vector2f computed_force = universe.getNetForce(0);
-    BOOST_CHECK_SMALL(computed_force.x, 1e-10);
-    BOOST_CHECK_SMALL(computed_force.y, 1e-10);
+    BOOST_CHECK_SMALL(static_cast<double>(computed_force.x), 1e-10);
+    BOOST_CHECK_SMALL(static_cast<double>(computed_force.y), 1e-10);
 
     std::cerr << "TEST: Final Position: (" << final_position.x << ", " << final_position.y << ")\n";
     std::cerr << "TEST: Final Velocity: (" << final_velocity.x << ", " << final_velocity.y << ")\n";
