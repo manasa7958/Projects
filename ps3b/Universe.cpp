@@ -65,7 +65,7 @@ void NB::Universe::step(double dt) {
     std::vector<sf::Vector2f> newPositions(bodies.size());
 
     double dtSign = (dt >= 0) ? 1.0 : -1.0;
-    double absDt = std::abs(dt);  // Ensure time step remains positive
+    double absDt = std::abs(dt);  
 
     for (size_t i = 0; i < bodies.size(); i++) {
         if (bodies[i]->mass() == 0) {
@@ -82,7 +82,7 @@ void NB::Universe::step(double dt) {
             double distanceSquared = static_cast<double>(diff.x * diff.x + diff.y * diff.y);
             double distance = std::sqrt(distanceSquared);
 
-            if (distance < 1e-6) continue;  // Avoid singularities
+            if (distance < 1e-6) continue;
 
             double forceMagnitude = (6.67430e-11 * bodies[i]->mass() * bodies[j]->mass()) / distanceSquared;
             sf::Vector2f force = (diff / static_cast<float>(distance)) * static_cast<float>(forceMagnitude * dtSign);
@@ -90,6 +90,9 @@ void NB::Universe::step(double dt) {
         }
 
         sf::Vector2f acceleration = netForce / static_cast<float>(bodies[i]->mass());
+
+        // DEBUG: Print forces
+        std::cerr << "DEBUG: Body " << i << " Net Force: (" << netForce.x << ", " << netForce.y << ")\n";
 
         // Leapfrog integration
         sf::Vector2f halfStepVelocity = bodies[i]->velocity() + acceleration * static_cast<float>(absDt * 0.5);
