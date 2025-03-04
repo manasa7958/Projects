@@ -61,52 +61,6 @@ const CelestialBody& Universe::operator[](size_t index) const {
     return *bodies[index];
 }
 
-/*void NB::Universe::step(double dt) {
-    std::vector<sf::Vector2f> newVelocities(bodies.size());
-    std::vector<sf::Vector2f> newPositions(bodies.size());
-
-    for (size_t i = 0; i < bodies.size(); i++) {
-        if (bodies[i]->mass() == 0) {
-            // Retain original position and velocity for massless objects
-            newPositions[i] = bodies[i]->position();
-            newVelocities[i] = bodies[i]->velocity();
-            std::cerr << "Massless Body " << i << " retains its original position.\n";
-            continue;  
-        }
-
-        sf::Vector2f netForce(0.f, 0.f);
-        for (size_t j = 0; j < bodies.size(); j++) {
-            if (i == j) continue;
-            if (bodies[j]->mass() == 0) continue;  // Skip massless objects
-
-            sf::Vector2f diff = bodies[j]->position() - bodies[i]->position();
-            float distance = std::sqrt(diff.x * diff.x + diff.y * diff.y);
-
-            if (distance < 1e-6 || distance > 1.0e+15) {
-                std::cerr << "Ignoring force computation for Body " << i << " due to distance threshold\n";
-                continue;
-            }
-
-            float forceMagnitude = (6.67430e-11 * bodies[i]->mass() * bodies[j]->mass()) / (distance * distance);
-            sf::Vector2f force = (diff / distance) * (-forceMagnitude);
-            netForce += force;
-        }
-        std::cerr << "Body " << i << " Net Force: (" << netForce.x << ", " << netForce.y << ")\n";
-
-        sf::Vector2f acceleration = netForce / bodies[i]->mass();
-        newVelocities[i] = bodies[i]->velocity() + (acceleration * static_cast<float>(dt));
-        if (dt < 0) {
-            newVelocities[i] = bodies[i]->velocity() - (acceleration * static_cast<float>(-dt));
-        }
-        newPositions[i] = bodies[i]->position() + (newVelocities[i] * static_cast<float>(dt));
-
-    }
-    for (size_t i = 0; i < bodies.size(); i++) {
-        bodies[i]->setVelocity(newVelocities[i]);
-        bodies[i]->setPosition(newPositions[i]);
-    }
-}*/
-
 void NB::Universe::step(double dt) {
     std::vector<sf::Vector2f> newVelocities(bodies.size());
     std::vector<sf::Vector2f> newPositions(bodies.size());
@@ -127,11 +81,11 @@ void NB::Universe::step(double dt) {
             float distance = std::sqrt(diff.x * diff.x + diff.y * diff.y);
 
             if (distance < 1e-6 || distance > 1.0e+15) {
-                std::cerr << "Ignoring force computation for Body " << i << " due to distance threshold\n";
                 continue;
             }
-            float forceMagnitude = (6.67430e-11 * bodies[i]->mass() * bodies[j]->mass()) / (distance * distance);
-            sf::Vector2f force = (diff / distance) * forceMagnitude;  // Ensure attraction, not repulsion
+            float forceMagnitude = (6.67430e-11 * bodies[i]->mass() * bodies[j]->mass()) 
+            / (distance * distance);
+            sf::Vector2f force = (diff / distance) * forceMagnitude;
             netForce += force;
         }
 
@@ -139,12 +93,6 @@ void NB::Universe::step(double dt) {
         sf::Vector2f halfStepVelocity = bodies[i]->velocity() + (acceleration * static_cast<float>(dt * 0.5));
         newPositions[i] = bodies[i]->position() + (halfStepVelocity * static_cast<float>(dt));
         newVelocities[i] = halfStepVelocity + (acceleration * static_cast<float>(dt * 0.5));
-
-        std::cerr << "LEAPFROG DEBUG: Body " << i
-                  << " Pos: (" << newPositions[i].x << ", " << newPositions[i].y << ") "
-                  << " Vel: (" << newVelocities[i].x << ", " << newVelocities[i].y << ") "
-                  << " Acc: (" << acceleration.x << ", " << acceleration.y << ")"
-                  << std::endl;
     }
 
     for (size_t i = 0; i < bodies.size(); i++) {
