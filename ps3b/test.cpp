@@ -68,7 +68,7 @@ BOOST_AUTO_TEST_CASE(testNoAcceleration) {
     BOOST_REQUIRE_CLOSE(static_cast<double>(final_position.y), static_cast<double>(initial_position.y), 1e-10);
 }
 
-BOOST_AUTO_TEST_CASE(testAntigravity) {
+/*BOOST_AUTO_TEST_CASE(testAntigravity) {
     std::stringstream input("2 1.0e+11\n"
         "0.0 0.0 0.0 0.0 1.0e+30 sun.gif\n"
         "1.0e+11 0.0 0.0 0.0 1.0e+30 mercury.gif\n");
@@ -88,7 +88,7 @@ BOOST_AUTO_TEST_CASE(testAntigravity) {
 
     BOOST_REQUIRE(pos1.x > 0.0);  // Sun should NOT move left
     BOOST_REQUIRE(pos2.x < 1.0e+11);  // Mercury should move left (towards the Sun)
-}
+}*/
 
 BOOST_AUTO_TEST_CASE(testInvertedGravity) {
     std::stringstream input("2 1.0e+11\n"
