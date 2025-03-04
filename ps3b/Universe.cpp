@@ -60,35 +60,53 @@ const CelestialBody& Universe::operator[](size_t index) const {
     }
     return *bodies[index];
 }
-for (size_t i = 0; i < bodies.size(); i++) {
-    if (bodies[i]->mass() == 0) {
-        newPositions[i] = bodies[i]->position();
-        newVelocities[i] = bodies[i]->velocity();
-        continue;
+void NB::Universe::step(double dt) {
+    std::vector<sf::Vector2f> newVelocities(bodies.size());
+    std::vector<sf::Vector2f> newPositions(bodies.size());
+
+    double dtSign = (dt >= 0) ? 1.0 : -1.0;
+    double absDt = std::abs(dt);  
+
+    for (size_t i = 0; i < bodies.size(); i++) {
+        if (bodies[i]->mass() == 0) {
+            newPositions[i] = bodies[i]->position();
+            newVelocities[i] = bodies[i]->velocity();
+            continue;
+        }
+
+        sf::Vector2f netForce(0.f, 0.f);
+        for (size_t j = 0; j < bodies.size(); j++) {
+            if (i == j || bodies[j]->mass() == 0) continue;
+
+            sf::Vector2f diff = bodies[j]->position() - bodies[i]->position();
+            double distanceSquared = static_cast<double>(diff.x * diff.x + diff.y * diff.y);
+            double distance = std::sqrt(distanceSquared);
+
+            if (distance < 1e-6) continue;
+
+            double forceMagnitude = (6.67430e-11 * bodies[i]->mass() * bodies[j]->mass()) / distanceSquared;
+            sf::Vector2f force = (diff / static_cast<float>(distance)) * static_cast<float>(forceMagnitude);
+
+            // 🔹 Apply equal & opposite force to body j
+            netForce += force;
+            bodies[j]->setVelocity(bodies[j]->velocity() - (force / static_cast<float>(bodies[j]->mass())) * static_cast<float>(dt));
+        }
+
+        sf::Vector2f acceleration = netForce / static_cast<float>(bodies[i]->mass());
+
+        // 🔹 Print force for debugging
+        std::cerr << "DEBUG: Body " << i << " Net Force: (" << netForce.x << ", " << netForce.y << ")\n";
+
+        // 🔹 Leapfrog integration
+        sf::Vector2f halfStepVelocity = bodies[i]->velocity() + acceleration * static_cast<float>(absDt * 0.5);
+        newPositions[i] = bodies[i]->position() + halfStepVelocity * static_cast<float>(absDt);
+        newVelocities[i] = halfStepVelocity + acceleration * static_cast<float>(absDt * 0.5);
     }
 
-    sf::Vector2f netForce(0.f, 0.f);
-    for (size_t j = i + 1; j < bodies.size(); j++) {  // Only compute each pair once
-        if (bodies[j]->mass() == 0) continue;
-
-        sf::Vector2f diff = bodies[j]->position() - bodies[i]->position();
-        double distanceSquared = static_cast<double>(diff.x * diff.x + diff.y * diff.y);
-        double distance = std::sqrt(distanceSquared);
-
-        if (distance < 1e-6) continue;
-
-        double forceMagnitude = (6.67430e-11 * bodies[i]->mass() * bodies[j]->mass()) / distanceSquared;
-        sf::Vector2f force = (diff / static_cast<float>(distance)) * static_cast<float>(forceMagnitude);
-
-        // Apply equal and opposite forces
-        netForce += force;
-        bodies[j]->setVelocity(bodies[j]->velocity() - force / static_cast<float>(bodies[j]->mass()) * static_cast<float>(dt));
+    for (size_t i = 0; i < bodies.size(); i++) {
+        bodies[i]->setVelocity(newVelocities[i]);
+        bodies[i]->setPosition(newPositions[i]);
     }
-
-    sf::Vector2f acceleration = netForce / static_cast<float>(bodies[i]->mass());
-    sf::Vector2f halfStepVelocity = bodies[i]->velocity() + acceleration * static_cast<float>(absDt * 0.5);
-    newPositions[i] = bodies[i]->position() + halfStepVelocity * static_cast<float>(absDt);
-    newVelocities[i] = halfStepVelocity + acceleration * static_cast<float>(absDt * 0.5);
 }
 /*void NB::Universe::step(double dt) {
     std::vector<sf::Vector2f> newVelocities(bodies.size());
