@@ -82,7 +82,6 @@ BOOST_AUTO_TEST_CASE(testTwoBodyAttraction) {
     BOOST_CHECK_MESSAGE(final_pos1.x > initial_pos1.x, "Body 1 should move right.");
     BOOST_CHECK_MESSAGE(final_pos2.x < initial_pos2.x, "Body 2 should move left.");
 }
-
 BOOST_AUTO_TEST_CASE(testMultiBodyBalance) {
     std::stringstream input("3 2.50e+11\n"
                             "0.0 0.0 0.0 0.0 1.0e+30 sun.gif\n"
@@ -96,10 +95,17 @@ BOOST_AUTO_TEST_CASE(testMultiBodyBalance) {
         universe.step(1.0e+6);
     }
 
-    BOOST_CHECK_CLOSE(std::abs(universe[0].velocity().x), std::abs(universe[1].velocity().x), 0.001);
-    BOOST_CHECK_CLOSE(universe[1].velocity().y, universe[2].velocity().y, 0.001);
-}
+    sf::Vector2f v_sun = universe[0].velocity();
+    sf::Vector2f v_earth = universe[1].velocity();
+    sf::Vector2f v_mercury = universe[2].velocity();
 
+    std::cerr << "DEBUG: Sun Velocity: (" << v_sun.x << ", " << v_sun.y << ")\n";
+    std::cerr << "DEBUG: Earth Velocity: (" << v_earth.x << ", " << v_earth.y << ")\n";
+    std::cerr << "DEBUG: Mercury Velocity: (" << v_mercury.x << ", " << v_mercury.y << ")\n";
+
+    BOOST_CHECK_CLOSE(std::abs(v_sun.x), std::abs(v_earth.x), 0.001);
+    BOOST_CHECK_CLOSE(v_earth.y, v_mercury.y, 0.001);
+}
 BOOST_AUTO_TEST_CASE(testExtremeMassDifference) {
     std::stringstream input("2 1.0e+11\n"
         "0.0 0.0 0.0 0.0 1.0e+30 sun.gif\n"
