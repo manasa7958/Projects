@@ -1,5 +1,4 @@
 // Copyright 2025 Manasa Praveen
-// Copyright 2025 Manasa Praveen
 #ifndef CELESTIALBODY_HPP
 #define CELESTIALBODY_HPP
 
