@@ -46,6 +46,29 @@ void Universe::step(double dt) {
   }
 }
 
+std::istream& operator>>(std::istream& in, Universe& universe) {
+    size_t n;
+    double radius;
+    in >> n >> radius;
+    universe.setRadius(radius);
+    universe.clearBodies();
+
+    for (size_t i = 0; i < n; ++i) {
+        auto body = std::make_shared<CelestialBody>();
+        in >> *body;
+        universe.addBody(body);
+    }
+    return in;
+}
+
+std::ostream& operator<<(std::ostream& out, const Universe& universe) {
+    out << universe.size() << " " << universe.radius() << "\n";
+    for (size_t i = 0; i < universe.size(); ++i) {
+        out << *universe.bodies[i];
+    }
+    return out;
+}
+
 void Universe::draw(sf::RenderTarget& window, sf::RenderStates states) const {
     window.draw(backgroundSprite);
     for (const auto& body : bodies) {
