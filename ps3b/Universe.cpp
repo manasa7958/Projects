@@ -3,7 +3,6 @@
 #include <memory>
 #include <cmath>
 #include "Universe.hpp"
-
 namespace NB {
 
 const double G = 6.67430e-11;  // Gravitational constant
@@ -19,6 +18,31 @@ Universe::Universe() : universeRadius(0) {
         float scaleY = static_cast<float>(windowSize.y) / textureSize.y;
         backgroundSprite.setScale(scaleX, scaleY);
     }
+}
+
+// Clear all celestial bodies
+void Universe::clearBodies() {
+    bodies.clear();
+}
+
+// Add a new celestial body
+void Universe::addBody(std::shared_ptr<CelestialBody> body) {
+    bodies.push_back(body);
+}
+
+// Set the radius of the universe
+void Universe::setRadius(double r) {
+    universeRadius = r;
+}
+
+// Get the number of celestial bodies
+size_t Universe::size() const {
+    return bodies.size();
+}
+
+// Get the radius of the universe
+double Universe::radius() const {
+    return universeRadius;
 }
 
 void Universe::step(double dt) {
