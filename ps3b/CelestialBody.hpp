@@ -12,21 +12,36 @@ namespace NB {
 
 class CelestialBody : public sf::Drawable {
  public:
+  // Constructors
   CelestialBody();
-  
-  void updateVelocity(const Vector2D& force, double dt);
+  CelestialBody(double x, double y, double vx, double vy, double mass, const std::string& imgFile);
+
+  // Getters
+  const Vector2D& position() const { return pos; }
+  const Vector2D& velocity() const { return vel; }
+  double mass() const { return m; }
+
+  // Setters
+  void setVelocity(const Vector2D& newVel) { vel = newVel; }
+  void setPosition(const Vector2D& newPos) { pos = newPos; }
+
+  // Physics updates
+  void applyForce(const Vector2D& force, double dt);
   void updatePosition(double dt);
 
+  // Load and draw texture
+  bool loadTexture(double universeRadius);
+  
+  // Overloaded operators for input/output
   friend std::istream& operator>>(std::istream& in, CelestialBody& body);
   friend std::ostream& operator<<(std::ostream& out, const CelestialBody& body);
-
-  bool loadTexture(double universeRadius);
 
  protected:
   void draw(sf::RenderTarget& window, sf::RenderStates states) const override;
 
  private:
-  Vector2D pos, vel;
+  Vector2D pos;
+  Vector2D vel;
   double m;
   std::string imageFile;
   std::shared_ptr<sf::Texture> texture;
@@ -35,4 +50,4 @@ class CelestialBody : public sf::Drawable {
 
 }  // namespace NB
 
-#endif
+#endif  // CELESTIALBODY_HPP
