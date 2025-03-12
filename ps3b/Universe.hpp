@@ -9,6 +9,7 @@
 #include <SFML/Graphics.hpp>
 #include "CelestialBody.hpp"
 #include "Vector2D.hpp"
+
 namespace NB {
 
 class Universe : public sf::Drawable {
@@ -21,6 +22,9 @@ class Universe : public sf::Drawable {
   double radius() const;
   void setRadius(double r);
   const CelestialBody& operator[](size_t index) const;
+
+  friend std::istream& operator>>(std::istream& in, Universe& universe);
+  friend std::ostream& operator<<(std::ostream& out, const Universe& universe);
 
  protected:
   void draw(sf::RenderTarget& window, sf::RenderStates states) const override;
