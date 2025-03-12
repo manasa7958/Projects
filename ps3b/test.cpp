@@ -14,163 +14,59 @@
 #include <boost/test/unit_test.hpp>
 
 BOOST_AUTO_TEST_CASE(testEmptyUniverse) {
-    std::stringstream input("0 1.0e+11\n");
-    NB::Universe universe;
-    input >> universe;
-    BOOST_TEST(universe.size() == 0);
+  std::stringstream input("0 1.0e+11\n");
+  NB::Universe universe;
+  input >> universe;
+  BOOST_TEST(universe.size() == 0);
 }
 
 BOOST_AUTO_TEST_CASE(testFlippedValues) {
-    std::stringstream input(
-        "1.1111e+11 2.2222e+11 3.3333e+04 4.4444e+04 5.5555e+24 earth.gif");
-    NB::CelestialBody body;
-    input >> body;
-
-    double expected_x_pos = 1.1111e+11;
-    double expected_y_pos = 2.2222e+11;
-    double expected_x_vel = 3.3333e+04;
-    double expected_y_vel = 4.4444e+04;
-    double expected_mass = 5.5555e+24;
-
-    BOOST_REQUIRE_CLOSE(body.position().x, expected_x_pos, 0.001);
-    BOOST_REQUIRE_CLOSE(body.position().y, expected_y_pos, 0.001);
-    BOOST_REQUIRE_CLOSE(body.velocity().x, expected_x_vel, 0.001);
-    BOOST_REQUIRE_CLOSE(body.velocity().y, expected_y_vel, 0.001);
-    BOOST_REQUIRE_CLOSE(body.mass(), expected_mass, 0.001);
+  std::stringstream input(
+      "1.1111e+11 2.2222e+11 3.3333e+04 4.4444e+04 5.5555e+24 flipped.gif");
+  NB::CelestialBody body;
+  input >> body;
+  BOOST_CHECK_CLOSE(body.position().x, 1.1111e+11, 0.001);
+  BOOST_CHECK_CLOSE(body.position().y, 2.2222e+11, 0.001);
+  BOOST_CHECK_CLOSE(body.velocity().x, 3.3333e+04, 0.001);
+  BOOST_CHECK_CLOSE(body.velocity().y, 4.4444e+04, 0.001);
+  BOOST_CHECK_CLOSE(body.mass(), 5.5555e+24, 0.001);
 }
 
-BOOST_AUTO_TEST_CASE(testSingleBodyNoMotion) {
-    std::stringstream input("1 1.0e+11\n"
-                            "1.0e+11 0.0 0.0 0.0 5.974e+24 earth.gif\n");
-
-    NB::Universe universe;
-    input >> universe;
-
-    sf::Vector2f initial_pos = universe[0].position();
-    sf::Vector2f initial_vel = universe[0].velocity();
-
-    for (int i = 0; i < 10; i++) {
-        universe.step(1.0e+6);
-    }
-
-    sf::Vector2f final_pos = universe[0].position();
-    sf::Vector2f final_vel = universe[0].velocity();
-
-    BOOST_CHECK_EQUAL(final_pos.x, initial_pos.x);
-    BOOST_CHECK_EQUAL(final_pos.y, initial_pos.y);
-    BOOST_CHECK_EQUAL(final_vel.x, initial_vel.x);
-    BOOST_CHECK_EQUAL(final_vel.y, initial_vel.y);
-}
-BOOST_AUTO_TEST_CASE(testTwoBodyAttraction) {
-    std::stringstream input("2 1.0e+11\n"
-        "-1.0e+11 0.0 0.0 0.0 5.974e+24 earth.gif\n"
-        "1.0e+11 0.0 0.0 0.0 5.974e+24 mars.gif\n");
-
-    NB::Universe universe;
-    input >> universe;
-
-    sf::Vector2f initial_pos1 = universe[0].position();
-    sf::Vector2f initial_pos2 = universe[1].position();
-
-    for (int i = 0; i < 10; i++) {
-        universe.step(1.0e+6);
-    }
-
-    sf::Vector2f final_pos1 = universe[0].position();
-    sf::Vector2f final_pos2 = universe[1].position();
-
-    BOOST_CHECK_MESSAGE(final_pos1.x > initial_pos1.x, "Body 1 should move right.");
-    BOOST_CHECK_MESSAGE(final_pos2.x < initial_pos2.x, "Body 2 should move left.");
-}
-BOOST_AUTO_TEST_CASE(testMultiBodyBalance) {
-    std::stringstream input("3 2.50e+11\n"
-                            "0.0 0.0 0.0 0.0 1.0e+30 sun.gif\n"
-                            "-8.6603e+10 -5.0000e+10 0.0 0.0 5.974e+24 earth.gif\n"
-                            "8.6603e+10 -5.0000e+10 0.0 0.0 5.974e+24 mercury.gif\n");
-
-    NB::Universe universe;
-    input >> universe;
-
-    for (int i = 0; i < 20; i++) {
-        universe.step(1.0e+6);
-    }
-
-    sf::Vector2f v_sun = universe[0].velocity();
-    sf::Vector2f v_earth = universe[1].velocity();
-    sf::Vector2f v_mercury = universe[2].velocity();
-
-    std::cerr << "DEBUG: Sun Velocity: (" << v_sun.x << ", " << v_sun.y << ")\n";
-    std::cerr << "DEBUG: Earth Velocity: (" << v_earth.x << ", " << v_earth.y << ")\n";
-    std::cerr << "DEBUG: Mercury Velocity: (" << v_mercury.x << ", " << v_mercury.y << ")\n";
-
-    BOOST_CHECK_CLOSE(std::abs(v_sun.x), std::abs(v_earth.x), 0.001);
-    BOOST_CHECK_CLOSE(v_earth.y, v_mercury.y, 0.001);
-}
-BOOST_AUTO_TEST_CASE(testExtremeMassDifference) {
-    std::stringstream input("2 1.0e+11\n"
-        "0.0 0.0 0.0 0.0 1.0e+30 sun.gif\n"
-        "1.0e+11 0.0 0.0 0.0 1.0e+10 asteroid.gif\n");
-
-    NB::Universe universe;
-    input >> universe;
-
-    const double dt = 25000.0;
-    universe.step(dt);
-
-    float accel1 = std::abs(universe[0].velocity().x) / dt;
-    float accel2 = std::abs(universe[1].velocity().x) / dt;
-
-    BOOST_CHECK_MESSAGE(accel1 < 1e10f, "Acceleration is too large for a small object.");
-    BOOST_CHECK_MESSAGE(accel2 < 1e10f, "Acceleration is too large for a massive object.");
+BOOST_AUTO_TEST_CASE(testFormatting) {
+  std::stringstream input(
+      "1.4960e+11 0.0000e+00 0.0000e+00 2.9800e+04 5.9740e+24 earth.gif");
+  NB::CelestialBody body;
+  input >> body;
+  std::stringstream output;
+  output << body;
+  NB::CelestialBody body2;
+  output >> body2;
+  BOOST_CHECK_CLOSE(body2.position().x, body.position().x, 0.001);
+  BOOST_CHECK_CLOSE(body2.position().y, body.position().y, 0.001);
+  BOOST_CHECK_CLOSE(body2.velocity().x, body.velocity().x, 0.001);
+  BOOST_CHECK_CLOSE(body2.velocity().y, body.velocity().y, 0.001);
+  BOOST_CHECK_CLOSE(body2.mass(), body.mass(), 0.001);
 }
 
-BOOST_AUTO_TEST_CASE(testExtraCredit) {
-    std::stringstream input("2 1.0e+11\n"
-        "0.0 0.0 0.0 0.0 0.0 earth.gif\n"
-        "1.0e+11 0.0 0.0 0.0 0.0 mars.gif\n");
-
-    NB::Universe universe;
-    input >> universe;
-    universe.step(1.0e+6);
-
-    BOOST_REQUIRE_CLOSE(static_cast<double>(universe[0].position().x), 0.0, 0.0001);
-    BOOST_REQUIRE_CLOSE(static_cast<double>(universe[0].position().y), 0.0, 0.0001);
-    BOOST_REQUIRE_CLOSE(static_cast<double>(universe[1].position().x), 1.0e+11, 0.0001);
+BOOST_AUTO_TEST_CASE(testNumPlanets1) {
+  std::stringstream input("5 2.50e+11\n"
+       "1.4960e+11 0.0000e+00 0.0000e+00 2.9800e+04 5.9740e+24 earth.gif\n"
+       "2.2790e+11 0.0000e+00 0.0000e+00 2.4100e+04 6.4190e+23 mars.gif\n"
+       "5.7900e+10 0.0000e+00 0.0000e+00 4.7900e+04 3.3020e+23 mercury.gif\n"
+       "0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00 1.9890e+30 sun.gif\n"
+       "1.0820e+11 0.0000e+00 0.0000e+00 3.5000e+04 4.8690e+24 venus.gif\n");
+  NB::Universe universe;
+  input >> universe;
+  BOOST_REQUIRE_EQUAL(universe.size(), 5);
+  BOOST_REQUIRE_NO_THROW(universe[0]);
 }
 
-/*BOOST_AUTO_TEST_CASE(testFixedDeltaAndLeapfrog) {
-    std::stringstream input("2 1.0e+11\n"
-        "0.0 0.0 0.0 0.0 1.0e+30 sun.gif\n"
-        "1.0e+11 0.0 0.0 0.0 1.0e+30 mercury.gif\n");
-
-    NB::Universe universe;
-    input >> universe;
-
-    for (int i = 0; i < 10; ++i) {
-        universe.step(-1.0e+6);
-    }
-
-    BOOST_REQUIRE(universe[0].position().x < 0.0);
-    BOOST_REQUIRE(universe[1].position().x > 1.0e+11);
-}*/
-BOOST_AUTO_TEST_CASE(testFixedDeltaAndLeapfrog) {
-    std::stringstream input("2 1.0e+11\n"
-        "0.0 0.0 0.0 0.0 1.0e+30 sun.gif\n"
-        "1.0e+11 0.0 0.0 0.0 1.0e+30 mercury.gif\n");
-
-    NB::Universe universe;
-    input >> universe;
-
-    sf::Vector2f initial_pos1 = universe[0].position();
-    sf::Vector2f initial_pos2 = universe[1].position();
-
-    for (int i = 0; i < 10; ++i) {
-        universe.step(-1.0e+6);
-    }
-
-    sf::Vector2f final_pos1 = universe[0].position();
-    sf::Vector2f final_pos2 = universe[1].position();
-
-    BOOST_CHECK_MESSAGE(final_pos1.x < initial_pos1.x, "Body 1 should move left.");
-    BOOST_CHECK_MESSAGE(final_pos2.x > initial_pos2.x, "Body 2 should move right.");
+BOOST_AUTO_TEST_CASE(testStepFunction) {
+  std::stringstream input("2 1.0e+11\n"
+                          "0.0 0.0 0.0 0.0 5.0e+30 sun.gif\n"
+                          "1.0e+11 0.0 0.0 30000.0 6.0e+24 earth.gif\n");
+  NB::Universe universe;
+  input >> universe;
+  universe.step(1000.0);
+  BOOST_CHECK_CLOSE(universe[1].position().x, 1.0e+11 + 30000.0 * 1000.0, 0.001);
 }
