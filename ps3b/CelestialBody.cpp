@@ -1,9 +1,9 @@
 // Copyright 2025 Manasa Praveen
-#include "CelestialBody.hpp"
 #include <iomanip>
 #include <iostream>
 #include <memory>
 #include <cmath>
+#include "CelestialBody.hpp"
 
 namespace NB {
 
@@ -20,6 +20,18 @@ void CelestialBody::updateVelocity(const Vector2D& force, double dt) {
 void CelestialBody::updatePosition(double dt) {
   pos.x += vel.x * dt;
   pos.y += vel.y * dt;
+}
+
+Vector2D CelestialBody::position() const {
+  return pos;
+}
+
+Vector2D CelestialBody::velocity() const {
+  return vel;
+}
+
+double CelestialBody::mass() const {
+  return m;
 }
 
 std::istream& operator>>(std::istream& in, CelestialBody& body) {
