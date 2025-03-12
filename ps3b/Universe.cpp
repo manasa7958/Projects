@@ -38,7 +38,7 @@ void Universe::step(double dt) {
   }
 
   for (size_t i = 0; i < n; ++i) {
-    bodies[i]->updateVelocity(forces[i], dt);
+    bodies[i]->applyForce(forces[i], dt);
   }
 
   for (size_t i = 0; i < n; ++i) {
