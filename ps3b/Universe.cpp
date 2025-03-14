@@ -5,7 +5,7 @@
 #include "Universe.hpp"
 namespace NB {
 
-const double G = 6.67430e-11;  // Gravitational constant
+const double G = 6.67430e-11;
 
 Universe::Universe() : universeRadius(0) {
     if (!backgroundTexture.loadFromFile("background.jpg")) {
@@ -21,30 +21,25 @@ Universe::Universe() : universeRadius(0) {
 }
 
 const CelestialBody& Universe::operator[](size_t index) const {
-    return *bodies.at(index);  // Use at() for bounds checking
+    return *bodies.at(index);
 }
 
-// Clear all celestial bodies
 void Universe::clearBodies() {
     bodies.clear();
 }
 
-// Add a new celestial body
 void Universe::addBody(std::shared_ptr<CelestialBody> body) {
     bodies.push_back(body);
 }
 
-// Set the radius of the universe
 void Universe::setRadius(double r) {
     universeRadius = r;
 }
 
-// Get the number of celestial bodies
 size_t Universe::size() const {
     return bodies.size();
 }
 
-// Get the radius of the universe
 double Universe::radius() const {
     return universeRadius;
 }
