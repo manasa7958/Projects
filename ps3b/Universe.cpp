@@ -3,9 +3,8 @@
 #include <memory>
 #include <cmath>
 #include "Universe.hpp"
-namespace NB {
 
-const double G = 6.67430e-11;
+namespace NB {
 
 Universe::Universe() : universeRadius(0) {
     if (!backgroundTexture.loadFromFile("background.jpg")) {
@@ -20,20 +19,31 @@ Universe::Universe() : universeRadius(0) {
     }
 }
 
-const CelestialBody& Universe::operator[](size_t index) const {
-    return *bodies.at(index);
+std::istream& operator>>(std::istream& in, Universe& universe) {
+    size_t n;
+    double radius;
+    in >> n >> radius;
+    universe.setRadius(radius);
+    universe.clearBodies();
+
+    if (n == 0) return in;
+    for (size_t i = 0; i < n; ++i) {
+        auto body = std::make_shared<CelestialBody>();
+        in >> *body;
+        if (!body->loadTexture(radius)) {
+          std::cerr << "Failed to load texture" << std::endl;
+        }
+        universe.addBody(body);
+    }
+    return in;
 }
 
-void Universe::clearBodies() {
-    bodies.clear();
-}
-
-void Universe::addBody(std::shared_ptr<CelestialBody> body) {
-    bodies.push_back(body);
-}
-
-void Universe::setRadius(double r) {
-    universeRadius = r;
+std::ostream& operator<<(std::ostream& out, const Universe& universe) {
+    out << universe.size() << " " << universe.radius() << "\n";
+    for (size_t i = 0; i < universe.size(); ++i) {
+        out << universe[i];
+    }
+    return out;
 }
 
 size_t Universe::size() const {
@@ -44,56 +54,63 @@ double Universe::radius() const {
     return universeRadius;
 }
 
-void Universe::step(double dt) {
-  size_t n = bodies.size();
-  std::vector<Vector2D> forces(n, Vector2D(0, 0));
-
-  for (size_t i = 0; i < n; ++i) {
-    for (size_t j = 0; j < n; ++j) {
-      if (i != j) {
-        Vector2D delta = bodies[j]->position() - bodies[i]->position();
-        double distance = std::sqrt(delta.x * delta.x + delta.y * delta.y);
-        double forceMagnitude = (G * bodies[i]->mass() * bodies[j]->mass()) / (distance * distance);
-        Vector2D force(forceMagnitude * delta.x / distance, forceMagnitude * delta.y / distance);
-        forces[i] = forces[i] + force;
-      }
+const CelestialBody& Universe::operator[](size_t index) const {
+    if (index >= bodies.size()) {
+        throw std::out_of_range("Index out of range");
     }
-  }
-
-  for (size_t i = 0; i < n; ++i) {
-    bodies[i]->applyForce(forces[i], dt);
-  }
-
-  for (size_t i = 0; i < n; ++i) {
-    bodies[i]->updatePosition(dt);
-  }
+    return *bodies[index];
 }
 
-std::istream& operator>>(std::istream& in, Universe& universe) {
-    size_t n;
-    double radius;
-    in >> n >> radius;
-    universe.setRadius(radius);
-    universe.clearBodies();
+void NB::Universe::step(double dt) {
+    std::vector<sf::Vector2f> newVelocities(bodies.size());
+    std::vector<sf::Vector2f> newPositions(bodies.size());
 
-    for (size_t i = 0; i < n; ++i) {
-        auto body = std::make_shared<CelestialBody>();
-        in >> *body;
-        universe.addBody(body);
+    for (size_t i = 0; i < bodies.size(); i++) {
+        if (bodies[i]->mass() == 0) {
+            // Retain original position and velocity for massless objects
+            newPositions[i] = bodies[i]->position();
+            newVelocities[i] = bodies[i]->velocity();
+            std::cerr << "Massless Body " << i << " retains its original position.\n";
+            continue;  
+        }
+
+        sf::Vector2f netForce(0.f, 0.f);
+        for (size_t j = 0; j < bodies.size(); j++) {
+            if (i == j) continue;
+            if (bodies[j]->mass() == 0) continue;  // Skip massless objects
+
+            sf::Vector2f diff = bodies[j]->position() - bodies[i]->position();
+            float distance = std::sqrt(diff.x * diff.x + diff.y * diff.y);
+
+            if (distance < 1e-6 || distance > 1.0e+15) {
+                std::cerr << "Ignoring force computation for Body " << i << " due to distance threshold\n";
+                continue;
+            }
+
+            float forceMagnitude = (6.67430e-11 * bodies[i]->mass() * bodies[j]->mass()) / (distance * distance);
+            sf::Vector2f force = (diff / distance) * (-forceMagnitude);
+            netForce += force;
+        }
+        std::cerr << "Body " << i << " Net Force: (" << netForce.x << ", " << netForce.y << ")\n";
+
+        sf::Vector2f acceleration = netForce / bodies[i]->mass();
+        newVelocities[i] = bodies[i]->velocity() + (acceleration * static_cast<float>(dt));
+        if (dt < 0) {
+            newVelocities[i] = bodies[i]->velocity() - (acceleration * static_cast<float>(-dt));
+        }
+        newPositions[i] = bodies[i]->position() + (newVelocities[i] * static_cast<float>(dt));
+
     }
-    return in;
-}
-
-std::ostream& operator<<(std::ostream& out, const Universe& universe) {
-    out << universe.size() << " " << universe.radius() << "\n";
-    for (size_t i = 0; i < universe.size(); ++i) {
-        out << *universe.bodies[i];
+    for (size_t i = 0; i < bodies.size(); i++) {
+        bodies[i]->setVelocity(newVelocities[i]);
+        bodies[i]->setPosition(newPositions[i]);
     }
-    return out;
 }
-
 void Universe::draw(sf::RenderTarget& window, sf::RenderStates states) const {
     window.draw(backgroundSprite);
+    if (bodies.empty()) {
+        std::cerr << "No celestial bodies found!";
+    }
     for (const auto& body : bodies) {
         window.draw(*body, states);
     }
