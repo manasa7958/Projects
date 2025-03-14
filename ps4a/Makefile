@@ -6,7 +6,7 @@ LIBDIR = -L/opt/homebrew/opt/boost/lib/ -L/opt/homebrew/opt/sfml@2/lib/
 
 BUILD_DIR = build
 
-DEPS = Universe.hpp CelestialBody.hpp
+DEPS = Sokoban.hpp
 OBJECTS = $(BUILD_DIR)/Sokoban.o $(BUILD_DIR)/main.o
 PROGRAM = Sokoban
 
