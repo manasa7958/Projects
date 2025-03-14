@@ -20,8 +20,8 @@ Universe::Universe() : universeRadius(0) {
     }
 }
 
-CelestialBody& Universe::operator[](unsigned long index) const {
-    return *bodies.at(index); 
+const CelestialBody& Universe::operator[](size_t index) const {
+    return *bodies.at(index);  // Use at() for bounds checking
 }
 
 // Clear all celestial bodies
