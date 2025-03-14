@@ -12,27 +12,21 @@ namespace NB {
 
 class CelestialBody : public sf::Drawable {
  public:
-  // Constructors
   CelestialBody();
   CelestialBody(double x, double y, double vx, double vy, double mass, const std::string& imgFile);
 
-  // Getters
   const Vector2D& position() const { return pos; }
   const Vector2D& velocity() const { return vel; }
   double mass() const { return m; }
 
-  // Setters
   void setVelocity(const Vector2D& newVel) { vel = newVel; }
   void setPosition(const Vector2D& newPos) { pos = newPos; }
 
-  // Physics updates
   void applyForce(const Vector2D& force, double dt);
   void updatePosition(double dt);
 
-  // Load and draw texture
   bool loadTexture(double universeRadius);
   
-  // Overloaded operators for input/output
   friend std::istream& operator>>(std::istream& in, CelestialBody& body);
   friend std::ostream& operator<<(std::ostream& out, const CelestialBody& body);
 
