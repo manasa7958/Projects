@@ -13,6 +13,8 @@
 #include <boost/algorithm/string.hpp>
 #include <boost/test/unit_test.hpp>
 
+using namespace NB;
+
 BOOST_AUTO_TEST_CASE(test_celestial_body_initialization) {
     CelestialBody body(1.0e24, 1.0e11, 2.0e11, 3.0e3, 4.0e3, "earth.gif");
     BOOST_CHECK_CLOSE(body.getMass(), 1.0e24, 1e-6);
