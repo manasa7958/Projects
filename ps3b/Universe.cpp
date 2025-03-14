@@ -20,6 +20,10 @@ Universe::Universe() : universeRadius(0) {
     }
 }
 
+CelestialBody& Universe::operator[](unsigned long index) const {
+        return *bodies.at(index); 
+}
+
 // Clear all celestial bodies
 void Universe::clearBodies() {
     bodies.clear();
