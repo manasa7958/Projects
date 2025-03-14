@@ -1,30 +1,26 @@
 // Copyright 2025 Manasa Praveen
-#ifndef UNIVERSE_HPP
-#define UNIVERSE_HPP
-
+#pragma once
 #include <iostream>
 #include <string>
-#include <vector>
 #include <memory>
+#include <vector>
 #include <SFML/Graphics.hpp>
 #include "CelestialBody.hpp"
-#include "Vector2D.hpp"
 
 namespace NB {
 
 class Universe : public sf::Drawable {
  public:
   Universe();
-  void step(double dt);
-  void addBody(std::shared_ptr<CelestialBody> body);
-  void clearBodies();
+
   size_t size() const;
   double radius() const;
-  void setRadius(double r);
-  const CelestialBody& operator[](size_t index) const;
+  void setRadius(double r) { universeRadius = r; }
+  void clearBodies() { bodies.clear(); }
+  void addBody(std::shared_ptr<CelestialBody> body) { bodies.push_back(body); }
+  void step(double dt);
 
-  friend std::istream& operator>>(std::istream& in, Universe& universe);
-  friend std::ostream& operator<<(std::ostream& out, const Universe& universe);
+  const CelestialBody& operator[](size_t index) const;
 
  protected:
   void draw(sf::RenderTarget& window, sf::RenderStates states) const override;
@@ -34,8 +30,9 @@ class Universe : public sf::Drawable {
   double universeRadius;
   sf::Texture backgroundTexture;
   sf::Sprite backgroundSprite;
+
+  friend std::istream& operator>>(std::istream& in, Universe& universe);
+  friend std::ostream& operator<<(std::ostream& out, const Universe& universe);
 };
 
 }  // namespace NB
-
-#endif
