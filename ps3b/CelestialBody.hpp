@@ -12,7 +12,6 @@ namespace NB {
 
 class CelestialBody : public sf::Drawable {
  public:
-  CelestialBody();
   CelestialBody(double x, double y, double vx, double vy, double mass, const std::string& imgFile);
 
   const Vector2D& position() const { return pos; }
