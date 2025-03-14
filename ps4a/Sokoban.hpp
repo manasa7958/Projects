@@ -36,7 +36,10 @@ class Sokoban : public sf::Drawable {
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
  private:
-    // Any fields you need go here.
+    unsigned int boardWidth;
+    unsigned int boardHeight;
+    sf::Vector2u playerPosition;
+    std::vector<std::string> board;
 };
 
 std::ostream& operator<<(std::ostream& out, const Sokoban& s);
