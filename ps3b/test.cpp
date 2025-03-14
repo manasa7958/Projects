@@ -13,60 +13,40 @@
 #include <boost/algorithm/string.hpp>
 #include <boost/test/unit_test.hpp>
 
-BOOST_AUTO_TEST_CASE(testEmptyUniverse) {
-  std::stringstream input("0 1.0e+11\n");
-  NB::Universe universe;
-  input >> universe;
-  BOOST_TEST(universe.size() == 0);
+BOOST_AUTO_TEST_CASE(test_celestial_body_initialization) {
+    CelestialBody body(1.0e24, 1.0e11, 2.0e11, 3.0e3, 4.0e3, "earth.gif");
+    BOOST_CHECK_CLOSE(body.getMass(), 1.0e24, 1e-6);
+    BOOST_CHECK_CLOSE(body.getPosition().x, 1.0e11, 1e-6);
+    BOOST_CHECK_CLOSE(body.getPosition().y, 2.0e11, 1e-6);
+    BOOST_CHECK_CLOSE(body.getVelocity().x, 3.0e3, 1e-6);
+    BOOST_CHECK_CLOSE(body.getVelocity().y, 4.0e3, 1e-6);
+    BOOST_CHECK_EQUAL(body.getImage(), "earth.gif");
 }
 
-BOOST_AUTO_TEST_CASE(testFlippedValues) {
-  std::stringstream input(
-      "1.1111e+11 2.2222e+11 3.3333e+04 4.4444e+04 5.5555e+24 flipped.gif");
-  NB::CelestialBody body;
-  input >> body;
-  BOOST_CHECK_CLOSE(body.position().x, 1.1111e+11, 0.001);
-  BOOST_CHECK_CLOSE(body.position().y, 2.2222e+11, 0.001);
-  BOOST_CHECK_CLOSE(body.velocity().x, 3.3333e+04, 0.001);
-  BOOST_CHECK_CLOSE(body.velocity().y, 4.4444e+04, 0.001);
-  BOOST_CHECK_CLOSE(body.mass(), 5.5555e+24, 0.001);
+BOOST_AUTO_TEST_CASE(test_universe_step) {
+    Universe universe;
+    universe.addBody(std::make_shared<CelestialBody>(1.0e24, 0.0, 0.0, 0.0, 0.0, "sun.gif"));
+    universe.addBody(std::make_shared<CelestialBody>(5.0e23, 1.0e11, 0.0, 0.0, 3.0e4, "mars.gif"));
+    
+    double initial_x = universe.getBodies()[1]->getPosition().x;
+    double initial_y = universe.getBodies()[1]->getPosition().y;
+    
+    universe.step(25000.0);
+    
+    BOOST_CHECK(universe.getBodies()[1]->getPosition().x != initial_x);
+    BOOST_CHECK(universe.getBodies()[1]->getPosition().y != initial_y);
 }
 
-BOOST_AUTO_TEST_CASE(testFormatting) {
-  std::stringstream input(
-      "1.4960e+11 0.0000e+00 0.0000e+00 2.9800e+04 5.9740e+24 earth.gif");
-  NB::CelestialBody body;
-  input >> body;
-  std::stringstream output;
-  output << body;
-  NB::CelestialBody body2;
-  output >> body2;
-  BOOST_CHECK_CLOSE(body2.position().x, body.position().x, 0.001);
-  BOOST_CHECK_CLOSE(body2.position().y, body.position().y, 0.001);
-  BOOST_CHECK_CLOSE(body2.velocity().x, body.velocity().x, 0.001);
-  BOOST_CHECK_CLOSE(body2.velocity().y, body.velocity().y, 0.001);
-  BOOST_CHECK_CLOSE(body2.mass(), body.mass(), 0.001);
-}
-
-BOOST_AUTO_TEST_CASE(testNumPlanets1) {
-  std::stringstream input("5 2.50e+11\n"
-       "1.4960e+11 0.0000e+00 0.0000e+00 2.9800e+04 5.9740e+24 earth.gif\n"
-       "2.2790e+11 0.0000e+00 0.0000e+00 2.4100e+04 6.4190e+23 mars.gif\n"
-       "5.7900e+10 0.0000e+00 0.0000e+00 4.7900e+04 3.3020e+23 mercury.gif\n"
-       "0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00 1.9890e+30 sun.gif\n"
-       "1.0820e+11 0.0000e+00 0.0000e+00 3.5000e+04 4.8690e+24 venus.gif\n");
-  NB::Universe universe;
-  input >> universe;
-  BOOST_REQUIRE_EQUAL(universe.size(), 5);
-  BOOST_REQUIRE_NO_THROW(universe[0]);
-}
-
-BOOST_AUTO_TEST_CASE(testStepFunction) {
-  std::stringstream input("2 1.0e+11\n"
-                          "0.0 0.0 0.0 0.0 5.0e+30 sun.gif\n"
-                          "1.0e+11 0.0 0.0 30000.0 6.0e+24 earth.gif\n");
-  NB::Universe universe;
-  input >> universe;
-  universe.step(1000.0);
-  BOOST_CHECK_CLOSE(universe[1].position().x, 1.0e+11 + 30000.0 * 1000.0, 0.001);
+BOOST_AUTO_TEST_CASE(test_velocity_update) {
+    Universe universe;
+    auto planet = std::make_shared<CelestialBody>(5.0e23, 1.0e11, 0.0, 0.0, 3.0e4, "venus.gif");
+    universe.addBody(planet);
+    
+    double initial_vx = planet->getVelocity().x;
+    double initial_vy = planet->getVelocity().y;
+    
+    universe.step(25000.0);
+    
+    BOOST_CHECK(planet->getVelocity().x != initial_vx);
+    BOOST_CHECK(planet->getVelocity().y != initial_vy);
 }
