@@ -1,4 +1,4 @@
-//Copyright Manasa praveen 2025
+// Copyright Manasa praveen 2025
 #include <iostream>
 #include <fstream>
 #include <stdexcept>
@@ -15,7 +15,6 @@ Sokoban::Sokoban(const std::string& filename) {
         throw std::runtime_error("Unable to open file");
     }
     file >> *this;
-    
     if (!wallTexture.loadFromFile("block_06.png")) {
         throw std::runtime_error("Failed to load wall texture");
     }
@@ -84,7 +83,6 @@ void Sokoban::draw(sf::RenderTarget& target, sf::RenderStates states) const {
             } else {
                 continue;
             }
-            
             sprite.setPosition(x * TILE_SIZE, y * TILE_SIZE);
             target.draw(sprite, states);
         }
@@ -104,7 +102,6 @@ std::istream& operator>>(std::istream& in, Sokoban& s) {
     s.board.clear();
     s.board.resize(s.boardHeight);
     in.ignore();
-    
     for (unsigned int i = 0; i < s.boardHeight; ++i) {
         std::getline(in, s.board[i]);
         auto pos = s.board[i].find('@');
@@ -115,4 +112,4 @@ std::istream& operator>>(std::istream& in, Sokoban& s) {
     return in;
 }
 
-} // namespace SB
+}  // namespace SB
