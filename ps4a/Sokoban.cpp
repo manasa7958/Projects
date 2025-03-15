@@ -15,10 +15,7 @@ Sokoban::Sokoban(const std::string& filename) {
         throw std::runtime_error("Unable to open file");
     }
     file >> *this;
-
-    /*if (!std::filesystem::exists("block_06.png")) {
-        throw std::runtime_error("File not found: block_06.png");
-    }*/
+    
     if (!wallTexture.loadFromFile("block_06.png")) {
         throw std::runtime_error("Failed to load wall texture");
     }
@@ -70,7 +67,6 @@ void Sokoban::draw(sf::RenderTarget& target, sf::RenderStates states) const {
         for (unsigned int x = 0; x < boardWidth; ++x) {
             char tile = board[y][x];
 
-            // Always draw the ground first, except under walls
             if (tile != '#') {
                 sf::Sprite groundSprite;
                 groundSprite.setTexture(groundTexture);
@@ -96,32 +92,6 @@ void Sokoban::draw(sf::RenderTarget& target, sf::RenderStates states) const {
         }
     }
 }
-
-/*void Sokoban::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-    for (unsigned int y = 0; y < boardHeight; ++y) {
-        for (unsigned int x = 0; x < boardWidth; ++x) {
-            sf::Sprite sprite;
-            char tile = board[y][x];
-            
-            if (tile == '#') {
-                sprite.setTexture(wallTexture);
-            } else if (tile == 'A') {
-                sprite.setTexture(boxTexture);
-            } else if (tile == '.') {
-                sprite.setTexture(groundTexture);
-            } else if (tile == 'a') {
-                sprite.setTexture(storageTexture);
-            } else if (tile == '@') {
-                sprite.setTexture(playerTexture);
-            } else {
-                sprite.setTexture(groundTexture); // Default to ground
-            }
-            
-            sprite.setPosition(x * TILE_SIZE, y * TILE_SIZE);
-            target.draw(sprite, states);
-        }
-    }
-}*/
 
 std::ostream& operator<<(std::ostream& out, const Sokoban& s) {
     out << s.boardHeight << " " << s.boardWidth << "\n";
