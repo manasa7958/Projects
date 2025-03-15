@@ -8,7 +8,7 @@ BUILD_DIR = build
 DEPS = Sokoban.hpp
 OBJECTS = $(BUILD_DIR)/Sokoban.o $(BUILD_DIR)/main.o
 PROGRAM = Sokoban
-STATIC_LIB = $(BUILD_DIR)/Sokoban.a
+STATIC_LIB = Sokoban.a  # Put it in the project root for Gradescope
 
 $(BUILD_DIR):
 	mkdir -p $(BUILD_DIR)
