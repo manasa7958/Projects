@@ -15,7 +15,7 @@ class Sokoban : public sf::Drawable {
     static const int TILE_SIZE = 64;
 
     Sokoban();
-    Sokoban(const std::string&);  // Optional
+    explicit Sokoban(const std::string&);  // Optional
 
     unsigned int pixelHeight() const;  // Optional
     unsigned int pixelWidth() const;  // Optional
