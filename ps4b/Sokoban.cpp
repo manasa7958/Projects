@@ -77,11 +77,14 @@ void Sokoban::movePlayer(Direction dir) {
     if (board[newY][newX] == 'A' || board[newY][newX] == 'a') {
         int boxNewX = newX + dx;
         int boxNewY = newY + dy;
+        if (board[newY][newX] == 'a') {
+            return;  // If a box is already on storage, don't move it
+        }
+        
         if (board[boxNewY][boxNewX] == '.' || board[boxNewY][boxNewX] == 'a') {
-            // Move the box
             board[boxNewY][boxNewX] = 'A';
             board[newY][newX] = '@';
-            board[playerPosition.y][playerPosition.x] = '.';
+            board[playerPosition.y][playerPosition.x] = (originalBoard[playerPosition.y][playerPosition.x] == 'a') ? 'a' : '.';
             playerPosition = {static_cast<unsigned int>(newX), static_cast<unsigned int>(newY)};
         }
     } else {  // Normal movement
