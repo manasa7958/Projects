@@ -1,4 +1,4 @@
-//Copyright Manasa praveen 2025
+// Copyright Manasa praveen 2025
 #pragma once
 
 #include <iostream>
@@ -30,8 +30,8 @@ class Sokoban : public sf::Drawable {
     void movePlayer(Direction dir);
     void reset();
 
-    void undo(); // Optional XC
-    void redo(); // Optional XC
+    void undo();  // Optional XC
+    void redo();  // Optional XC
 
  protected:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
