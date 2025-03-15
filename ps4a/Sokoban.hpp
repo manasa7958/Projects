@@ -41,6 +41,11 @@ class Sokoban : public sf::Drawable {
     unsigned int boardHeight;
     sf::Vector2u playerPosition;
     std::vector<std::string> board;
+    sf::Texture wallTexture;
+    sf::Texture boxTexture;
+    sf::Texture groundTexture;
+    sf::Texture storageTexture;
+    sf::Texture playerTexture;
     friend std::ostream& operator<<(std::ostream& out, const Sokoban& s);
     friend std::istream& operator>>(std::istream& in, Sokoban& s);
 };
