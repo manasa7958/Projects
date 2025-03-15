@@ -20,8 +20,8 @@ Sokoban::Sokoban(const std::string& filename) {
     std::cout << "Current working directory: " << std::filesystem::current_path() << std::endl;
 
     // Check if the texture files exist before loading
-    if (!std::filesystem::exists("sokoban/block_06.png")) {
-        throw std::runtime_error("File not found: sokoban/block_06.png");
+    if (!std::filesystem::exists("block_06.png")) {
+        throw std::runtime_error("File not found: block_06.png");
     }
 
     // Load textures
