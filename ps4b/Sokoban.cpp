@@ -46,15 +46,20 @@ sf::Vector2u Sokoban::playerLoc() const {
 }
 
 bool Sokoban::isWon() const {
-    for (const auto& row : board) {
-        if (row.find('a') != std::string::npos) {
-            return false;
-        }
+    bool won = std::none_of(board.begin(), board.end(), [](const std::string& row) {
+        return row.find('a') != std::string::npos;
+    });
+
+    if (won) {
+        const_cast<Sokoban*>(this)->gameWon = true;
     }
-    return true;
+
+    return won;
 }
 
 void Sokoban::movePlayer(Direction dir) {
+    if (gameWon) return;
+    
     int dx = 0, dy = 0;
     switch (dir) {
         case Direction::Up: dy = -1; break;
@@ -86,11 +91,13 @@ void Sokoban::movePlayer(Direction dir) {
         board[playerPosition.y][playerPosition.x] = '.';
         playerPosition = {static_cast<unsigned int>(newX), static_cast<unsigned int>(newY)};
     }
+    
+    isWon();
 }
 
 void Sokoban::reset() {
     board = originalBoard;
-    // Find the player's original position
+    gameWon = false;
     for (unsigned int y = 0; y < board.size(); ++y) {
         auto pos = board[y].find('@');
         if (pos != std::string::npos) {
@@ -126,6 +133,20 @@ void Sokoban::draw(sf::RenderTarget& target, sf::RenderStates states) const {
             sprite.setPosition(x * TILE_SIZE, y * TILE_SIZE);
             target.draw(sprite, states);
         }
+    }
+    if (gameWon) {
+        sf::Font font;
+        if (!font.loadFromFile("arial.ttf")) {
+            throw std::runtime_error("Failed to load font");
+        }
+
+        sf::Text winText;
+        winText.setFont(font);
+        winText.setString("You Win!");
+        winText.setCharacterSize(48);
+        winText.setFillColor(sf::Color::Yellow);
+        winText.setPosition(boardWidth * TILE_SIZE / 2 - 100, boardHeight * TILE_SIZE / 2 - 50);
+        target.draw(winText, states);
     }
 }
 
