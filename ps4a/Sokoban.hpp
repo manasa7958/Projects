@@ -38,6 +38,8 @@ class Sokoban : public sf::Drawable {
 
  private:
     unsigned int moveCount = 0;
+    sf::Font font;
+    sf::Text moveText;
     unsigned int boardWidth;
     unsigned int boardHeight;
     sf::Vector2u playerPosition;
