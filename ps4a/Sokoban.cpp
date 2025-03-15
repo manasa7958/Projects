@@ -74,14 +74,9 @@ void Sokoban::reset() {
 void Sokoban::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     for (unsigned int y = 0; y < boardHeight; ++y) {
         for (unsigned int x = 0; x < boardWidth; ++x) {
-            sf::Sprite groundSprite;
-            groundSprite.setTexture(groundTexture);
-            groundSprite.setPosition(x * TILE_SIZE, y * TILE_SIZE);
-            target.draw(groundSprite, states);
-
-            sf::Sprite sprite;
             char tile = board[y][x];
-            
+            sf::Sprite sprite;
+
             if (tile == '#') {
                 sprite.setTexture(wallTexture);
             } else if (tile == 'A') {
@@ -91,7 +86,7 @@ void Sokoban::draw(sf::RenderTarget& target, sf::RenderStates states) const {
             } else if (tile == '@') {
                 sprite.setTexture(playerTexture);
             } else {
-                continue; // No need to draw anything else since ground is already drawn
+                sprite.setTexture(groundTexture); // Draw ground only when there is no wall
             }
             
             sprite.setPosition(x * TILE_SIZE, y * TILE_SIZE);
@@ -99,7 +94,6 @@ void Sokoban::draw(sf::RenderTarget& target, sf::RenderStates states) const {
         }
     }
 }
-
 /*void Sokoban::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     for (unsigned int y = 0; y < boardHeight; ++y) {
         for (unsigned int x = 0; x < boardWidth; ++x) {
