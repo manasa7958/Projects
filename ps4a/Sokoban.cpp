@@ -30,6 +30,15 @@ Sokoban::Sokoban(const std::string& filename) {
     if (!playerTexture.loadFromFile("player_05.png")) {
         throw std::runtime_error("Failed to load player texture");
     }
+    // Move Counter 
+    if (!font.loadFromFile("arial.ttf")) {
+        throw std::runtime_error("Failed to load font arial.ttf");
+    }
+
+    moveText.setFont(font);
+    moveText.setCharacterSize(24);
+    moveText.setFillColor(sf::Color::White);
+    moveText.setPosition(10, 10);
 }
 
 unsigned int Sokoban::width() const {
@@ -54,6 +63,7 @@ bool Sokoban::isWon() const {
 }
 
 void Sokoban::movePlayer(Direction dir) {
+    moveText.setString("Moves: " + std::to_string(moveCount));
     moveCount++;
 }
 
@@ -87,6 +97,7 @@ void Sokoban::draw(sf::RenderTarget& target, sf::RenderStates states) const {
             target.draw(sprite, states);
         }
     }
+    target.draw(moveText, states);
 }
 
 std::ostream& operator<<(std::ostream& out, const Sokoban& s) {
