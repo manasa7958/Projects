@@ -14,8 +14,9 @@ Sokoban::Sokoban(const std::string& filename) {
     if (!file) {
         throw std::runtime_error("Unable to open file");
     }
-    originalBoard = board;
     file >> *this;
+    originalBoard = board;
+
     if (!wallTexture.loadFromFile("block_06.png")) {
         throw std::runtime_error("Failed to load wall texture");
     }
@@ -46,15 +47,9 @@ sf::Vector2u Sokoban::playerLoc() const {
 }
 
 bool Sokoban::isWon() const {
-    bool won = std::none_of(board.begin(), board.end(), [](const std::string& row) {
+    return std::none_of(board.begin(), board.end(), [](const std::string& row) {
         return row.find('a') != std::string::npos;
     });
-
-    if (won) {
-        const_cast<Sokoban*>(this)->gameWon = true;
-    }
-
-    return won;
 }
 
 void Sokoban::movePlayer(Direction dir) {
@@ -92,12 +87,16 @@ void Sokoban::movePlayer(Direction dir) {
         playerPosition = {static_cast<unsigned int>(newX), static_cast<unsigned int>(newY)};
     }
     
-    isWon();
+    gameWon = isWon();
 }
 
 void Sokoban::reset() {
-    board = originalBoard;
-    gameWon = false;
+    board = originalBoard;  // Restore original board state
+    gameWon = false;  // Allow player movement again
+    boardWidth = originalBoard[0].size();  // Restore correct board width
+    boardHeight = originalBoard.size();  // Restore correct board height
+
+    // Find the player's original position
     for (unsigned int y = 0; y < board.size(); ++y) {
         auto pos = board[y].find('@');
         if (pos != std::string::npos) {
