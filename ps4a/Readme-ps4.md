@@ -12,7 +12,11 @@ Time to Complete: 4 hours
 In this project we are creating a version of the Sokoban game. The objective of the game is for the player to push the red boxes into the storage locations. The sokoban.zip file has text files with various levels in them which are recreated in this program. 
 
 ### Features
-I decided to store level data as a std::vector<std::string> because it would make it easy for indexing and also when implementing my operator>>, and operator<< functions. I also used sf::Texture to store the images as this would eliminate the need to load each image repeatedly. Lastly, when trying to mimic the output from the instructions file I made sure to draw the ground texture first, and then the other objects to avoid redundant rendering. 
+I decided to store level data as a std::vector<std::string> because it would make it easy for indexing and also when implementing my operator>>, and operator<< functions. 
+
+I also used sf::Texture to store the images as this would eliminate the need to load each image repeatedly. 
+
+Lastly, when trying to mimic the output from the instructions file I made sure to draw the ground texture first, and then the other objects to avoid redundant rendering. 
 
 #### Part a
 In part A of the project we have to implement the Sokoban class, which is where different levels data is stored. Each level text file had an arrangement of symbols which were the converted to their corresponding images and rendered as output. These symbols included: # (grey wall), . (ground), @ (player), A (Red box), a (storage spot).
