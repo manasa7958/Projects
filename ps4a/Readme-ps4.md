@@ -23,7 +23,7 @@ In part A of the project we have to implement the Sokoban class, which is where 
 I stored level data as a std::vector<std::string>. I did not use any dynamic memory allocation so I did not haev any smart pointer (shared or unique).
 
 ### Lambdas
-I used the std::find to locate the player, and the std::for_each to iterate throught the board and check for the win condition.
+I used the Lambda expression std::none_of inside of my isWon() function to check if any boxes remained that were not in it's storage position yet. 
 
 ### Issues
 I had issues with my Makefile. I was able to run my program on my personal terminal but the Gradescope autograder was not able to find Sokoban.a. This is because I did not write Sokoban.a in the project root and instead had it inside the build/ subdirectory. However, with a bit of trial and error I was able to fix it.  I also had some trouble with my draw function as I struggled with the placement of the ground tiles. Initially the player did not have the ground background but when I tried fixing that I added the background to the entire screen while in the correct output the ground should not be under the gray walls. So I had to rewrite my if-else statement inside of the draw function a couple of times before I was able to render the correct output.
