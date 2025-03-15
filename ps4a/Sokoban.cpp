@@ -45,12 +45,9 @@ sf::Vector2u Sokoban::playerLoc() const {
 }
 
 bool Sokoban::isWon() const {
-    for (const auto& row : board) {
-        if (row.find('a') != std::string::npos) {
-            return false;
-        }
-    }
-    return true;
+    return std::none_of(board.begin(), board.end(), [](const std::string& row) {
+        return row.find('a') != std::string::npos;
+    });
 }
 
 void Sokoban::movePlayer(Direction dir) {
