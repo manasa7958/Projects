@@ -25,19 +25,19 @@ Sokoban::Sokoban(const std::string& filename) {
     }
 
     // Load textures
-    if (!wallTexture.loadFromFile("sokoban/block_06.png")) {
+    if (!wallTexture.loadFromFile("block_06.png")) {
         throw std::runtime_error("Failed to load wall texture");
     }
-    if (!boxTexture.loadFromFile("sokoban/crate_03.png")) {
+    if (!boxTexture.loadFromFile("crate_03.png")) {
         throw std::runtime_error("Failed to load box texture");
     }
-    if (!groundTexture.loadFromFile("sokoban/ground_01.png")) {
+    if (!groundTexture.loadFromFile("ground_01.png")) {
         throw std::runtime_error("Failed to load ground texture");
     }
-    if (!storageTexture.loadFromFile("sokoban/ground_04.png")) {
+    if (!storageTexture.loadFromFile("ground_04.png")) {
         throw std::runtime_error("Failed to load storage texture");
     }
-    if (!playerTexture.loadFromFile("sokoban/player_05.png")) {
+    if (!playerTexture.loadFromFile("player_05.png")) {
         throw std::runtime_error("Failed to load player texture");
     }
 }
