@@ -12,15 +12,15 @@ int main(int argc, char* argv[]) {
     SB::Sokoban game(argv[1]);
     sf::RenderWindow window(sf::VideoMode(game.width() * SB::Sokoban::TILE_SIZE,
                             game.height() * SB::Sokoban::TILE_SIZE), "Sokoban");
-    while (window.isOpen()) {
+   while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
                 window.close();
             }
     
-            if (event.type == sf::Event::KeyPressed) {
-                if (!game.isWon()) {  // Prevent movement after winning
+            if (!game.isWon()) {  // Prevent movement after winning
+                if (event.type == sf::Event::KeyPressed) {
                     if (event.key.code == sf::Keyboard::W || event.key.code == sf::Keyboard::Up) {
                         game.movePlayer(SB::Direction::Up);
                     } else if (event.key.code == sf::Keyboard::S || event.key.code == sf::Keyboard::Down) {
@@ -31,15 +31,18 @@ int main(int argc, char* argv[]) {
                         game.movePlayer(SB::Direction::Right);
                     }
                 }
-                if (event.key.code == sf::Keyboard::R) {
-                    game.reset();  // Properly reset game
-                }
+            }
+    
+            // Allow reset even if the game is won
+            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::R) {
+                game.reset();
             }
         }
-    
-        window.clear();
-        window.draw(game);
-        window.display();
+
+    window.clear();
+    window.draw(game);  // Draw game normally
+    window.display();   // Keep window open even after winning
     }
+
     return 0;
 }
