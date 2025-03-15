@@ -70,7 +70,6 @@ void Sokoban::draw(sf::RenderTarget& target, sf::RenderStates states) const {
                 groundSprite.setPosition(x * TILE_SIZE, y * TILE_SIZE);
                 target.draw(groundSprite, states);
             }
-
             sf::Sprite sprite;
             if (tile == '#') {
                 sprite.setTexture(wallTexture);
