@@ -16,14 +16,10 @@ Sokoban::Sokoban(const std::string& filename) {
     }
     file >> *this;
 
-    // Print the working directory
-    std::cout << "Current working directory: " << std::filesystem::current_path() << std::endl;
-
-    // Check if the texture files exist before loading
+   /* // Check if the texture files exist before loading
     if (!std::filesystem::exists("block_06.png")) {
         throw std::runtime_error("File not found: block_06.png");
     }
-
     // Load textures
     if (!wallTexture.loadFromFile("block_06.png")) {
         throw std::runtime_error("Failed to load wall texture");
@@ -39,7 +35,7 @@ Sokoban::Sokoban(const std::string& filename) {
     }
     if (!playerTexture.loadFromFile("player_05.png")) {
         throw std::runtime_error("Failed to load player texture");
-    }
+    }*/
 }
 
 unsigned int Sokoban::width() const {
