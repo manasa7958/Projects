@@ -38,6 +38,7 @@ class Sokoban : public sf::Drawable {
 
  private:
     bool gameWon = false;
+    sf::Font font;
     unsigned int boardWidth;
     unsigned int boardHeight;
     sf::Vector2u playerPosition;
