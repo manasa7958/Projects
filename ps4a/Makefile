@@ -1,5 +1,5 @@
-CXX = g++
-CXXFLAGS = -std=c++17 -Wall -Werror -pedantic -g
+CC = g++
+CFLAGS = -std=c++17 -Wall -Werror -pedantic -g
 LIBS = -lsfml-graphics -lsfml-window -lsfml-system
 INCLUDEDIR = -I. -I/opt/homebrew/opt/boost/include/ -I/opt/homebrew/opt/sfml@2/include/
 LIBDIR = -L/opt/homebrew/opt/boost/lib/ -L/opt/homebrew/opt/sfml@2/lib/
@@ -15,10 +15,10 @@ $(BUILD_DIR):
 all: $(PROGRAM) $(BUILD_DIR)/Sokoban.a
 
 $(BUILD_DIR)/%.o: %.cpp $(DEPS) | $(BUILD_DIR)
-	$(CXX) $(CXXFLAGS) $(INCLUDEDIR) -c $< -o $@
+	$(CC) $(CFLAGS) $(INCLUDEDIR) -c $< -o $@
 
 $(PROGRAM): $(OBJECTS)
-	$(CXX) $(CXXFLAGS) $(LIBDIR) -o $@ $^ $(LIBS)
+	$(CC) $(CFLAGS) $(LIBDIR) -o $@ $^ $(LIBS)
 
 $(BUILD_DIR)/Sokoban.a: $(OBJECTS)
 	ar rcs $@ $(OBJECTS)
