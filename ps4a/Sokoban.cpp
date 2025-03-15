@@ -1,12 +1,12 @@
-//Copyright Manasa praveen 2025
-#include <iostream>
-#include <fstream>
-#include <vector>
+#pragma once
+
 #include "Sokoban.hpp"
+#include <fstream>
+#include <stdexcept>
 
 namespace SB {
 
-Sokoban::Sokoban() {}
+Sokoban::Sokoban() : boardWidth(0), boardHeight(0) {}
 
 Sokoban::Sokoban(const std::string& filename) {
     std::ifstream file(filename);
@@ -29,15 +29,21 @@ sf::Vector2u Sokoban::playerLoc() const {
 }
 
 bool Sokoban::isWon() const {
-    return false; // Placeholder, will be implemented in Part B
+    // Check if all storage locations have boxes
+    for (const auto& row : board) {
+        if (row.find('a') != std::string::npos) {
+            return false;
+        }
+    }
+    return true;
 }
 
 void Sokoban::movePlayer(Direction dir) {
-    // Placeholder, will be implemented in Part B
+    // Placeholder for movement logic (to be implemented in Part B)
 }
 
 void Sokoban::reset() {
-    // Reset game state
+    // Reset game state logic (to be implemented)
 }
 
 void Sokoban::draw(sf::RenderTarget& target, sf::RenderStates states) const {
