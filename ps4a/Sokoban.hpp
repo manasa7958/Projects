@@ -41,8 +41,7 @@ class Sokoban : public sf::Drawable {
     unsigned int boardHeight;
     sf::Vector2u playerPosition;
     std::vector<std::string> board;
+    friend std::ostream& operator<<(std::ostream& out, const Sokoban& s);
+    friend std::istream& operator>>(std::istream& in, Sokoban& s);
 };
-
-std::ostream& operator<<(std::ostream& out, const Sokoban& s);
-std::istream& operator>>(std::istream& in, Sokoban& s);
 }  // namespace SB
