@@ -54,6 +54,7 @@ bool Sokoban::isWon() const {
 }
 
 void Sokoban::movePlayer(Direction dir) {
+    moveCount++;
 }
 
 void Sokoban::reset() {
