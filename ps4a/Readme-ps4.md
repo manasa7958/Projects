@@ -25,7 +25,7 @@ Describe what <algorithm> functions you used and what lambda expressions you wro
 
 ### Issues
 I had issues with my Makefile. I was able to run my program on my personal terminal but the Gradescope autograder was not able to find Sokoban.a. This is because I did not Sokoban.a in the project root and instead had it as a subdirectory inside of build/. However, with a but of trial and error I was able to fix it. 
-I also had 
+I also had some trouble with my draw function as I struggled with the placement 
 
 ### Extra Credit
 Anything special you did.  This is required to earn bonus points.
