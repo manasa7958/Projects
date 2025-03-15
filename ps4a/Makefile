@@ -13,7 +13,7 @@ STATIC_LIB = $(BUILD_DIR)/Sokoban.a
 $(BUILD_DIR):
 	mkdir -p $(BUILD_DIR)
 
-all: $(PROGRAM) $(BUILD_DIR)
+all: $(PROGRAM) $(STATIC_LIB)
 
 $(BUILD_DIR)/%.o: %.cpp $(DEPS) | $(BUILD_DIR)
 	$(CC) $(CFLAGS) $(INCLUDEDIR) -c $< -o $@
