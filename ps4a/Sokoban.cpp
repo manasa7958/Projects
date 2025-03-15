@@ -74,6 +74,35 @@ void Sokoban::reset() {
 void Sokoban::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     for (unsigned int y = 0; y < boardHeight; ++y) {
         for (unsigned int x = 0; x < boardWidth; ++x) {
+            sf::Sprite groundSprite;
+            groundSprite.setTexture(groundTexture);
+            groundSprite.setPosition(x * TILE_SIZE, y * TILE_SIZE);
+            target.draw(groundSprite, states);
+
+            sf::Sprite sprite;
+            char tile = board[y][x];
+            
+            if (tile == '#') {
+                sprite.setTexture(wallTexture);
+            } else if (tile == 'A') {
+                sprite.setTexture(boxTexture);
+            } else if (tile == 'a') {
+                sprite.setTexture(storageTexture);
+            } else if (tile == '@') {
+                sprite.setTexture(playerTexture);
+            } else {
+                continue; // No need to draw anything else since ground is already drawn
+            }
+            
+            sprite.setPosition(x * TILE_SIZE, y * TILE_SIZE);
+            target.draw(sprite, states);
+        }
+    }
+}
+
+/*void Sokoban::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+    for (unsigned int y = 0; y < boardHeight; ++y) {
+        for (unsigned int x = 0; x < boardWidth; ++x) {
             sf::Sprite sprite;
             char tile = board[y][x];
             
@@ -95,7 +124,7 @@ void Sokoban::draw(sf::RenderTarget& target, sf::RenderStates states) const {
             target.draw(sprite, states);
         }
     }
-}
+}*/
 
 std::ostream& operator<<(std::ostream& out, const Sokoban& s) {
     out << s.boardHeight << " " << s.boardWidth << "\n";
