@@ -55,11 +55,9 @@ bool Sokoban::isWon() const {
 }
 
 void Sokoban::movePlayer(Direction dir) {
-    // Placeholder for movement logic
 }
 
 void Sokoban::reset() {
-    // Reset game state logic
 }
 
 void Sokoban::draw(sf::RenderTarget& target, sf::RenderStates states) const {
