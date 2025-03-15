@@ -1,4 +1,4 @@
-//Copyright Manasa Praveen 2025
+// Copyright Manasa Praveen 2025
 #include <iostream>
 #include "Sokoban.hpp"
 #include <SFML/Graphics.hpp>
@@ -10,7 +10,8 @@ int main(int argc, char* argv[]) {
     }
 
     SB::Sokoban game(argv[1]);
-    sf::RenderWindow window(sf::VideoMode(game.width() * SB::Sokoban::TILE_SIZE, game.height() * SB::Sokoban::TILE_SIZE), "Sokoban");
+    sf::RenderWindow window(sf::VideoMode(game.width() * SB::Sokoban::TILE_SIZE, 
+                            game.height() * SB::Sokoban::TILE_SIZE), "Sokoban");
 
     while (window.isOpen()) {
         sf::Event event;
