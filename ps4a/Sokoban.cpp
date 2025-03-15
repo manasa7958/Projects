@@ -16,24 +16,29 @@ Sokoban::Sokoban(const std::string& filename) {
     }
     file >> *this;
 
-    // Debugging: Print the current working directory
+    // Print the working directory
     std::cout << "Current working directory: " << std::filesystem::current_path() << std::endl;
+
+    // Check if the texture files exist before loading
+    if (!std::filesystem::exists("sokoban/block_06.png")) {
+        throw std::runtime_error("File not found: sokoban/block_06.png");
+    }
 
     // Load textures
     if (!wallTexture.loadFromFile("sokoban/block_06.png")) {
-        throw std::runtime_error("Failed to load wall texture from sokoban/block_06.png");
+        throw std::runtime_error("Failed to load wall texture");
     }
     if (!boxTexture.loadFromFile("sokoban/crate_03.png")) {
-        throw std::runtime_error("Failed to load box texture from sokoban/crate_03.png");
+        throw std::runtime_error("Failed to load box texture");
     }
     if (!groundTexture.loadFromFile("sokoban/ground_01.png")) {
-        throw std::runtime_error("Failed to load ground texture from sokoban/ground_01.png");
+        throw std::runtime_error("Failed to load ground texture");
     }
     if (!storageTexture.loadFromFile("sokoban/ground_04.png")) {
-        throw std::runtime_error("Failed to load storage texture from sokoban/ground_04.png");
+        throw std::runtime_error("Failed to load storage texture");
     }
     if (!playerTexture.loadFromFile("sokoban/player_05.png")) {
-        throw std::runtime_error("Failed to load player texture from sokoban/player_05.png");
+        throw std::runtime_error("Failed to load player texture");
     }
 }
 
