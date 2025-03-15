@@ -37,7 +37,6 @@ class Sokoban : public sf::Drawable {
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
  private:
-    unsigned int moveCount = 0;
     unsigned int boardWidth;
     unsigned int boardHeight;
     sf::Vector2u playerPosition;
