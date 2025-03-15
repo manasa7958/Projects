@@ -89,6 +89,15 @@ void Sokoban::movePlayer(Direction dir) {
 }
 
 void Sokoban::reset() {
+    board = originalBoard;
+    // Find the player's original position
+    for (unsigned int y = 0; y < board.size(); ++y) {
+        auto pos = board[y].find('@');
+        if (pos != std::string::npos) {
+            playerPosition = {static_cast<unsigned int>(pos), y};
+            break;
+        }
+    }
 }
 
 void Sokoban::draw(sf::RenderTarget& target, sf::RenderStates states) const {
