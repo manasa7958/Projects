@@ -19,8 +19,21 @@ int main(int argc, char* argv[]) {
             if (event.type == sf::Event::Closed) {
                 window.close();
             }
+        
+            if (event.type == sf::Event::KeyPressed) {
+                if (event.key.code == sf::Keyboard::W || event.key.code == sf::Keyboard::Up) {
+                    game.movePlayer(SB::Direction::Up);
+                } else if (event.key.code == sf::Keyboard::S || event.key.code == sf::Keyboard::Down) {
+                    game.movePlayer(SB::Direction::Down);
+                } else if (event.key.code == sf::Keyboard::A || event.key.code == sf::Keyboard::Left) {
+                    game.movePlayer(SB::Direction::Left);
+                } else if (event.key.code == sf::Keyboard::D || event.key.code == sf::Keyboard::Right) {
+                    game.movePlayer(SB::Direction::Right);
+                } else if (event.key.code == sf::Keyboard::R) {  // Reset game
+                    game.reset();
+                }
+            }
         }
-
         window.clear();
         window.draw(game);
         window.display();
