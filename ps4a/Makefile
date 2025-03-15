@@ -8,11 +8,12 @@ BUILD_DIR = build
 DEPS = Sokoban.hpp
 OBJECTS = $(BUILD_DIR)/Sokoban.o $(BUILD_DIR)/main.o
 PROGRAM = Sokoban
+STATIC_LIB = $(BUILD_DIR)/Sokoban.a
 
 $(BUILD_DIR):
 	mkdir -p $(BUILD_DIR)
 
-all: $(PROGRAM) $(BUILD_DIR)/Sokoban.a
+all: $(PROGRAM) $(BUILD_DIR)
 
 $(BUILD_DIR)/%.o: %.cpp $(DEPS) | $(BUILD_DIR)
 	$(CC) $(CFLAGS) $(INCLUDEDIR) -c $< -o $@
@@ -20,11 +21,11 @@ $(BUILD_DIR)/%.o: %.cpp $(DEPS) | $(BUILD_DIR)
 $(PROGRAM): $(OBJECTS)
 	$(CC) $(CFLAGS) $(LIBDIR) -o $@ $^ $(LIBS)
 
-$(BUILD_DIR)/Sokoban.a: $(OBJECTS)
-	ar rcs $@ $(OBJECTS)
+$(STATIC_LIB): $(BUILD_DIR)/Sokoban.o
+	ar rcs $@ $^
 
 clean:
-	rm -rf $(BUILD_DIR) $(PROGRAM) $(BUILD_DIR)/Sokoban.a
+	rm -rf $(BUILD_DIR) $(PROGRAM) $(STATIC_LIB)
 
 lint:
 	cpplint *.cpp *.hpp
