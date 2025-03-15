@@ -1,6 +1,4 @@
 //Copyright Manasa praveen 2025
-#pragma once
-
 #include "Sokoban.hpp"
 #include <fstream>
 #include <stdexcept>
