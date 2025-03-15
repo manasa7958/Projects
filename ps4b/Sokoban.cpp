@@ -32,6 +32,9 @@ Sokoban::Sokoban(const std::string& filename) {
     if (!playerTexture.loadFromFile("player_05.png")) {
         throw std::runtime_error("Failed to load player texture");
     }
+    if (!font.loadFromFile("/System/Library/Fonts/Supplemental/Arial.ttf")) {  
+    throw std::runtime_error("Failed to load system font");
+    }
 }
 
 unsigned int Sokoban::width() const {
@@ -134,11 +137,6 @@ void Sokoban::draw(sf::RenderTarget& target, sf::RenderStates states) const {
         }
     }
     if (gameWon) {
-        sf::Font font;
-        if (!font.loadFromFile("arial.ttf")) {
-            throw std::runtime_error("Failed to load font");
-        }
-
         sf::Text winText;
         winText.setFont(font);
         winText.setString("You Win!");
