@@ -17,6 +17,16 @@ int main(int argc, char* argv[]) {
   std::cin >> universe;
   
   sf::RenderWindow window(sf::VideoMode(800, 800), "The Solar System!");
+  sf::Font font;
+  if (!font.loadFromFile("Arial.ttf")) {
+    std::cerr << "Failed to load font" << std::endl;
+  }
+  sf::Text elapsedTimeText;
+  elapsedTimeText.setFont(font);
+  elapsedTimeText.setCharacterSize(20);
+  elapsedTimeText.setFillColor(sf::Color::White);
+  elapsedTimeText.setPosition(10, 10);
+  
   double elapsedTime = 0.0;
 
   while (window.isOpen() && elapsedTime < T) {
@@ -27,12 +37,17 @@ int main(int argc, char* argv[]) {
     }
     
     universe.step(dt);
+    elapsedTime += dt;
+    
     window.clear();
     window.draw(universe);
+    
+    elapsedTimeText.setString("Elapsed Time: " + std::to_string(elapsedTime) + " s");
+    window.draw(elapsedTimeText);
+    
     window.display();
-    elapsedTime += dt;
   }
-
+  
   std::cout << universe;
   return 0;
 }
