@@ -1,9 +1,11 @@
 // Copyright 2025 Manasa Praveen
 #include <iostream>
 #include <memory>
+#include <cmath>
 #include "Universe.hpp"
 
 namespace NB {
+
 Universe::Universe() : universeRadius(0) {
     if (!backgroundTexture.loadFromFile("background.jpg")) {
         std::cerr << "Failed to load background image" << std::endl;
@@ -44,6 +46,63 @@ std::ostream& operator<<(std::ostream& out, const Universe& universe) {
   return out;
 }
 
+void Universe::step(double dt) {
+    const double G = 6.67430e-11;
+
+    size_t numBodies = bodies.size();
+    std::vector<double> forceX(numBodies, 0.0);
+    std::vector<double> forceY(numBodies, 0.0);
+
+    // Compute gravitational forces
+    for (size_t i = 0; i < numBodies; i++) {
+        for (size_t j = 0; j < numBodies; j++) {
+            if (i != j) {
+                auto bodyA = bodies[i];
+                auto bodyB = bodies[j];
+
+                double dx = bodyB->position().x - bodyA->position().x;
+                double dy = bodyB->position().y - bodyA->position().y;
+                double dist = sqrt(dx * dx + dy * dy);
+
+                if (dist == 0) continue; // Prevent division by zero
+
+                // Compute gravitational force
+                double force = (G * bodyA->mass() * bodyB->mass()) / (dist * dist);
+                forceX[i] += force * (dx / dist);
+                forceY[i] += force * (dy / dist);
+            }
+        }
+    }
+
+    // Update positions and velocities using Leapfrog Integration
+    for (size_t i = 0; i < numBodies; i++) {
+        auto body = bodies[i];
+
+        double ax = forceX[i] / body->mass();
+        double ay = forceY[i] / body->mass();
+
+        sf::Vector2f vel = body->velocity();
+        sf::Vector2f pos = body->position();
+
+        // ✅ Correct Leapfrog Integration
+        vel.x += 0.5 * dt * ax;
+        vel.y += 0.5 * dt * ay;
+
+        pos.x += dt * vel.x;
+        pos.y += dt * vel.y;
+
+        vel.x += 0.5 * dt * ax;
+        vel.y += 0.5 * dt * ay;
+
+        body->setVelocity(vel.x, vel.y);
+        body->setPosition(pos.x, pos.y);
+
+        // ✅ Debugging: Print positions and velocities
+        std::cout << "Body " << i << " Pos: (" << pos.x << ", " << pos.y << ")"
+                  << " Vel: (" << vel.x << ", " << vel.y << ")" << std::endl;
+    }
+}
+
 size_t Universe::size() const {
   return bodies.size();
 }
@@ -61,11 +120,21 @@ const CelestialBody& Universe::operator[](size_t index) const {
 
 void Universe::draw(sf::RenderTarget& window, sf::RenderStates states) const {
     window.draw(backgroundSprite);
-    if (bodies.empty()) {
-    std::cerr << "No celestial bodies found!";
-    }
+
     for (const auto& body : bodies) {
-        window.draw(*body, states);
+        sf::Vector2f pos = body->position();
+        
+        // 🔥 Convert physics coordinates to screen coordinates
+        float screenX = (pos.x / universeRadius) * 400 + 400;
+        float screenY = (pos.y / universeRadius) * 400 + 400;
+
+        // 🔥 Directly update sprite position
+        const_cast<sf::Sprite&>(body->getSprite()).setPosition(screenX, screenY);
+        
+        window.draw(body->getSprite(), states);
     }
 }
+
+
+
 }  // namespace NB
