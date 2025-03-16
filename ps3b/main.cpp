@@ -18,7 +18,6 @@ int main(int argc, char* argv[]) {
   
   sf::RenderWindow window(sf::VideoMode(800, 800), "The Solar System!");
   
-  // Use default SFML font instead of Arial.ttf
   sf::Font defaultFont;
   if (!defaultFont.loadFromFile("/System/Library/Fonts/Supplemental/Helvetica.ttc")) { 
     std::cerr << "Warning: Failed to load Helvetica. Continuing without font." << std::endl;
@@ -51,7 +50,6 @@ int main(int argc, char* argv[]) {
     window.display();
   }
 
-  // 🔹 Keep window open after simulation ends
   while (window.isOpen()) {
     sf::Event event;
     while (window.pollEvent(event)) {
