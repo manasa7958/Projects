@@ -47,14 +47,13 @@ std::ostream& operator<<(std::ostream& out, const Universe& universe) {
 }
 
 void Universe::step(double dt) {
-    const double G = 6.67430e-11; // 🔥 Move inside function
+    const double G = 6.67430e-11;  // Move inside function to avoid warnings
 
     size_t numBodies = bodies.size();
-    
     std::vector<double> forceX(numBodies, 0.0);
     std::vector<double> forceY(numBodies, 0.0);
 
-    // Compute net forces
+    // 🔥 Compute net gravitational forces
     for (size_t i = 0; i < numBodies; i++) {
         for (size_t j = 0; j < numBodies; j++) {
             if (i != j) {
@@ -65,7 +64,7 @@ void Universe::step(double dt) {
                 double dy = bodyB->position().y - bodyA->position().y;
                 double dist = sqrt(dx * dx + dy * dy);
 
-                if (dist == 0) continue;
+                if (dist == 0) continue; // Prevent division by zero
 
                 double force = (G * bodyA->mass() * bodyB->mass()) / (dist * dist);
                 forceX[i] += force * (dx / dist);
@@ -74,7 +73,7 @@ void Universe::step(double dt) {
         }
     }
 
-    // Update velocities and positions using Leapfrog Integration
+    // 🔥 Apply Leapfrog Integration for accurate motion
     for (size_t i = 0; i < numBodies; i++) {
         auto body = bodies[i];
 
@@ -84,17 +83,24 @@ void Universe::step(double dt) {
         sf::Vector2f vel = body->velocity();
         sf::Vector2f pos = body->position();
 
+        // Leapfrog Integration: Update velocity first
         vel.x += 0.5 * dt * ax;
         vel.y += 0.5 * dt * ay;
 
+        // Update position using velocity
         pos.x += dt * vel.x;
         pos.y += dt * vel.y;
 
+        // Update velocity again (second half-step)
         vel.x += 0.5 * dt * ax;
         vel.y += 0.5 * dt * ay;
 
         body->setVelocity(vel.x, vel.y);
         body->setPosition(pos.x, pos.y);
+
+        // 🔥 Debugging: Print positions and velocities
+        std::cout << "Body " << i << " Pos: (" << pos.x << ", " << pos.y << ")"
+                  << " Vel: (" << vel.x << ", " << vel.y << ")" << std::endl;
     }
 }
 
