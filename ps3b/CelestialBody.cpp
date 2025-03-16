@@ -1,11 +1,13 @@
 // Copyright 2025 Manasa Praveen
-#include "CelestialBody.hpp"
-
 #include <iomanip>
 #include <iostream>
 #include <memory>
+#include <cmath>
+#include "CelestialBody.hpp"
 
 namespace NB {
+
+const double G = 6.67430e-11;
 
 CelestialBody::CelestialBody() : pos(0, 0), vel(0, 0), m(0), imageFile("") {}
 
