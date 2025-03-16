@@ -59,13 +59,16 @@ void Universe::step(double dt) {
     for (size_t i = 0; i < numBodies; i++) {
         for (size_t j = 0; j < numBodies; j++) {
             if (i != j) {
-                double dx = bodies[j]->position().x - bodies[i]->position().x;
-                double dy = bodies[j]->position().y - bodies[i]->position().y;
+                auto bodyA = bodies[i]; // Smart pointer to CelestialBody
+                auto bodyB = bodies[j];
+
+                double dx = bodyB->position().x - bodyA->position().x;
+                double dy = bodyB->position().y - bodyA->position().y;
                 double dist = sqrt(dx * dx + dy * dy);
 
                 if (dist == 0) continue; // Prevent division by zero
 
-                double force = (G * bodies[i]->mass() * bodies[j]->mass()) / (dist * dist);
+                double force = (G * bodyA->mass() * bodyB->mass()) / (dist * dist);
                 forceX[i] += force * (dx / dist);
                 forceY[i] += force * (dy / dist);
             }
@@ -74,18 +77,23 @@ void Universe::step(double dt) {
 
     // Update velocities and positions using Leapfrog Integration
     for (size_t i = 0; i < numBodies; i++) {
-        double ax = forceX[i] / bodies[i]->mass();
-        double ay = forceY[i] / bodies[i]->mass();
+        auto body = bodies[i]; // Smart pointer to CelestialBody
 
-        // Leapfrog Step:
-        bodies[i]->vel.x += 0.5 * dt * ax;  // Half-step velocity update
-        bodies[i]->vel.y += 0.5 * dt * ay;
+        double ax = forceX[i] / body->mass();
+        double ay = forceY[i] / body->mass();
 
-        bodies[i]->pos.x += dt * bodies[i]->vel.x;  // Update position
-        bodies[i]->pos.y += dt * bodies[i]->vel.y;
+        // Retrieve current velocity
+        sf::Vector2f vel = body->velocity();
+        vel.x += 0.5 * dt * ax;  // Half-step velocity update
+        vel.y += 0.5 * dt * ay;
 
-        bodies[i]->vel.x += 0.5 * dt * ax;  // Second half-step velocity update
-        bodies[i]->vel.y += 0.5 * dt * ay;
+        // Retrieve current position
+        sf::Vector2f pos = body->position();
+        pos.x += dt * vel.x;  // Update position
+        pos.y += dt * vel.y;
+
+        body->setVelocity(vel.x + 0.5 * dt * ax, vel.y + 0.5 * dt * ay);  // Second half-step velocity update
+        body->setPosition(pos.x, pos.y);
     }
 }
 
