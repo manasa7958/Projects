@@ -7,8 +7,6 @@
 
 namespace NB {
 
-const double G = 6.67430e-11;
-
 CelestialBody::CelestialBody() : pos(0, 0), vel(0, 0), m(0), imageFile("") {}
 
 std::istream& operator>>(std::istream& in, CelestialBody& body) {
