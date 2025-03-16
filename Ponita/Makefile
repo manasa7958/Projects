@@ -1,30 +1,35 @@
 CC = g++
 CFLAGS = --std=c++17 -Wall -Werror -pedantic -g
-LIB = -lsfml-graphics -lsfml-window -lsfml-system -lboost_unit_test_framework
+LIB = -lsfml-graphics -lsfml-audio -lsfml-window -lsfml-system -lboost_unit_test_framework
+INCLUDEDIR = -I. -I/opt/homebrew/opt/boost/include/ -I/opt/homebrew/opt/sfml@2/include/
+LIBDIR = -L/opt/homebrew/opt/boost/lib/ -L/opt/homebrew/opt/sfml@2/lib/
 
-DEPS = CelestialBody.hpp Universe.hpp
-OBJECTS = CelestialBody.o Universe.o
+BUILD_DIR = build
+
+DEPS = Universe.hpp CelestialBody.hpp
+OBJECTS = $(BUILD_DIR)/Universe.o $(BUILD_DIR)/CelestialBody.o
 PROGRAM = NBody
 TEST = test
 
-.PHONY: all clean lint
+$(BUILD_DIR):
+	mkdir -p $(BUILD_DIR)
 
 all: $(PROGRAM) $(TEST) NBody.a
 
-%.o: %.cpp $(DEPS)
-	$(CC) $(CFLAGS) -c $<
+$(BUILD_DIR)/%.o: %.cpp $(DEPS) | $(BUILD_DIR)
+	$(CC) $(CFLAGS) $(INCLUDEDIR) -c $< -o $@
 
-$(PROGRAM): $(OBJECTS) main.o
-	$(CC) $(CFLAGS) -o $@ $(OBJECTS) main.o $(LIB)
+$(PROGRAM): $(BUILD_DIR)/main.o $(OBJECTS)
+	$(CC) $(CFLAGS) $(LIBDIR) -o $@ $^ $(LIB)
 
-$(TEST): $(OBJECTS) test.o
-	$(CC) $(CFLAGS) -o $@ $(OBJECTS) test.o $(LIB)
+$(TEST): $(BUILD_DIR)/test.o $(OBJECTS)
+	$(CC) $(CFLAGS) $(LIBDIR) -o $@ $^ $(LIB)
 
 NBody.a: $(OBJECTS)
-	ar rcs $@ $^
+	ar rcs $@ $(OBJECTS)
 
 clean:
-	rm -f *.o $(PROGRAM) $(TEST) NBody.a
+	rm -rf $(BUILD_DIR) $(PROGRAM) $(TEST) NBody.a
 
 lint:
 	cpplint *.cpp *.hpp
