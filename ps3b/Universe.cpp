@@ -44,6 +44,38 @@ std::ostream& operator<<(std::ostream& out, const Universe& universe) {
   return out;
 }
 
+void Universe::step(double dt) {
+    size_t numBodies = bodies.size();
+    std::vector<sf::Vector2f> forces(numBodies, {0, 0});
+
+    // Compute net forces
+    for (size_t i = 0; i < numBodies; i++) {
+        for (size_t j = 0; j < numBodies; j++) {
+            if (i != j) {
+                double dx = bodies[j]->position().x - bodies[i]->position().x;
+                double dy = bodies[j]->position().y - bodies[i]->position().y;
+                double dist = sqrt(dx * dx + dy * dy);
+                if (dist == 0) continue;
+
+                double force = (G * bodies[i]->mass() * bodies[j]->mass()) / (dist * dist);
+                forces[i].x += force * (dx / dist);
+                forces[i].y += force * (dy / dist);
+            }
+        }
+    }
+
+    // Update velocities and positions
+    for (size_t i = 0; i < numBodies; i++) {
+        double ax = forces[i].x / bodies[i]->mass();
+        double ay = forces[i].y / bodies[i]->mass();
+        
+        bodies[i]->vel.x += dt * ax;
+        bodies[i]->vel.y += dt * ay;
+        bodies[i]->pos.x += dt * bodies[i]->vel.x;
+        bodies[i]->pos.y += dt * bodies[i]->vel.y;
+    }
+}
+
 size_t Universe::size() const {
   return bodies.size();
 }
