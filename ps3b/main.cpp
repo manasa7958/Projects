@@ -17,12 +17,15 @@ int main(int argc, char* argv[]) {
   std::cin >> universe;
   
   sf::RenderWindow window(sf::VideoMode(800, 800), "The Solar System!");
-  sf::Font font;
-  if (!font.loadFromFile("Arial.ttf")) {
-    std::cerr << "Failed to load font" << std::endl;
+  
+  // Use default SFML font instead of Arial.ttf
+  sf::Font defaultFont;
+  if (!defaultFont.loadFromFile("/System/Library/Fonts/Supplemental/Helvetica.ttc")) { 
+    std::cerr << "Warning: Failed to load Helvetica. Continuing without font." << std::endl;
   }
+  
   sf::Text elapsedTimeText;
-  elapsedTimeText.setFont(font);
+  elapsedTimeText.setFont(defaultFont);
   elapsedTimeText.setCharacterSize(20);
   elapsedTimeText.setFillColor(sf::Color::White);
   elapsedTimeText.setPosition(10, 10);
@@ -42,12 +45,21 @@ int main(int argc, char* argv[]) {
     window.clear();
     window.draw(universe);
     
-    elapsedTimeText.setString("Elapsed Time: " + std::to_string(elapsedTime) + " s");
+    elapsedTimeText.setString("Elapsed Time: " + std::to_string(static_cast<int>(elapsedTime)) + " s");
     window.draw(elapsedTimeText);
     
     window.display();
   }
-  
+
+  // 🔹 Keep window open after simulation ends
+  while (window.isOpen()) {
+    sf::Event event;
+    while (window.pollEvent(event)) {
+      if (event.type == sf::Event::Closed)
+        window.close();
+    }
+  }
+
   std::cout << universe;
   return 0;
 }
