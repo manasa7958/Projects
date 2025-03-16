@@ -129,12 +129,13 @@ void Universe::draw(sf::RenderTarget& window, sf::RenderStates states) const {
         float screenX = (pos.x / universeRadius) * 400 + 400;
         float screenY = (pos.y / universeRadius) * 400 + 400;
 
-        sf::Sprite& sprite = const_cast<sf::Sprite&>(body->getSprite());
-        sprite.setPosition(screenX, screenY);
+        // 🔥 Directly update sprite position
+        const_cast<sf::Sprite&>(body->getSprite()).setPosition(screenX, screenY);
         
-        window.draw(sprite, states);
+        window.draw(body->getSprite(), states);
     }
 }
+
 
 
 }  // namespace NB
