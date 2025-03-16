@@ -29,10 +29,7 @@ bool CelestialBody::loadTexture(double universeRadius) {
     return false;
   }
   sprite.setTexture(*texture);
-  const double SCALE_FACTOR = 400.0 / universeRadius;
-  float screenX = (pos.x * SCALE_FACTOR) + 400;
-  float screenY = (pos.y * SCALE_FACTOR) + 400;
-  sprite.setPosition(screenX, screenY);
+  sprite.setOrigin(texture->getSize().x / 2, texture->getSize().y / 2);
   return true;
 }
 
