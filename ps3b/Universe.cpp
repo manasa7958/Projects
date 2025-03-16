@@ -53,7 +53,6 @@ void Universe::step(double dt) {
     std::vector<double> forceX(numBodies, 0.0);
     std::vector<double> forceY(numBodies, 0.0);
 
-    // Compute gravitational forces
     for (size_t i = 0; i < numBodies; i++) {
         for (size_t j = 0; j < numBodies; j++) {
             if (i != j) {
@@ -64,9 +63,8 @@ void Universe::step(double dt) {
                 double dy = bodyB->position().y - bodyA->position().y;
                 double dist = sqrt(dx * dx + dy * dy);
 
-                if (dist == 0) continue; // Prevent division by zero
+                if (dist == 0) continue;
 
-                // Compute gravitational force
                 double force = (G * bodyA->mass() * bodyB->mass()) / (dist * dist);
                 forceX[i] += force * (dx / dist);
                 forceY[i] += force * (dy / dist);
@@ -74,7 +72,6 @@ void Universe::step(double dt) {
         }
     }
 
-    // Update positions and velocities using Leapfrog Integration
     for (size_t i = 0; i < numBodies; i++) {
         auto body = bodies[i];
 
@@ -84,7 +81,6 @@ void Universe::step(double dt) {
         sf::Vector2f vel = body->velocity();
         sf::Vector2f pos = body->position();
 
-        // ✅ Correct Leapfrog Integration
         vel.x += 0.5 * dt * ax;
         vel.y += 0.5 * dt * ay;
 
@@ -96,10 +92,6 @@ void Universe::step(double dt) {
 
         body->setVelocity(vel.x, vel.y);
         body->setPosition(pos.x, pos.y);
-
-        // ✅ Debugging: Print positions and velocities
-        std::cout << "Body " << i << " Pos: (" << pos.x << ", " << pos.y << ")"
-                  << " Vel: (" << vel.x << ", " << vel.y << ")" << std::endl;
     }
 }
 
@@ -124,11 +116,9 @@ void Universe::draw(sf::RenderTarget& window, sf::RenderStates states) const {
     for (const auto& body : bodies) {
         sf::Vector2f pos = body->position();
         
-        // 🔥 Convert physics coordinates to screen coordinates
         float screenX = (pos.x / universeRadius) * 400 + 400;
         float screenY = (pos.y / universeRadius) * 400 + 400;
 
-        // 🔥 Directly update sprite position
         const_cast<sf::Sprite&>(body->getSprite()).setPosition(screenX, screenY);
         
         window.draw(body->getSprite(), states);
