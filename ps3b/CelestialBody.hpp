@@ -10,10 +10,15 @@ class CelestialBody : public sf::Drawable {
  public:
   explicit CelestialBody();
 
+  // Getter methods
   sf::Vector2f position() const { return pos; }
   sf::Vector2f velocity() const { return vel; }
   float mass() const { return m; }
   std::string getImageFile() const { return imageFile; }
+
+  // Setter methods
+  void setPosition(float x, float y) { pos = {x, y}; }
+  void setVelocity(float vx, float vy) { vel = {vx, vy}; }
 
   bool loadTexture(double universeRadius);
 
@@ -31,5 +36,4 @@ class CelestialBody : public sf::Drawable {
   friend std::istream& operator>>(std::istream& in, CelestialBody& body);
   friend std::ostream& operator<<(std::ostream& out, const CelestialBody& body);
 };
-
 }  // namespace NB
