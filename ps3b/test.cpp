@@ -19,10 +19,9 @@ BOOST_AUTO_TEST_CASE(testEmptyUniverse) {
   BOOST_TEST(universe.size() == 0);
 }
 
-BOOST_AUTO_TEST_CASE(testNoAcceleration) {
+BOOST_AUTO_TEST_CASE(testStationaryBody) {
   std::stringstream input(
-      "1\n"
-      "1.0e+11\n"
+      "1 1.0e+11\n"
       "0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00 5.9740e+24 earth.gif\n");
   
   NB::Universe universe;
@@ -30,13 +29,13 @@ BOOST_AUTO_TEST_CASE(testNoAcceleration) {
   
   double initial_x = universe[0].position().x;
   double initial_y = universe[0].position().y;
-  universe.step(10000.0);
+  universe.step(50000.0);
   
   BOOST_TEST(universe[0].position().x == initial_x);
   BOOST_TEST(universe[0].position().y == initial_y);
 }
 
-BOOST_AUTO_TEST_CASE(testSinglePlanetNoMotion) {
+BOOST_AUTO_TEST_CASE(testSinglePlanetFixed) {
   std::stringstream input("1 1.0e+11\n"
                           "0.0 0.0 0.0 0.0 5.974e+24 earth.gif\n");
   NB::Universe universe;
@@ -46,10 +45,10 @@ BOOST_AUTO_TEST_CASE(testSinglePlanetNoMotion) {
   BOOST_TEST(universe[0].position().y == 0.0);
 }
 
-BOOST_AUTO_TEST_CASE(testTwoBodiesAttract) {
+BOOST_AUTO_TEST_CASE(testTwoBodyGravity) {
   std::stringstream input("2 1.0e+11\n"
                           "-1.0e+11 0.0 0.0 0.0 5.974e+24 earth.gif\n"
-                          "1.0e+11 0.0 0.0 0.0 5.974e+24 earth.gif\n");
+                          "1.0e+11 0.0 0.0 0.0 5.974e+24 mars.gif\n");
   NB::Universe universe;
   input >> universe;
   universe.step(1.0e6);
@@ -57,7 +56,7 @@ BOOST_AUTO_TEST_CASE(testTwoBodiesAttract) {
   BOOST_TEST(universe[1].position().x < 1.0e+11);
 }
 
-BOOST_AUTO_TEST_CASE(testFormatting) {
+BOOST_AUTO_TEST_CASE(testFormatConsistency) {
   std::stringstream input(
       "1.4960e+11 0.0000e+00 0.0000e+00 2.9800e+04 5.9740e+24 earth.gif");
   NB::CelestialBody body;
@@ -74,7 +73,7 @@ BOOST_AUTO_TEST_CASE(testFormatting) {
   BOOST_CHECK_CLOSE(body2.mass(), body.mass(), 0.001f);
 }
 
-BOOST_AUTO_TEST_CASE(testMultipleSteps) {
+BOOST_AUTO_TEST_CASE(testMultiStepSimulation) {
   std::stringstream input("5 2.50e+11\n"
          "1.4960e+11 0.0000e+00 0.0000e+00 2.9800e+04 5.9740e+24 earth.gif\n"
          "2.2790e+11 0.0000e+00 0.0000e+00 2.4100e+04 6.4190e+23 mars.gif\n"
