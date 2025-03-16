@@ -6,8 +6,6 @@
 
 namespace NB {
 
-const double G = 6.67430e-11; // Gravitational constant
-
 Universe::Universe() : universeRadius(0) {
     if (!backgroundTexture.loadFromFile("background.jpg")) {
         std::cerr << "Failed to load background image" << std::endl;
@@ -49,6 +47,8 @@ std::ostream& operator<<(std::ostream& out, const Universe& universe) {
 }
 
 void Universe::step(double dt) {
+    const double G = 6.67430e-11; // 🔥 Move inside function
+
     size_t numBodies = bodies.size();
     
     std::vector<double> forceX(numBodies, 0.0);
@@ -67,7 +67,7 @@ void Universe::step(double dt) {
 
                 if (dist == 0) continue;
 
-                double force = (6.67430e-11 * bodyA->mass() * bodyB->mass()) / (dist * dist);
+                double force = (G * bodyA->mass() * bodyB->mass()) / (dist * dist);
                 forceX[i] += force * (dx / dist);
                 forceY[i] += force * (dy / dist);
             }
@@ -84,23 +84,17 @@ void Universe::step(double dt) {
         sf::Vector2f vel = body->velocity();
         sf::Vector2f pos = body->position();
 
-        // 🔥 Leapfrog Integration: Half-step velocity update
         vel.x += 0.5 * dt * ax;
         vel.y += 0.5 * dt * ay;
 
-        // 🔥 Update position
         pos.x += dt * vel.x;
         pos.y += dt * vel.y;
 
-        // 🔥 Second half-step velocity update
         vel.x += 0.5 * dt * ax;
         vel.y += 0.5 * dt * ay;
 
         body->setVelocity(vel.x, vel.y);
         body->setPosition(pos.x, pos.y);
-
-        std::cout << "Body " << i << " Position: (" << pos.x << ", " << pos.y << ")"
-                  << " Velocity: (" << vel.x << ", " << vel.y << ")" << std::endl;
     }
 }
 
