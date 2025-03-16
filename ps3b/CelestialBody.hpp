@@ -15,6 +15,7 @@ class CelestialBody : public sf::Drawable {
   sf::Vector2f velocity() const { return vel; }
   float mass() const { return m; }
   std::string getImageFile() const { return imageFile; }
+  sf::Sprite& getSprite() { return sprite; }
 
   // Setter methods
   void setPosition(float x, float y) { pos = {x, y}; }
