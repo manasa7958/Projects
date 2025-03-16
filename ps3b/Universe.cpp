@@ -1,9 +1,13 @@
 // Copyright 2025 Manasa Praveen
 #include <iostream>
 #include <memory>
+#include <cmath>
 #include "Universe.hpp"
 
 namespace NB {
+
+const double G = 6.67430e-11; // Gravitational constant
+
 Universe::Universe() : universeRadius(0) {
     if (!backgroundTexture.loadFromFile("background.jpg")) {
         std::cerr << "Failed to load background image" << std::endl;
@@ -46,33 +50,42 @@ std::ostream& operator<<(std::ostream& out, const Universe& universe) {
 
 void Universe::step(double dt) {
     size_t numBodies = bodies.size();
-    std::vector<sf::Vector2f> forces(numBodies, {0, 0});
+    
+    // Vectors to store net forces acting on each body
+    std::vector<double> forceX(numBodies, 0.0);
+    std::vector<double> forceY(numBodies, 0.0);
 
-    // Compute net forces
+    // Compute net forces for each body
     for (size_t i = 0; i < numBodies; i++) {
         for (size_t j = 0; j < numBodies; j++) {
             if (i != j) {
                 double dx = bodies[j]->position().x - bodies[i]->position().x;
                 double dy = bodies[j]->position().y - bodies[i]->position().y;
                 double dist = sqrt(dx * dx + dy * dy);
-                if (dist == 0) continue;
+
+                if (dist == 0) continue; // Prevent division by zero
 
                 double force = (G * bodies[i]->mass() * bodies[j]->mass()) / (dist * dist);
-                forces[i].x += force * (dx / dist);
-                forces[i].y += force * (dy / dist);
+                forceX[i] += force * (dx / dist);
+                forceY[i] += force * (dy / dist);
             }
         }
     }
 
-    // Update velocities and positions
+    // Update velocities and positions using Leapfrog Integration
     for (size_t i = 0; i < numBodies; i++) {
-        double ax = forces[i].x / bodies[i]->mass();
-        double ay = forces[i].y / bodies[i]->mass();
-        
-        bodies[i]->vel.x += dt * ax;
-        bodies[i]->vel.y += dt * ay;
-        bodies[i]->pos.x += dt * bodies[i]->vel.x;
+        double ax = forceX[i] / bodies[i]->mass();
+        double ay = forceY[i] / bodies[i]->mass();
+
+        // Leapfrog Step:
+        bodies[i]->vel.x += 0.5 * dt * ax;  // Half-step velocity update
+        bodies[i]->vel.y += 0.5 * dt * ay;
+
+        bodies[i]->pos.x += dt * bodies[i]->vel.x;  // Update position
         bodies[i]->pos.y += dt * bodies[i]->vel.y;
+
+        bodies[i]->vel.x += 0.5 * dt * ax;  // Second half-step velocity update
+        bodies[i]->vel.y += 0.5 * dt * ay;
     }
 }
 
@@ -94,10 +107,11 @@ const CelestialBody& Universe::operator[](size_t index) const {
 void Universe::draw(sf::RenderTarget& window, sf::RenderStates states) const {
     window.draw(backgroundSprite);
     if (bodies.empty()) {
-    std::cerr << "No celestial bodies found!";
+        std::cerr << "No celestial bodies found!" << std::endl;
     }
     for (const auto& body : bodies) {
         window.draw(*body, states);
     }
 }
+
 }  // namespace NB
