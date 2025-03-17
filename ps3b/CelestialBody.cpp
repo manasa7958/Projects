@@ -4,6 +4,7 @@
 #include <memory>
 #include <cmath>
 #include "CelestialBody.hpp"
+#include <SFML/Graphics.hpp>
 
 namespace NB {
 
