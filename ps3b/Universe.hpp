@@ -16,6 +16,7 @@ class Universe : public sf::Drawable {
   void clearBodies() { bodies.clear(); }
   size_t size() const { return bodies.size(); }
   double radius() const { return universeRadius; }
+  const CelestialBody& operator[](size_t i) const;
 
  protected:
   void draw(sf::RenderTarget& window, sf::RenderStates states) const override;
