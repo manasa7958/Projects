@@ -68,12 +68,10 @@ void Sokoban::movePlayer(Direction dir) {
     int newX = playerPosition.x + dx;
     int newY = playerPosition.y + dy;
 
-    // Check for wall collision
     if (board[newY][newX] == '#') {
         return;
     }
     
-    // Handle box movement
     if (board[newY][newX] == 'A' || board[newY][newX] == 'a') {
         int boxNewX = newX + dx;
         int boxNewY = newY + dy;
@@ -97,12 +95,11 @@ void Sokoban::movePlayer(Direction dir) {
 }
 
 void Sokoban::reset() {
-    board = originalBoard;  // Restore original board state
-    gameWon = false;  // Allow player movement again
-    boardWidth = originalBoard[0].size();  // Restore correct board width
-    boardHeight = originalBoard.size();  // Restore correct board height
-
-    // Find the player's original position
+    board = originalBoard;
+    gameWon = false;
+    boardWidth = originalBoard[0].size();
+    boardHeight = originalBoard.size();
+    
     for (unsigned int y = 0; y < board.size(); ++y) {
         auto pos = board[y].find('@');
         if (pos != std::string::npos) {
