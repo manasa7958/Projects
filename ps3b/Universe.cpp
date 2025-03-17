@@ -32,7 +32,7 @@ std::istream& operator>>(std::istream& in, Universe& universe) {
 std::ostream& operator<<(std::ostream& out, const Universe& universe) {
     out << universe.size() << " " << universe.radius() << "\n";
     for (size_t i = 0; i < universe.size(); ++i) {
-        out << *universe.bodies[i] << "\n";  // Dereferencing shared_ptr
+        out << universe[i] << "\n";  // Using the overloaded << for CelestialBody
     }
     return out;
 }
