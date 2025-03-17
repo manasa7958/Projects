@@ -1,6 +1,5 @@
 // Copyright 2025 Manasa Praveen
 #include <iostream>
-#include <memory>
 #include <cmath>
 #include "Universe.hpp"
 
@@ -11,6 +10,11 @@ Universe::Universe() : universeRadius(0) {
         std::cerr << "Failed to load background image" << std::endl;
     } else {
         backgroundSprite.setTexture(backgroundTexture);
+        sf::Vector2u textureSize = backgroundTexture.getSize();
+        sf::Vector2u windowSize(800, 800);
+        float scaleX = static_cast<float>(windowSize.x) / textureSize.x;
+        float scaleY = static_cast<float>(windowSize.y) / textureSize.y;
+        backgroundSprite.setScale(scaleX, scaleY);
     }
 }
 
@@ -24,24 +28,12 @@ std::istream& operator>>(std::istream& in, Universe& universe) {
     for (size_t i = 0; i < n; ++i) {
         auto body = std::make_shared<CelestialBody>();
         in >> *body;
+        if (!body->loadTexture(radius)) {
+            std::cerr << "Failed to load texture" << std::endl;
+        }
         universe.addBody(body);
     }
     return in;
-}
-
-std::ostream& operator<<(std::ostream& out, const Universe& universe) {
-    out << universe.size() << " " << universe.radius() << "\n";
-    for (size_t i = 0; i < universe.size(); ++i) {
-        out << universe[i] << "\n";  // Now works correctly
-    }
-    return out;
-}
-
-const CelestialBody& Universe::operator[](size_t i) const {
-    if (i >= bodies.size()) {
-        throw std::out_of_range("Index out of range");
-    }
-    return *bodies[i];  // Dereferencing the shared_ptr
 }
 
 void Universe::step(double dt) {
@@ -89,8 +81,16 @@ void Universe::step(double dt) {
 
 void Universe::draw(sf::RenderTarget& window, sf::RenderStates states) const {
     window.draw(backgroundSprite);
+    
     for (const auto& body : bodies) {
-        window.draw(*body, states);
+        sf::Vector2f pos = body->position();
+        
+        float screenX = (pos.x / universeRadius) * 400 + 400;
+        float screenY = (pos.y / universeRadius) * 400 + 400;
+
+        const_cast<sf::Sprite&>(body->getSprite()).setPosition(screenX, screenY);
+        
+        window.draw(body->getSprite(), states);
     }
 }
 
