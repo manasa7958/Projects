@@ -15,7 +15,6 @@ class CelestialBody : public sf::Drawable {
   sf::Vector2f velocity() const { return vel; }
   float mass() const { return m; }
   std::string getImageFile() const { return imageFile; }
-  sf::Sprite& getSprite() { return sprite; }
 
   // Setter methods
   void setPosition(float x, float y) { pos = {x, y}; }
@@ -31,8 +30,8 @@ class CelestialBody : public sf::Drawable {
   float m;
   std::string imageFile;
   std::shared_ptr<sf::Texture> texture;
-  sf::Sprite sprite;
-
+  std::shared_ptr<sf::Sprite> sprite;
+  friend class Universe;
   friend std::istream& operator>>(std::istream& in, CelestialBody& body);
   friend std::ostream& operator<<(std::ostream& out, const CelestialBody& body);
 };
