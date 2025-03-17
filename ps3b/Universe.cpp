@@ -32,9 +32,16 @@ std::istream& operator>>(std::istream& in, Universe& universe) {
 std::ostream& operator<<(std::ostream& out, const Universe& universe) {
     out << universe.size() << " " << universe.radius() << "\n";
     for (size_t i = 0; i < universe.size(); ++i) {
-        out << universe[i] << "\n";  // Using the overloaded << for CelestialBody
+        out << universe[i] << "\n";  // Now works correctly
     }
     return out;
+}
+
+const CelestialBody& Universe::operator[](size_t i) const {
+    if (i >= bodies.size()) {
+        throw std::out_of_range("Index out of range");
+    }
+    return *bodies[i];  // Dereferencing the shared_ptr
 }
 
 void Universe::step(double dt) {
