@@ -80,4 +80,3 @@ void Universe::draw(sf::RenderTarget& window, sf::RenderStates states) const {
 }
 
 }  // namespace NB
-}  // namespace NB
