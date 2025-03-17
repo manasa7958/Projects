@@ -36,6 +36,14 @@ std::istream& operator>>(std::istream& in, Universe& universe) {
     return in;
 }
 
+std::ostream& operator<<(std::ostream& out, const Universe& universe) {
+    out << universe.size() << " " << universe.radius() << "\n";
+    for (size_t i = 0; i < universe.size(); ++i) {
+        out << universe[i] << "\n";  // This relies on operator<< for CelestialBody
+    }
+    return out;
+}
+
 void Universe::step(double dt) {
     const double G = 6.67430e-11;
 
