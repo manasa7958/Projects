@@ -20,6 +20,7 @@ class CelestialBody : public sf::Drawable {
   // Setter methods
   void setPosition(float x, float y) { pos = {x, y}; }
   void setVelocity(float vx, float vy) { vel = {vx, vy}; }
+  bool loadTexture(double universeRadius);
 
  protected:
   void draw(sf::RenderTarget& window, sf::RenderStates states) const override;
