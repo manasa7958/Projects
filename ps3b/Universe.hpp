@@ -28,4 +28,5 @@ class Universe : public sf::Drawable {
 };
 
 std::istream& operator>>(std::istream& is, Universe& uni);
+std::ostream& operator<<(std::ostream& os, const Universe& uni);
 }  // namespace NB
