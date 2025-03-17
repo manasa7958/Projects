@@ -19,7 +19,7 @@ int main(int argc, char* argv[]) {
                 window.close();
             }
     
-            if (!game.isWon()) {  // Prevent movement after winning
+            if (!game.isWon()) {
                 if (event.type == sf::Event::KeyPressed) {
                     if (event.key.code == sf::Keyboard::W || event.key.code == sf::Keyboard::Up) {
                         game.movePlayer(SB::Direction::Up);
@@ -32,16 +32,14 @@ int main(int argc, char* argv[]) {
                     }
                 }
             }
-    
-            // Allow reset even if the game is won
             if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::R) {
                 game.reset();
             }
         }
 
     window.clear();
-    window.draw(game);  // Draw game normally
-    window.display();   // Keep window open even after winning
+    window.draw(game);
+    window.display();
     }
 
     return 0;
