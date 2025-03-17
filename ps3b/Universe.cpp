@@ -29,6 +29,14 @@ std::istream& operator>>(std::istream& in, Universe& universe) {
     return in;
 }
 
+std::ostream& operator<<(std::ostream& out, const Universe& universe) {
+    out << universe.size() << " " << universe.radius() << "\n";
+    for (size_t i = 0; i < universe.size(); ++i) {
+        out << *universe.bodies[i] << "\n";  // Dereferencing shared_ptr
+    }
+    return out;
+}
+
 void Universe::step(double dt) {
     const double G = 6.67430e-11;
 
