@@ -28,7 +28,7 @@ std::istream& operator>>(std::istream& in, Universe& universe) {
     double radius;
     in >> n >> radius;
     universe.radius_ = radius;
-    universe.bodies_.clear();
+    universe.bodies.clear();
 
     for (size_t i = 0; i < n; ++i) {
         auto body = std::make_shared<CelestialBody>();
@@ -36,24 +36,24 @@ std::istream& operator>>(std::istream& in, Universe& universe) {
         if (!body->loadTexture(radius)) {
             std::cerr << "Failed to load texture" << std::endl;
         }
-        universe.bodies_.push_back(body);
+        universe.bodies.push_back(body);
     }
     return in;
 }
 
 std::ostream& operator<<(std::ostream& out, const Universe& universe) {
-    out << universe.bodies_.size() << " " << universe.radius_ << "\n";
-    for (const auto& body : universe.bodies_) {
+    out << universe.bodies.size() << " " << universe.radius_ << "\n";
+    for (const auto& body : universe.bodies) {
         out << *body << "\n";
     }
     return out;
 }
 
 const CelestialBody& Universe::operator[](size_t i) const {
-    if (i >= bodies_.size()) {
+    if (i >= bodies.size()) {
         throw std::out_of_range("Index out of range");
     }
-    return *bodies_[i];
+    return *bodies[i];
 }
 
 void Universe::step(double seconds) {
@@ -61,7 +61,7 @@ void Universe::step(double seconds) {
     const double MAX_FORCE = 1.0e30;
     const double MAX_ACCEL = 1.0e20;
 
-    size_t n = bodies_.size();
+    size_t n = bodies.size();
     if (n == 0) return;
 
     std::vector<double> forceX(n, 0.0);
@@ -70,13 +70,13 @@ void Universe::step(double seconds) {
     // Compute gravitational forces
     for (size_t i = 0; i < n; i++) {
         for (size_t j = i + 1; j < n; j++) {  
-            double dx = bodies_[j]->position().x - bodies_[i]->position().x;
-            double dy = bodies_[j]->position().y - bodies_[i]->position().y;
+            double dx = bodies[j]->position().x - bodies[i]->position().x;
+            double dy = bodies[j]->position().y - bodies[i]->position().y;
             double r = std::sqrt(dx * dx + dy * dy);
 
             if (r < 1e-10) r = 1e-10;
 
-            double force = G * bodies_[i]->mass() * bodies_[j]->mass() / (r * r);
+            double force = G * bodies[i]->mass() * bodies[j]->mass() / (r * r);
             if (force > MAX_FORCE) force = MAX_FORCE;
 
             double fx = force * dx / r;
@@ -91,33 +91,33 @@ void Universe::step(double seconds) {
 
     // Apply forces and update positions
     for (size_t i = 0; i < n; i++) {
-        double ax = forceX[i] / bodies_[i]->mass();
-        double ay = forceY[i] / bodies_[i]->mass();
+        double ax = forceX[i] / bodies[i]->mass();
+        double ay = forceY[i] / bodies[i]->mass();
 
         if (std::abs(ax) > MAX_ACCEL) ax = ax > 0 ? MAX_ACCEL : -MAX_ACCEL;
         if (std::abs(ay) > MAX_ACCEL) ay = ay > 0 ? MAX_ACCEL : -MAX_ACCEL;
 
-        double vx = bodies_[i]->velocity().x;
-        double vy = bodies_[i]->velocity().y;
+        double vx = bodies[i]->velocity().x;
+        double vy = bodies[i]->velocity().y;
 
         double new_vx = vx + ax * seconds;
         double new_vy = vy + ay * seconds;
 
-        double px = bodies_[i]->position().x;
-        double py = bodies_[i]->position().y;
+        double px = bodies[i]->position().x;
+        double py = bodies[i]->position().y;
 
         double new_px = px + new_vx * seconds;
         double new_py = py + new_vy * seconds;
 
-        bodies_[i]->setPosition(new_px, new_py);
-        bodies_[i]->setVelocity(new_vx, new_vy);
+        bodies[i]->setPosition(new_px, new_py);
+        bodies[i]->setVelocity(new_vx, new_vy);
     }
 }
 
 void Universe::draw(sf::RenderTarget& window, sf::RenderStates states) const {
     window.draw(*backgroundSprite_);  
 
-    for (const auto& body : bodies_) {
+    for (const auto& body : bodies) {
         sf::Vector2f pos = body->position();
         float screenX = (pos.x / radius_) * 400 + 400;
         float screenY = (pos.y / radius_) * 400 + 400;
