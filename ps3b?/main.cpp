@@ -1,4 +1,4 @@
-// main.cpp - Customized Version
+// Copyright 2025 Manasa Praveen 
 #include <iostream>
 #include <sstream>
 #include <SFML/Graphics.hpp>
@@ -6,48 +6,49 @@
 
 int main(int argc, char* argv[]) {
     if (argc != 3) {
-        std::cerr << "Usage: " << argv[0] << " T dt < universe_file" << std::endl;
-        return 1;
+        std::cerr << "Incorrect usage. Format: " << argv[0] << " <duration> <time_step> < input_file" << std::endl;
+        return EXIT_FAILURE;
     }
 
-    double totalTime;
-    std::istringstream timeStream(argv[1]);
-    timeStream >> totalTime;
-    double timeInterval;
-    std::istringstream intervalStream(argv[2]);
-    intervalStream >> timeInterval;
+    double simulationTime, stepSize;
+    if (!(std::istringstream(argv[1]) >> simulationTime) || !(std::istringstream(argv[2]) >> stepSize) || simulationTime <= 0 || stepSize <= 0) {
+        std::cerr << "Error: Duration and step size must be positive numbers." << std::endl;
+        return EXIT_FAILURE;
+    }
 
-    sf::RenderWindow window(sf::VideoMode(600, 600), "Cosmic Motion");
-    window.setFramerateLimit(60);
+    sf::RenderWindow simulationWindow(sf::VideoMode(600, 600), "N-Body Simulation");
+    simulationWindow.setFramerateLimit(60);
 
-    NB::Universe galaxySimulation;
+    NB::Universe cosmicSystem;
     try {
-        std::cin >> galaxySimulation;
-        std::cout << "Initialized universe with " << galaxySimulation.size()
-                  << " bodies within a boundary of " << galaxySimulation.radius() << std::endl;
-    } catch (const std::exception& err) {
-        std::cerr << "Error loading universe data: " << err.what() << std::endl;
-        return 1;
+        std::cin >> cosmicSystem;
+        if (cosmicSystem.size() == 0) {
+            std::cerr << "Error: No celestial bodies detected in input." << std::endl;
+            return EXIT_FAILURE;
+        }
+        std::cout << "Loaded Universe: " << cosmicSystem.size() << " objects within radius " << cosmicSystem.radius() << std::endl;
+    } catch (const std::exception& ex) {
+        std::cerr << "Failed to load universe data: " << ex.what() << std::endl;
+        return EXIT_FAILURE;
     }
 
-    double elapsed = 0.0;
-    sf::Clock simulationClock;
-
-    while (window.isOpen() && elapsed < totalTime) {
+    double elapsedTime = 0.0;
+    while (simulationWindow.isOpen() && elapsedTime + stepSize <= simulationTime) {
         sf::Event event;
-        while (window.pollEvent(event)) {
+        while (simulationWindow.pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
-                window.close();
+                simulationWindow.close();
             }
         }
 
-        galaxySimulation.step(timeInterval);
-        elapsed += timeInterval;
+        cosmicSystem.step(stepSize);
+        elapsedTime += stepSize;
 
-        window.clear(sf::Color(15, 15, 50));
-        window.draw(galaxySimulation);
-        window.display();
+        simulationWindow.clear(sf::Color(10, 10, 40));
+        simulationWindow.draw(cosmicSystem);
+        simulationWindow.display();
     }
-    std::cout << galaxySimulation;
-    return 0;
+
+    std::cout << cosmicSystem;
+    return EXIT_SUCCESS;
 }
