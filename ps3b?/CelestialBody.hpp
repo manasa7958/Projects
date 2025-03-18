@@ -1,6 +1,8 @@
 // Copyright 2025 Manasa Praveen
 #pragma once
 #include <iostream>
+#include <string>
+#include <memory>
 #include <SFML/Graphics.hpp>
 
 namespace NB {
