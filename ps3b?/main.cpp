@@ -24,7 +24,7 @@ int main(int argc, char* argv[]) {
         std::cerr << "Error: Could not load background image." << std::endl;
     }
     sf::Sprite background(backgroundTexture);
-    backgroundSprite.setScale(
+    background.setScale(
         static_cast<float>(window.getSize().x) / backgroundTexture.getSize().x,
         static_cast<float>(window.getSize().y) / backgroundTexture.getSize().y
     );
