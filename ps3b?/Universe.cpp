@@ -39,7 +39,7 @@ void Universe::draw(sf::RenderTarget& window, sf::RenderStates states) const {
 
     float scale = std::min(windowSize.x, windowSize.y)
     / (2.0f * static_cast<float>(universeBoundary_));
-    scale *= 1.0f;
+    scale *= 0.8f;
 
     for (const auto& body : spaceObjects_) {
         float screenX = (body.position().x * scale) + (windowSize.x / 2.0f);
@@ -48,7 +48,7 @@ void Universe::draw(sf::RenderTarget& window, sf::RenderStates states) const {
         sf::Sprite sprite;
         if (body.getSprite(sprite)) {
             sprite.setPosition(screenX, screenY);
-            sprite.setScale(1.0f, 1.0f);
+            sprite.setScale(1.5f, 1.5f);
             window.draw(sprite, states);
         }
     }
