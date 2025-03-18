@@ -1,13 +1,16 @@
 // Copyright 2025 Manasa Praveen
 #pragma once
 #include <iostream>
+#include <string>
+#include <vector>
+#include <memory>
 #include <SFML/Graphics.hpp>
 #include "CelestialBody.hpp"
 
 namespace NB {
 class Universe: public sf::Drawable {
  public:
-    Universe(); // Required
+    Universe();
     explicit Universe(const std::string& filename);
     size_t size() const;
     double radius() const;
