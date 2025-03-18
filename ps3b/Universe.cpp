@@ -56,46 +56,59 @@ const CelestialBody& Universe::operator[](size_t i) const {
 
 void Universe::step(double dt) {
     const double G = 6.67430e-11;
+    const double MAX_FORCE = 1.0e30;  // Prevents unrealistic forces
+    const double MAX_ACCEL = 1.0e20;  // Prevents unrealistic acceleration
 
     size_t numBodies = bodies.size();
+    if (numBodies == 0) return;
+
     std::vector<double> forceX(numBodies, 0.0);
     std::vector<double> forceY(numBodies, 0.0);
 
-    // Compute forces
+    // Compute gravitational forces
     for (size_t i = 0; i < numBodies; i++) {
-        for (size_t j = 0; j < numBodies; j++) {
-            if (i != j) {
-                double dx = bodies[j]->position().x - bodies[i]->position().x;
-                double dy = bodies[j]->position().y - bodies[i]->position().y;
-                double dist = sqrt(dx * dx + dy * dy);
+        for (size_t j = i + 1; j < numBodies; j++) {  // ✅ Avoids duplicate calculations
+            double dx = bodies[j]->position().x - bodies[i]->position().x;
+            double dy = bodies[j]->position().y - bodies[i]->position().y;
+            double r = std::sqrt(dx * dx + dy * dy);
 
-                if (dist < 1e-10) continue;
+            if (r < 1e-10) r = 1e-10;  // ✅ Prevents division by zero
 
-                double force = (G * bodies[i]->mass() * bodies[j]->mass()) / (dist * dist);
-                forceX[i] += force * (dx / dist);
-                forceY[i] += force * (dy / dist);
-            }
+            double force = (G * bodies[i]->mass() * bodies[j]->mass()) / (r * r);
+            if (force > MAX_FORCE) force = MAX_FORCE;  // ✅ Limits extreme forces
+
+            double fx = force * dx / r;
+            double fy = force * dy / r;
+
+            forceX[i] += fx;
+            forceY[i] += fy;
+            forceX[j] -= fx;  // ✅ Newton's Third Law
+            forceY[j] -= fy;
         }
     }
 
-    // Update positions and velocities
+    // Apply acceleration, update velocity and position
     for (size_t i = 0; i < numBodies; i++) {
-        auto body = bodies[i];
+        double ax = forceX[i] / bodies[i]->mass();
+        double ay = forceY[i] / bodies[i]->mass();
 
-        double ax = forceX[i] / body->mass();
-        double ay = forceY[i] / body->mass();
+        if (std::abs(ax) > MAX_ACCEL) ax = ax > 0 ? MAX_ACCEL : -MAX_ACCEL;
+        if (std::abs(ay) > MAX_ACCEL) ay = ay > 0 ? MAX_ACCEL : -MAX_ACCEL;
 
-        sf::Vector2f vel = body->velocity();
-        sf::Vector2f pos = body->position();
+        double vx = bodies[i]->velocity().x;
+        double vy = bodies[i]->velocity().y;
 
-        vel.x += dt * ax;
-        vel.y += dt * ay;
+        double new_vx = vx + ax * dt;  // ✅ v = v0 + a * t
+        double new_vy = vy + ay * dt;
 
-        pos.x += dt * vel.x;
-        pos.y += dt * vel.y;
+        double px = bodies[i]->position().x;
+        double py = bodies[i]->position().y;
 
-        body->setVelocity(vel.x, vel.y);
-        body->setPosition(pos.x, pos.y);
+        double new_px = px + new_vx * dt;  // ✅ p = p0 + v * t
+        double new_py = py + new_vy * dt;
+
+        bodies[i]->setPosition(new_px, new_py);
+        bodies[i]->setVelocity(new_vx, new_vy);
     }
 }
 
