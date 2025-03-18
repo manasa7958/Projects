@@ -1,4 +1,3 @@
-// CelestialBody.cpp - Fixed Version
 #include "CelestialBody.hpp"
 #include <iomanip>
 
@@ -37,6 +36,14 @@ void CelestialBody::setVelocity(double vx, double vy) {
     speedY_ = vy;
 }
 
+bool CelestialBody::getSprite(sf::Sprite& outSprite) const {
+    if (sprite_ && texture_) {
+        outSprite = *sprite_;
+        return true;
+    }
+    return false;
+}
+
 void CelestialBody::draw(sf::RenderTarget& window, sf::RenderStates states) const {
     if (sprite_ && texture_) {
         window.draw(*sprite_, states);
@@ -53,8 +60,9 @@ std::istream& operator>>(std::istream& is, CelestialBody& body) {
         body.speedY_ = vy;
         body.weight_ = m;
         body.textureFile_ = filename;
-        body.texture_->loadFromFile(filename);
-        body.sprite_->setTexture(*body.texture_);
+        if (body.texture_->loadFromFile(filename)) {
+            body.sprite_->setTexture(*body.texture_);
+        }
     }
     return is;
 }
