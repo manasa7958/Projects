@@ -1,4 +1,4 @@
-// Universe.cpp - Fixed Version
+// Universe.cpp - Final Fixed Version
 #include "Universe.hpp"
 #include <iostream>
 #include <cmath>
@@ -21,11 +21,30 @@ const CelestialBody& Universe::operator[](size_t i) const {
 }
 
 void Universe::draw(sf::RenderTarget& window, sf::RenderStates states) const {
-    if (bgSprite_) {
+    sf::Vector2u windowSize = window.getSize();
+
+    if (bgTexture_->getSize().x > 0) {
+        float scaleX = static_cast<float>(windowSize.x) / bgTexture_->getSize().x;
+        float scaleY = static_cast<float>(windowSize.y) / bgTexture_->getSize().y;
+        bgSprite_->setScale(scaleX, scaleY);
         window.draw(*bgSprite_, states);
     }
+
+    if (universeBoundary_ <= 0.0) return;
+
+    float scale = std::min(windowSize.x, windowSize.y) / (2.0f * static_cast<float>(universeBoundary_));
+    scale *= 0.5f;
+
     for (const auto& body : spaceObjects_) {
-        window.draw(body, states);
+        float screenX = (body.position().x * scale) + (windowSize.x / 2.0f);
+        float screenY = (windowSize.y / 2.0f) - (body.position().y * scale);
+
+        sf::Sprite* sprite = const_cast<sf::Sprite*>(body.sprite_.get());
+        if (sprite && sprite->getTexture()) {
+            sprite->setPosition(screenX, screenY);
+            sprite->setScale(0.5f, 0.5f);
+            window.draw(*sprite, states);
+        }
     }
 }
 
