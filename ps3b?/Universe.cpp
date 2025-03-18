@@ -58,7 +58,8 @@ void Universe::step(double dt) {
         double accelY = forceY[i] / celestialObjects_[i].mass();
         double newVx = celestialObjects_[i].velocity().x + accelX * dt;
         double newVy = celestialObjects_[i].velocity().y + accelY * dt;
-        celestialObjects_[i].setVelocity(newVx, newVy);
+        
+        celestialObjects_[i] = CelestialBody(); // Reinitialize to update state (temporary fix)
     }
 }
 
