@@ -111,9 +111,7 @@ void Universe::draw(sf::RenderTarget& window, sf::RenderStates states) const {
         window.draw(*body, states);
     }
 }
-
 }  // namespace NB
-
 
 /*// Copyright 2025 Manasa Praveen
 #include <iostream>
