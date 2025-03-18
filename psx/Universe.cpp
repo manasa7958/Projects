@@ -8,6 +8,15 @@ namespace NB {
 Universe::Universe() : universeRadius(0.0), backgroundTexture(std::make_shared<sf::Texture>()),
 backgroundSprite(std::make_shared<sf::Sprite>()) {}
 
+bool Universe::initBackground(const std::string& filename) {
+    if (backgroundTexture->loadFromFile(filename)) {
+        backgroundSprite->setTexture(*backgroundTexture);
+        return true;
+    } else {
+        std::cerr << "Could not load background image: " << filename << std::endl;
+        return false;
+    }
+}
 
 size_t Universe::size() const {
     return bodies.size();
@@ -40,29 +49,27 @@ void Universe::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 std::istream& operator>>(std::istream& in, Universe& universe) {
     size_t n;
     double r;
-    in >> n >> r;
+    is >> n >> r;
     universe.universeRadius = r;
     universe.bodies.clear();
 
     for (size_t i = 0; i < n; ++i) {
         auto body = std::make_shared<CelestialBody>();
-        in >> *body;
+        is >> *body;
         universe.bodies.push_back(body);
     }
+    return is;
 }
 
 std::ostream& operator<<(std::ostream& out, const Universe& universe) {
-    out << universe.bodies.size() << " " << universe.universeRadius << "\n";
-    for (size_t i = 0; i < universe.bodies.size(); ++i) {
-        out << universe[i] << "\n";
+    os << universe.bodies.size() << " " << universe.universeRadius << "\n";
+    for (const auto& body : universe.bodies) {
+        os << *body << "\n";
     }
-    /*for (const auto& body : universe.bodies) {
-        out << *body << "\n";
-    }*/
-    return out;
+    return os;
 }
 
-void Universe::step(double seconds) {
+void Universe::step(double dt) {
     const double G = 6.67e-11;
     size_t n = bodies.size();
     if (n == 0) return;
@@ -97,17 +104,22 @@ void Universe::step(double seconds) {
         double vx = bodies[i]->velocity().x;
         double vy = bodies[i]->velocity().y;
 
-        double new_vx = vx + ax * seconds;
-        double new_vy = vy + ay * seconds;
+        const double MAX_ACCEL = 1.0e20;
+        if (std::abs(ax) > MAX_ACCEL) ax = ax > 0 ? MAX_ACCEL : -MAX_ACCEL;
+        if (std::abs(ay) > MAX_ACCEL) ay = ay > 0 ? MAX_ACCEL : -MAX_ACCEL;
+
+        double new_vx = vx + ax * dt;
+        double new_vy = vy + ay * dt;
 
         double px = bodies[i]->position().x;
         double py = bodies[i]->position().y;
 
-        double new_px = px + new_vx * seconds;
-        double new_py = py + new_vy * seconds;
+        double new_px = px + new_vx * dt;
+        double new_py = py + new_vy * dt;
 
         bodies[i]->setPosition(new_px, new_py);
         bodies[i]->setVelocity(new_vx, new_vy);
     }
 }
+
 }  // namespace NB
