@@ -15,14 +15,14 @@ class Universe: public sf::Drawable {
 
     const CelestialBody& operator[](size_t i) const; // Optional
 
-    void step(double dt); // Implemented in part b, behavior for part a is undefined
+    void step(double timeStep); // Implemented in part b, behavior for part a is undefined
 
  protected:
     void draw(sf::RenderTarget& window, sf::RenderStates states) const override; // From sf::Drawable
 
  private:
-    std::vector<CelestialBody> celestialObjects_;
-    double universeSize_;
+    std::vector<CelestialBody> spaceObjects_;
+    double universeBoundary_;
     std::shared_ptr<sf::Texture> bgTexture_;
     std::shared_ptr<sf::Sprite> bgSprite_;
 
