@@ -25,8 +25,8 @@ int main(int argc, char* argv[]) {
     }
     sf::Sprite background(backgroundTexture);
     backgroundSprite.setScale(
-        static_cast<float>(spaceWindow.getSize().x) / backgroundTexture.getSize().x,
-        static_cast<float>(spaceWindow.getSize().y) / backgroundTexture.getSize().y
+        static_cast<float>(window.getSize().x) / backgroundTexture.getSize().x,
+        static_cast<float>(window.getSize().y) / backgroundTexture.getSize().y
     );
 
     
