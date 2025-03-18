@@ -15,7 +15,7 @@ class CelestialBody: public sf::Drawable {
     bool getSprite(sf::Sprite& outSprite) const;
 
  protected:
-    void draw(sf::RenderTarget& window, sf::RenderStates states) const override; // From sf::Drawable
+    void draw(sf::RenderTarget& window, sf::RenderStates states) const override;
 
  private:
     sf::Vector2f pos_;
