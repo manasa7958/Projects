@@ -4,13 +4,13 @@
 #include <cmath>
 #include "Universe.hpp"
 
-namespace NB {
+namespace NB {  // ✅ Ensuring everything is inside the correct namespace
 
 Universe::Universe() : universeRadius(0) {
     if (!backgroundTexture->loadFromFile("background.jpg")) {
         std::cerr << "Failed to load background image" << std::endl;
     } else {
-        backgroundSprite->setTexture(backgroundTexture);
+        backgroundSprite.setTexture(backgroundTexture);
         sf::Vector2u textureSize = backgroundTexture.getSize();
         sf::Vector2u windowSize(800, 800);
         float scaleX = static_cast<float>(windowSize.x) / textureSize.x;
@@ -150,4 +150,4 @@ void Universe::draw(sf::RenderTarget& window, sf::RenderStates states) const {
     }
 }
 
-}  // namespace NB
+}  // namespace NB  ✅ Ensures everything is inside NB
