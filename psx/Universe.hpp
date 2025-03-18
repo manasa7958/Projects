@@ -19,7 +19,7 @@ class Universe : public sf::Drawable {
 
     bool initBackground(const std::string& filename);
 
-    void step(double seconds);
+    void step(double dt);
 
  protected:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
@@ -31,8 +31,8 @@ class Universe : public sf::Drawable {
     std::shared_ptr<sf::Texture> backgroundTexture;
     std::shared_ptr<sf::Sprite> backgroundSprite;
 
-    friend std::istream& operator>>(std::istream& is, Universe& uni);
-    friend std::ostream& operator<<(std::ostream& os, const Universe& uni);
+    friend std::istream& operator>>(std::istream& in, Universe& universe);
+    friend std::ostream& operator<<(std::ostream& out, const Universe& universe);
 };
 
 std::istream& operator>>(std::istream& is, Universe& uni);
