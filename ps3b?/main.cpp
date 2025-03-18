@@ -16,7 +16,7 @@ int main(int argc, char* argv[]) {
         return -1;
     }
 
-    sf::RenderWindow window(sf::VideoMode(500, 500), "The Solar System!");
+    sf::RenderWindow window(sf::VideoMode(600, 600), "The Solar System!");
     window.setFramerateLimit(60);
 
     NB::Universe universe;
