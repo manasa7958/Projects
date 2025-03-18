@@ -53,7 +53,6 @@ BOOST_AUTO_TEST_CASE(TestUniverseEvolution) {
     BOOST_CHECK_LT(cosmos[0].position().x, 1.4960e+11);
 }
 
-// Test case: No acceleration (Bodies should not move if no forces act on them)
 BOOST_AUTO_TEST_CASE(TestNoAcceleration) {
     std::stringstream ss;
     ss << "1 1.00e+11\n";
@@ -66,7 +65,6 @@ BOOST_AUTO_TEST_CASE(TestNoAcceleration) {
     BOOST_CHECK_EQUAL(cosmos[0].position().y, 0.0f);
 }
 
-// Test case: Anti-gravity (Reverse gravity constant)
 BOOST_AUTO_TEST_CASE(TestAntiGravity) {
     std::stringstream ss;
     ss << "2 3.00e+11\n";
@@ -80,7 +78,6 @@ BOOST_AUTO_TEST_CASE(TestAntiGravity) {
     BOOST_CHECK_LT(cosmos[1].position().x, -1.0000e+11);
 }
 
-// Test case: Inverted gravity (Objects attract in the opposite direction)
 BOOST_AUTO_TEST_CASE(TestInvertedGravity) {
     std::stringstream ss;
     ss << "2 3.00e+11\n";
@@ -94,7 +91,6 @@ BOOST_AUTO_TEST_CASE(TestInvertedGravity) {
     BOOST_CHECK_GT(cosmos[1].position().x, -1.0000e+11);
 }
 
-// Test case: Fixed time step delays
 BOOST_AUTO_TEST_CASE(TestFixedTimeStep) {
     std::stringstream ss;
     ss << "1 1.00e+11\n";
@@ -106,7 +102,6 @@ BOOST_AUTO_TEST_CASE(TestFixedTimeStep) {
     BOOST_CHECK_CLOSE(cosmos[0].position().x, 1.0000e+04, 0.001f);
 }
 
-// Test case: Leapfrog integration
 BOOST_AUTO_TEST_CASE(TestLeapfrogIntegration) {
     std::stringstream ss;
     ss << "1 1.00e+11\n";
