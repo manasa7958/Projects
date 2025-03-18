@@ -32,10 +32,6 @@ BOOST_AUTO_TEST_CASE(TestCelestialInputOperator) {
     BOOST_CHECK_CLOSE(obj.mass(), 6.0f, 0.001f);
 }
 
-
-
-
-
 BOOST_AUTO_TEST_CASE(TestUniverseConstructor) {
     NB::Universe cosmos;
     BOOST_CHECK_EQUAL(cosmos.size(), 0);
@@ -61,7 +57,7 @@ BOOST_AUTO_TEST_CASE(TestUniverseEvolution) {
 BOOST_AUTO_TEST_CASE(TestNoAcceleration) {
     std::stringstream ss;
     ss << "1 1.00e+11\n";
-    ss << "0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00 5.0000e+24 test.gif\n";
+    ss << "0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00 5.0000e+24 venus.gif\n";
 
     NB::Universe cosmos;
     ss >> cosmos;
@@ -74,8 +70,8 @@ BOOST_AUTO_TEST_CASE(TestNoAcceleration) {
 BOOST_AUTO_TEST_CASE(TestAntiGravity) {
     std::stringstream ss;
     ss << "2 3.00e+11\n";
-    ss << "1.0000e+11 0.0000e+00 0.0000e+00 0.0000e+00 5.0000e+24 test1.gif\n";
-    ss << "-1.0000e+11 0.0000e+00 0.0000e+00 0.0000e+00 5.0000e+24 test2.gif\n";
+    ss << "1.0000e+11 0.0000e+00 0.0000e+00 0.0000e+00 5.0000e+24 sun.gif\n";
+    ss << "-1.0000e+11 0.0000e+00 0.0000e+00 0.0000e+00 5.0000e+24 earth.gif\n";
 
     NB::Universe cosmos;
     ss >> cosmos;
@@ -88,8 +84,8 @@ BOOST_AUTO_TEST_CASE(TestAntiGravity) {
 BOOST_AUTO_TEST_CASE(TestInvertedGravity) {
     std::stringstream ss;
     ss << "2 3.00e+11\n";
-    ss << "1.0000e+11 0.0000e+00 0.0000e+00 0.0000e+00 5.0000e+24 test1.gif\n";
-    ss << "-1.0000e+11 0.0000e+00 0.0000e+00 0.0000e+00 5.0000e+24 test2.gif\n";
+    ss << "1.0000e+11 0.0000e+00 0.0000e+00 0.0000e+00 5.0000e+24 sun.gif\n";
+    ss << "-1.0000e+11 0.0000e+00 0.0000e+00 0.0000e+00 5.0000e+24 earth.gif\n";
 
     NB::Universe cosmos;
     ss >> cosmos;
@@ -102,7 +98,7 @@ BOOST_AUTO_TEST_CASE(TestInvertedGravity) {
 BOOST_AUTO_TEST_CASE(TestFixedTimeStep) {
     std::stringstream ss;
     ss << "1 1.00e+11\n";
-    ss << "0.0000e+00 0.0000e+00 1.0000e+04 0.0000e+00 5.0000e+24 test.gif\n";
+    ss << "0.0000e+00 0.0000e+00 1.0000e+04 0.0000e+00 5.0000e+24 saturn.gif\n";
 
     NB::Universe cosmos;
     ss >> cosmos;
@@ -114,7 +110,7 @@ BOOST_AUTO_TEST_CASE(TestFixedTimeStep) {
 BOOST_AUTO_TEST_CASE(TestLeapfrogIntegration) {
     std::stringstream ss;
     ss << "1 1.00e+11\n";
-    ss << "0.0000e+00 0.0000e+00 1.0000e+04 0.0000e+00 5.0000e+24 test.gif\n";
+    ss << "0.0000e+00 0.0000e+00 1.0000e+04 0.0000e+00 5.0000e+24 jupiter.gif\n";
 
     NB::Universe cosmos;
     ss >> cosmos;
