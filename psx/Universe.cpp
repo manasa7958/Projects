@@ -1,21 +1,23 @@
 // Copyright 2025 Manasa Praveen
 #include <iostream>
-#include <memory>
 #include <cmath>
 #include "Universe.hpp"
 
 namespace NB {
 
-Universe::Universe() : universeRadius(0) {
-    if (!backgroundTexture.loadFromFile("background.jpg")) {
+Universe::Universe() : universeRadius(0), 
+    backgroundTexture(std::make_shared<sf::Texture>()),
+    backgroundSprite(std::make_shared<sf::Sprite>()) {
+
+    if (!backgroundTexture->loadFromFile("background.jpg")) {
         std::cerr << "Failed to load background image" << std::endl;
     } else {
-        backgroundSprite.setTexture(backgroundTexture);
-        sf::Vector2u textureSize = backgroundTexture.getSize();
+        backgroundSprite->setTexture(*backgroundTexture);
+        sf::Vector2u textureSize = backgroundTexture->getSize();
         sf::Vector2u windowSize(800, 800);
         float scaleX = static_cast<float>(windowSize.x) / textureSize.x;
         float scaleY = static_cast<float>(windowSize.y) / textureSize.y;
-        backgroundSprite.setScale(scaleX, scaleY);
+        backgroundSprite->setScale(scaleX, scaleY);
     }
 }
 
@@ -26,12 +28,11 @@ std::istream& operator>>(std::istream& in, Universe& universe) {
     universe.setRadius(radius);
     universe.clearBodies();
 
-    if (n == 0) return in;
     for (size_t i = 0; i < n; ++i) {
         auto body = std::make_shared<CelestialBody>();
         in >> *body;
         if (!body->loadTexture(radius)) {
-          std::cerr << "Failed to load texture" << std::endl;
+            std::cerr << "Failed to load texture" << std::endl;
         }
         universe.addBody(body);
     }
@@ -41,74 +42,77 @@ std::istream& operator>>(std::istream& in, Universe& universe) {
 std::ostream& operator<<(std::ostream& out, const Universe& universe) {
     out << universe.size() << " " << universe.radius() << "\n";
     for (size_t i = 0; i < universe.size(); ++i) {
-        out << universe[i];
+        out << universe[i] << "\n";  // Uses overloaded operator<< for CelestialBody
     }
     return out;
 }
 
-size_t Universe::size() const {
-    return bodies.size();
-}
-
-double Universe::radius() const {
-    return universeRadius;
-}
-
-const CelestialBody& Universe::operator[](size_t index) const {
-    if (index >= bodies.size()) {
+const CelestialBody& Universe::operator[](size_t i) const {
+    if (i >= bodies.size()) {
         throw std::out_of_range("Index out of range");
     }
-    return *bodies[index];
+    return *bodies[i];  // Dereferencing shared_ptr
 }
 
-void NB::Universe::step(double dt) {
-    std::vector<sf::Vector2f> newVelocities(bodies.size());
-    std::vector<sf::Vector2f> newPositions(bodies.size());
+void Universe::step(double dt) {
+    const double G = 6.67430e-11;
 
-    for (size_t i = 0; i < bodies.size(); i++) {
-        if (bodies[i]->mass() == 0) {
-            std::cerr << "Massless Body " << i << " retains its original position.\n";
-            newPositions[i] = bodies[i]->position();
-            newVelocities[i] = bodies[i]->velocity();
-            continue;
-        }
+    size_t numBodies = bodies.size();
+    std::vector<double> forceX(numBodies, 0.0);
+    std::vector<double> forceY(numBodies, 0.0);
 
-        sf::Vector2f netForce(0.f, 0.f);
-        for (size_t j = 0; j < bodies.size(); j++) {
-            if (i == j || bodies[j]->mass() == 0) continue;
+    // Compute forces
+    for (size_t i = 0; i < numBodies; i++) {
+        for (size_t j = 0; j < numBodies; j++) {
+            if (i != j) {
+                double dx = bodies[j]->position().x - bodies[i]->position().x;
+                double dy = bodies[j]->position().y - bodies[i]->position().y;
+                double dist = sqrt(dx * dx + dy * dy);
 
-            sf::Vector2f diff = bodies[j]->position() - bodies[i]->position();
-            float distance = std::sqrt(diff.x * diff.x + diff.y * diff.y);
+                if (dist < 1e-10) continue;
 
-            if (distance < 1e-6 || distance > 1.0e+15) {
-                continue;
+                double force = (G * bodies[i]->mass() * bodies[j]->mass()) / (dist * dist);
+                forceX[i] += force * (dx / dist);
+                forceY[i] += force * (dy / dist);
             }
-            float forceMagnitude = (6.67430e-11 * bodies[i]->mass() * bodies[j]->mass())
-            / (distance * distance);
-            sf::Vector2f force = (diff / distance) * forceMagnitude;
-            netForce += force;
         }
-
-        sf::Vector2f acceleration = netForce / bodies[i]->mass();
-        sf::Vector2f halfStepVelocity = bodies[i]->velocity()
-        + (acceleration * static_cast<float>(dt * 0.5));
-        newPositions[i] = bodies[i]->position() + (halfStepVelocity * static_cast<float>(dt));
-        newVelocities[i] = halfStepVelocity + (acceleration * static_cast<float>(dt * 0.5));
     }
 
-    for (size_t i = 0; i < bodies.size(); i++) {
-        bodies[i]->setVelocity(newVelocities[i]);
-        bodies[i]->setPosition(newPositions[i]);
+    // Update positions and velocities
+    for (size_t i = 0; i < numBodies; i++) {
+        auto body = bodies[i];
+
+        double ax = forceX[i] / body->mass();
+        double ay = forceY[i] / body->mass();
+
+        sf::Vector2f vel = body->velocity();
+        sf::Vector2f pos = body->position();
+
+        vel.x += dt * ax;
+        vel.y += dt * ay;
+
+        pos.x += dt * vel.x;
+        pos.y += dt * vel.y;
+
+        body->setVelocity(vel.x, vel.y);
+        body->setPosition(pos.x, pos.y);
     }
 }
 
 void Universe::draw(sf::RenderTarget& window, sf::RenderStates states) const {
-    window.draw(backgroundSprite);
-    if (bodies.empty()) {
-        std::cerr << "No celestial bodies found!";
-    }
+    window.draw(*backgroundSprite); // ✅ Now using shared_ptr
+
     for (const auto& body : bodies) {
-        window.draw(*body, states);
+        sf::Vector2f pos = body->position();
+
+        // ✅ Fixing screen coordinate transformation
+        float screenX = (pos.x / universeRadius) * 400 + 400;
+        float screenY = (pos.y / universeRadius) * 400 + 400;
+
+        if (body->sprite) {  // ✅ No need for const_cast
+            body->sprite->setPosition(screenX, screenY);
+            window.draw(*body->sprite, states);
+        }
     }
 }
 
