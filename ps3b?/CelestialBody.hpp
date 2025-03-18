@@ -16,12 +16,12 @@ class CelestialBody: public sf::Drawable {
     void draw(sf::RenderTarget& window, sf::RenderStates states) const override; // From sf::Drawable
 
  private:
-    double coordX_, coordY_;
-    double speedX_, speedY_;
-    double weight_;
-    std::string textureFile_;
-    std::shared_ptr<sf::Texture> texture_;
-    std::shared_ptr<sf::Sprite> sprite_;
+    double xCoord_, yCoord_;
+    double xSpeed_, ySpeed_;
+    double massValue_;
+    std::string imageFile_;
+    std::shared_ptr<sf::Texture> textureResource_;
+    std::shared_ptr<sf::Sprite> spriteInstance_;
 
     friend std::istream& operator>>(std::istream& is, CelestialBody& body);
     friend std::ostream& operator<<(std::ostream& os, const CelestialBody& body);
