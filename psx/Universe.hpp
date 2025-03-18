@@ -1,5 +1,4 @@
-// Universe.hpp - Fixed version
-// Copyright 2025 Manasa Praveen
+// Copyright 2025 Ponita Ty
 #pragma once
 #include <iostream>
 #include <vector>
@@ -9,14 +8,15 @@
 #include "CelestialBody.hpp"
 
 namespace NB {
-class Universe : public sf::Drawable {
+class Universe: public sf::Drawable {
  public:
-    Universe();
+    Universe();  // Required
 
-    size_t size() const;
-    double radius() const;
-    const CelestialBody& operator[](size_t i) const;
+    size_t size() const;  // Optional
+    double radius() const;  // Optional
+    const CelestialBody& operator[](size_t i) const;  // Optional
 
+    // Extra credit: Initialize background
     bool initBackground(const std::string& filename);
 
     void step(double seconds);
@@ -25,14 +25,14 @@ class Universe : public sf::Drawable {
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
  private:
-    std::vector<std::shared_ptr<CelestialBody>> bodies; 
-    double universeRadius; 
+    std::vector<CelestialBody> bodies_;  // Collection of celestial bodies
+    double radius_;  // Radius of the universe
 
-    std::shared_ptr<sf::Texture> backgroundTexture;
-    std::shared_ptr<sf::Sprite> backgroundSprite;
+    // Background resources
+    std::shared_ptr<sf::Texture> backgroundTexture_;
+    std::shared_ptr<sf::Sprite> backgroundSprite_;
 
     friend std::istream& operator>>(std::istream& is, Universe& uni);
-    friend std::ostream& operator<<(std::ostream& os, const Universe& uni);
 };
 
 std::istream& operator>>(std::istream& is, Universe& uni);
