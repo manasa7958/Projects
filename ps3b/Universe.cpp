@@ -14,7 +14,7 @@ Universe::Universe() : universeRadius(0),
     } else {
         backgroundSprite->setTexture(*backgroundTexture);
         sf::Vector2u textureSize = backgroundTexture->getSize();
-        sf::Vector2u windowSize(800, 800);
+        sf::Vector2u windowSize(800, 800);  // ✅ Keeping your window size
         float scaleX = static_cast<float>(windowSize.x) / textureSize.x;
         float scaleY = static_cast<float>(windowSize.y) / textureSize.y;
         backgroundSprite->setScale(scaleX, scaleY);
@@ -113,7 +113,7 @@ void Universe::step(double seconds) {
 }
 
 void Universe::draw(sf::RenderTarget& window, sf::RenderStates states) const {
-    window.draw(*backgroundSprite);  // ✅ Uses corrected background variable names
+    window.draw(*backgroundSprite);  // ✅ Using your original background logic
 
     for (const auto& body : bodies) {
         sf::Vector2f pos = body->position();
