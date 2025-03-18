@@ -1,4 +1,4 @@
-/ Copyright 2025 Ponita Ty
+// Copyright 2025 Ponita Ty
 #pragma once
 #include <iostream>
 #include <memory>
