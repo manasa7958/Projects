@@ -39,7 +39,7 @@ void Universe::draw(sf::RenderTarget& window, sf::RenderStates states) const {
 
     float scale = std::min(windowSize.x, windowSize.y)
     / (2.0f * static_cast<float>(universeBoundary_));
-    scale *= 1.5f;
+    scale *= 1.0f;
 
     for (const auto& body : spaceObjects_) {
         float screenX = (body.position().x * scale) + (windowSize.x / 2.0f);
