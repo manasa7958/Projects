@@ -1,6 +1,4 @@
-
-
-// Universe.hpp - Fixed Version
+// Copyright 2025 Manasa Praveen
 #pragma once
 #include <iostream>
 #include <SFML/Graphics.hpp>
@@ -10,17 +8,14 @@ namespace NB {
 class Universe: public sf::Drawable {
  public:
     Universe(); // Required
-    explicit Universe(const std::string& filename);  // Optional
-
-    size_t size() const; // Optional
-    double radius() const; // Optional
-
-    const CelestialBody& operator[](size_t i) const; // Optional
-
-    void step(double timeStep); // Implemented in part b, behavior for part a is undefined
+    explicit Universe(const std::string& filename);
+    size_t size() const;
+    double radius() const;
+    const CelestialBody& operator[](size_t i) const;
+    void step(double timeStep);
 
  protected:
-    void draw(sf::RenderTarget& window, sf::RenderStates states) const override; // From sf::Drawable
+    void draw(sf::RenderTarget& window, sf::RenderStates states) const override;
 
  private:
     std::vector<CelestialBody> spaceObjects_;
