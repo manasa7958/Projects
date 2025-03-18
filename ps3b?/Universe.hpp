@@ -1,40 +1,32 @@
-// Copyright 2025 Ponita Ty
+// Universe.hpp - Customized Version
 #pragma once
 #include <iostream>
-#include <vector>
-#include <memory>
-#include <stdexcept>
 #include <SFML/Graphics.hpp>
 #include "CelestialBody.hpp"
 
 namespace NB {
 class Universe: public sf::Drawable {
  public:
-    Universe();  // Required
+    Universe(); // Required
+    explicit Universe(const std::string& filename);  // Optional
 
-    size_t size() const;  // Optional
-    double radius() const;  // Optional
-    const CelestialBody& operator[](size_t i) const;  // Optional
+    size_t size() const; // Optional
+    double radius() const; // Optional
 
-    // Extra credit: Initialize background
-    bool initBackground(const std::string& filename);
+    const CelestialBody& operator[](size_t i) const; // Optional
 
-    void step(double seconds);
+    void step(double dt); // Implemented in part b, behavior for part a is undefined
 
  protected:
-    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+    void draw(sf::RenderTarget& window, sf::RenderStates states) const override; // From sf::Drawable
 
  private:
-    std::vector<CelestialBody> bodies_;  // Collection of celestial bodies
-    double radius_;  // Radius of the universe
-
-    // Background resources
-    std::shared_ptr<sf::Texture> backgroundTexture_;
-    std::shared_ptr<sf::Sprite> backgroundSprite_;
+    std::vector<CelestialBody> celestialObjects_;
+    double universeSize_;
+    std::shared_ptr<sf::Texture> bgTexture_;
+    std::shared_ptr<sf::Sprite> bgSprite_;
 
     friend std::istream& operator>>(std::istream& is, Universe& uni);
+    friend std::ostream& operator<<(std::ostream& os, const Universe& uni);
 };
-
-std::istream& operator>>(std::istream& is, Universe& uni);
-std::ostream& operator<<(std::ostream& os, const Universe& uni);
 }  // namespace NB
