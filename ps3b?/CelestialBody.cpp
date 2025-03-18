@@ -1,5 +1,6 @@
-#include "CelestialBody.hpp"
+// Copyright 2025 Manasa Praveen
 #include <iomanip>
+#include "CelestialBody.hpp"
 
 namespace NB {
 
