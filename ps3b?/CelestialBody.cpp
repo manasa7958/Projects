@@ -12,12 +12,15 @@ CelestialBody::CelestialBody() : pos_(0.0f, 0.0f), vel_(0.0f, 0.0f), m_(0.0f) {
     sprite_ = std::make_shared<sf::Sprite>();
 }
 
-bool CelestialBody::getSprite(sf::Sprite& outSprite) const {
+/*bool CelestialBody::getSprite(sf::Sprite& outSprite) const {
     if (sprite_ && texture_) {
         outSprite = *sprite_;
         return true;
     }
     return false;
+}*/
+sf::Sprite* CelestialBody::getSprite() const {
+    return sprite_.get();  // Returns the raw pointer from the shared pointer
 }
 
 sf::Vector2f CelestialBody::position() const {
