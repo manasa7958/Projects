@@ -11,29 +11,29 @@ int main(int argc, char* argv[]) {
     }
 
     double totalTime;
-    std::istringstream ss(argv[1]);
-    ss >> totalTime;
-    double timeStep;
-    std::istringstream ss1(argv[2]);
-    ss1 >> timeStep;
+    std::istringstream timeStream(argv[1]);
+    timeStream >> totalTime;
+    double timeInterval;
+    std::istringstream intervalStream(argv[2]);
+    intervalStream >> timeInterval;
 
-    sf::RenderWindow window(sf::VideoMode(500, 500), "Galactic Simulation");
+    sf::RenderWindow window(sf::VideoMode(600, 600), "Cosmic Motion");
     window.setFramerateLimit(60);
 
-    NB::Universe galaxy;
+    NB::Universe galaxySimulation;
     try {
-        std::cin >> galaxy;
-        std::cout << "Loaded galaxy with " << galaxy.size()
-                  << " celestial objects and size " << galaxy.radius() << std::endl;
-    } catch (const std::exception& ex) {
-        std::cerr << "Error loading galaxy: " << ex.what() << std::endl;
+        std::cin >> galaxySimulation;
+        std::cout << "Initialized universe with " << galaxySimulation.size()
+                  << " bodies within a boundary of " << galaxySimulation.radius() << std::endl;
+    } catch (const std::exception& err) {
+        std::cerr << "Error loading universe data: " << err.what() << std::endl;
         return 1;
     }
 
-    double elapsedTime = 0.0;
-    sf::Clock clock;
+    double elapsed = 0.0;
+    sf::Clock simulationClock;
 
-    while (window.isOpen() && elapsedTime < totalTime) {
+    while (window.isOpen() && elapsed < totalTime) {
         sf::Event event;
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
@@ -41,13 +41,13 @@ int main(int argc, char* argv[]) {
             }
         }
 
-        galaxy.step(timeStep);
-        elapsedTime += timeStep;
+        galaxySimulation.step(timeInterval);
+        elapsed += timeInterval;
 
-        window.clear(sf::Color(10, 10, 40));
-        window.draw(galaxy);
+        window.clear(sf::Color(15, 15, 50));
+        window.draw(galaxySimulation);
         window.display();
     }
-    std::cout << galaxy;
+    std::cout << galaxySimulation;
     return 0;
 }
