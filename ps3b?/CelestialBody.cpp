@@ -1,4 +1,5 @@
 // Copyright 2025 Manasa Praveen
+#include <isotream>
 #include <iomanip>
 #include <memory>
 #include <string>
@@ -62,7 +63,8 @@ std::ostream& operator<<(std::ostream& os, const CelestialBody& body) {
     return os;
 }
 
-void CelestialBody::draw(sf::RenderTarget& window, sf::RenderStates states) const {
+void CelestialBody::draw(sf::RenderTarget& window, sf::RenderStates states)
+const {
     if (sprite_ && texture_) {
         window.draw(*sprite_, states);
     }
