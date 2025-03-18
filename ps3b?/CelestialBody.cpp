@@ -10,6 +10,14 @@ CelestialBody::CelestialBody() : pos_(0.0f, 0.0f), vel_(0.0f, 0.0f), m_(0.0f) {
     sprite_ = std::make_shared<sf::Sprite>();
 }
 
+bool CelestialBody::getSprite(sf::Sprite& outSprite) const {
+    if (sprite_ && texture_) {
+        outSprite = *sprite_;
+        return true;
+    }
+    return false;
+}
+
 sf::Vector2f CelestialBody::position() const {
     return pos_;
 }
@@ -28,20 +36,6 @@ void CelestialBody::setPosition(const sf::Vector2f& pos) {
 
 void CelestialBody::setVelocity(const sf::Vector2f& vel) {
     vel_ = vel;
-}
-
-bool CelestialBody::getSprite(sf::Sprite& outSprite) const {
-    if (sprite_ && texture_) {
-        outSprite = *sprite_;
-        return true;
-    }
-    return false;
-}
-
-void CelestialBody::draw(sf::RenderTarget& window, sf::RenderStates states) const {
-    if (sprite_ && texture_) {
-        window.draw(*sprite_, states);
-    }
 }
 
 std::istream& operator>>(std::istream& is, CelestialBody& body) {
@@ -65,6 +59,12 @@ std::ostream& operator<<(std::ostream& os, const CelestialBody& body) {
        << body.vel_.x << " " << body.vel_.y << " "
        << body.m_ << " " << body.textureFile_;
     return os;
+}
+
+void CelestialBody::draw(sf::RenderTarget& window, sf::RenderStates states) const {
+    if (sprite_ && texture_) {
+        window.draw(*sprite_, states);
+    }
 }
 }  // namespace NB
 
