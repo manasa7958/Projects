@@ -5,16 +5,19 @@
 
 namespace NB {
 
-Universe::Universe() : universeRadius(0) {
-    if (!backgroundTexture.loadFromFile("background.jpg")) {
+Universe::Universe() : universeRadius(0), 
+    backgroundTexture(std::make_shared<sf::Texture>()),
+    backgroundSprite(std::make_shared<sf::Sprite>()) {
+
+    if (!backgroundTexture->loadFromFile("background.jpg")) {
         std::cerr << "Failed to load background image" << std::endl;
     } else {
-        backgroundSprite.setTexture(backgroundTexture);
-        sf::Vector2u textureSize = backgroundTexture.getSize();
+        backgroundSprite->setTexture(*backgroundTexture);
+        sf::Vector2u textureSize = backgroundTexture->getSize();
         sf::Vector2u windowSize(800, 800);
         float scaleX = static_cast<float>(windowSize.x) / textureSize.x;
         float scaleY = static_cast<float>(windowSize.y) / textureSize.y;
-        backgroundSprite.setScale(scaleX, scaleY);
+        backgroundSprite->setScale(scaleX, scaleY);
     }
 }
 
@@ -39,9 +42,16 @@ std::istream& operator>>(std::istream& in, Universe& universe) {
 std::ostream& operator<<(std::ostream& out, const Universe& universe) {
     out << universe.size() << " " << universe.radius() << "\n";
     for (size_t i = 0; i < universe.size(); ++i) {
-        out << universe[i] << "\n";  // This relies on operator<< for CelestialBody
+        out << universe[i] << "\n";  // Uses overloaded operator<< for CelestialBody
     }
     return out;
+}
+
+const CelestialBody& Universe::operator[](size_t i) const {
+    if (i >= bodies.size()) {
+        throw std::out_of_range("Index out of range");
+    }
+    return *bodies[i];  // Dereferencing shared_ptr
 }
 
 void Universe::step(double dt) {
@@ -51,6 +61,7 @@ void Universe::step(double dt) {
     std::vector<double> forceX(numBodies, 0.0);
     std::vector<double> forceY(numBodies, 0.0);
 
+    // Compute forces
     for (size_t i = 0; i < numBodies; i++) {
         for (size_t j = 0; j < numBodies; j++) {
             if (i != j) {
@@ -67,6 +78,7 @@ void Universe::step(double dt) {
         }
     }
 
+    // Update positions and velocities
     for (size_t i = 0; i < numBodies; i++) {
         auto body = bodies[i];
 
@@ -88,17 +100,19 @@ void Universe::step(double dt) {
 }
 
 void Universe::draw(sf::RenderTarget& window, sf::RenderStates states) const {
-    window.draw(backgroundSprite);
-    
+    window.draw(*backgroundSprite); // ✅ Now using shared_ptr
+
     for (const auto& body : bodies) {
         sf::Vector2f pos = body->position();
-        
+
+        // ✅ Fixing screen coordinate transformation
         float screenX = (pos.x / universeRadius) * 400 + 400;
         float screenY = (pos.y / universeRadius) * 400 + 400;
 
-        const_cast<sf::Sprite&>(body->getSprite()).setPosition(screenX, screenY);
-        
-        window.draw(body->getSprite(), states);
+        if (body->sprite) {  // ✅ No need for const_cast
+            body->sprite->setPosition(screenX, screenY);
+            window.draw(*body->sprite, states);
+        }
     }
 }
 
