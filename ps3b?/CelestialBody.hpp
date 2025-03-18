@@ -28,7 +28,8 @@ class CelestialBody: public sf::Drawable {
     std::shared_ptr<sf::Sprite> sprite_;
 
     friend std::istream& operator>>(std::istream& is, CelestialBody& body);
-    friend std::ostream& operator<<(std::ostream& os, const CelestialBody& body);
+    friend std::ostream& operator<<(std::ostream& os,
+    const CelestialBody& body);
 };
 }  // namespace NB
 
