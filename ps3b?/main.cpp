@@ -1,4 +1,4 @@
-// Copyright 2025 Ponita Ty
+// main.cpp - Customized Version
 #include <iostream>
 #include <sstream>
 #include <SFML/Graphics.hpp>
@@ -10,34 +10,30 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    double T;
+    double totalTime;
     std::istringstream ss(argv[1]);
-    ss >> T;
-    double dt;
+    ss >> totalTime;
+    double timeStep;
     std::istringstream ss1(argv[2]);
-    ss1 >> dt;
+    ss1 >> timeStep;
 
-    sf::RenderWindow window(sf::VideoMode(300, 300), "The Solar System!");
+    sf::RenderWindow window(sf::VideoMode(500, 500), "Galactic Simulation");
     window.setFramerateLimit(60);
 
-    NB::Universe universe;
+    NB::Universe galaxy;
     try {
-        std::cin >> universe;
-        std::cout << "Successfully loaded universe with " << universe.size()
-                  << " bodies and radius " << universe.radius() << std::endl;
-
-        if (!universe.initBackground("starfield.jpg")) {
-            std::cerr << "Warning: Could not load background image" << std::endl;
-        }
+        std::cin >> galaxy;
+        std::cout << "Loaded galaxy with " << galaxy.size()
+                  << " celestial objects and size " << galaxy.radius() << std::endl;
     } catch (const std::exception& ex) {
-        std::cerr << "Error reading universe: " << ex.what() << std::endl;
+        std::cerr << "Error loading galaxy: " << ex.what() << std::endl;
         return 1;
     }
 
-    double elapsed = 0.0;
+    double elapsedTime = 0.0;
     sf::Clock clock;
 
-    while (window.isOpen() && elapsed < T) {
+    while (window.isOpen() && elapsedTime < totalTime) {
         sf::Event event;
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
@@ -45,13 +41,13 @@ int main(int argc, char* argv[]) {
             }
         }
 
-        universe.step(dt);
-        elapsed += dt;
+        galaxy.step(timeStep);
+        elapsedTime += timeStep;
 
-        window.clear(sf::Color(0, 0, 20));
-        window.draw(universe);
+        window.clear(sf::Color(10, 10, 40));
+        window.draw(galaxy);
         window.display();
     }
-    std::cout << universe;
+    std::cout << galaxy;
     return 0;
 }
