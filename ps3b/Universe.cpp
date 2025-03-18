@@ -106,17 +106,10 @@ void Universe::step(double dt) {
 }
 
 void Universe::draw(sf::RenderTarget& window, sf::RenderStates states) const {
-    // ✅ Ensure the background is drawn properly
-    if (backgroundSprite) {
-        window.draw(*backgroundSprite);
-    } else {
-        std::cerr << "Error: Background sprite is null!" << std::endl;
-    }
-
+    window.draw(*backgroundSprite);
     if (bodies.empty()) {
-        std::cerr << "No celestial bodies found!" << std::endl;
+        std::cerr << "No celestial bodies found!";
     }
-
     for (const auto& body : bodies) {
         window.draw(*body, states);
     }
