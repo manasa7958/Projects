@@ -1,13 +1,18 @@
-// Copyright 2025 Ponita Ty
-#define BOOST_TEST_DYN_LINK
-#define BOOST_TEST_MODULE NBodyTest
-#include <sstream>
+// Copyright 2025 Manasa Praveen
 #include <cmath>
-#include <boost/test/unit_test.hpp>
-#include "Universe.hpp"
-#include "CelestialBody.hpp"
+#include <iomanip>
+#include <iostream>
+#include <sstream>
+#include <string>
 
-BOOST_AUTO_TEST_SUITE(SpaceObjectTests)
+#include "CelestialBody.hpp"
+#include "Universe.hpp"
+
+#define BOOST_TEST_DYN_LINK
+#define BOOST_TEST_MODULE NBodyTests
+#include <boost/algorithm/string.hpp>
+#include <boost/test/unit_test.hpp>
+
 
 BOOST_AUTO_TEST_CASE(TestCelestialConstructor) {
     NB::CelestialBody obj;
@@ -27,9 +32,9 @@ BOOST_AUTO_TEST_CASE(TestCelestialInputOperator) {
     BOOST_CHECK_CLOSE(obj.mass(), 6.0f, 0.001f);
 }
 
-BOOST_AUTO_TEST_SUITE_END()
 
-BOOST_AUTO_TEST_SUITE(GalacticSimulationTests)
+
+
 
 BOOST_AUTO_TEST_CASE(TestUniverseConstructor) {
     NB::Universe cosmos;
@@ -52,4 +57,71 @@ BOOST_AUTO_TEST_CASE(TestUniverseEvolution) {
     BOOST_CHECK_LT(cosmos[0].position().x, 1.4960e+11);
 }
 
-BOOST_AUTO_TEST_SUITE_END()
+// Test case: No acceleration (Bodies should not move if no forces act on them)
+BOOST_AUTO_TEST_CASE(TestNoAcceleration) {
+    std::stringstream ss;
+    ss << "1 1.00e+11\n";
+    ss << "0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00 5.0000e+24 test.gif\n";
+
+    NB::Universe cosmos;
+    ss >> cosmos;
+    cosmos.step(10000);
+    BOOST_CHECK_EQUAL(cosmos[0].position().x, 0.0f);
+    BOOST_CHECK_EQUAL(cosmos[0].position().y, 0.0f);
+}
+
+// Test case: Anti-gravity (Reverse gravity constant)
+BOOST_AUTO_TEST_CASE(TestAntiGravity) {
+    std::stringstream ss;
+    ss << "2 3.00e+11\n";
+    ss << "1.0000e+11 0.0000e+00 0.0000e+00 0.0000e+00 5.0000e+24 test1.gif\n";
+    ss << "-1.0000e+11 0.0000e+00 0.0000e+00 0.0000e+00 5.0000e+24 test2.gif\n";
+
+    NB::Universe cosmos;
+    ss >> cosmos;
+    cosmos.step(-10000);
+    BOOST_CHECK_GT(cosmos[0].position().x, 1.0000e+11);
+    BOOST_CHECK_LT(cosmos[1].position().x, -1.0000e+11);
+}
+
+// Test case: Inverted gravity (Objects attract in the opposite direction)
+BOOST_AUTO_TEST_CASE(TestInvertedGravity) {
+    std::stringstream ss;
+    ss << "2 3.00e+11\n";
+    ss << "1.0000e+11 0.0000e+00 0.0000e+00 0.0000e+00 5.0000e+24 test1.gif\n";
+    ss << "-1.0000e+11 0.0000e+00 0.0000e+00 0.0000e+00 5.0000e+24 test2.gif\n";
+
+    NB::Universe cosmos;
+    ss >> cosmos;
+    cosmos.step(10000);
+    BOOST_CHECK_LT(cosmos[0].position().x, 1.0000e+11);
+    BOOST_CHECK_GT(cosmos[1].position().x, -1.0000e+11);
+}
+
+// Test case: Fixed time step delays
+BOOST_AUTO_TEST_CASE(TestFixedTimeStep) {
+    std::stringstream ss;
+    ss << "1 1.00e+11\n";
+    ss << "0.0000e+00 0.0000e+00 1.0000e+04 0.0000e+00 5.0000e+24 test.gif\n";
+
+    NB::Universe cosmos;
+    ss >> cosmos;
+    cosmos.step(1);
+    BOOST_CHECK_CLOSE(cosmos[0].position().x, 1.0000e+04, 0.001f);
+}
+
+// Test case: Leapfrog integration
+BOOST_AUTO_TEST_CASE(TestLeapfrogIntegration) {
+    std::stringstream ss;
+    ss << "1 1.00e+11\n";
+    ss << "0.0000e+00 0.0000e+00 1.0000e+04 0.0000e+00 5.0000e+24 test.gif\n";
+
+    NB::Universe cosmos;
+    ss >> cosmos;
+    double dt = 1;
+    for (int i = 0; i < 10; ++i) {
+        cosmos.step(dt / 2);
+        cosmos.step(dt / 2);
+    }
+    BOOST_CHECK_CLOSE(cosmos[0].position().x, 1.0000e+05, 0.001f);
+}
