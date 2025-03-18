@@ -31,7 +31,10 @@ class Universe : public sf::Drawable {
     std::shared_ptr<sf::Texture> backgroundTexture;
     std::shared_ptr<sf::Sprite> backgroundSprite;
 
-    friend std::istream& operator>>(std::istream& in, Universe& uni);
-    friend std::ostream& operator<<(std::ostream& out, const Universe& uni);
+    friend std::istream& operator>>(std::istream& is, Universe& uni);
+    friend std::ostream& operator<<(std::ostream& os, const Universe& uni);
 };
+
+std::istream& operator>>(std::istream& is, Universe& uni);
+std::ostream& operator<<(std::ostream& os, const Universe& uni);
 }  // namespace NB
