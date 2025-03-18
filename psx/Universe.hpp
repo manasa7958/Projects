@@ -1,3 +1,4 @@
+// Universe.hpp - Fixed version
 // Copyright 2025 Manasa Praveen
 #pragma once
 #include <iostream>
@@ -10,24 +11,23 @@
 namespace NB {
 class Universe : public sf::Drawable {
  public:
-    Universe();  // Required
+    Universe();
 
     size_t size() const;
     double radius() const;
     const CelestialBody& operator[](size_t i) const;
 
-    bool initBackground(const std::string& filename);  // ✅ Added background init method
+    bool initBackground(const std::string& filename);
 
-    void step(double seconds);  // ✅ Matches correct step function
+    void step(double seconds);
 
  protected:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
  private:
-    std::vector<std::shared_ptr<CelestialBody>> bodies;  // ✅ Changed to match correct code
-    double universeRadius;  // ✅ Matches correct version
+    std::vector<std::shared_ptr<CelestialBody>> bodies; 
+    double universeRadius; 
 
-    // Background resources
     std::shared_ptr<sf::Texture> backgroundTexture;
     std::shared_ptr<sf::Sprite> backgroundSprite;
 
