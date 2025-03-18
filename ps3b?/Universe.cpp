@@ -1,11 +1,14 @@
 // Copyright 2025 Manasa Praveen
-#include "Universe.hpp"
 #include <iostream>
 #include <cmath>
+#include <algorithm>
+#include <vector>
+#include "Universe.hpp"
 
 namespace NB {
 
-Universe::Universe() : universeBoundary_(0.0), bgTexture_(std::make_shared<sf::Texture>()),
+Universe::Universe() : universeBoundary_(0.0),
+bgTexture_(std::make_shared<sf::Texture>()),
 bgSprite_(std::make_shared<sf::Sprite>()) {}
 
 size_t Universe::size() const {
@@ -24,15 +27,18 @@ void Universe::draw(sf::RenderTarget& window, sf::RenderStates states) const {
     sf::Vector2u windowSize = window.getSize();
 
     if (bgTexture_->getSize().x > 0) {
-        float scaleX = static_cast<float>(windowSize.x) / bgTexture_->getSize().x;
-        float scaleY = static_cast<float>(windowSize.y) / bgTexture_->getSize().y;
+        float scaleX = static_cast<float>(windowSize.x)
+        / bgTexture_->getSize().x;
+        float scaleY = static_cast<float>(windowSize.y)
+        / bgTexture_->getSize().y;
         bgSprite_->setScale(scaleX, scaleY);
         window.draw(*bgSprite_, states);
     }
 
     if (universeBoundary_ <= 0.0) return;
 
-    float scale = std::min(windowSize.x, windowSize.y) / (2.0f * static_cast<float>(universeBoundary_));
+    float scale = std::min(windowSize.x, windowSize.y)
+    / (2.0f * static_cast<float>(universeBoundary_));
     scale *= 0.5f;
 
     for (const auto& body : spaceObjects_) {
@@ -57,10 +63,12 @@ void Universe::step(double timeStep) {
 
     for (size_t i = 0; i < bodyCount; i++) {
         for (size_t j = i + 1; j < bodyCount; j++) {
-            sf::Vector2f delta = spaceObjects_[j].position() - spaceObjects_[i].position();
+            sf::Vector2f delta = spaceObjects_[j].position()
+            - spaceObjects_[i].position();
             float distance = std::sqrt(delta.x * delta.x + delta.y * delta.y);
             if (distance < 1e-10) distance = 1e-10;
-            float forceMagnitude = GRAV_CONST * spaceObjects_[i].mass() * spaceObjects_[j].mass() / (distance * distance);
+            float forceMagnitude = GRAV_CONST * spaceObjects_[i].mass()
+            * spaceObjects_[j].mass() / (distance * distance);
             sf::Vector2f force = forceMagnitude * (delta / distance);
             forces[i] += force;
             forces[j] -= force;
@@ -69,9 +77,10 @@ void Universe::step(double timeStep) {
 
     for (size_t i = 0; i < bodyCount; i++) {
         sf::Vector2f acceleration = forces[i] / spaceObjects_[i].mass();
-        sf::Vector2f newVelocity = spaceObjects_[i].velocity() + acceleration * static_cast<float>(timeStep);
-        sf::Vector2f newPosition = spaceObjects_[i].position() + newVelocity * static_cast<float>(timeStep);
-        
+        sf::Vector2f newVelocity = spaceObjects_[i].velocity()
+        + acceleration * static_cast<float>(timeStep);
+        sf::Vector2f newPosition = spaceObjects_[i].position()
+        + newVelocity * static_cast<float>(timeStep);
         spaceObjects_[i].setPosition(newPosition);
         spaceObjects_[i].setVelocity(newVelocity);
     }
