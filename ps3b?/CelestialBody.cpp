@@ -1,9 +1,10 @@
 // Copyright 2025 Manasa Praveen
 #include <iomanip>
+#include <memory>
+#include <string>
 #include "CelestialBody.hpp"
 
 namespace NB {
-
 CelestialBody::CelestialBody() : pos_(0.0f, 0.0f), vel_(0.0f, 0.0f), m_(0.0f) {
     textureFile_ = "default.gif";
     texture_ = std::make_shared<sf::Texture>();
