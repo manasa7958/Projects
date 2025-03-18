@@ -1,4 +1,4 @@
-// Universe.cpp - Updated to use sf::Vector2f for position and velocity
+// Copyright 2025 Manasa Praveen
 #include "Universe.hpp"
 #include <iostream>
 #include <cmath>
