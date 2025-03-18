@@ -1,4 +1,4 @@
-// Copyright 2025 Manasa Praveen 
+// Copyright 2025 Manasa Praveen
 #include <iostream>
 #include <sstream>
 #include <SFML/Graphics.hpp>
@@ -6,49 +6,46 @@
 
 int main(int argc, char* argv[]) {
     if (argc != 3) {
-        std::cerr << "Incorrect usage. Format: " << argv[0] << " <duration> <time_step> < input_file" << std::endl;
-        return EXIT_FAILURE;
+        std::cerr << "Invalid input format." << std::endl;
+        return -1;
     }
 
-    double simulationTime, stepSize;
-    if (!(std::istringstream(argv[1]) >> simulationTime) || !(std::istringstream(argv[2]) >> stepSize) || simulationTime <= 0 || stepSize <= 0) {
-        std::cerr << "Error: Duration and step size must be positive numbers." << std::endl;
-        return EXIT_FAILURE;
+    double totalDuration, timeIncrement;
+    if (!(std::istringstream(argv[1]) >> totalDuration) || !(std::istringstream(argv[2]) >> timeIncrement) || totalDuration <= 0 || timeIncrement <= 0) {
+        std::cerr << "Error: Time values must be positive." << std::endl;
+        return -1;
     }
 
-    sf::RenderWindow simulationWindow(sf::VideoMode(600, 600), "N-Body Simulation");
-    simulationWindow.setFramerateLimit(60);
+    sf::RenderWindow window(sf::VideoMode(800, 800), "The Solar System!");
+    window.setFramerateLimit(60);
 
-    NB::Universe cosmicSystem;
-    try {
-        std::cin >> cosmicSystem;
-        if (cosmicSystem.size() == 0) {
-            std::cerr << "Error: No celestial bodies detected in input." << std::endl;
-            return EXIT_FAILURE;
-        }
-        std::cout << "Loaded Universe: " << cosmicSystem.size() << " objects within radius " << cosmicSystem.radius() << std::endl;
-    } catch (const std::exception& ex) {
-        std::cerr << "Failed to load universe data: " << ex.what() << std::endl;
-        return EXIT_FAILURE;
+    NB::Universe universe;
+    if (!(std::cin >> universe)) {
+        std::cerr << "Error: Failed to load universe data." << std::endl;
+        return -1;
+    }
+    if (universe.size() == 0) {
+        std::cerr << "Error: No celestial bodies available in input." << std::endl;
+        return -1;
     }
 
     double elapsedTime = 0.0;
-    while (simulationWindow.isOpen() && elapsedTime + stepSize <= simulationTime) {
+    while (window.isOpen() && elapsedTime + timeIncrement <= totalDuration) {
         sf::Event event;
-        while (simulationWindow.pollEvent(event)) {
+        while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
-                simulationWindow.close();
+                window.close();
             }
         }
 
-        cosmicSystem.step(stepSize);
-        elapsedTime += stepSize;
+        universe.step(timeIncrement);
+        elapsedTime += timeIncrement;
 
-        simulationWindow.clear(sf::Color(10, 10, 40));
-        simulationWindow.draw(cosmicSystem);
-        simulationWindow.display();
+        window.clear(sf::Color(15, 15, 60));
+        window.draw(universe);
+        window.display();
     }
 
-    std::cout << cosmicSystem;
-    return EXIT_SUCCESS;
+    std::cout << universe;
+    return 1;
 }
