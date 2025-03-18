@@ -31,12 +31,14 @@ int main(int argc, char* argv[]) {
 
     double elapsedTime = 0.0;
 
-    while (window.isOpen() && elapsedTime < T) {
+    while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed)
                 window.close();
         }
+
+        if (elapsedTime >= T) break;  // ✅ Prevents unnecessary extra loops
 
         universe.step(dt);
         elapsedTime += dt;
@@ -50,14 +52,10 @@ int main(int argc, char* argv[]) {
         window.display();
     }
 
-    while (window.isOpen()) {
-        sf::Event event;
-        while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
-    }
+    // ✅ No need for an extra `while (window.isOpen())` loop
+    // The main loop already handles event processing and closing
 
-    std::cout << universe;
+    std::cout << "\nFinal state of the universe:\n" << universe << std::endl;  // ✅ Improves console readability
+
     return 0;
 }
