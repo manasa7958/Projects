@@ -19,6 +19,17 @@ int main(int argc, char* argv[]) {
     sf::RenderWindow window(sf::VideoMode(800, 800), "The Solar System!");
     window.setFramerateLimit(60);
 
+    sf::Texture backgroundTexture;
+    if (!backgroundTexture.loadFromFile("background.jpg")) {
+        std::cerr << "Error: Could not load background image." << std::endl;
+    }
+    sf::Sprite background(backgroundTexture);
+    backgroundSprite.setScale(
+        static_cast<float>(spaceWindow.getSize().x) / backgroundTexture.getSize().x,
+        static_cast<float>(spaceWindow.getSize().y) / backgroundTexture.getSize().y
+    );
+
+    
     NB::Universe universe;
     if (!(std::cin >> universe)) {
         std::cerr << "Error: Failed to load universe data." << std::endl;
@@ -42,6 +53,7 @@ int main(int argc, char* argv[]) {
         elapsedTime += timeIncrement;
 
         window.clear(sf::Color(15, 15, 60));
+        window.draw(background);
         window.draw(universe);
         window.display();
     }
