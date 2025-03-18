@@ -48,7 +48,7 @@ void Universe::draw(sf::RenderTarget& window, sf::RenderStates states) const {
         sf::Sprite sprite;
         if (body.getSprite(sprite)) {
             sprite.setPosition(screenX, screenY);
-            sprite.setScale(0.5f, 0.5f);
+            sprite.setScale(2.0f, 2.0f);
             window.draw(sprite, states);
         }
     }
