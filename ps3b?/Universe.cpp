@@ -39,11 +39,11 @@ void Universe::draw(sf::RenderTarget& window, sf::RenderStates states) const {
         float screenX = (body.position().x * scale) + (windowSize.x / 2.0f);
         float screenY = (windowSize.y / 2.0f) - (body.position().y * scale);
 
-        sf::Sprite* sprite = const_cast<sf::Sprite*>(body.sprite_.get());
-        if (sprite && sprite->getTexture()) {
-            sprite->setPosition(screenX, screenY);
-            sprite->setScale(0.5f, 0.5f);
-            window.draw(*sprite, states);
+        sf::Sprite sprite;
+        if (body.getSprite(sprite)) {
+            sprite.setPosition(screenX, screenY);
+            sprite.setScale(0.5f, 0.5f);
+            window.draw(sprite, states);
         }
     }
 }
