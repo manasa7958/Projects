@@ -42,7 +42,9 @@ int main(int argc, char* argv[]) {
         elapsedTime += timeIncrement;
 
         window.clear(sf::Color(15, 15, 60));
-        window.draw(universe);
+        sf::RenderStates states;
+        states.transform.scale(2.0f, 2.0f); // Adjust scaling factor as needed
+        spaceWindow.draw(universe, states);
         window.display();
     }
 
