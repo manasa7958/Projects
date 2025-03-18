@@ -49,24 +49,24 @@ void Universe::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 std::istream& operator>>(std::istream& in, Universe& universe) {
     size_t n;
     double r;
-    is >> n >> r;
+    in >> n >> r;
     universe.universeRadius = r;
     universe.bodies.clear();
 
     for (size_t i = 0; i < n; ++i) {
         auto body = std::make_shared<CelestialBody>();
-        is >> *body;
+        in >> *body;
         universe.bodies.push_back(body);
     }
-    return is;
+    return in;
 }
 
 std::ostream& operator<<(std::ostream& out, const Universe& universe) {
-    os << universe.bodies.size() << " " << universe.universeRadius << "\n";
+    out << universe.bodies.size() << " " << universe.universeRadius << "\n";
     for (const auto& body : universe.bodies) {
-        os << *body << "\n";
+        out << *body << "\n";
     }
-    return os;
+    return out;
 }
 
 void Universe::step(double dt) {
