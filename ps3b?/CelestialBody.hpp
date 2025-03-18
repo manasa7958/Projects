@@ -6,12 +6,10 @@
 namespace NB {
 class CelestialBody: public sf::Drawable {
  public:
-    explicit CelestialBody(); // Required
-
-    sf::Vector2f position() const; // Optional
-    sf::Vector2f velocity() const; // Optional
-    float mass() const; // Optional
-
+    explicit CelestialBody();
+    sf::Vector2f position() const;
+    sf::Vector2f velocity() const;
+    float mass() const;
     void setPosition(const sf::Vector2f& pos);
     void setVelocity(const sf::Vector2f& vel);
     bool getSprite(sf::Sprite& outSprite) const;
