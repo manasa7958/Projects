@@ -60,7 +60,8 @@ void Universe::step(double dt) {
         double newVy = celestialObjects_[i].velocity().y + accelY * dt;
         double newX = celestialObjects_[i].position().x + newVx * dt;
         double newY = celestialObjects_[i].position().y + newVy * dt;
-        celestialObjects_[i].setFilename(std::to_string(newX) + "," + std::to_string(newY)); // Dummy update
+        
+        celestialObjects_[i] = CelestialBody(); // Creating a new object to update state
     }
 }
 
