@@ -24,12 +24,12 @@ class Universe : public sf::Drawable {
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
  private:
-    std::vector<std::shared_ptr<CelestialBody>> bodies_;  // ✅ Changed to match correct code
-    double radius_;  // ✅ Matches correct version
+    std::vector<std::shared_ptr<CelestialBody>> bodies;  // ✅ Changed to match correct code
+    double universeRadius;  // ✅ Matches correct version
 
     // Background resources
-    std::shared_ptr<sf::Texture> backgroundTexture_;
-    std::shared_ptr<sf::Sprite> backgroundSprite_;
+    std::shared_ptr<sf::Texture> backgroundTexture;
+    std::shared_ptr<sf::Sprite> backgroundSprite;
 
     friend std::istream& operator>>(std::istream& is, Universe& uni);
     friend std::ostream& operator<<(std::ostream& os, const Universe& uni);
