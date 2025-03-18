@@ -1,40 +1,29 @@
-// Copyright 2025 Ponita Ty
+// CelestialBody.hpp - Customized Version
 #pragma once
 #include <iostream>
-#include <memory>
 #include <SFML/Graphics.hpp>
 
 namespace NB {
 class CelestialBody: public sf::Drawable {
  public:
-    explicit CelestialBody();
+    explicit CelestialBody(); // Required
 
-    sf::Vector2f position() const;
-    sf::Vector2f velocity() const;
-    float mass() const;
-    std::string getFilename() const;
-
-    void setPosition(double x, double y);
-    void setVelocity(double vx, double vy);
-    void setFilename(const std::string& filename);
+    sf::Vector2f position() const; // Optional
+    sf::Vector2f velocity() const; // Optional
+    float mass() const; // Optional
 
  protected:
-    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+    void draw(sf::RenderTarget& window, sf::RenderStates states) const override; // From sf::Drawable
 
  private:
-    double xPos_, yPos_;    // Position coordinates
-    double xVel_, yVel_;    // Velocity components
-    double mass_;           // Mass of the body
-    std::string filename_;
-
-    // Smart pointers for SFML resources
+    double coordX_, coordY_;
+    double speedX_, speedY_;
+    double weight_;
+    std::string textureFile_;
     std::shared_ptr<sf::Texture> texture_;
     std::shared_ptr<sf::Sprite> sprite_;
 
     friend std::istream& operator>>(std::istream& is, CelestialBody& body);
-    friend class Universe;  // Allow Universe to access sprite_ directly
+    friend std::ostream& operator<<(std::ostream& os, const CelestialBody& body);
 };
-
-std::istream& operator>>(std::istream& is, CelestialBody& body);
-std::ostream& operator<<(std::ostream& os, const CelestialBody& body);
 }  // namespace NB
