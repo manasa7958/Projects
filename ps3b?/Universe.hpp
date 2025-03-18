@@ -1,4 +1,6 @@
-// Universe.hpp - Customized Version
+
+
+// Universe.hpp - Fixed Version
 #pragma once
 #include <iostream>
 #include <SFML/Graphics.hpp>
