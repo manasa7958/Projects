@@ -27,7 +27,7 @@ std::istream& operator>>(std::istream& in, Universe& universe) {
     in >> n >> radius;
     universe.universeRadius = radius;
     universe.bodies.clear();
-
+    if (n == 0) return in;
     for (size_t i = 0; i < n; ++i) {
         auto body = std::make_shared<CelestialBody>();
         in >> *body;
