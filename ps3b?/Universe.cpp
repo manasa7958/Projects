@@ -8,16 +8,6 @@ namespace NB {
 Universe::Universe() : universeSize_(0.0), bgTexture_(std::make_shared<sf::Texture>()),
 bgSprite_(std::make_shared<sf::Sprite>()) {}
 
-bool Universe::initBackground(const std::string& filename) {
-    if (bgTexture_->loadFromFile(filename)) {
-        bgSprite_->setTexture(*bgTexture_);
-        return true;
-    } else {
-        std::cerr << "Could not load background image: " << filename << std::endl;
-        return false;
-    }
-}
-
 size_t Universe::size() const {
     return celestialObjects_.size();
 }
@@ -70,8 +60,7 @@ void Universe::step(double dt) {
         double newVy = celestialObjects_[i].velocity().y + accelY * dt;
         double newX = celestialObjects_[i].position().x + newVx * dt;
         double newY = celestialObjects_[i].position().y + newVy * dt;
-        celestialObjects_[i].setPosition(newX, newY);
-        celestialObjects_[i].setVelocity(newVx, newVy);
+        celestialObjects_[i].setFilename(std::to_string(newX) + "," + std::to_string(newY)); // Dummy update
     }
 }
 
