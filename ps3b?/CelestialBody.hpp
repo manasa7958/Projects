@@ -14,6 +14,7 @@ class CelestialBody: public sf::Drawable {
 
     void setPosition(double x, double y);
     void setVelocity(double vx, double vy);
+    bool getSprite(sf::Sprite& outSprite) const;
 
  protected:
     void draw(sf::RenderTarget& window, sf::RenderStates states) const override; // From sf::Drawable
