@@ -5,7 +5,7 @@
 
 namespace NB {
 
-Universe::Universe() : radius_(0), 
+Universe::Universe() : radius(0), 
     backgroundTexture_(std::make_shared<sf::Texture>()),
     backgroundSprite_(std::make_shared<sf::Sprite>()) {}
 
@@ -27,7 +27,7 @@ std::istream& operator>>(std::istream& in, Universe& universe) {
     size_t n;
     double radius;
     in >> n >> radius;
-    universe.radius_ = radius;
+    universe.radius = radius;
     universe.bodies.clear();
 
     for (size_t i = 0; i < n; ++i) {
@@ -42,7 +42,7 @@ std::istream& operator>>(std::istream& in, Universe& universe) {
 }
 
 std::ostream& operator<<(std::ostream& out, const Universe& universe) {
-    out << universe.bodies.size() << " " << universe.radius_ << "\n";
+    out << universe.bodies.size() << " " << universe.radius << "\n";
     for (const auto& body : universe.bodies) {
         out << *body << "\n";
     }
@@ -119,8 +119,8 @@ void Universe::draw(sf::RenderTarget& window, sf::RenderStates states) const {
 
     for (const auto& body : bodies) {
         sf::Vector2f pos = body->position();
-        float screenX = (pos.x / radius_) * 400 + 400;
-        float screenY = (pos.y / radius_) * 400 + 400;
+        float screenX = (pos.x / radius) * 400 + 400;
+        float screenY = (pos.y / radius) * 400 + 400;
 
         if (body->sprite) {  
             body->sprite->setPosition(screenX, screenY);
