@@ -1,88 +1,68 @@
-// Universe.cpp - Fixed Version
+// Universe.cpp - Customized Version
 #include "Universe.hpp"
 #include <iostream>
 #include <cmath>
 
 namespace NB {
 
-Universe::Universe() : universeSize_(0.0), bgTexture_(std::make_shared<sf::Texture>()),
-bgSprite_(std::make_shared<sf::Sprite>()) {}
+Universe::Universe() : cosmosSize_(0.0), backgroundTexture_(std::make_shared<sf::Texture>()),
+backgroundSprite_(std::make_shared<sf::Sprite>()) {}
 
 size_t Universe::size() const {
-    return celestialObjects_.size();
+    return celestialBodies_.size();
 }
 
 double Universe::radius() const {
-    return universeSize_;
+    return cosmosSize_;
 }
 
 const CelestialBody& Universe::operator[](size_t i) const {
-    return celestialObjects_[i];
+    return celestialBodies_[i];
 }
 
 void Universe::draw(sf::RenderTarget& window, sf::RenderStates states) const {
-    if (bgSprite_) {
-        window.draw(*bgSprite_, states);
+    if (backgroundSprite_) {
+        window.draw(*backgroundSprite_, states);
     }
-    for (const auto& obj : celestialObjects_) {
-        window.draw(obj, states);
+    for (const auto& body : celestialBodies_) {
+        window.draw(body, states);
     }
 }
 
-void Universe::step(double dt) {
-    const double G_CONST = 6.67e-11;
-    size_t count = celestialObjects_.size();
-    if (count == 0) return;
+void Universe::step(double timeInterval) {
+    const double GRAV_CONST = 6.67e-11;
+    size_t bodyCount = celestialBodies_.size();
+    if (bodyCount == 0) return;
 
-    std::vector<double> forceX(count, 0.0);
-    std::vector<double> forceY(count, 0.0);
+    std::vector<double> forceX(bodyCount, 0.0);
+    std::vector<double> forceY(bodyCount, 0.0);
 
-    for (size_t i = 0; i < count; i++) {
-        for (size_t j = i + 1; j < count; j++) {
-            double dx = celestialObjects_[j].position().x - celestialObjects_[i].position().x;
-            double dy = celestialObjects_[j].position().y - celestialObjects_[i].position().y;
-            double dist = std::sqrt(dx * dx + dy * dy);
-            if (dist < 1e-10) dist = 1e-10;
-            double force = G_CONST * celestialObjects_[i].mass() * celestialObjects_[j].mass() / (dist * dist);
-            double fx = force * dx / dist;
-            double fy = force * dy / dist;
-            forceX[i] += fx;
-            forceY[i] += fy;
-            forceX[j] -= fx;
-            forceY[j] -= fy;
+    for (size_t i = 0; i < bodyCount; i++) {
+        for (size_t j = i + 1; j < bodyCount; j++) {
+            double deltaX = celestialBodies_[j].position().x - celestialBodies_[i].position().x;
+            double deltaY = celestialBodies_[j].position().y - celestialBodies_[i].position().y;
+            double distance = std::sqrt(deltaX * deltaX + deltaY * deltaY);
+            if (distance < 1e-10) distance = 1e-10;
+            double force = GRAV_CONST * celestialBodies_[i].mass() * celestialBodies_[j].mass() / (distance * distance);
+            double forceXComponent = force * deltaX / distance;
+            double forceYComponent = force * deltaY / distance;
+            forceX[i] += forceXComponent;
+            forceY[i] += forceYComponent;
+            forceX[j] -= forceXComponent;
+            forceY[j] -= forceYComponent;
         }
     }
 
-    for (size_t i = 0; i < count; i++) {
-        double accelX = forceX[i] / celestialObjects_[i].mass();
-        double accelY = forceY[i] / celestialObjects_[i].mass();
-        double newVx = celestialObjects_[i].velocity().x + accelX * dt;
-        double newVy = celestialObjects_[i].velocity().y + accelY * dt;
+    for (size_t i = 0; i < bodyCount; i++) {
+        double accelerationX = forceX[i] / celestialBodies_[i].mass();
+        double accelerationY = forceY[i] / celestialBodies_[i].mass();
+        double velocityX = celestialBodies_[i].velocity().x + accelerationX * timeInterval;
+        double velocityY = celestialBodies_[i].velocity().y + accelerationY * timeInterval;
+        double positionX = celestialBodies_[i].position().x + velocityX * timeInterval;
+        double positionY = celestialBodies_[i].position().y + velocityY * timeInterval;
         
-        celestialObjects_[i] = CelestialBody(); // Reinitialize to update state (temporary fix)
+        celestialBodies_[i].setPosition(positionX, positionY);
+        celestialBodies_[i].setVelocity(velocityX, velocityY);
     }
-}
-
-std::istream& operator>>(std::istream& is, Universe& universe) {
-    int bodyCount;
-    double size;
-    is >> bodyCount >> size;
-    universe.universeSize_ = size;
-    universe.celestialObjects_.clear();
-
-    for (int i = 0; i < bodyCount; ++i) {
-        CelestialBody object;
-        is >> object;
-        universe.celestialObjects_.push_back(object);
-    }
-    return is;
-}
-
-std::ostream& operator<<(std::ostream& os, const Universe& universe) {
-    os << universe.size() << " " << universe.radius() << "\n";
-    for (const auto& obj : universe.celestialObjects_) {
-        os << obj << "\n";
-    }
-    return os;
 }
 }  // namespace NB
