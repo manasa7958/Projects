@@ -1,37 +1,37 @@
-// Universe.cpp - Customized Version
+// Universe.cpp - Fixed Version
 #include "Universe.hpp"
 #include <iostream>
 #include <cmath>
 
 namespace NB {
 
-Universe::Universe() : cosmosSize_(0.0), backgroundTexture_(std::make_shared<sf::Texture>()),
-backgroundSprite_(std::make_shared<sf::Sprite>()) {}
+Universe::Universe() : universeBoundary_(0.0), bgTexture_(std::make_shared<sf::Texture>()),
+bgSprite_(std::make_shared<sf::Sprite>()) {}
 
 size_t Universe::size() const {
-    return celestialBodies_.size();
+    return spaceObjects_.size();
 }
 
 double Universe::radius() const {
-    return cosmosSize_;
+    return universeBoundary_;
 }
 
 const CelestialBody& Universe::operator[](size_t i) const {
-    return celestialBodies_[i];
+    return spaceObjects_[i];
 }
 
 void Universe::draw(sf::RenderTarget& window, sf::RenderStates states) const {
-    if (backgroundSprite_) {
-        window.draw(*backgroundSprite_, states);
+    if (bgSprite_) {
+        window.draw(*bgSprite_, states);
     }
-    for (const auto& body : celestialBodies_) {
+    for (const auto& body : spaceObjects_) {
         window.draw(body, states);
     }
 }
 
-void Universe::step(double timeInterval) {
+void Universe::step(double timeStep) {
     const double GRAV_CONST = 6.67e-11;
-    size_t bodyCount = celestialBodies_.size();
+    size_t bodyCount = spaceObjects_.size();
     if (bodyCount == 0) return;
 
     std::vector<double> forceX(bodyCount, 0.0);
@@ -39,11 +39,11 @@ void Universe::step(double timeInterval) {
 
     for (size_t i = 0; i < bodyCount; i++) {
         for (size_t j = i + 1; j < bodyCount; j++) {
-            double deltaX = celestialBodies_[j].position().x - celestialBodies_[i].position().x;
-            double deltaY = celestialBodies_[j].position().y - celestialBodies_[i].position().y;
+            double deltaX = spaceObjects_[j].position().x - spaceObjects_[i].position().x;
+            double deltaY = spaceObjects_[j].position().y - spaceObjects_[i].position().y;
             double distance = std::sqrt(deltaX * deltaX + deltaY * deltaY);
             if (distance < 1e-10) distance = 1e-10;
-            double force = GRAV_CONST * celestialBodies_[i].mass() * celestialBodies_[j].mass() / (distance * distance);
+            double force = GRAV_CONST * spaceObjects_[i].mass() * spaceObjects_[j].mass() / (distance * distance);
             double forceXComponent = force * deltaX / distance;
             double forceYComponent = force * deltaY / distance;
             forceX[i] += forceXComponent;
@@ -54,15 +54,38 @@ void Universe::step(double timeInterval) {
     }
 
     for (size_t i = 0; i < bodyCount; i++) {
-        double accelerationX = forceX[i] / celestialBodies_[i].mass();
-        double accelerationY = forceY[i] / celestialBodies_[i].mass();
-        double velocityX = celestialBodies_[i].velocity().x + accelerationX * timeInterval;
-        double velocityY = celestialBodies_[i].velocity().y + accelerationY * timeInterval;
-        double positionX = celestialBodies_[i].position().x + velocityX * timeInterval;
-        double positionY = celestialBodies_[i].position().y + velocityY * timeInterval;
+        double accelerationX = forceX[i] / spaceObjects_[i].mass();
+        double accelerationY = forceY[i] / spaceObjects_[i].mass();
+        double velocityX = spaceObjects_[i].velocity().x + accelerationX * timeStep;
+        double velocityY = spaceObjects_[i].velocity().y + accelerationY * timeStep;
+        double positionX = spaceObjects_[i].position().x + velocityX * timeStep;
+        double positionY = spaceObjects_[i].position().y + velocityY * timeStep;
         
-        celestialBodies_[i].setPosition(positionX, positionY);
-        celestialBodies_[i].setVelocity(velocityX, velocityY);
+        spaceObjects_[i].setPosition(positionX, positionY);
+        spaceObjects_[i].setVelocity(velocityX, velocityY);
     }
+}
+
+std::istream& operator>>(std::istream& is, Universe& universe) {
+    int totalBodies;
+    double size;
+    is >> totalBodies >> size;
+    universe.universeBoundary_ = size;
+    universe.spaceObjects_.clear();
+
+    for (int i = 0; i < totalBodies; ++i) {
+        CelestialBody body;
+        is >> body;
+        universe.spaceObjects_.push_back(body);
+    }
+    return is;
+}
+
+std::ostream& operator<<(std::ostream& os, const Universe& universe) {
+    os << universe.size() << " " << universe.radius() << "\n";
+    for (const auto& body : universe.spaceObjects_) {
+        os << body << "\n";
+    }
+    return os;
 }
 }  // namespace NB
