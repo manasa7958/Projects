@@ -1,4 +1,4 @@
-// CelestialBody.hpp - Customized Version
+// CelestialBody.hpp - Fixed Version
 #pragma once
 #include <iostream>
 #include <SFML/Graphics.hpp>
@@ -12,16 +12,19 @@ class CelestialBody: public sf::Drawable {
     sf::Vector2f velocity() const; // Optional
     float mass() const; // Optional
 
+    void setPosition(double x, double y);
+    void setVelocity(double vx, double vy);
+
  protected:
     void draw(sf::RenderTarget& window, sf::RenderStates states) const override; // From sf::Drawable
 
  private:
-    double xCoord_, yCoord_;
-    double xSpeed_, ySpeed_;
-    double massValue_;
-    std::string imageFile_;
-    std::shared_ptr<sf::Texture> textureResource_;
-    std::shared_ptr<sf::Sprite> spriteInstance_;
+    double coordX_, coordY_;
+    double speedX_, speedY_;
+    double weight_;
+    std::string textureFile_;
+    std::shared_ptr<sf::Texture> texture_;
+    std::shared_ptr<sf::Sprite> sprite_;
 
     friend std::istream& operator>>(std::istream& is, CelestialBody& body);
     friend std::ostream& operator<<(std::ostream& os, const CelestialBody& body);
