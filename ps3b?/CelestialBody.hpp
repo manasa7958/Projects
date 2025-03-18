@@ -1,37 +1,3 @@
-/*// CelestialBody.hpp - Fixed Version
-#pragma once
-#include <iostream>
-#include <SFML/Graphics.hpp>
-
-namespace NB {
-class CelestialBody: public sf::Drawable {
- public:
-    explicit CelestialBody(); // Required
-
-    sf::Vector2f position() const; // Optional
-    sf::Vector2f velocity() const; // Optional
-    float mass() const; // Optional
-
-    void setPosition(double x, double y);
-    void setVelocity(double vx, double vy);
-    bool getSprite(sf::Sprite& outSprite) const;
-
- protected:
-    void draw(sf::RenderTarget& window, sf::RenderStates states) const override; // From sf::Drawable
-
- private:
-    double coordX_, coordY_;
-    double speedX_, speedY_;
-    double weight_;
-    std::string textureFile_;
-    std::shared_ptr<sf::Texture> texture_;
-    std::shared_ptr<sf::Sprite> sprite_;
-
-    friend std::istream& operator>>(std::istream& is, CelestialBody& body);
-    friend std::ostream& operator<<(std::ostream& os, const CelestialBody& body);
-};
-}  // namespace NB*/
-// CelestialBody.hpp - Updated to use sf::Vector2f for position and velocity
 #pragma once
 #include <iostream>
 #include <SFML/Graphics.hpp>
