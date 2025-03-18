@@ -3,7 +3,7 @@
 
 namespace NB {
 
-CelestialBody::CelestialBody() : pos_(0.0f, 0.0f), vel_(0.0f, 0.0f), weight_(0.0f) {
+CelestialBody::CelestialBody() : pos_(0.0f, 0.0f), vel_(0.0f, 0.0f), m_(0.0f) {
     textureFile_ = "default.gif";
     texture_ = std::make_shared<sf::Texture>();
     sprite_ = std::make_shared<sf::Sprite>();
@@ -18,7 +18,7 @@ sf::Vector2f CelestialBody::velocity() const {
 }
 
 float CelestialBody::mass() const {
-    return weight_;
+    return m_;
 }
 
 void CelestialBody::setPosition(const sf::Vector2f& pos) {
@@ -49,7 +49,7 @@ std::istream& operator>>(std::istream& is, CelestialBody& body) {
     if (is >> x >> y >> vx >> vy >> m >> filename) {
         body.pos_ = sf::Vector2f(x, y);
         body.vel_ = sf::Vector2f(vx, vy);
-        body.weight_ = m;
+        body.m_ = m;
         body.textureFile_ = filename;
         if (body.texture_->loadFromFile(filename)) {
             body.sprite_->setTexture(*body.texture_);
@@ -62,7 +62,7 @@ std::ostream& operator<<(std::ostream& os, const CelestialBody& body) {
     os << std::scientific << std::setprecision(4)
        << body.pos_.x << " " << body.pos_.y << " "
        << body.vel_.x << " " << body.vel_.y << " "
-       << body.weight_ << " " << body.textureFile_;
+       << body.m_ << " " << body.textureFile_;
     return os;
 }
 }  // namespace NB
