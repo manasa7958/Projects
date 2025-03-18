@@ -56,3 +56,4 @@ std::ostream& operator<<(std::ostream& os, const CelestialBody& body) {
        << body.weight_ << " " << body.textureFile_;
     return os;
 }
+} //namespace NB
