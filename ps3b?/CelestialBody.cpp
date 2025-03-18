@@ -1,4 +1,4 @@
-// CelestialBody.cpp - Customized Version
+// CelestialBody.cpp - Fixed Version
 #include "CelestialBody.hpp"
 #include <iomanip>
 
@@ -25,6 +25,16 @@ sf::Vector2f CelestialBody::velocity() const {
 
 float CelestialBody::mass() const {
     return static_cast<float>(weight_);
+}
+
+void CelestialBody::setPosition(double x, double y) {
+    coordX_ = x;
+    coordY_ = y;
+}
+
+void CelestialBody::setVelocity(double vx, double vy) {
+    speedX_ = vx;
+    speedY_ = vy;
 }
 
 void CelestialBody::draw(sf::RenderTarget& window, sf::RenderStates states) const {
@@ -56,4 +66,4 @@ std::ostream& operator<<(std::ostream& os, const CelestialBody& body) {
        << body.weight_ << " " << body.textureFile_;
     return os;
 }
-} //namespace NB
+}  // namespace NB
