@@ -55,7 +55,8 @@ void Universe::draw(sf::RenderTarget& window, sf::RenderStates states) const {
 }
 
 void Universe::step(double timeStep) {
-    const double GRAV_CONST = 6.67e-11;
+    // const double GRAV_CONST = 6.67e-11;
+    const double GRAVITY = (antiGravityMode_) ? -6.67e-11 : 6.67e-11;
     size_t bodyCount = spaceObjects_.size();
     if (bodyCount == 0) return;
 
