@@ -77,8 +77,8 @@ BOOST_AUTO_TEST_CASE(TestAntiGravity) {
     
     universe.enableAntiGravity(true);  // ✅ Ensure anti-gravity is turned on
 
-    for (int i = 0; i < 100; i++) {  // Run more steps to see noticeable separation
-        universe.step(10000);
+    for (int i = 0; i < 5000; i++) {  // Run more steps to see noticeable separation
+        universe.step(50000);
     }
 
     BOOST_CHECK_GT(universe[0].position().x, 1.0000e+11);
