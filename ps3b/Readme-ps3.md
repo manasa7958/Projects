@@ -5,7 +5,7 @@ Name: Manasa Praveen
 
 Section: 202
 
-Time to Complete: 9 hours
+Time to Complete: 15 hours
 
 
 ## Description
@@ -33,7 +33,8 @@ I have recurring problems with my tests, I keep failing the noaccelration, antig
 Part a: I added a background image to the SFML window. I also made sure to dynamically scale the background. I downloaded a jpg image from the internet that I thought would be appropriate as a background for the planets and then wrote the code for it in my Universe.cpp file. Most of the code remained rather basic I just had to put in effort into scaling of the photo because initially it only covered a bit of the window.
 
 ### Changes
-Whenr edoing my ps3b project I worked on step function within the Universe file. I ended up scrapping all of my code and trying to rebuild it from scratch because none of the changes I made to the code seemed to be working. Most of my edits in Universe files included the created of a shared pointer for Sprites. This radically changed my code and made it a lot more efficient. I also edited my step and draw functions within the Universe file to correctly calculate the movement. Earlier despite being able to score well on the autograder I was not able to actually simulate movement on the window but now my planets revolve around the sun in the correct manner. I had to create several different versions of the step function before I finally succeeded I had a lot of trouble calculating the force and ensuring that the planets move counterclockwise.
+When redoing my ps3b project I worked on step function within the Universe file. I ended up scrapping all of my code and trying to rebuild it from scratch because none of the changes I made to the code seemed to be working. Most of my edits in Universe files included the created of a shared pointer for Sprites. This radically changed my code and made it a lot more efficient. I also edited my step and draw functions within the Universe file to correctly calculate the movement. Earlier despite being able to score well on the autograder I was not able to actually simulate movement on the window but now my planets revolve around the sun in the correct manner. I had to create several different versions of the step function before I finally succeeded I had a lot of trouble calculating the force and ensuring that the planets move counterclockwise.
+
 In addition to changes in the code, I also edited my Readme file, as I had previously not added explanation for part b of my project during my submission.
 
 ## Acknowledgements
