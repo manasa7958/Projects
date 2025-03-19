@@ -40,33 +40,18 @@ void CelestialBody::setVelocity(const sf::Vector2f& vel) {
     vel_ = vel;
 }
 
-/*std::istream& operator>>(std::istream& is, CelestialBody& body) {
-    float x, y, vx, vy, m;
-    std::string filename;
-    if (is >> x >> y >> vx >> vy >> m >> filename) {
-        body.pos_ = sf::Vector2f(x, y);
-        body.vel_ = sf::Vector2f(vx, vy);
-        body.m_ = m;
-        body.textureFile_ = filename;
-        if (body.texture_->loadFromFile(filename)) {
-            body.sprite_->setTexture(*body.texture_);
-        }
-    }
-    return is;
-}*/
 std::istream& operator>>(std::istream& is, CelestialBody& body) {
     float x, y, vx, vy, m;
     std::string filename;
 
     if (!(is >> x >> y >> vx >> vy >> m >> filename)) {
         std::cerr << "Error: Invalid CelestialBody input!" << std::endl;
-        is.setstate(std::ios::failbit); // Mark the stream as failed
+        is.setstate(std::ios::failbit);
         return is;
     }
-
     body.pos_ = sf::Vector2f(x, y);
     body.vel_ = sf::Vector2f(vx, vy);
-    body.m_ = m;  // ✅ Assign mass properly
+    body.m_ = m;
 
     body.textureFile_ = filename;
     if (!body.texture_->loadFromFile(filename)) {
@@ -74,7 +59,6 @@ std::istream& operator>>(std::istream& is, CelestialBody& body) {
     } else {
         body.sprite_->setTexture(*body.texture_);
     }
-
     return is;
 }
 
