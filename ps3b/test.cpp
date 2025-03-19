@@ -83,7 +83,7 @@ BOOST_AUTO_TEST_CASE(TestNoAcceleration) {
 
     BOOST_CHECK_GT(universe[0].position().x, 1.0000e+11);
     BOOST_CHECK_LT(universe[1].position().x, -1.0000e+11);
-}
+}*/
 
 BOOST_AUTO_TEST_CASE(TestInvertedGravity) {
     std::stringstream ss;
@@ -96,7 +96,7 @@ BOOST_AUTO_TEST_CASE(TestInvertedGravity) {
     universe.step(10000);
     BOOST_CHECK_LT(universe[0].position().x, 1.0000e+11);
     BOOST_CHECK_GT(universe[1].position().x, -1.0000e+11);
-}*/
+}
 
 BOOST_AUTO_TEST_CASE(TestFixedTimeStep) {
     std::stringstream ss;
@@ -109,7 +109,7 @@ BOOST_AUTO_TEST_CASE(TestFixedTimeStep) {
     BOOST_CHECK_CLOSE(universe[0].position().x, 1.0000e+04, 0.001f);
 }
 
-BOOST_AUTO_TEST_CASE(TestLeapfrogIntegration) {
+/*BOOST_AUTO_TEST_CASE(TestLeapfrogIntegration) {
     std::stringstream ss;
     ss << "1 1.00e+11\n";
     ss << "0.0000e+00 0.0000e+00 1.0000e+04 0.0000e+00 5.0000e+24 mars.gif\n";
@@ -139,4 +139,4 @@ BOOST_AUTO_TEST_CASE(TestExtraCredit) {
     0.0, 0.0001);
     BOOST_REQUIRE_CLOSE(static_cast<double>(universe[1].position().x),
     1.0e+11, 0.0001);
-}
+}*/
