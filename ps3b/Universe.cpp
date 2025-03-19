@@ -11,10 +11,6 @@ bgTexture_(std::make_shared<sf::Texture>()),
 bgSprite_(std::make_shared<sf::Sprite>()),
 antiGravityMode_(false) {}
 
-void Universe::enableAntiGravity(bool mode) { 
-    antiGravityMode_ = mode; 
-}
-
 size_t Universe::size() const {
     return spaceObjects_.size();
 }
@@ -25,6 +21,11 @@ double Universe::radius() const {
 
 const CelestialBody& Universe::operator[](size_t i) const {
     return spaceObjects_[i];
+}
+
+void Universe::enableAntiGravity(bool mode) { 
+    std::cout << "enableAntiGravity called! Mode: " << mode << std::endl;  
+    antiGravityMode_ = mode; 
 }
 
 void Universe::draw(sf::RenderTarget& window, sf::RenderStates states) const {
