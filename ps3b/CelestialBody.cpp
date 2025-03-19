@@ -29,7 +29,7 @@ sf::Vector2f CelestialBody::velocity() const {
 }
 
 float CelestialBody::mass() const {
-    return (m_ > 0) ? m_ : 1e-10f;
+    return (m_ > 0) ? m_ : 0.0f;
 }
 
 void CelestialBody::setPosition(const sf::Vector2f& pos) {
