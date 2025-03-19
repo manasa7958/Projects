@@ -6,30 +6,27 @@ LIBDIR = -L/opt/homebrew/opt/boost/lib/ -L/opt/homebrew/opt/sfml@2/lib/
 
 BUILD_DIR = build
 
-DEPS = Universe.hpp CelestialBody.hpp
-OBJECTS = $(BUILD_DIR)/Universe.o $(BUILD_DIR)/CelestialBody.o
+DEPS = Universe.hpp CelestialBody.hpp main.cpp
+OBJECTS = $(BUILD_DIR)/Universe.o $(BUILD_DIR)/CelestialBody.o $(BUILD_DIR)/main.o
 PROGRAM = NBody
 TEST = test
 
 $(BUILD_DIR):
 	mkdir -p $(BUILD_DIR)
 
-all: $(PROGRAM) $(TEST) NBody.a
+all: $(PROGRAM) $(TEST)
 
 $(BUILD_DIR)/%.o: %.cpp $(DEPS) | $(BUILD_DIR)
 	$(CC) $(CFLAGS) $(INCLUDEDIR) -c $< -o $@
 
-$(PROGRAM): $(BUILD_DIR)/main.o $(OBJECTS)
+$(PROGRAM): $(OBJECTS)
 	$(CC) $(CFLAGS) $(LIBDIR) -o $@ $^ $(LIB)
 
 $(TEST): $(BUILD_DIR)/test.o $(OBJECTS)
-	$(CC) $(CFLAGS) $(LIBDIR) -o $@ $^ $(LIB)
-
-NBody.a: $(OBJECTS)
-	ar rcs $@ $(OBJECTS)
+	$(CC) $(CFLAGS) -DBOOST_TEST_DYN_LINK $(LIBDIR) -o $@ $^ $(LIB)
 
 clean:
-	rm -rf $(BUILD_DIR) $(PROGRAM) $(TEST) NBody.a
+	rm -rf $(BUILD_DIR) $(PROGRAM) $(TEST)
 
 lint:
 	cpplint *.cpp *.hpp
