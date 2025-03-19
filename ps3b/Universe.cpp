@@ -11,7 +11,7 @@ bgTexture_(std::make_shared<sf::Texture>()),
 bgSprite_(std::make_shared<sf::Sprite>()),
 antiGravityMode_(false) {}
 
-void enableAntiGravity(bool mode) { 
+void NB::Universe::enableAntiGravity(bool mode) { 
     antiGravityMode_ = mode; 
 }
 
