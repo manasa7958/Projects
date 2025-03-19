@@ -126,7 +126,7 @@ BOOST_AUTO_TEST_CASE(TestExtraCredit) {
     input >> universe;
     universe.step(1.0e+6);
 
-    BOOST_REQUIRE_CLOSE(static_cast<double>(universe[0].position().x), 0.0, 0.0001);
-    BOOST_REQUIRE_CLOSE(static_cast<double>(universe[0].position().y), 0.0, 0.0001);
-    BOOST_REQUIRE_CLOSE(static_cast<double>(universe[1].position().x), 1.0e+11, 0.0001);
+    BOOST_REQUIRE_CLOSE(static_cast<double>(universe[0].position().x),0.0,0.0001);
+    BOOST_REQUIRE_CLOSE(static_cast<double>(universe[0].position().y),0.0,0.0001);
+    BOOST_REQUIRE_CLOSE(static_cast<double>(universe[1].position().x),1.0e+11,0.0001);
 }
