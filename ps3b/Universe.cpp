@@ -73,6 +73,8 @@ void Universe::step(double timeStep) {
             float forceMagnitude = GRAV_CONST * spaceObjects_[i].mass() * spaceObjects_[j].mass() / (distance * distance);
             //sf::Vector2f force = forceMagnitude * (delta / distance);
             sf::Vector2f force = (antiGravityMode_ ? -1 : 1) * forceMagnitude * (delta / distance);
+            std::cout << "Step: " << i << ", Body 0 x: " << spaceObjects_[0].position().x
+          << ", Body 1 x: " << spaceObjects_[1].position().x << std::endl;
             /*forces[i] += force;
             forces[j] -= force;*/
             forces[i] += (antiGravityMode_ ? -force : force);
