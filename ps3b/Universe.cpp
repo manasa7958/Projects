@@ -77,8 +77,8 @@ void Universe::step(double timeStep) {
             if (antiGravityMode_) {
                 force = -force;
             }
-            forces[i] += (antiGravityMode_ ? -1.5f : 1.5f) * force;
-            forces[j] -= (antiGravityMode_ ? -1.5f : 1.5f) * force;
+            forces[i] += force;
+            forces[j] -= force;
         }
     }
     for (size_t i = 0; i < bodyCount; i++) {
