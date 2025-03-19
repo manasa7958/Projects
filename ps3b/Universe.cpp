@@ -123,69 +123,6 @@ void Universe::step(double timeStep) {
     }
 }
 
-/*void Universe::step(double timeStep) {
-    const double GRAV_CONST = 6.67e-11;
-    size_t bodyCount = spaceObjects_.size();
-    if (bodyCount == 0) return;
-
-    std::vector<sf::Vector2f> forces(bodyCount, sf::Vector2f(0.0f, 0.0f));
-
-    for (size_t i = 0; i < bodyCount; i++) {
-        for (size_t j = i + 1; j < bodyCount; j++) {
-            sf::Vector2f delta = spaceObjects_[j].position() - spaceObjects_[i].position();
-            float distance = std::sqrt(delta.x * delta.x + delta.y * delta.y);
-            if (distance < 1e-10) distance = 1e-10;
-            float forceMagnitude = GRAV_CONST * spaceObjects_[i].mass() * spaceObjects_[j].mass() / (distance * distance);
-            //sf::Vector2f force = forceMagnitude * (delta / distance);
-            sf::Vector2f force = (antiGravityMode_ ? -1 : 1) * forceMagnitude * (delta / distance);
-            std::cout << "Step: " << i << ", Body 0 x: " << spaceObjects_[0].position().x
-          << ", Body 1 x: " << spaceObjects_[1].position().x << std::endl;
-            forces[i] += force;
-            forces[j] -= force;
-            forces[i] += (antiGravityMode_ ? -force : force);
-            forces[j] -= (antiGravityMode_ ? -force : force);
-
-        }
-    }
-
-    for (size_t i = 0; i < bodyCount; i++) {
-        if (spaceObjects_[i].mass() == 0) continue;
-        
-        sf::Vector2f acceleration = forces[i] / spaceObjects_[i].mass();
-        sf::Vector2f halfVelocity = spaceObjects_[i].velocity() + acceleration * static_cast<float>(timeStep);
-        sf::Vector2f newPosition = spaceObjects_[i].position() + halfVelocity * static_cast<float>(timeStep);
-
-        sf::Vector2f acceleration = forces[i] / spaceObjects_[i].mass();
-        sf::Vector2f halfVelocity = spaceObjects_[i].velocity() + (0.5f * acceleration * static_cast<float>(timeStep));
-        sf::Vector2f newPosition = spaceObjects_[i].position() + halfVelocity * static_cast<float>(timeStep);
-        spaceObjects_[i].setPosition(newPosition);
-
-        sf::Vector2f newAcceleration = forces[i] / spaceObjects_[i].mass();
-        //sf::Vector2f newVelocity = halfVelocity + (0.5f * newAcceleration * static_cast<float>(timeStep));
-        sf::Vector2f newVelocity = spaceObjects_[i].velocity() + (antiGravityMode_ ? -0.5f : 0.5f) * newAcceleration * static_cast<float>(timeStep);
-        spaceObjects_[i].setVelocity(newVelocity);
-
-    }
-    std::vector<sf::Vector2f> newForces(bodyCount, sf::Vector2f(0.0f, 0.0f));
-    for (size_t i = 0; i < bodyCount; i++) {
-        for (size_t j = i + 1; j < bodyCount; j++) {
-            sf::Vector2f delta = spaceObjects_[j].position() - spaceObjects_[i].position();
-            float distance = std::sqrt(delta.x * delta.x + delta.y * delta.y);
-            if (distance < 1e-10) distance = 1e-10;
-            float forceMagnitude = GRAV_CONST * spaceObjects_[i].mass() * spaceObjects_[j].mass() / (distance * distance);
-            sf::Vector2f force = forceMagnitude * (delta / distance);
-            newForces[i] += force;
-            newForces[j] -= force;
-        }
-    }
-
-    for (size_t i = 0; i < bodyCount; i++) {
-        sf::Vector2f newAcceleration = newForces[i] / spaceObjects_[i].mass();
-        sf::Vector2f newVelocity = spaceObjects_[i].velocity() + (0.5f * newAcceleration * static_cast<float>(timeStep));
-        spaceObjects_[i].setVelocity(newVelocity);
-    }
-}*/
-
 std::istream& operator>>(std::istream& is, Universe& universe) {
     int totalBodies;
     double size;
