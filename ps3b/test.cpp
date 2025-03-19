@@ -73,6 +73,7 @@ BOOST_AUTO_TEST_CASE(TestAntiGravity) {
 
     NB::Universe universe;
     ss >> universe;
+    universe.enableAntiGravity(true);
     universe.step(-10000);
     BOOST_CHECK_GT(universe[0].position().x, 1.0000e+11);
     BOOST_CHECK_LT(universe[1].position().x, -1.0000e+11);
