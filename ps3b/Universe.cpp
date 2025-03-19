@@ -54,39 +54,6 @@ void Universe::draw(sf::RenderTarget& window, sf::RenderStates states) const {
     }
 }
 
-/*void Universe::step(double timeStep) {
-    // const double GRAV_CONST = 6.67e-11;
-    const double GRAVITY = (antiGravityMode_) ? -6.67e-11 : 6.67e-11;
-    size_t bodyCount = spaceObjects_.size();
-    if (bodyCount == 0) return;
-
-    std::vector<sf::Vector2f> forces(bodyCount, sf::Vector2f(0.0f, 0.0f));
-
-    for (size_t i = 0; i < bodyCount; i++) {
-        for (size_t j = i + 1; j < bodyCount; j++) {
-            sf::Vector2f delta = spaceObjects_[j].position()
-            - spaceObjects_[i].position();
-            float distance = std::sqrt(delta.x * delta.x + delta.y * delta.y);
-            if (distance < 1e-10) distance = 1e-10;
-            float forceMagnitude = GRAV_CONST * spaceObjects_[i].mass()
-            * spaceObjects_[j].mass() / (distance * distance);
-            sf::Vector2f force = forceMagnitude * (delta / distance);
-            forces[i] += force;
-            forces[j] -= force;
-        }
-    }
-
-    for (size_t i = 0; i < bodyCount; i++) {
-        sf::Vector2f acceleration = forces[i] / spaceObjects_[i].mass();
-        sf::Vector2f newVelocity = spaceObjects_[i].velocity()
-        + acceleration * static_cast<float>(timeStep);
-        sf::Vector2f newPosition = spaceObjects_[i].position()
-        + newVelocity * static_cast<float>(timeStep);
-        spaceObjects_[i].setPosition(newPosition);
-        spaceObjects_[i].setVelocity(newVelocity);
-    }
-}*/
-
 void Universe::step(double timeStep) {
     const double GRAV_CONST = (antiGravityMode_) ? -6.67e-11 : 6.67e-11;
     size_t bodyCount = spaceObjects_.size();
@@ -112,9 +79,7 @@ void Universe::step(double timeStep) {
         sf::Vector2f newPosition = spaceObjects_[i].position() + halfVelocity * static_cast<float>(timeStep);
         spaceObjects_[i].setPosition(newPosition);
     }
-
     std::vector<sf::Vector2f> newForces(bodyCount, sf::Vector2f(0.0f, 0.0f));
-
     for (size_t i = 0; i < bodyCount; i++) {
         for (size_t j = i + 1; j < bodyCount; j++) {
             sf::Vector2f delta = spaceObjects_[j].position() - spaceObjects_[i].position();
