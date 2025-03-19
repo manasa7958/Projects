@@ -55,7 +55,7 @@ void Universe::draw(sf::RenderTarget& window, sf::RenderStates states) const {
 }
 
 void Universe::step(double timeStep) {
-    const double GRAV_CONST = (antiGravityMode_) ? -6.67e-11 : 6.67e-11;
+    const double GRAV_CONST = 6.67e-11;
     size_t bodyCount = spaceObjects_.size();
     if (bodyCount == 0) return;
 
@@ -67,7 +67,8 @@ void Universe::step(double timeStep) {
             float distance = std::sqrt(delta.x * delta.x + delta.y * delta.y);
             if (distance < 1e-10) distance = 1e-10;
             float forceMagnitude = GRAV_CONST * spaceObjects_[i].mass() * spaceObjects_[j].mass() / (distance * distance);
-            sf::Vector2f force = forceMagnitude * (delta / distance);
+            //sf::Vector2f force = forceMagnitude * (delta / distance);
+            sf::Vector2f force = (antiGravityMode_ ? -1 : 1) * forceMagnitude * (delta / distance);
             forces[i] += force;
             forces[j] -= force;
         }
@@ -82,7 +83,8 @@ void Universe::step(double timeStep) {
         spaceObjects_[i].setPosition(newPosition);
 
         sf::Vector2f newAcceleration = forces[i] / spaceObjects_[i].mass();
-        sf::Vector2f newVelocity = halfVelocity + (0.5f * newAcceleration * static_cast<float>(timeStep));
+        //sf::Vector2f newVelocity = halfVelocity + (0.5f * newAcceleration * static_cast<float>(timeStep));
+        sf::Vector2f newVelocity = spaceObjects_[i].velocity() + (antiGravityMode_ ? -0.5f : 0.5f) * newAcceleration * static_cast<float>(timeStep);
         spaceObjects_[i].setVelocity(newVelocity);
 
     }
