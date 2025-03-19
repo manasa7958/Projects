@@ -28,7 +28,8 @@ int main(int argc, char* argv[]) {
     sf::Sprite background(backgroundTexture);
     background.setScale(
         static_cast<float>(window.getSize().x) / backgroundTexture.getSize().x,
-        static_cast<float>(window.getSize().y) / backgroundTexture.getSize().y );
+        static_cast<float>(window.getSize().y)
+        / backgroundTexture.getSize().y );
     
     NB::Universe universe;
     if (!(std::cin >> universe)) {
