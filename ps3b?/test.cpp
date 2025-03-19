@@ -105,7 +105,8 @@ BOOST_AUTO_TEST_CASE(TestFixedTimeStep) {
 BOOST_AUTO_TEST_CASE(TestLeapfrogIntegration) {
     std::stringstream ss;
     ss << "1 1.00e+11\n";
-    ss << "0.0000e+00 0.0000e+00 1.0000e+04 0.0000e+00 5.0000e+24 jupiter.gif\n";
+    ss << "0.0000e+00 0.0000e+00 1.0000e+04 0.0000e+00 5.0000e+24
+        jupiter.gif\n";
 
     NB::Universe cosmos;
     ss >> cosmos;
