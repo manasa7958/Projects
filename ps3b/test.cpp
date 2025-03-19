@@ -65,7 +65,7 @@ BOOST_AUTO_TEST_CASE(TestNoAcceleration) {
     BOOST_CHECK_EQUAL(universe[0].position().y, 0.0f);
 }
 
-/*BOOST_AUTO_TEST_CASE(TestAntiGravity) {
+BOOST_AUTO_TEST_CASE(TestAntiGravity) {
     std::stringstream ss;
     ss << "2 3.00e+11\n";
     ss << "1.0000e+11 0.0000e+00 0.0000e+00 0.0000e+00 5.0000e+24 sun.gif\n";
@@ -76,7 +76,7 @@ BOOST_AUTO_TEST_CASE(TestNoAcceleration) {
     universe.step(-10000);
     BOOST_CHECK_GT(universe[0].position().x, 1.0000e+11);
     BOOST_CHECK_LT(universe[1].position().x, -1.0000e+11);
-}*/
+}
 
 BOOST_AUTO_TEST_CASE(TestInvertedGravity) {
     std::stringstream ss;
