@@ -29,8 +29,7 @@ int main(int argc, char* argv[]) {
     background.setScale(
         static_cast<float>(window.getSize().x) / backgroundTexture.getSize().x,
         static_cast<float>(window.getSize().y)
-        / backgroundTexture.getSize().y );
-    
+        / backgroundTexture.getSize().y);
     NB::Universe universe;
     if (!(std::cin >> universe)) {
         std::cerr << "Error: Failed to load universe data." << std::endl;
