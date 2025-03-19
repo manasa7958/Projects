@@ -16,7 +16,8 @@ class Universe: public sf::Drawable {
     double radius() const;
     const CelestialBody& operator[](size_t i) const;
     void step(double timeStep);
-    void enableAntiGravity(bool mode);
+    //void enableAntiGravity(bool mode);
+    void enableAntiGravity(bool mode) { antiGravityMode_ = mode; }
 
  protected:
     void draw(sf::RenderTarget& window, sf::RenderStates states) const override;
