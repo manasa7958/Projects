@@ -77,8 +77,8 @@ void Universe::step(double timeStep) {
             if (antiGravityMode_) {
                 force = -force;
             }
-            forces[i] += (antiGravityMode_ ? -force : force);
-            forces[j] -= (antiGravityMode_ ? -force : force);
+            forces[i] += (antiGravityMode_ ? -1.5 * force : 1.5 * force);
+            forces[j] -= (antiGravityMode_ ? -1.5 * force : 1.5 * force);
         }
     }
     for (size_t i = 0; i < bodyCount; i++) {
@@ -114,8 +114,8 @@ void Universe::step(double timeStep) {
         if (spaceObjects_[i].mass() == 0) continue;
 
         sf::Vector2f newAcceleration = newForces[i] / spaceObjects_[i].mass();
-        sf::Vector2f newVelocity = spaceObjects_[i].velocity() + ((antiGravityMode_ ? -0.5f : 0.5f)
-        * newAcceleration * static_cast<float>(timeStep));
+        sf::Vector2f newVelocity = spaceObjects_[i].velocity()
+        + (newAcceleration * static_cast<float>(timeStep));
         
         spaceObjects_[i].setVelocity(newVelocity);
     }
