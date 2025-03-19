@@ -22,7 +22,7 @@ class CelestialBody: public sf::Drawable {
  private:
     sf::Vector2f pos_;
     sf::Vector2f vel_;
-    float m_;
+    float m_ = 0.0f;
     std::string textureFile_;
     std::shared_ptr<sf::Texture> texture_;
     std::shared_ptr<sf::Sprite> sprite_;
