@@ -25,6 +25,7 @@ class Universe: public sf::Drawable {
     double universeBoundary_;
     std::shared_ptr<sf::Texture> bgTexture_;
     std::shared_ptr<sf::Sprite> bgSprite_;
+    bool antiGravityMode_ = false;
 
     friend std::istream& operator>>(std::istream& is, Universe& uni);
     friend std::ostream& operator<<(std::ostream& os, const Universe& uni);
