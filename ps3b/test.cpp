@@ -109,7 +109,7 @@ BOOST_AUTO_TEST_CASE(TestFixedTimeStep) {
     BOOST_CHECK_CLOSE(universe[0].position().x, 1.0000e+04, 0.001f);
 }
 
-/*BOOST_AUTO_TEST_CASE(TestLeapfrogIntegration) {
+BOOST_AUTO_TEST_CASE(TestLeapfrogIntegration) {
     std::stringstream ss;
     ss << "1 1.00e+11\n";
     ss << "0.0000e+00 0.0000e+00 1.0000e+04 0.0000e+00 5.0000e+24 mars.gif\n";
@@ -139,4 +139,4 @@ BOOST_AUTO_TEST_CASE(TestExtraCredit) {
     0.0, 0.0001);
     BOOST_REQUIRE_CLOSE(static_cast<double>(universe[1].position().x),
     1.0e+11, 0.0001);
-}*/
+}
