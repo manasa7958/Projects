@@ -23,6 +23,10 @@ const CelestialBody& Universe::operator[](size_t i) const {
     return spaceObjects_[i];
 }
 
+void Universe::enableAntiGravity(bool mode) {
+    antiGravityMode_ = mode;
+}
+
 void Universe::draw(sf::RenderTarget& window, sf::RenderStates states) const {
     sf::Vector2u windowSize = window.getSize();
 
