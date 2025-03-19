@@ -23,9 +23,9 @@ const CelestialBody& Universe::operator[](size_t i) const {
     return spaceObjects_[i];
 }
 
-void Universe::enableAntiGravity(bool mode) { 
-    std::cout << "enableAntiGravity called! Mode: " << mode << std::endl;  
-    antiGravityMode_ = mode; 
+void Universe::enableAntiGravity(bool mode) {
+    std::cout << "enableAntiGravity called! Mode: " << mode << std::endl;
+    antiGravityMode_ = mode;
 }
 
 void Universe::draw(sf::RenderTarget& window, sf::RenderStates states) const {
@@ -116,7 +116,6 @@ void Universe::step(double timeStep) {
         sf::Vector2f newAcceleration = newForces[i] / spaceObjects_[i].mass();
         sf::Vector2f newVelocity = spaceObjects_[i].velocity()
         + (newAcceleration * static_cast<float>(timeStep));
-        
         spaceObjects_[i].setVelocity(newVelocity);
     }
 }
