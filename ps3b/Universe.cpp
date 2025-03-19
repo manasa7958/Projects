@@ -58,9 +58,7 @@ void Universe::step(double timeStep) {
     const double GRAV_CONST = 6.67e-11;
     size_t bodyCount = spaceObjects_.size();
     if (bodyCount == 0) return;
-
     std::vector<sf::Vector2f> forces(bodyCount, sf::Vector2f(0.0f, 0.0f));
-
     for (size_t i = 0; i < bodyCount; i++) {
         for (size_t j = i + 1; j < bodyCount; j++) {
             sf::Vector2f delta = spaceObjects_[j].position() - spaceObjects_[i].position();
@@ -79,7 +77,6 @@ void Universe::step(double timeStep) {
             forces[j] -= force;
         }
     }
-
     for (size_t i = 0; i < bodyCount; i++) {
         if (spaceObjects_[i].mass() == 0) continue;
 
@@ -91,7 +88,6 @@ void Universe::step(double timeStep) {
 
         spaceObjects_[i].setPosition(newPosition);
     }
-
     std::vector<sf::Vector2f> newForces(bodyCount, sf::Vector2f(0.0f, 0.0f));
     for (size_t i = 0; i < bodyCount; i++) {
         for (size_t j = i + 1; j < bodyCount; j++) {
@@ -106,12 +102,10 @@ void Universe::step(double timeStep) {
             if (antiGravityMode_) {
                 force = -force;
             }
-
             newForces[i] += force;
             newForces[j] -= force;
         }
     }
-
     for (size_t i = 0; i < bodyCount; i++) {
         if (spaceObjects_[i].mass() == 0) continue;
 
