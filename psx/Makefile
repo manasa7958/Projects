@@ -22,7 +22,7 @@ $(BUILD_DIR)/%.o: %.cpp $(DEPS) | $(BUILD_DIR)
 $(PROGRAM): $(OBJECTS)
 	$(CC) $(CFLAGS) $(LIBDIR) -o $@ $^ $(LIB)
 
-$(TEST): $(BUILD_DIR)/test.o $(OBJECTS)
+$(TEST): $(BUILD_DIR)/test.o $(BUILD_DIR)/Universe.o $(BUILD_DIR)/CelestialBody.o
 	$(CC) $(CFLAGS) -DBOOST_TEST_DYN_LINK $(LIBDIR) -o $@ $^ $(LIB)
 
 clean:
