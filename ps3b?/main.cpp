@@ -11,7 +11,9 @@ int main(int argc, char* argv[]) {
     }
 
     double totalDuration, timeIncrement;
-    if (!(std::istringstream(argv[1]) >> totalDuration) || !(std::istringstream(argv[2]) >> timeIncrement) || totalDuration <= 0 || timeIncrement <= 0) {
+    if (!(std::istringstream(argv[1]) >> totalDuration) ||
+        !(std::istringstream(argv[2]) >> timeIncrement) ||
+        totalDuration <= 0 || timeIncrement <= 0) {
         std::cerr << "Error: Time values must be positive." << std::endl;
         return -1;
     }
@@ -26,9 +28,7 @@ int main(int argc, char* argv[]) {
     sf::Sprite background(backgroundTexture);
     background.setScale(
         static_cast<float>(window.getSize().x) / backgroundTexture.getSize().x,
-        static_cast<float>(window.getSize().y) / backgroundTexture.getSize().y
-    );
-
+        static_cast<float>(window.getSize().y) / backgroundTexture.getSize().y );
     
     NB::Universe universe;
     if (!(std::cin >> universe)) {
@@ -36,7 +36,7 @@ int main(int argc, char* argv[]) {
         return -1;
     }
     if (universe.size() == 0) {
-        std::cerr << "Error: No celestial bodies available in input." << std::endl;
+        std::cerr << "Error: No celestial bodies found." << std::endl;
         return -1;
     }
 
