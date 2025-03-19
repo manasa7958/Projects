@@ -116,3 +116,17 @@ BOOST_AUTO_TEST_CASE(TestLeapfrogIntegration) {
     }
     BOOST_CHECK_CLOSE(cosmos[0].position().x, 1.0000e+05, 0.001f);
 }
+
+BOOST_AUTO_TEST_CASE(TestExtraCredit) {
+    std::stringstream input("2 1.0e+11\n"
+        "0.0 0.0 0.0 0.0 0.0 earth.gif\n"
+        "1.0e+11 0.0 0.0 0.0 0.0 mars.gif\n");
+
+    NB::Universe universe;
+    input >> universe;
+    universe.step(1.0e+6);
+
+    BOOST_REQUIRE_CLOSE(static_cast<double>(universe[0].position().x), 0.0, 0.0001);
+    BOOST_REQUIRE_CLOSE(static_cast<double>(universe[0].position().y), 0.0, 0.0001);
+    BOOST_REQUIRE_CLOSE(static_cast<double>(universe[1].position().x), 1.0e+11, 0.0001);
+}
