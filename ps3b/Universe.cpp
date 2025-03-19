@@ -6,11 +6,9 @@
 #include "Universe.hpp"
 
 namespace NB {
-
-Universe::Universe() : universeBoundary_(0.0),
+Universe::Universe() : universeBoundary_(0.0), antiGravityMode_(false),
 bgTexture_(std::make_shared<sf::Texture>()),
-bgSprite_(std::make_shared<sf::Sprite>()),
-antiGravityMode_(false) {}
+bgSprite_(std::make_shared<sf::Sprite>()) {}
 
 size_t Universe::size() const {
     return spaceObjects_.size();
@@ -56,7 +54,7 @@ void Universe::draw(sf::RenderTarget& window, sf::RenderStates states) const {
 }
 
 void Universe::step(double timeStep) {
-    const double GRAV_CONST = antiGravityMode_ ? -6.67e-11 : 6.67e-11;
+    const double GRAV_CONST = (antiGravityMode_) ? -6.67e-11 : 6.67e-11;
     size_t bodyCount = spaceObjects_.size();
     if (bodyCount == 0) return;
 
@@ -75,6 +73,8 @@ void Universe::step(double timeStep) {
     }
 
     for (size_t i = 0; i < bodyCount; i++) {
+        if (spaceObjects_[i].mass() == 0) continue;
+        
         sf::Vector2f acceleration = forces[i] / spaceObjects_[i].mass();
         sf::Vector2f halfVelocity = spaceObjects_[i].velocity() + (0.5f * acceleration * static_cast<float>(timeStep));
         sf::Vector2f newPosition = spaceObjects_[i].position() + halfVelocity * static_cast<float>(timeStep);
