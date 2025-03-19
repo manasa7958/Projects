@@ -56,7 +56,7 @@ void Universe::draw(sf::RenderTarget& window, sf::RenderStates states) const {
 }
 
 void Universe::step(double timeStep) {
-    const double GRAV_CONST = (antiGravityMode_) ? -6.67e-11 : 6.67e-11;
+    const double GRAV_CONST = antiGravityMode_ ? -6.67e-11 : 6.67e-11;
     size_t bodyCount = spaceObjects_.size();
     if (bodyCount == 0) return;
 
@@ -79,6 +79,11 @@ void Universe::step(double timeStep) {
         sf::Vector2f halfVelocity = spaceObjects_[i].velocity() + (0.5f * acceleration * static_cast<float>(timeStep));
         sf::Vector2f newPosition = spaceObjects_[i].position() + halfVelocity * static_cast<float>(timeStep);
         spaceObjects_[i].setPosition(newPosition);
+
+        sf::Vector2f newAcceleration = newForces[i] / spaceObjects_[i].mass();
+        sf::Vector2f newVelocity = halfVelocity + (0.5f * newAcceleration * static_cast<float>(timeStep));
+        spaceObjects_[i].setVelocity(newVelocity);
+
     }
     std::vector<sf::Vector2f> newForces(bodyCount, sf::Vector2f(0.0f, 0.0f));
     for (size_t i = 0; i < bodyCount; i++) {
