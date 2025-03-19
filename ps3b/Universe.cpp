@@ -80,7 +80,7 @@ void Universe::step(double timeStep) {
         sf::Vector2f newPosition = spaceObjects_[i].position() + halfVelocity * static_cast<float>(timeStep);
         spaceObjects_[i].setPosition(newPosition);
 
-        sf::Vector2f newAcceleration = newForces[i] / spaceObjects_[i].mass();
+        sf::Vector2f newAcceleration = forces[i] / spaceObjects_[i].mass();
         sf::Vector2f newVelocity = halfVelocity + (0.5f * newAcceleration * static_cast<float>(timeStep));
         spaceObjects_[i].setVelocity(newVelocity);
 
