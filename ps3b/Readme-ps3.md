@@ -27,7 +27,7 @@ As of now from my understanding my code should work correctly.
 I also did have trouble with my formatting test. When working on the test.cpp I did a dummy submission on Gradescope to figure out the criterias that were being testsed and then wrote my tests accordingly. I did not have too much trouble with my emptyUniverse testing nor the flipped values testing but my formatting testing had me stuck for a while. I had to rewrite parts of it mutliple times and then tried comparing the expected and actual strings which lead to errors. In the end I tried getting the output's string to be reassigned to another variable and then tried checking that way. 
 
 Part b:
-I have recurring problems with my tests, I keep failing the noaccelration, antigravity, and inverted tests. I am certain that the tests are failing because of faulty code in my step function but I am unable to fix it.
+I have recurring problems with my tests, I keep failing the noaccelration, antigravity, and inverted tests. I am certain that the tests are failing because of faulty code in my step function but I am unable to fix it. Some of my tests still dont work.
 
 ### Extra Credit
 Part a: I added a background image to the SFML window. I also made sure to dynamically scale the background. I downloaded a jpg image from the internet that I thought would be appropriate as a background for the planets and then wrote the code for it in my Universe.cpp file. Most of the code remained rather basic I just had to put in effort into scaling of the photo because initially it only covered a bit of the window.
