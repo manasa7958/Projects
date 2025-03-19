@@ -75,9 +75,9 @@ BOOST_AUTO_TEST_CASE(TestAntiGravity) {
     NB::Universe universe;
     ss >> universe;
     
-    universe.enableAntiGravity(true);  // ✅ Ensure anti-gravity is turned on
+    universe.enableAntiGravity(true);
 
-    for (int i = 0; i < 5000; i++) {  // Run more steps to see noticeable separation
+    for (int i = 0; i < 5000; i++) {
         universe.step(50000);
     }
 
