@@ -61,19 +61,18 @@ void Universe::step(double timeStep) {
 
     std::vector<sf::Vector2f> forces(bodyCount, sf::Vector2f(0.0f, 0.0f));
 
-    // ✅ Compute forces between all pairs of celestial bodies
     for (size_t i = 0; i < bodyCount; i++) {
         for (size_t j = i + 1; j < bodyCount; j++) {
             sf::Vector2f delta = spaceObjects_[j].position() - spaceObjects_[i].position();
             float distance = std::sqrt(delta.x * delta.x + delta.y * delta.y);
-            if (distance < 1e-10) distance = 1e-10;  // Prevent division by zero
+            if (distance < 1e-10) distance = 1e-10;
 
-            float forceMagnitude = GRAV_CONST * spaceObjects_[i].mass() * spaceObjects_[j].mass() / (distance * distance);
+            float forceMagnitude = GRAV_CONST * spaceObjects_[i].mass()
+            * spaceObjects_[j].mass() / (distance * distance);
             sf::Vector2f force = forceMagnitude * (delta / distance);
 
-            // ✅ Apply anti-gravity correctly
             if (antiGravityMode_) {
-                force = -force;  // Reverse force in anti-gravity mode
+                force = -force;
             }
 
             forces[i] += force;
@@ -81,18 +80,18 @@ void Universe::step(double timeStep) {
         }
     }
 
-    // ✅ Update positions using Leapfrog Integration
     for (size_t i = 0; i < bodyCount; i++) {
-        if (spaceObjects_[i].mass() == 0) continue;  // Skip massless objects
+        if (spaceObjects_[i].mass() == 0) continue;
 
         sf::Vector2f acceleration = forces[i] / spaceObjects_[i].mass();
-        sf::Vector2f halfVelocity = spaceObjects_[i].velocity() + (0.5f * acceleration * static_cast<float>(timeStep));
-        sf::Vector2f newPosition = spaceObjects_[i].position() + halfVelocity * static_cast<float>(timeStep);
+        sf::Vector2f halfVelocity = spaceObjects_[i].velocity()
+        + (0.5f * acceleration * static_cast<float>(timeStep));
+        sf::Vector2f newPosition = spaceObjects_[i].position()
+        + halfVelocity * static_cast<float>(timeStep);
 
         spaceObjects_[i].setPosition(newPosition);
     }
 
-    // ✅ Recalculate forces after updating positions
     std::vector<sf::Vector2f> newForces(bodyCount, sf::Vector2f(0.0f, 0.0f));
     for (size_t i = 0; i < bodyCount; i++) {
         for (size_t j = i + 1; j < bodyCount; j++) {
@@ -100,11 +99,12 @@ void Universe::step(double timeStep) {
             float distance = std::sqrt(delta.x * delta.x + delta.y * delta.y);
             if (distance < 1e-10) distance = 1e-10;
 
-            float forceMagnitude = GRAV_CONST * spaceObjects_[i].mass() * spaceObjects_[j].mass() / (distance * distance);
+            float forceMagnitude = GRAV_CONST * spaceObjects_[i].mass()
+            * spaceObjects_[j].mass() / (distance * distance);
             sf::Vector2f force = forceMagnitude * (delta / distance);
 
             if (antiGravityMode_) {
-                force = -force;  // Reverse force in anti-gravity mode
+                force = -force;
             }
 
             newForces[i] += force;
@@ -112,12 +112,12 @@ void Universe::step(double timeStep) {
         }
     }
 
-    // ✅ Update velocities using the updated forces
     for (size_t i = 0; i < bodyCount; i++) {
         if (spaceObjects_[i].mass() == 0) continue;
 
         sf::Vector2f newAcceleration = newForces[i] / spaceObjects_[i].mass();
-        sf::Vector2f newVelocity = spaceObjects_[i].velocity() + (0.5f * newAcceleration * static_cast<float>(timeStep));
+        sf::Vector2f newVelocity = spaceObjects_[i].velocity()
+        + (0.5f * newAcceleration * static_cast<float>(timeStep));
         
         spaceObjects_[i].setVelocity(newVelocity);
     }
