@@ -85,6 +85,69 @@ BOOST_AUTO_TEST_CASE(TestNoAcceleration) {
     BOOST_CHECK_LT(universe[1].position().x, -1.0000e+11);
 }*/
 
+BOOST_AUTO_TEST_CASE(Test1Year) {
+    std::stringstream input;
+    input << "2 1.496e+11\n";
+    input << "1.4960e+11 0.0 0.0 2.978e+04 5.9740e+24 earth.gif\n";
+    input << "0.0 0.0 0.0 0.0 1.9890e+30 sun.gif\n";
+
+    NB::Universe universe;
+    input >> universe;
+
+    double one_year = 365.25 * 24 * 60 * 60;
+    int steps = 365;
+    double dt = one_year / steps;
+
+    for (int i = 0; i < steps; i++) {
+        universe.step(dt);
+    }
+
+    sf::Vector2f final_position = universe[0].position();
+    sf::Vector2f final_velocity = universe[0].velocity();
+
+    double distance_from_sun = std::sqrt(
+        final_position.x * final_position.x + final_position.y * final_position.y
+    );
+
+    BOOST_REQUIRE_CLOSE(distance_from_sun, 1.496e+11, 0.1);
+    BOOST_REQUIRE_CLOSE(final_velocity.x, 0.0, 0.1);
+}
+
+BOOST_AUTO_TEST_CASE(TestPrecision) {
+    std::stringstream input;
+    input << "2 1.0e+11\n";
+    input << "0.0 0.0 0.0 0.0 1.0e+30 sun.gif\n";
+    input << "1.0e+10 0.0 0.0001 0.0 5.9740e+24 earth.gif\n";
+
+    NB::Universe universe;
+    input >> universe;
+
+    double total_time = 1.0e+6;
+    int steps = 1000;
+    double dt = total_time / steps;
+
+    sf::Vector2f initial_position = universe[1].position();
+    sf::Vector2f initial_velocity = universe[1].velocity();
+
+    for (int i = 0; i < steps; i++) {
+        universe.step(dt);
+    }
+
+    sf::Vector2f final_position = universe[1].position();
+    sf::Vector2f final_velocity = universe[1].velocity();
+
+    double displacement_x = std::abs(final_position.x - initial_position.x);
+    double displacement_y = std::abs(final_position.y - initial_position.y);
+    double velocity_change_x = std::abs(final_velocity.x - initial_velocity.x);
+    double velocity_change_y = std::abs(final_velocity.y - initial_velocity.y);
+
+    BOOST_CHECK_SMALL(displacement_x, 1.0);
+    BOOST_CHECK_SMALL(displacement_y, 1.0);
+    BOOST_CHECK_SMALL(velocity_change_x, 1e-5);
+    BOOST_CHECK_SMALL(velocity_change_y, 1e-5);
+}
+
+
 BOOST_AUTO_TEST_CASE(TestInvertedGravity) {
     std::stringstream ss;
     ss << "2 3.00e+11\n";
