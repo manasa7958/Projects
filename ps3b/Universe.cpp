@@ -6,9 +6,10 @@
 #include "Universe.hpp"
 
 namespace NB {
-Universe::Universe() : universeBoundary_(0.0), antiGravityMode_(false),
+Universe::Universe() : universeBoundary_(0.0),
 bgTexture_(std::make_shared<sf::Texture>()),
-bgSprite_(std::make_shared<sf::Sprite>()) {}
+bgSprite_(std::make_shared<sf::Sprite>()),
+antiGravityMode_(false) {}
 
 size_t Universe::size() const {
     return spaceObjects_.size();
