@@ -33,9 +33,9 @@ BOOST_AUTO_TEST_CASE(TestCelestialInputOperator) {
 }
 
 BOOST_AUTO_TEST_CASE(TestUniverseConstructor) {
-    NB::Universe cosmos;
-    BOOST_CHECK_EQUAL(cosmos.size(), 0);
-    BOOST_CHECK_GE(cosmos.radius(), 0.0);
+    NB::Universe universe;
+    BOOST_CHECK_EQUAL(universe.size(), 0);
+    BOOST_CHECK_GE(universe.radius(), 0.0);
 }
 
 BOOST_AUTO_TEST_CASE(TestUniverseEvolution) {
@@ -44,13 +44,13 @@ BOOST_AUTO_TEST_CASE(TestUniverseEvolution) {
     ss << "1.4960e+11 0.0000e+00 0.0000e+00 2.9800e+04 5.9740e+24 earth.gif\n";
     ss << "0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00 1.9890e+30 sun.gif\n";
 
-    NB::Universe cosmos;
-    ss >> cosmos;
+    NB::Universe universe;
+    ss >> universe;
 
     const double dt = 25000.0;
-    cosmos.step(dt);
+    universe.step(dt);
 
-    BOOST_CHECK_LT(cosmos[0].position().x, 1.4960e+11);
+    BOOST_CHECK_LT(universe[0].position().x, 1.4960e+11);
 }
 
 BOOST_AUTO_TEST_CASE(TestNoAcceleration) {
@@ -58,11 +58,11 @@ BOOST_AUTO_TEST_CASE(TestNoAcceleration) {
     ss << "1 1.00e+11\n";
     ss << "0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00 5.0000e+24 venus.gif\n";
 
-    NB::Universe cosmos;
-    ss >> cosmos;
-    cosmos.step(10000);
-    BOOST_CHECK_EQUAL(cosmos[0].position().x, 0.0f);
-    BOOST_CHECK_EQUAL(cosmos[0].position().y, 0.0f);
+    NB::Universe universe;
+    ss >> universe;
+    universe.step(10000);
+    BOOST_CHECK_EQUAL(universe[0].position().x, 0.0f);
+    BOOST_CHECK_EQUAL(universe[0].position().y, 0.0f);
 }
 
 BOOST_AUTO_TEST_CASE(TestAntiGravity) {
@@ -71,11 +71,11 @@ BOOST_AUTO_TEST_CASE(TestAntiGravity) {
     ss << "1.0000e+11 0.0000e+00 0.0000e+00 0.0000e+00 5.0000e+24 sun.gif\n";
     ss << "-1.0000e+11 0.0000e+00 0.0000e+00 0.0000e+00 5.0000e+24 earth.gif\n";
 
-    NB::Universe cosmos;
-    ss >> cosmos;
-    cosmos.step(-10000);
-    BOOST_CHECK_GT(cosmos[0].position().x, 1.0000e+11);
-    BOOST_CHECK_LT(cosmos[1].position().x, -1.0000e+11);
+    NB::Universe universe;
+    ss >> universe;
+    universe.step(-10000);
+    BOOST_CHECK_GT(universe[0].position().x, 1.0000e+11);
+    BOOST_CHECK_LT(universe[1].position().x, -1.0000e+11);
 }
 
 BOOST_AUTO_TEST_CASE(TestInvertedGravity) {
@@ -84,11 +84,11 @@ BOOST_AUTO_TEST_CASE(TestInvertedGravity) {
     ss << "1.0000e+11 0.0000e+00 0.0000e+00 0.0000e+00 5.0000e+24 sun.gif\n";
     ss << "-1.0000e+11 0.0000e+00 0.0000e+00 0.0000e+00 5.0000e+24 earth.gif\n";
 
-    NB::Universe cosmos;
-    ss >> cosmos;
-    cosmos.step(10000);
-    BOOST_CHECK_LT(cosmos[0].position().x, 1.0000e+11);
-    BOOST_CHECK_GT(cosmos[1].position().x, -1.0000e+11);
+    NB::Universe universe;
+    ss >> universe;
+    universe.step(10000);
+    BOOST_CHECK_LT(universe[0].position().x, 1.0000e+11);
+    BOOST_CHECK_GT(universe[1].position().x, -1.0000e+11);
 }
 
 BOOST_AUTO_TEST_CASE(TestFixedTimeStep) {
@@ -96,10 +96,10 @@ BOOST_AUTO_TEST_CASE(TestFixedTimeStep) {
     ss << "1 1.00e+11\n";
     ss << "0.0000e+00 0.0000e+00 1.0000e+04 0.0000e+00 5.0000e+24 saturn.gif\n";
 
-    NB::Universe cosmos;
-    ss >> cosmos;
-    cosmos.step(1);
-    BOOST_CHECK_CLOSE(cosmos[0].position().x, 1.0000e+04, 0.001f);
+    NB::Universe universe;
+    ss >> universe;
+    universe.step(1);
+    BOOST_CHECK_CLOSE(universe[0].position().x, 1.0000e+04, 0.001f);
 }
 
 BOOST_AUTO_TEST_CASE(TestLeapfrogIntegration) {
@@ -107,14 +107,14 @@ BOOST_AUTO_TEST_CASE(TestLeapfrogIntegration) {
     ss << "1 1.00e+11\n";
     ss << "0.0000e+00 0.0000e+00 1.0000e+04 0.0000e+00 5.0000e+24 mars.gif\n";
 
-    NB::Universe cosmos;
-    ss >> cosmos;
+    NB::Universe universe;
+    ss >> universe;
     double dt = 1;
     for (int i = 0; i < 10; ++i) {
-        cosmos.step(dt / 2);
-        cosmos.step(dt / 2);
+        universe.step(dt / 2);
+        universe.step(dt / 2);
     }
-    BOOST_CHECK_CLOSE(cosmos[0].position().x, 1.0000e+05, 0.001f);
+    BOOST_CHECK_CLOSE(universe[0].position().x, 1.0000e+05, 0.001f);
 }
 
 BOOST_AUTO_TEST_CASE(TestExtraCredit) {
