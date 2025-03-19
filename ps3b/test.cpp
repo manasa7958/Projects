@@ -16,7 +16,7 @@
 
 BOOST_AUTO_TEST_CASE(TestCelestialConstructor) {
     NB::CelestialBody obj;
-    BOOST_CHECK_SMALL(obj.mass(), 1e-10);
+    BOOST_CHECK_SMALL(static_cast<double>(obj.mass()), 1e-10);
     BOOST_CHECK_EQUAL(obj.position().x, 0.0f);
     BOOST_CHECK_EQUAL(obj.position().y, 0.0f);
 }
