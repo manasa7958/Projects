@@ -1,4 +1,4 @@
-// Copyright Manasa praveen 2025
+// Copyright Manasa Praveen 2025
 #include <iostream>
 #include <fstream>
 #include <stdexcept>
