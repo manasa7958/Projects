@@ -1,7 +1,16 @@
 // Copyright Manasa Praveen 2025
-#define BOOST_TEST_MODULE SokobanTests
-#include <boost/test/included/unit_test.hpp>
+#include <cmath>
+#include <iomanip>
+#include <iostream>
+#include <sstream>
+#include <string>
+
 #include "Sokoban.hpp"
+
+#define BOOST_TEST_DYN_LINK
+#define BOOST_TEST_MODULE SokobanTests
+#include <boost/algorithm/string.hpp>
+#include <boost/test/unit_test.hpp>
 
 using namespace SB;
 
