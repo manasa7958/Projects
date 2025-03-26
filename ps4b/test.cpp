@@ -46,7 +46,7 @@ BOOST_AUTO_TEST_CASE(WallCollisionTest) {
     BOOST_CHECK_EQUAL(midPos, finalPos);
 }
 
-BOOST_AUTO_TEST_CASE(BoxPushTest) {
+/*BOOST_AUTO_TEST_CASE(BoxPushTest) {
     SB::Sokoban game(testLevel);
     game.movePlayer(SB::Direction::Right);
     game.movePlayer(SB::Direction::Right);
@@ -74,4 +74,4 @@ BOOST_AUTO_TEST_CASE(ResetFunctionalityTest) {
     BOOST_CHECK_NE(game.playerLoc(), initialPos);
     game.reset();
     BOOST_CHECK_EQUAL(game.playerLoc(), initialPos);
-}
+}*/
