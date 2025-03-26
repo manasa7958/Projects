@@ -35,7 +35,7 @@ BOOST_AUTO_TEST_CASE(BasicMovementTest) {
     BOOST_CHECK_NE(originalPos, newPos);
 }
 
-BOOST_AUTO_TEST_CASE(WallCollisionTest) {
+BOOST_AUTO_TEST_CASE(CannotMoveTest) {
     SB::Sokoban game(testLevel);
     game.movePlayer(SB::Direction::Left);
     game.movePlayer(SB::Direction::Left);
