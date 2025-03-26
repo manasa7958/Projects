@@ -130,7 +130,7 @@ void Sokoban::movePlayer(Direction dir) {
         char& next = board[nny][nnx];
 
         // ❗ Check if next tile is a box or wall or storage already full
-        if (next == '#' || next == 'A' || next == 'a') return;
+        if (next == '#' || next == 'A') return;
 
         next = 'A';
         dest = '@';
