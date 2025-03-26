@@ -51,14 +51,14 @@ BOOST_AUTO_TEST_CASE(CannotMoveTest) {
     auto before = game.playerLoc();
     game.movePlayer(SB::Direction::Right);
     BOOST_CHECK_EQUAL(game.playerLoc(), before);
-}*/
+}
 
 BOOST_AUTO_TEST_CASE(BoxBoxCollisionTest) {
     SB::Sokoban game("pushleft.lvl");
     auto before = game.playerLoc();
     game.movePlayer(SB::Direction::Left);
     BOOST_CHECK_EQUAL(game.playerLoc(), before);
-}
+}*/
 
 BOOST_AUTO_TEST_CASE(VictoryConditionTest) {
     SB::Sokoban game("victory_test.lvl");
@@ -80,5 +80,4 @@ BOOST_AUTO_TEST_CASE(VictoryConditionTest) {
 BOOST_AUTO_TEST_CASE(MultipleTargetVictoryTest) {
     SB::Sokoban game("autowin.lvl");
     BOOST_CHECK(game.isWon());
-}
-*/
+}*/
