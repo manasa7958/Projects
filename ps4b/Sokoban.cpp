@@ -118,7 +118,7 @@ void Sokoban::movePlayer(Direction dir) {
         ny >= static_cast<int>(boardHeight)) return;
 
     char dest = board[ny][nx];
-    char curr = board[y][x];
+    //char curr = board[y][x];
 
     // Wall blocks movement
     if (dest == '#') return;
