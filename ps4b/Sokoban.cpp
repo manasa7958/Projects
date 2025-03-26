@@ -55,7 +55,7 @@ bool Sokoban::isWon() const {
     });
 }
 
-void Sokoban::movePlayer(Direction dir) {
+/*void Sokoban::movePlayer(Direction dir) {
     if (gameWon) return;
     int dx = 0, dy = 0;
     switch (dir) {
@@ -95,6 +95,53 @@ void Sokoban::movePlayer(Direction dir) {
         curr = (originalBoard[y][x] == 'a') ? 'a' : '.';
         playerPosition = { static_cast<unsigned int>(nx), static_cast<unsigned int>(ny) };
     }
+    gameWon = isWon();
+}*/
+void Sokoban::movePlayer(Direction dir) {
+    if (gameWon) return;
+
+    int dx = 0, dy = 0;
+    switch (dir) {
+        case Direction::Up: dy = -1; break;
+        case Direction::Down: dy = 1; break;
+        case Direction::Left: dx = -1; break;
+        case Direction::Right: dx = 1; break;
+    }
+
+    int x = playerPosition.x;
+    int y = playerPosition.y;
+    int nx = x + dx;
+    int ny = y + dy;
+
+    if (nx < 0 || ny < 0 || nx >= static_cast<int>(boardWidth) ||
+        ny >= static_cast<int>(boardHeight)) return;
+
+    char& dest = board[ny][nx];
+    char& curr = board[y][x];
+
+    if (dest == '#') return;
+
+    if (dest == 'A' || dest == 'a') {
+        int nnx = nx + dx;
+        int nny = ny + dy;
+        if (nnx < 0 || nny < 0 || nnx >= static_cast<int>(boardWidth) ||
+            nny >= static_cast<int>(boardHeight)) return;
+        
+        char& next = board[nny][nnx];
+
+        // ❗ Check if next tile is a box or wall or storage already full
+        if (next == '#' || next == 'A' || next == 'a') return;
+
+        next = 'A';
+        dest = '@';
+        curr = (originalBoard[y][x] == 'a') ? 'a' : '.';
+        playerPosition = { static_cast<unsigned int>(nx), static_cast<unsigned int>(ny) };
+    } else if (dest == '.' || dest == ' ') {
+        dest = '@';
+        curr = (originalBoard[y][x] == 'a') ? 'a' : '.';
+        playerPosition = { static_cast<unsigned int>(nx), static_cast<unsigned int>(ny) };
+    }
+
     gameWon = isWon();
 }
 
