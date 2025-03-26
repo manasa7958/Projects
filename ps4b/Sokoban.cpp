@@ -117,8 +117,8 @@ void Sokoban::movePlayer(Direction dir) {
     if (nx < 0 || ny < 0 || nx >= static_cast<int>(boardWidth) ||
         ny >= static_cast<int>(boardHeight)) return;
 
-    char& dest = board[ny][nx];
-    char& curr = board[y][x];
+    char dest = board[ny][nx];
+    char curr = board[y][x];
 
     // Wall blocks movement
     if (dest == '#') return;
@@ -127,30 +127,32 @@ void Sokoban::movePlayer(Direction dir) {
     if (dest == 'A' || dest == 'a') {
         int nnx = nx + dx;
         int nny = ny + dy;
+
         if (nnx < 0 || nny < 0 || nnx >= static_cast<int>(boardWidth) ||
             nny >= static_cast<int>(boardHeight)) return;
 
         char& next = board[nny][nnx];
 
-        // Cannot push into a wall or another box
-        if (next == '#' || next == 'A' || next == 'a') return;
+        // Next tile must be walkable ('.' or ' ')
+        if (next != '.' && next != ' ') return;
 
         // Move the box
         next = 'A';
 
-        // Replace box's previous location with original tile
-        dest = (originalBoard[ny][nx] == 'a') ? 'a' : '.';
-
-        // Move player into the box's previous spot
+        // Update the tile the box was on
         board[ny][nx] = '@';
-        curr = (originalBoard[y][x] == 'a') ? 'a' : '.';
+
+        // Restore player's previous tile
+        board[y][x] = (originalBoard[y][x] == 'a') ? 'a' : '.';
+
+        // Update position
         playerPosition = { static_cast<unsigned int>(nx), static_cast<unsigned int>(ny) };
     }
 
-    // --- Regular move
+    // --- Regular player movement
     else if (dest == '.' || dest == 'a' || dest == ' ') {
         board[ny][nx] = '@';
-        curr = (originalBoard[y][x] == 'a') ? 'a' : '.';
+        board[y][x] = (originalBoard[y][x] == 'a') ? 'a' : '.';
         playerPosition = { static_cast<unsigned int>(nx), static_cast<unsigned int>(ny) };
     }
 
