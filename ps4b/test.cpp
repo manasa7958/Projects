@@ -46,13 +46,19 @@ BOOST_AUTO_TEST_CASE(CannotMoveTest) {
     BOOST_CHECK_EQUAL(midPos, finalPos);
 }
 
-/*BOOST_AUTO_TEST_CASE(BoxPushTest) {
-    SB::Sokoban game(testLevel);
+BOOST_AUTO_TEST_CASE(BoxWallCollisionTest) {
+    SB::Sokoban game("pushright.lvl");
+    auto before = game.playerLoc();
     game.movePlayer(SB::Direction::Right);
-    game.movePlayer(SB::Direction::Right);
-    auto playerPos = game.playerLoc();
-    BOOST_CHECK_NE(playerPos, sf::Vector2u(2, 1));
-}*/
+    BOOST_CHECK_EQUAL(game.playerLoc(), before);
+}
+
+BOOST_AUTO_TEST_CASE(BoxBoxCollisionTest) {
+    SB::Sokoban game("pushleft.lvl");
+    auto before = game.playerLoc();
+    game.movePlayer(SB::Direction::Left);
+    BOOST_CHECK_EQUAL(game.playerLoc(), before);
+}
 
 BOOST_AUTO_TEST_CASE(VictoryConditionTest) {
     SB::Sokoban game("victory_test.lvl");
