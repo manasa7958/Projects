@@ -38,6 +38,7 @@ BOOST_AUTO_TEST_CASE(BasicMovementTest) {
 BOOST_AUTO_TEST_CASE(WallCollisionTest) {
     SB::Sokoban game(testLevel);
     game.movePlayer(SB::Direction::Left);
+    game.movePlayer(SB::Direction::Left);
     auto midPos = game.playerLoc();
     game.movePlayer(SB::Direction::Left);
     auto finalPos = game.playerLoc();
