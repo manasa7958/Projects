@@ -32,7 +32,7 @@ Sokoban::Sokoban(const std::string& filename) {
     if (!playerTexture.loadFromFile("player_05.png")) {
         throw std::runtime_error("Failed to load player texture");
     }
-    if (!font.loadFromFile("/System/Library/Fonts/Supplemental/Arial.ttf")) {  
+    if (!font.loadFromFile("/System/Library/Fonts/Supplemental/Arial.ttf")) {
     throw std::runtime_error("Failed to load system font");
     }
 }
@@ -57,7 +57,6 @@ bool Sokoban::isWon() const {
 
 void Sokoban::movePlayer(Direction dir) {
     if (gameWon) return;
-    
     int dx = 0, dy = 0;
     switch (dir) {
         case Direction::Up: dy = -1; break;
@@ -71,18 +70,17 @@ void Sokoban::movePlayer(Direction dir) {
     if (board[newY][newX] == '#') {
         return;
     }
-    
     if (board[newY][newX] == 'A' || board[newY][newX] == 'a') {
         int boxNewX = newX + dx;
         int boxNewY = newY + dy;
         if (board[newY][newX] == 'a') {
             return;
         }
-        
         if (board[boxNewY][boxNewX] == '.' || board[boxNewY][boxNewX] == 'a') {
             board[boxNewY][boxNewX] = 'A';
             board[newY][newX] = '@';
-            board[playerPosition.y][playerPosition.x] = (originalBoard[playerPosition.y][playerPosition.x] == 'a') ? 'a' : '.';
+            board[playerPosition.y][playerPosition.x] = 
+                (originalBoard[playerPosition.y][playerPosition.x] == 'a') ? 'a' : '.';
             playerPosition = {static_cast<unsigned int>(newX), static_cast<unsigned int>(newY)};
         }
     } else {
@@ -90,7 +88,6 @@ void Sokoban::movePlayer(Direction dir) {
         board[playerPosition.y][playerPosition.x] = '.';
         playerPosition = {static_cast<unsigned int>(newX), static_cast<unsigned int>(newY)};
     }
-    
     gameWon = isWon();
 }
 
@@ -99,7 +96,6 @@ void Sokoban::reset() {
     gameWon = false;
     boardWidth = originalBoard[0].size();
     boardHeight = originalBoard.size();
-    
     for (unsigned int y = 0; y < board.size(); ++y) {
         auto pos = board[y].find('@');
         if (pos != std::string::npos) {
