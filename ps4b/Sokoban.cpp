@@ -55,41 +55,6 @@ bool Sokoban::isWon() const {
     });
 }
 
-/*void Sokoban::movePlayer(Direction dir) {
-    if (gameWon) return;
-    int dx = 0, dy = 0;
-    switch (dir) {
-        case Direction::Up: dy = -1; break;
-        case Direction::Down: dy = 1; break;
-        case Direction::Left: dx = -1; break;
-        case Direction::Right: dx = 1; break;
-    }
-    int newX = playerPosition.x + dx;
-    int newY = playerPosition.y + dy;
-
-    if (board[newY][newX] == '#') {
-        return;
-    }
-    if (board[newY][newX] == 'A' || board[newY][newX] == 'a') {
-        int boxNewX = newX + dx;
-        int boxNewY = newY + dy;
-        if (board[newY][newX] == 'a') {
-            return;
-        }
-        if (board[boxNewY][boxNewX] == '.' || board[boxNewY][boxNewX] == 'a') {
-            board[boxNewY][boxNewX] = 'A';
-            board[newY][newX] = '@';
-            board[playerPosition.y][playerPosition.x] = 
-                (originalBoard[playerPosition.y][playerPosition.x] == 'a') ? 'a' : '.';
-            playerPosition = {static_cast<unsigned int>(newX), static_cast<unsigned int>(newY)};
-        }
-    } else {
-        board[newY][newX] = '@';
-        board[playerPosition.y][playerPosition.x] = '.';
-        playerPosition = {static_cast<unsigned int>(newX), static_cast<unsigned int>(newY)};
-    }
-    gameWon = isWon();
-}*/
 void Sokoban::movePlayer(Direction dir) {
     if (gameWon) return;
     int dx = 0, dy = 0;
@@ -104,9 +69,8 @@ void Sokoban::movePlayer(Direction dir) {
     int y = playerPosition.y;
     int nx = x + dx;
     int ny = y + dy;
-
-    // Bounds check
-    if (nx < 0 || ny < 0 || nx >= static_cast<int>(boardWidth) || ny >= static_cast<int>(boardHeight)) return;
+    if (nx < 0 || ny < 0 || nx >= static_cast<int>(boardWidth) ||
+        ny >= static_cast<int>(boardHeight)) return;
 
     char& dest = board[ny][nx];
     char& curr = board[y][x];
@@ -116,7 +80,8 @@ void Sokoban::movePlayer(Direction dir) {
     if (dest == 'A' || dest == 'a') {
         int nnx = nx + dx;
         int nny = ny + dy;
-        if (nnx < 0 || nny < 0 || nnx >= static_cast<int>(boardWidth) || nny >= static_cast<int>(boardHeight)) return;
+        if (nnx < 0 || nny < 0 || nnx >= static_cast<int>(boardWidth) ||
+            nny >= static_cast<int>(boardHeight)) return;
         char& next = board[nny][nnx];
 
         if (next == '.' || next == 'a') {
