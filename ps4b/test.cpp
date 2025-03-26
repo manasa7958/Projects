@@ -37,11 +37,9 @@ BOOST_AUTO_TEST_CASE(BasicMovementTest) {
 
 BOOST_AUTO_TEST_CASE(WallCollisionTest) {
     SB::Sokoban game(testLevel);
-    auto originalPos = game.playerLoc();
-
-    game.movePlayer(SB::Direction::Left); // assume wall is to the left
+    game.movePlayer(SB::Direction::Left);
     auto midPos = game.playerLoc();
-    game.movePlayer(SB::Direction::Left); // try to move into the wall
+    game.movePlayer(SB::Direction::Left);
     auto finalPos = game.playerLoc();
 
     BOOST_CHECK_EQUAL(midPos, finalPos);
