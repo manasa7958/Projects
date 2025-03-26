@@ -19,60 +19,60 @@ std::ostream& operator<<(std::ostream& os, const sf::Vector2u& vec) {
 #include <boost/algorithm/string.hpp>
 #include <boost/test/unit_test.hpp>
 
-using namespace SB;
+using std::string;
+using std::vector;
+using std::cout;
+using std::endl;
+using std::ostringstream;
 
 const std::string testLevel = "level3.lvl";
 
 BOOST_AUTO_TEST_CASE(BasicMovementTest) {
-    Sokoban game(testLevel);
+    SB::Sokoban game(testLevel);
     auto originalPos = game.playerLoc();
-
-    game.movePlayer(Direction::Right);
+    game.movePlayer(SB::Direction::Right);
     auto newPos = game.playerLoc();
-
     BOOST_CHECK_NE(originalPos, newPos);
 }
 
 BOOST_AUTO_TEST_CASE(WallCollisionTest) {
-    Sokoban game(testLevel);
+    SB::Sokoban game(testLevel);
     auto originalPos = game.playerLoc();
 
-    game.movePlayer(Direction::Up);
-    auto newPos = game.playerLoc();
+    game.movePlayer(SB::Direction::Left); // assume wall is to the left
+    auto midPos = game.playerLoc();
+    game.movePlayer(SB::Direction::Left); // try to move into the wall
+    auto finalPos = game.playerLoc();
 
-    BOOST_CHECK_EQUAL(originalPos, newPos);
+    BOOST_CHECK_EQUAL(midPos, finalPos);
 }
 
 BOOST_AUTO_TEST_CASE(BoxPushTest) {
-    Sokoban game(testLevel);
-
-    game.movePlayer(Direction::Right);
-    game.movePlayer(Direction::Right);
-
+    SB::Sokoban game(testLevel);
+    game.movePlayer(SB::Direction::Right);
+    game.movePlayer(SB::Direction::Right);
     auto playerPos = game.playerLoc();
     BOOST_CHECK_NE(playerPos, sf::Vector2u(2, 1));
 }
 
 BOOST_AUTO_TEST_CASE(VictoryConditionTest) {
-    Sokoban game(testLevel);
+    SB::Sokoban game("victory_test.lvl");
 
-    game.movePlayer(Direction::Right);
-    game.movePlayer(Direction::Right);
-    game.movePlayer(Direction::Down);
-    game.movePlayer(Direction::Left);
-    game.movePlayer(Direction::Up);
+    game.movePlayer(SB::Direction::Right);
+    game.movePlayer(SB::Direction::Right);
+    game.movePlayer(SB::Direction::Down);
+    game.movePlayer(SB::Direction::Left);
+    game.movePlayer(SB::Direction::Up);
 
     BOOST_CHECK(game.isWon());
 }
 
 BOOST_AUTO_TEST_CASE(ResetFunctionalityTest) {
-    Sokoban game(testLevel);
+    SB::Sokoban game(testLevel);
     auto initialPos = game.playerLoc();
-
-    game.movePlayer(Direction::Right);
-    game.movePlayer(Direction::Down);
+    game.movePlayer(SB::Direction::Right);
+    game.movePlayer(SB::Direction::Down);
     BOOST_CHECK_NE(game.playerLoc(), initialPos);
-
     game.reset();
     BOOST_CHECK_EQUAL(game.playerLoc(), initialPos);
 }
