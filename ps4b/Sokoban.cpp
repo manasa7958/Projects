@@ -1,6 +1,8 @@
 // Copyright Manasa praveen 2025
 #include <iostream>
 #include <fstream>
+#include <vector>
+#include <string>
 #include <stdexcept>
 #include "Sokoban.hpp"
 #include <SFML/Graphics.hpp>
