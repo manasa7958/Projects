@@ -12,7 +12,7 @@
 #include <boost/test/unit_test.hpp>
 
 BOOST_AUTO_TEST_CASE(BasicMovementTest) {
-    SB::Sokoban game("test_levels/basic_move.lvl");
+    SB::Sokoban game("basic_move.lvl");
     sf::Vector2u start = game.playerLoc();
     game.movePlayer(SB::Direction::Right);
     sf::Vector2u end = game.playerLoc();
@@ -22,7 +22,7 @@ BOOST_AUTO_TEST_CASE(BasicMovementTest) {
 }
 
 BOOST_AUTO_TEST_CASE(WallCollisionTest) {
-    SB::Sokoban game("test_levels/wall_block.lvl");
+    SB::Sokoban game("wall_block.lvl");
     sf::Vector2u start = game.playerLoc();
     game.movePlayer(SB::Direction::Left);
     sf::Vector2u end = game.playerLoc();
@@ -32,7 +32,7 @@ BOOST_AUTO_TEST_CASE(WallCollisionTest) {
 }
 
 BOOST_AUTO_TEST_CASE(BoxPushTest) {
-    SB::Sokoban game("test_levels/box_push.lvl");
+    SB::Sokoban game("box_push.lvl");
     game.movePlayer(SB::Direction::Right);
     sf::Vector2u pos = game.playerLoc();
 
@@ -41,7 +41,7 @@ BOOST_AUTO_TEST_CASE(BoxPushTest) {
 }
 
 BOOST_AUTO_TEST_CASE(BoxBlockedTest) {
-    SB::Sokoban game("test_levels/box_blocked.lvl");
+    SB::Sokoban game("box_blocked.lvl");
     sf::Vector2u start = game.playerLoc();
     game.movePlayer(SB::Direction::Right);
     sf::Vector2u end = game.playerLoc();
@@ -51,7 +51,7 @@ BOOST_AUTO_TEST_CASE(BoxBlockedTest) {
 }
 
 BOOST_AUTO_TEST_CASE(ResetTest) {
-    SB::Sokoban game("test_levels/basic_move.lvl");
+    SB::Sokoban game("basic_move.lvl");
     sf::Vector2u start = game.playerLoc();
     game.movePlayer(SB::Direction::Right);
     game.reset();
@@ -62,18 +62,18 @@ BOOST_AUTO_TEST_CASE(ResetTest) {
 }
 
 BOOST_AUTO_TEST_CASE(VictoryConditionTest) {
-    SB::Sokoban game("test_levels/victory.lvl");
+    SB::Sokoban game("victory.lvl");
     game.movePlayer(SB::Direction::Right);
     BOOST_CHECK(game.isWon());
 }
 
 BOOST_AUTO_TEST_CASE(InvalidSymbolTest) {
-    std::ofstream bad("test_levels/bad_symbol.lvl");
+    std::ofstream bad("bad_symbol.lvl");
     bad << "3 3\n"
         << "###\n"
         << "#@x\n"
         << "###\n";
     bad.close();
 
-    BOOST_CHECK_THROW(SB::Sokoban("test_levels/bad_symbol.lvl"), std::runtime_error);
+    BOOST_CHECK_THROW(SB::Sokoban("bad_symbol.lvl"), std::runtime_error);
 }
