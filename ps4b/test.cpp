@@ -106,7 +106,7 @@ BOOST_AUTO_TEST_CASE(MultipleBoxVictoryTest) {
 }
 
 BOOST_AUTO_TEST_CASE(MultipleTargetVictoryTest) {
-    SB::Sokoban game("autowin.lvl");
+    SB::Sokoban game("multiple_target.lvl");
     printBoard(game);
     if (!game.isWon()) {
         std::cout << "Game not won, inspecting board...\n";
