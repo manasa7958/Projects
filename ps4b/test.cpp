@@ -99,17 +99,18 @@ BOOST_AUTO_TEST_CASE(PushOffScreenTest) {
     BOOST_CHECK_EQUAL(game.playerLoc(), before);
 }
 
-/*BOOST_AUTO_TEST_CASE(MultipleBoxVictoryTest) {
+BOOST_AUTO_TEST_CASE(LotOfBoxesTest) {
     std::cout << ">>> multiple_box.lvl\n";
     SB::Sokoban game("multiple_box.lvl");
     printBoard(game);
     BOOST_CHECK(game.isWon());
-}*/
-BOOST_AUTO_TEST_CASE(MultipleTargetVictoryTest) {
+}
+
+/*BOOST_AUTO_TEST_CASE(MultipleTargetVictoryTest) {
     SB::Sokoban game("autowin.lvl");
     printBoard(game);
     if (!game.isWon()) {
         std::cout << "Game not won, inspecting board...\n";
     }
     BOOST_CHECK(game.isWon());
-}
+}*/
