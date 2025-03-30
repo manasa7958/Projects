@@ -49,12 +49,21 @@ sf::Vector2u Sokoban::playerLoc() const {
     return playerPosition;
 }
 
-bool Sokoban::isWon() const {
+/*bool Sokoban::isWon() const {
     return std::none_of(board.begin(), board.end(), [](const std::string& row) {
         return row.find('a') != std::string::npos;
     });
+}*/
+bool Sokoban::isWon() const {
+    for (unsigned int y = 0; y < boardHeight; ++y) {
+        for (unsigned int x = 0; x < boardWidth; ++x) {
+            if (originalBoard[y][x] == 'a') {
+                if (board[y][x] != 'B') return false;
+            }
+        }
+    }
+    return true;
 }
-
 /*void Sokoban::movePlayer(Direction dir) {
     if (gameWon) return;
     int dx = 0, dy = 0;
@@ -123,21 +132,21 @@ void Sokoban::movePlayer(Direction dir) {
     if (dest == '#') return;
 
     // --- Handle pushing box
-    if (dest == 'A' || dest == 'a') {
+    if (dest == 'A' || dest == 'B') {
         int nnx = nx + dx;
         int nny = ny + dy;
 
-        // Bounds check for box destination
+        // Bounds check for destination of the box
         if (nnx < 0 || nny < 0 || nnx >= static_cast<int>(boardWidth) ||
             nny >= static_cast<int>(boardHeight)) return;
 
         char next = board[nny][nnx];
 
-        // Next tile must be walkable
-        if (next != '.' && next != ' ' && next != 'a') return;
+        // Box cannot be pushed into wall or another box
+        if (next == '#' || next == 'A' || next == 'B') return;
 
         // Move the box
-        board[nny][nnx] = (originalBoard[nny][nnx] == 'a') ? 'a' : 'A';
+        board[nny][nnx] = (originalBoard[nny][nnx] == 'a') ? 'B' : 'A';
 
         // Restore box's previous tile
         board[ny][nx] = (originalBoard[ny][nx] == 'a') ? 'a' : '.';
@@ -156,6 +165,7 @@ void Sokoban::movePlayer(Direction dir) {
 
     gameWon = isWon();
 }
+
 
 void Sokoban::reset() {
     board = originalBoard;
@@ -185,8 +195,8 @@ void Sokoban::draw(sf::RenderTarget& target, sf::RenderStates states) const {
             sf::Sprite sprite;
             if (tile == '#') {
                 sprite.setTexture(wallTexture);
-            } else if (tile == 'A') {
-                sprite.setTexture(boxTexture);
+            } else if (tile == 'A' || tile == 'B') {
+                sprite.setTexture(boxTexture); // Draw box texture even for 'B'
             } else if (tile == 'a') {
                 sprite.setTexture(storageTexture);
             } else if (tile == '@') {
