@@ -79,7 +79,5 @@ BOOST_AUTO_TEST_CASE(InvalidSymbolTest) {
         << "###\n"
         << "#@x\n"
         << "###\n";
-    bad.close();
-
-    BOOST_CHECK_THROW(SB::Sokoban("bad_symbol.lvl"), std::runtime_error);
 }
+BOOST_CHECK_THROW(SB::Sokoban("bad_symbol.lvl"), std::runtime_error);
