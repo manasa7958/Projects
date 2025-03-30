@@ -47,70 +47,69 @@ BOOST_AUTO_TEST_CASE(CannotMoveTest) {
     auto midPos = game.playerLoc();
     game.movePlayer(SB::Direction::Left);
     auto finalPos = game.playerLoc();
-
     BOOST_CHECK_EQUAL(midPos, finalPos);
 }
 
 BOOST_AUTO_TEST_CASE(VictoryConditionTest) {
     SB::Sokoban game("victory_test.lvl");
-
     game.movePlayer(SB::Direction::Right);
     game.movePlayer(SB::Direction::Right);
     game.movePlayer(SB::Direction::Down);
     game.movePlayer(SB::Direction::Left);
     game.movePlayer(SB::Direction::Up);
-
     BOOST_CHECK(game.isWon());
 }
 
+BOOST_AUTO_TEST_CASE(MissingSymbolTest) {
+    std::cout << ">>> Testing invalid_symbol.lvl for invalid characters...\n";
+    bool threw = false;
+    try {
+        SB::Sokoban game("invalid_symbol.lvl");
+    } catch (const std::runtime_error& e) {
+        std::cout << "Caught expected exception: " << e.what() << "\n";
+        threw = true;
+    }
+    BOOST_CHECK(threw);
+}
+
 BOOST_AUTO_TEST_CASE(BoxWallCollisionTest) {
-    std::cout << ">>> box_wall.lvl\n";
     SB::Sokoban game("box_wall.lvl");
-    printBoard(game);
     auto before = game.playerLoc();
     game.movePlayer(SB::Direction::Right);
     BOOST_CHECK_EQUAL(game.playerLoc(), before);
 }
 
 BOOST_AUTO_TEST_CASE(BoxBoxCollisionTest) {
-    std::cout << ">>> box_box.lvl\n";
     SB::Sokoban game("box_box.lvl");
-    printBoard(game);
     auto before = game.playerLoc();
-    game.movePlayer(SB::Direction::Right);
+    game.movePlayer(SB::Direction::Left);
     BOOST_CHECK_EQUAL(game.playerLoc(), before);
 }
 
 BOOST_AUTO_TEST_CASE(MoveOffScreenTest) {
-    std::cout << ">>> move_offscreen.lvl\n";
     SB::Sokoban game("move_offscreen.lvl");
-    printBoard(game);
     auto before = game.playerLoc();
     game.movePlayer(SB::Direction::Up);
     BOOST_CHECK_EQUAL(game.playerLoc(), before);
 }
 
 BOOST_AUTO_TEST_CASE(PushOffScreenTest) {
-    std::cout << ">>> push_offscreen.lvl\n";
     SB::Sokoban game("push_offscreen.lvl");
-    printBoard(game);
     auto before = game.playerLoc();
     game.movePlayer(SB::Direction::Down);
     BOOST_CHECK_EQUAL(game.playerLoc(), before);
 }
 
-BOOST_AUTO_TEST_CASE(LotOfBoxesTest) {
-    std::cout << ">>> multiple_box.lvl\n";
-    SB::Sokoban game("multiple_box.lvl");
-    printBoard(game);
+BOOST_AUTO_TEST_CASE(MultipleBoxVictoryTest) {
+    SB::Sokoban game("autowin2.lvl");
     BOOST_CHECK(game.isWon());
 }
 
-/*BOOST_AUTO_TEST_CASE(MultipleTargetVictoryTest) {
+BOOST_AUTO_TEST_CASE(MultipleTargetVictoryTest) {
     SB::Sokoban game("autowin.lvl");
     printBoard(game);
     if (!game.isWon()) {
         std::cout << "Game not won, inspecting board...\n";
     }
     BOOST_CHECK(game.isWon());
-}*/
+}
