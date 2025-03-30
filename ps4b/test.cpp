@@ -61,10 +61,10 @@ BOOST_AUTO_TEST_CASE(VictoryConditionTest) {
 }
 
 BOOST_AUTO_TEST_CASE(MissingSymbolTest) {
-    std::cout << ">>> Testing invalid_symbol.lvl for invalid characters...\n";
+    std::cout << ">>> Testing for invalid characters...\n";
     bool threw = false;
     try {
-        SB::Sokoban game("invalid_symbol.lvl");
+        SB::Sokoban game("autowin2.lvl");
     } catch (const std::runtime_error& e) {
         std::cout << "Caught expected exception: " << e.what() << "\n";
         threw = true;
