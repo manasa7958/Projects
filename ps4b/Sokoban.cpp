@@ -112,7 +112,7 @@ void Sokoban::movePlayer(Direction dir) {
 }
 
 
-void Sokoban::reset() {
+/*void Sokoban::reset() {
     board = originalBoard;
     gameWon = false;
     boardWidth = originalBoard[0].size();
@@ -122,6 +122,23 @@ void Sokoban::reset() {
         if (pos != std::string::npos) {
             playerPosition = {static_cast<unsigned int>(pos), y};
             break;
+        }
+    }
+}*/
+void Sokoban::reset() {
+    board = originalBoard;
+    gameWon = false;
+    boardWidth = originalBoard[0].size();
+    boardHeight = originalBoard.size();
+    for (unsigned int y = 0; y < board.size(); ++y) {
+        for (unsigned int x = 0; x < board[y].size(); ++x) {
+            if (board[y][x] == '@') {
+                playerPosition = {static_cast<unsigned int>(x), y};
+            }
+            // Fix: convert box on goal to 'B'
+            if (originalBoard[y][x] == 'a' && board[y][x] == 'A') {
+                board[y][x] = 'B';
+            }
         }
     }
 }
