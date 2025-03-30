@@ -12,6 +12,13 @@ std::ostream& operator<<(std::ostream& os, const sf::Vector2u& vec) {
     os << "(" << vec.x << ", " << vec.y << ")";
     return os;
 }
+
+void printBoard(const SB::Sokoban& game) {
+    std::cout << "=== Current Board ===\n";
+    std::ostringstream out;
+    out << game;
+    std::cout << out.str() << std::endl;
+}
 }
 
 #define BOOST_TEST_DYN_LINK
@@ -90,8 +97,14 @@ BOOST_AUTO_TEST_CASE(MultipleBoxVictoryTest) {
     SB::Sokoban game("autowin2.lvl");
     BOOST_CHECK(game.isWon());
 }
-
 BOOST_AUTO_TEST_CASE(MultipleTargetVictoryTest) {
     SB::Sokoban game("autowin.lvl");
+
+    printBoard(game);  // << Add this
+
+    if (!game.isWon()) {
+        std::cout << "Game not won, inspecting board...\n";
+    }
+
     BOOST_CHECK(game.isWon());
 }
