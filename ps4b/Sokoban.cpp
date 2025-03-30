@@ -100,12 +100,13 @@ void Sokoban::movePlayer(Direction dir) {
         board[ny][nx] = (originalBoard[ny][nx] == 'a') ? 'a' : '.';
         board[y][x] = (originalBoard[y][x] == 'a') ? 'a' : '.';
         board[ny][nx] = '@';
-        playerPosition = { static_cast<unsigned int>(nx), static_cast<unsigned int>(ny) };
-    }
-    else if (dest == '.' || dest == ' ' || dest == 'a') {
+        playerPosition = { static_cast<unsigned int>(nx),
+            static_cast<unsigned int>(ny) };
+    } else if (dest == '.' || dest == ' ' || dest == 'a') {
         board[y][x] = (originalBoard[y][x] == 'a') ? 'a' : '.';
         board[ny][nx] = '@';
-        playerPosition = { static_cast<unsigned int>(nx), static_cast<unsigned int>(ny) };
+        playerPosition = { static_cast<unsigned int>(nx),
+            static_cast<unsigned int>(ny) };
     }
 
     gameWon = isWon();
@@ -159,7 +160,8 @@ void Sokoban::draw(sf::RenderTarget& target, sf::RenderStates states) const {
         winText.setString("You Win!");
         winText.setCharacterSize(48);
         winText.setFillColor(sf::Color::Yellow);
-        winText.setPosition(boardWidth * TILE_SIZE / 2 - 100, boardHeight * TILE_SIZE / 2 - 50);
+        winText.setPosition(boardWidth * TILE_SIZE /
+            2 - 100, boardHeight * TILE_SIZE / 2 - 50);
         target.draw(winText, states);
     }
 }
