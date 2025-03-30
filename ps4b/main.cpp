@@ -35,7 +35,8 @@ int main(int argc, char* argv[]) {
                     }
                 }
             }
-            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::R) {
+            if (event.type == sf::Event::KeyPressed &&
+                event.key.code == sf::Keyboard::R) {
                 game.reset();
             }
         }
