@@ -11,6 +11,12 @@
 #include <boost/algorithm/string.hpp>
 #include <boost/test/unit_test.hpp>
 
+BOOST_AUTO_TEST_CASE(LevelLoadSanityCheck) {
+    SB::Sokoban game("basic_move.lvl");
+    BOOST_CHECK_EQUAL(game.width(), 5);
+    BOOST_CHECK_EQUAL(game.height(), 5);
+}
+
 BOOST_AUTO_TEST_CASE(BasicMovementTest) {
     SB::Sokoban game("basic_move.lvl");
     sf::Vector2u start = game.playerLoc();
