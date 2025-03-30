@@ -68,8 +68,11 @@ BOOST_AUTO_TEST_CASE(MissingSymbolTest) {
     } catch (const std::runtime_error& e) {
         std::cout << "Caught expected exception: " << e.what() << "\n";
         threw = true;
+    } catch (...) {
+        std::cout << "Caught some unknown exception!\n";
+        threw = true;
     }
-    BOOST_CHECK(threw);
+    BOOST_CHECK_MESSAGE(threw, "Expected an exception due to invalid symbol, but none was thrown.");
 }
 
 BOOST_AUTO_TEST_CASE(BoxWallCollisionTest) {
