@@ -46,7 +46,8 @@ BOOST_AUTO_TEST_CASE(BoxBlockedTest) {
     game.movePlayer(SB::Direction::Right);
     sf::Vector2u end = game.playerLoc();
 
-    BOOST_CHECK_EQUAL(end, start);
+    BOOST_CHECK_EQUAL(end.x, start.x);
+    BOOST_CHECK_EQUAL(end.y, start.y);
 }
 
 BOOST_AUTO_TEST_CASE(ResetTest) {
@@ -56,7 +57,8 @@ BOOST_AUTO_TEST_CASE(ResetTest) {
     game.reset();
     sf::Vector2u afterReset = game.playerLoc();
 
-    BOOST_CHECK_EQUAL(afterReset, start);
+    BOOST_CHECK_EQUAL(afterReset.x, start.x);
+    BOOST_CHECK_EQUAL(afterReset.y, start.y);
 }
 
 BOOST_AUTO_TEST_CASE(VictoryConditionTest) {
