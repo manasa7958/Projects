@@ -73,14 +73,14 @@ BOOST_AUTO_TEST_CASE(BoxBoxCollisionTest) {
 }
 
 BOOST_AUTO_TEST_CASE(MoveOffScreenTest) {
-    SB::Sokoban game("pushup.lvl");
+    SB::Sokoban game("move_offscreen.lvl");
     auto before = game.playerLoc();
     game.movePlayer(SB::Direction::Up);
     BOOST_CHECK_EQUAL(game.playerLoc(), before);
 }
 
 BOOST_AUTO_TEST_CASE(PushOffScreenTest) {
-    SB::Sokoban game("pushdown.lvl");
+    SB::Sokoban game("push_offscreen.lvl");
     auto before = game.playerLoc();
     game.movePlayer(SB::Direction::Down);
     BOOST_CHECK_EQUAL(game.playerLoc(), before);
