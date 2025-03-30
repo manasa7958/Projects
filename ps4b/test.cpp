@@ -36,7 +36,7 @@ BOOST_AUTO_TEST_CASE(BoxPushTest) {
     game.movePlayer(SB::Direction::Right);
     sf::Vector2u pos = game.playerLoc();
 
-    BOOST_CHECK_EQUAL(pos.x, 2);  // Expected new X position
+    BOOST_CHECK_EQUAL(pos.x, 2);
     BOOST_CHECK_EQUAL(pos.y, 1);
 }
 
@@ -46,7 +46,7 @@ BOOST_AUTO_TEST_CASE(BoxBlockedTest) {
     game.movePlayer(SB::Direction::Right);
     sf::Vector2u end = game.playerLoc();
 
-    BOOST_CHECK_EQUAL(end, start);  // No movement should happen
+    BOOST_CHECK_EQUAL(end, start);
 }
 
 BOOST_AUTO_TEST_CASE(ResetTest) {
@@ -61,7 +61,7 @@ BOOST_AUTO_TEST_CASE(ResetTest) {
 
 BOOST_AUTO_TEST_CASE(VictoryConditionTest) {
     SB::Sokoban game("test_levels/victory.lvl");
-    game.movePlayer(SB::Direction::Right);  // Push box onto goal
+    game.movePlayer(SB::Direction::Right);
     BOOST_CHECK(game.isWon());
 }
 
