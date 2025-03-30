@@ -1,79 +1,77 @@
-// test.cpp
-#include <cassert>
+// Copyright Manasa Praveen 2025
+#include <cmath>
 #include <iostream>
+#include <sstream>
+#include <string>
+#include <fstream>
 #include "Sokoban.hpp"
 
-using namespace SB;
+#define BOOST_TEST_DYN_LINK
+#define BOOST_TEST_MODULE SokobanTests
+#include <boost/algorithm/string.hpp>
+#include <boost/test/unit_test.hpp>
 
-void testBasicMovement() {
-    Sokoban game("test_levels/basic_move.lvl");
+BOOST_AUTO_TEST_CASE(BasicMovementTest) {
+    SB::Sokoban game("test_levels/basic_move.lvl");
+    sf::Vector2u start = game.playerLoc();
+    game.movePlayer(SB::Direction::Right);
+    sf::Vector2u end = game.playerLoc();
 
-    auto initial = game.playerLoc();
-    game.movePlayer(Direction::Right);
-    auto afterMove = game.playerLoc();
-
-    assert(afterMove.x == initial.x + 1 && afterMove.y == initial.y);
-    std::cout << "Basic movement test passed\n";
+    BOOST_CHECK_EQUAL(end.x, start.x + 1);
+    BOOST_CHECK_EQUAL(end.y, start.y);
 }
 
-void testWallCollision() {
-    Sokoban game("test_levels/wall_block.lvl");
+BOOST_AUTO_TEST_CASE(WallCollisionTest) {
+    SB::Sokoban game("test_levels/wall_block.lvl");
+    sf::Vector2u start = game.playerLoc();
+    game.movePlayer(SB::Direction::Left);
+    sf::Vector2u end = game.playerLoc();
 
-    auto initial = game.playerLoc();
-    game.movePlayer(Direction::Left);
-    auto afterMove = game.playerLoc();
-
-    assert(afterMove == initial);
-    std::cout << "Wall collision test passed\n";
+    BOOST_CHECK_EQUAL(end.x, start.x);
+    BOOST_CHECK_EQUAL(end.y, start.y);
 }
 
-void testBoxPush() {
-    Sokoban game("test_levels/box_push.lvl");
+BOOST_AUTO_TEST_CASE(BoxPushTest) {
+    SB::Sokoban game("test_levels/box_push.lvl");
+    game.movePlayer(SB::Direction::Right);
+    sf::Vector2u pos = game.playerLoc();
 
-    auto boxStart = game.playerLoc();
-    game.movePlayer(Direction::Right);
-    auto newPlayer = game.playerLoc();
-
-    assert(newPlayer.x == boxStart.x + 1);
-    std::cout << "Box push test passed\n";
+    BOOST_CHECK_EQUAL(pos.x, 2);  // Expected new X position
+    BOOST_CHECK_EQUAL(pos.y, 1);
 }
 
-void testBoxBlocked() {
-    Sokoban game("test_levels/box_blocked.lvl");
+BOOST_AUTO_TEST_CASE(BoxBlockedTest) {
+    SB::Sokoban game("test_levels/box_blocked.lvl");
+    sf::Vector2u start = game.playerLoc();
+    game.movePlayer(SB::Direction::Right);
+    sf::Vector2u end = game.playerLoc();
 
-    auto pos = game.playerLoc();
-    game.movePlayer(Direction::Right);
-    assert(game.playerLoc() == pos);
-    std::cout << "Box blocked test passed\n";
+    BOOST_CHECK_EQUAL(end, start);  // No movement should happen
 }
 
-void testVictory() {
-    Sokoban game("test_levels/victory.lvl");
-
-    game.movePlayer(Direction::Right);
-    assert(game.isWon());
-    std::cout << "Victory test passed\n";
-}
-
-void testReset() {
-    Sokoban game("test_levels/basic_move.lvl");
-
-    game.movePlayer(Direction::Right);
+BOOST_AUTO_TEST_CASE(ResetTest) {
+    SB::Sokoban game("test_levels/basic_move.lvl");
+    sf::Vector2u start = game.playerLoc();
+    game.movePlayer(SB::Direction::Right);
     game.reset();
-    auto resetPos = game.playerLoc();
+    sf::Vector2u afterReset = game.playerLoc();
 
-    // Should match the original start position
-    assert(resetPos == game.playerLoc());
-    std::cout << "Reset test passed\n";
+    BOOST_CHECK_EQUAL(afterReset, start);
 }
 
-int main() {
-    testBasicMovement();
-    testWallCollision();
-    testBoxPush();
-    testBoxBlocked();
-    testVictory();
-    testReset();
-    std::cout << "All tests passed successfully!\n";
+BOOST_AUTO_TEST_CASE(VictoryConditionTest) {
+    SB::Sokoban game("test_levels/victory.lvl");
+    game.movePlayer(SB::Direction::Right);  // Push box onto goal
+    BOOST_CHECK(game.isWon());
 }
-\
+
+BOOST_AUTO_TEST_CASE(InvalidSymbolTest) {
+    std::ofstream bad("test_levels/bad_symbol.lvl");
+    bad << "3 3\n"
+        << "###\n"
+        << "#@x\n"
+        << "###\n";
+    bad.close();
+
+    BOOST_CHECK_THROW(SB::Sokoban("test_levels/bad_symbol.lvl"), std::runtime_error);
+}
