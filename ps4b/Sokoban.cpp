@@ -203,6 +203,7 @@ std::istream& operator>>(std::istream& in, Sokoban& s) {
         for (char c : s.board[i]) {
             if (c != '#' && c != '.' && c != ' ' && c != 'a' &&
                 c != 'A' && c != '@') {
+                std::cout << "INVALID CHARACTER: '" << c << "'\n";
                 throw std::runtime_error(std::string("Invalid symbol: ") + c);
             }
         }
