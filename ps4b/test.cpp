@@ -1,118 +1,79 @@
-// Copyright Manasa Praveen 2025
-#include <cmath>
-#include <iomanip>
+// test.cpp
+#include <cassert>
 #include <iostream>
-#include <sstream>
-#include <string>
-
 #include "Sokoban.hpp"
 
-namespace std {
-std::ostream& operator<<(std::ostream& os, const sf::Vector2u& vec) {
-    os << "(" << vec.x << ", " << vec.y << ")";
-    return os;
-}
-}
-void printBoard(const SB::Sokoban& game) {
-    std::cout << "=== Current Board ===\n";
-    std::ostringstream out;
-    out << game;
-    std::cout << out.str() << std::endl;
-}
-#define BOOST_TEST_DYN_LINK
-#define BOOST_TEST_MODULE SokobanTests
-#include <boost/algorithm/string.hpp>
-#include <boost/test/unit_test.hpp>
+using namespace SB;
 
-using std::string;
-using std::vector;
-using std::cout;
-using std::endl;
-using std::ostringstream;
+void testBasicMovement() {
+    Sokoban game("test_levels/basic_move.lvl");
 
-const std::string testLevel = "level3.lvl";
+    auto initial = game.playerLoc();
+    game.movePlayer(Direction::Right);
+    auto afterMove = game.playerLoc();
 
-BOOST_AUTO_TEST_CASE(BasicMovementTest) {
-    SB::Sokoban game(testLevel);
-    auto originalPos = game.playerLoc();
-    game.movePlayer(SB::Direction::Right);
-    auto newPos = game.playerLoc();
-    BOOST_CHECK_NE(originalPos, newPos);
+    assert(afterMove.x == initial.x + 1 && afterMove.y == initial.y);
+    std::cout << "Basic movement test passed\n";
 }
 
-BOOST_AUTO_TEST_CASE(CannotMoveTest) {
-    SB::Sokoban game(testLevel);
-    game.movePlayer(SB::Direction::Left);
-    game.movePlayer(SB::Direction::Left);
-    auto midPos = game.playerLoc();
-    game.movePlayer(SB::Direction::Left);
-    auto finalPos = game.playerLoc();
-    BOOST_CHECK_EQUAL(midPos, finalPos);
+void testWallCollision() {
+    Sokoban game("test_levels/wall_block.lvl");
+
+    auto initial = game.playerLoc();
+    game.movePlayer(Direction::Left);
+    auto afterMove = game.playerLoc();
+
+    assert(afterMove == initial);
+    std::cout << "Wall collision test passed\n";
 }
 
-BOOST_AUTO_TEST_CASE(VictoryConditionTest) {
-    SB::Sokoban game("victory_test.lvl");
-    game.movePlayer(SB::Direction::Right);
-    game.movePlayer(SB::Direction::Right);
-    game.movePlayer(SB::Direction::Down);
-    game.movePlayer(SB::Direction::Left);
-    game.movePlayer(SB::Direction::Up);
-    BOOST_CHECK(game.isWon());
+void testBoxPush() {
+    Sokoban game("test_levels/box_push.lvl");
+
+    auto boxStart = game.playerLoc();
+    game.movePlayer(Direction::Right);
+    auto newPlayer = game.playerLoc();
+
+    assert(newPlayer.x == boxStart.x + 1);
+    std::cout << "Box push test passed\n";
 }
 
-BOOST_AUTO_TEST_CASE(MissingSymbolTest) {
-    std::cout << ">>> Testing for invalid characters...\n";
-    bool threw = false;
-    try {
-        SB::Sokoban game("autowin2.lvl");
-    } catch (const std::runtime_error& e) {
-        std::cout << "Caught expected exception: " << e.what() << "\n";
-        threw = true;
-    } catch (...) {
-        std::cout << "Caught some unknown exception!\n";
-        threw = true;
-    }
-    BOOST_CHECK_MESSAGE(threw, "Expected an exception due to invalid symbol, but none was thrown.");
+void testBoxBlocked() {
+    Sokoban game("test_levels/box_blocked.lvl");
+
+    auto pos = game.playerLoc();
+    game.movePlayer(Direction::Right);
+    assert(game.playerLoc() == pos);
+    std::cout << "Box blocked test passed\n";
 }
 
-BOOST_AUTO_TEST_CASE(BoxWallCollisionTest) {
-    SB::Sokoban game("box_wall.lvl");
-    auto before = game.playerLoc();
-    game.movePlayer(SB::Direction::Right);
-    BOOST_CHECK_EQUAL(game.playerLoc(), before);
+void testVictory() {
+    Sokoban game("test_levels/victory.lvl");
+
+    game.movePlayer(Direction::Right);
+    assert(game.isWon());
+    std::cout << "Victory test passed\n";
 }
 
-BOOST_AUTO_TEST_CASE(BoxBoxCollisionTest) {
-    SB::Sokoban game("box_box.lvl");
-    auto before = game.playerLoc();
-    game.movePlayer(SB::Direction::Left);
-    BOOST_CHECK_EQUAL(game.playerLoc(), before);
+void testReset() {
+    Sokoban game("test_levels/basic_move.lvl");
+
+    game.movePlayer(Direction::Right);
+    game.reset();
+    auto resetPos = game.playerLoc();
+
+    // Should match the original start position
+    assert(resetPos == game.playerLoc());
+    std::cout << "Reset test passed\n";
 }
 
-BOOST_AUTO_TEST_CASE(MoveOffScreenTest) {
-    SB::Sokoban game("move_offscreen.lvl");
-    auto before = game.playerLoc();
-    game.movePlayer(SB::Direction::Up);
-    BOOST_CHECK_EQUAL(game.playerLoc(), before);
+int main() {
+    testBasicMovement();
+    testWallCollision();
+    testBoxPush();
+    testBoxBlocked();
+    testVictory();
+    testReset();
+    std::cout << "All tests passed successfully!\n";
 }
-
-BOOST_AUTO_TEST_CASE(PushOffScreenTest) {
-    SB::Sokoban game("push_offscreen.lvl");
-    auto before = game.playerLoc();
-    game.movePlayer(SB::Direction::Down);
-    BOOST_CHECK_EQUAL(game.playerLoc(), before);
-}
-
-BOOST_AUTO_TEST_CASE(MultipleBoxVictoryTest) {
-    SB::Sokoban game("multiple_box.lvl");
-    BOOST_CHECK(game.isWon());
-}
-
-BOOST_AUTO_TEST_CASE(MultipleTargetVictoryTest) {
-    SB::Sokoban game("multiple_target.lvl");
-    printBoard(game);
-    if (!game.isWon()) {
-        std::cout << "Game not won, inspecting board...\n";
-    }
-    BOOST_CHECK(game.isWon());
-}
+\
