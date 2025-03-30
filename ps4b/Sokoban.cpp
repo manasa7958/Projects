@@ -54,7 +54,7 @@ sf::Vector2u Sokoban::playerLoc() const {
 bool Sokoban::isWon() const {
     for (unsigned int y = 0; y < boardHeight; ++y) {
         for (unsigned int x = 0; x < boardWidth; ++x) {
-            if (originalBoard[y][x] == 'a' && board[y][x] != 'B') {
+            if (originalBoard[y][x] == 'a' && board[y][x] != 'B' && board[y][x] != 'A') {
                 return false;
             }
         }
