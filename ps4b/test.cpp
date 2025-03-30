@@ -72,6 +72,20 @@ BOOST_AUTO_TEST_CASE(BoxBoxCollisionTest) {
     BOOST_CHECK_EQUAL(game.playerLoc(), before);
 }
 
+BOOST_AUTO_TEST_CASE(MoveOffScreenTest) {
+    SB::Sokoban game("pushup.lvl");
+    auto before = game.playerLoc();
+    game.movePlayer(SB::Direction::Up);
+    BOOST_CHECK_EQUAL(game.playerLoc(), before);
+}
+
+BOOST_AUTO_TEST_CASE(PushOffScreenTest) {
+    SB::Sokoban game("pushdown.lvl");
+    auto before = game.playerLoc();
+    game.movePlayer(SB::Direction::Down);
+    BOOST_CHECK_EQUAL(game.playerLoc(), before);
+}
+
 BOOST_AUTO_TEST_CASE(MultipleBoxVictoryTest) {
     SB::Sokoban game("autowin2.lvl");
     BOOST_CHECK(game.isWon());
