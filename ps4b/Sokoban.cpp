@@ -37,6 +37,7 @@ Sokoban::Sokoban(const std::string& filename) {
     if (!font.loadFromFile("/System/Library/Fonts/Supplemental/Arial.ttf")) {
     throw std::runtime_error("Failed to load system font");
     }
+    reset();
 }
 
 unsigned int Sokoban::width() const {
