@@ -74,10 +74,13 @@ BOOST_AUTO_TEST_CASE(VictoryConditionTest) {
 }
 
 BOOST_AUTO_TEST_CASE(InvalidSymbolTest) {
-    std::ofstream bad("bad_symbol.lvl");
-    bad << "3 3\n"
-        << "###\n"
-        << "#@x\n"
-        << "###\n";
+    {
+        std::ofstream bad("test_levels/bad_symbol.lvl");
+        bad << "3 3\n";
+        bad << "###\n";
+        bad << "#@x\n";
+        bad << "###\n";
+    }  // File is now closed
+
+    BOOST_CHECK_THROW(SB::Sokoban("test_levels/bad_symbol.lvl"), std::runtime_error);
 }
-BOOST_CHECK_THROW(SB::Sokoban("bad_symbol.lvl"), std::runtime_error);
