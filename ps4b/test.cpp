@@ -12,15 +12,13 @@ std::ostream& operator<<(std::ostream& os, const sf::Vector2u& vec) {
     os << "(" << vec.x << ", " << vec.y << ")";
     return os;
 }
-
+}
 void printBoard(const SB::Sokoban& game) {
     std::cout << "=== Current Board ===\n";
     std::ostringstream out;
     out << game;
     std::cout << out.str() << std::endl;
 }
-}
-
 #define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MODULE SokobanTests
 #include <boost/algorithm/string.hpp>
