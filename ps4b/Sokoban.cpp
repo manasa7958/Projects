@@ -49,11 +49,6 @@ sf::Vector2u Sokoban::playerLoc() const {
     return playerPosition;
 }
 
-/*bool Sokoban::isWon() const {
-    return std::none_of(board.begin(), board.end(), [](const std::string& row) {
-        return row.find('a') != std::string::npos;
-    });
-}*/
 bool Sokoban::isWon() const {
     for (unsigned int y = 0; y < boardHeight; ++y) {
         for (unsigned int x = 0; x < boardWidth; ++x) {
@@ -64,48 +59,7 @@ bool Sokoban::isWon() const {
     }
     return true;
 }
-/*void Sokoban::movePlayer(Direction dir) {
-    if (gameWon) return;
-    int dx = 0, dy = 0;
-    switch (dir) {
-        case Direction::Up: dy = -1; break;
-        case Direction::Down: dy = 1; break;
-        case Direction::Left: dx = -1; break;
-        case Direction::Right: dx = 1; break;
-    }
 
-    int x = playerPosition.x;
-    int y = playerPosition.y;
-    int nx = x + dx;
-    int ny = y + dy;
-    if (nx < 0 || ny < 0 || nx >= static_cast<int>(boardWidth) ||
-        ny >= static_cast<int>(boardHeight)) return;
-
-    char& dest = board[ny][nx];
-    char& curr = board[y][x];
-
-    if (dest == '#') return;
-
-    if (dest == 'A' || dest == 'a') {
-        int nnx = nx + dx;
-        int nny = ny + dy;
-        if (nnx < 0 || nny < 0 || nnx >= static_cast<int>(boardWidth) ||
-            nny >= static_cast<int>(boardHeight)) return;
-        char& next = board[nny][nnx];
-
-        if (next == '.' || next == 'a') {
-            next = 'A';
-            dest = '@';
-            curr = (originalBoard[y][x] == 'a') ? 'a' : '.';
-            playerPosition = { static_cast<unsigned int>(nx), static_cast<unsigned int>(ny) };
-        }
-    } else if (dest == '.' || dest == ' ') {
-        dest = '@';
-        curr = (originalBoard[y][x] == 'a') ? 'a' : '.';
-        playerPosition = { static_cast<unsigned int>(nx), static_cast<unsigned int>(ny) };
-    }
-    gameWon = isWon();
-}*/
 void Sokoban::movePlayer(Direction dir) {
     if (gameWon) return;
 
@@ -122,41 +76,30 @@ void Sokoban::movePlayer(Direction dir) {
     int nx = x + dx;
     int ny = y + dy;
 
-    // Bounds check
     if (nx < 0 || ny < 0 || nx >= static_cast<int>(boardWidth) ||
         ny >= static_cast<int>(boardHeight)) return;
 
     char dest = board[ny][nx];
 
-    // Wall blocks movement
     if (dest == '#') return;
 
-    // --- Handle pushing box
     if (dest == 'A' || dest == 'B') {
         int nnx = nx + dx;
         int nny = ny + dy;
 
-        // Bounds check for destination of the box
         if (nnx < 0 || nny < 0 || nnx >= static_cast<int>(boardWidth) ||
             nny >= static_cast<int>(boardHeight)) return;
 
         char next = board[nny][nnx];
 
-        // Box cannot be pushed into wall or another box
         if (next == '#' || next == 'A' || next == 'B') return;
 
-        // Move the box
         board[nny][nnx] = (originalBoard[nny][nnx] == 'a') ? 'B' : 'A';
-
-        // Restore box's previous tile
         board[ny][nx] = (originalBoard[ny][nx] == 'a') ? 'a' : '.';
-
-        // Move the player
         board[y][x] = (originalBoard[y][x] == 'a') ? 'a' : '.';
         board[ny][nx] = '@';
         playerPosition = { static_cast<unsigned int>(nx), static_cast<unsigned int>(ny) };
     }
-    // --- Regular player movement
     else if (dest == '.' || dest == ' ' || dest == 'a') {
         board[y][x] = (originalBoard[y][x] == 'a') ? 'a' : '.';
         board[ny][nx] = '@';
@@ -196,7 +139,7 @@ void Sokoban::draw(sf::RenderTarget& target, sf::RenderStates states) const {
             if (tile == '#') {
                 sprite.setTexture(wallTexture);
             } else if (tile == 'A' || tile == 'B') {
-                sprite.setTexture(boxTexture); // Draw box texture even for 'B'
+                sprite.setTexture(boxTexture);
             } else if (tile == 'a') {
                 sprite.setTexture(storageTexture);
             } else if (tile == '@') {
