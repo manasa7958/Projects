@@ -95,14 +95,12 @@ void Sokoban::movePlayer(Direction dir) {
         char next = board[nny][nnx];
 
         if (next == '#' || next == 'A' || next == 'B') return;
-        
         board[nny][nnx] = (originalBoard[nny][nnx] == 'a') ? 'B' : 'A';
         board[ny][nx] = (originalBoard[ny][nx] == 'a') ? 'a' : '.';
         board[y][x] = (originalBoard[y][x] == 'a') ? 'a' : '.';
         board[ny][nx] = '@';
         playerPosition = { static_cast<unsigned int>(nx),
             static_cast<unsigned int>(ny) };
-        
     } else if (dest == '.' || dest == ' ' || dest == 'a') {
         board[y][x] = (originalBoard[y][x] == 'a') ? 'a' : '.';
         board[ny][nx] = '@';
@@ -184,14 +182,12 @@ std::istream& operator>>(std::istream& in, Sokoban& s) {
         std::getline(in, s.board[i]);
         if (s.board[i].length() != s.boardWidth)
             throw std::runtime_error("Invalid row width");
-    
         for (char c : s.board[i]) {
             if (c != '#' && c != '.' && c != ' ' && c != 'a' &&
                 c != 'A' && c != '@') {
                 throw std::runtime_error(std::string("Invalid symbol: ") + c);
             }
         }
-    
         auto pos = s.board[i].find('@');
         if (pos != std::string::npos) {
             s.playerPosition = sf::Vector2u(pos, i);
