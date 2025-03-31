@@ -89,11 +89,9 @@ void Sokoban::movePlayer(Direction dir) {
     if (dest == 'A' || dest == 'B') {
         int nnx = nx + dx;
         int nny = ny + dy;
-    
         if (nnx < 0 || nny < 0 || nnx >= static_cast<int>(boardWidth) ||
             nny >= static_cast<int>(boardHeight)) return;
         char next = board[nny][nnx];
-    
         if (next == '#' || next == 'A' || next == 'B') return;
         board[nny][nnx] = (originalBoard[nny][nnx] == 'a') ? 'B' : 'A';
         board[ny][nx] = '@';
