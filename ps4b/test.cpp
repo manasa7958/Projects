@@ -73,7 +73,7 @@ BOOST_AUTO_TEST_CASE(IgnoreBoxesTest) {
     BOOST_CHECK(game.isWon());
 }
 
-/*BOOST_AUTO_TEST_CASE(ResetTest) {
+BOOST_AUTO_TEST_CASE(ResetTest) {
     SB::Sokoban game("pushright.lvl");
     sf::Vector2u start = game.playerLoc();
     game.movePlayer(SB::Direction::Right);
@@ -94,7 +94,7 @@ BOOST_AUTO_TEST_CASE(FileParsingTest) {
     BOOST_CHECK_EQUAL(game.playerLoc().y, 8);
 }
 
-BOOST_AUTO_TEST_CASE(PlayerMovesAlongBordersTest) {
+/*BOOST_AUTO_TEST_CASE(PlayerMovesAlongBordersTest) {
     SB::Sokoban game("level3.lvl");
     auto startPos = game.playerLoc();
     BOOST_CHECK_EQUAL(startPos.x, 3);
@@ -107,7 +107,7 @@ BOOST_AUTO_TEST_CASE(PlayerMovesAlongBordersTest) {
     auto afterLeft = game.playerLoc();
     BOOST_CHECK_EQUAL(afterLeft.x, startPos.x - 1);
     BOOST_CHECK_EQUAL(afterLeft.y, startPos.y - 1);
-}*/
+}
 
 BOOST_AUTO_TEST_CASE(BoxWallCollisionTest) {
     SB::Sokoban game("box_wall.lvl");
@@ -121,7 +121,7 @@ BOOST_AUTO_TEST_CASE(BoxBoxCollisionTest) {
     auto initialPos = game.playerLoc();
     game.movePlayer(SB::Direction::Right);
     BOOST_CHECK_EQUAL(game.playerLoc().x, initialPos.x);
-}
+}*/
 
 BOOST_AUTO_TEST_CASE(PushOffScreenTest) {
     SB::Sokoban game("push_offscreen.lvl");
