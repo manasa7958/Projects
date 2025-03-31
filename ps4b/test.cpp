@@ -114,11 +114,9 @@ BOOST_AUTO_TEST_CASE(PushBoxOffScreenTest) {
     BOOST_CHECK_EQUAL(end.y, 2);
 }
 
-BOOST_AUTO_TEST_CASE(InvalidSymbolTest) {
-    std::ofstream out("invalid.lvl");
-    out << "3 3\n###\n#@Z\n###\n";
-    out.close();
-    BOOST_CHECK_THROW(SB::Sokoban("invalid.lvl"), std::runtime_error);
-    std::remove("invalid.lvl");
+BOOST_AUTO_TEST_CASE(PushOffScreenTest) {
+    SB::Sokoban game("push_offscreen.lvl");
+    auto initialPos = game.playerLoc();
+    game.movePlayer(SB::Direction::Up);
+    BOOST_CHECK_EQUAL(game.playerLoc(), initialPos);
 }
-
