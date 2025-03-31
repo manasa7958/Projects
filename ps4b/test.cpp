@@ -74,10 +74,10 @@ BOOST_AUTO_TEST_CASE(IgnoreBoxesTest) {
 }
 
 BOOST_AUTO_TEST_CASE(BoxOffScreenTest) {
-    std::ofstream out("push_edges.lvl");
+    std::ofstream out("edge_push.lvl");
     out << "5 5\nA....\n@....\n.....\n....@\n....A";
     out.close();
-    SB::Sokoban game("push_edges.lvl");
+    SB::Sokoban game("edge_push.lvl");
     game.reset();
     game.movePlayer(SB::Direction::Up);
     BOOST_CHECK_EQUAL(game.playerLoc(), sf::Vector2u(0, 1));
