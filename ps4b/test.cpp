@@ -12,6 +12,15 @@ std::ostream& operator<<(std::ostream& os, const sf::Vector2u& vec) {
     os << "(" << vec.x << ", " << vec.y << ")";
     return os;
 }
+std::ostream& operator<<(std::ostream& os, const std::vector<sf::Vector2u>& vecs) {
+    os << "[";
+    for (size_t i = 0; i < vecs.size(); ++i) {
+        os << vecs[i];
+        if (i < vecs.size() - 1) os << ", ";
+    }
+    os << "]";
+    return os;
+}
 }
 void printBoard(const SB::Sokoban& game) {
     std::cout << "=== Current Board ===\n";
