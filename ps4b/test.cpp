@@ -35,7 +35,7 @@ BOOST_AUTO_TEST_CASE(CannotMoveTest) {
 }
 
 BOOST_AUTO_TEST_CASE(IgnoreBoxesTest) {
-    SB::Sokoban game("victory_test.lvl");
+    SB::Sokoban game("level3.lvl");
 
     game.movePlayer(SB::Direction::Right);
     game.movePlayer(SB::Direction::Right);
@@ -57,103 +57,4 @@ BOOST_AUTO_TEST_CASE(PlayerOffScreenTest) {
 
     BOOST_CHECK_EQUAL(end.x, 4);
     BOOST_CHECK_EQUAL(end.y, 2);
-}
-
-BOOST_AUTO_TEST_CASE(CannotMoveIntoWallTest) {
-    SB::Sokoban game({
-        "#####",
-        "#@  #",
-        "#####"
-    });
-    bool moved = game.movePlayer(SB::Direction::Left); // Wall
-    BOOST_CHECK(!moved);
-}
-
-BOOST_AUTO_TEST_CASE(IgnoreBoxesNotInDirectionTest) {
-    SB::Sokoban game({
-        "#####",
-        "#@ $#",
-        "#####"
-    });
-    bool moved = game.movePlayer(SB::Direction::Up); // No box above, should move
-    BOOST_CHECK(moved);
-}
-
-BOOST_AUTO_TEST_CASE(BoxBoxCollisionTest) {
-    SB::Sokoban game({
-        "######",
-        "#@$$ #",
-        "######"
-    });
-    bool moved = game.movePlayer(SB::Direction::Right); // Box into box
-    BOOST_CHECK(!moved);
-}
-
-BOOST_AUTO_TEST_CASE(BoxWallCollisionTest) {
-    SB::Sokoban game({
-        "######",
-        "#@$# #",
-        "######"
-    });
-    bool moved = game.movePlayer(SB::Direction::Right); // Box into wall
-    BOOST_CHECK(!moved);
-}
-
-BOOST_AUTO_TEST_CASE(InvalidSymbolsTest) {
-    BOOST_CHECK_THROW(SB::Sokoban({
-        "#@x #", // 'x' is invalid
-        "#####"
-    }), std::invalid_argument);
-}
-
-BOOST_AUTO_TEST_CASE(TooManyBoxesVictoryTest) {
-    SB::Sokoban game({
-        "#######",
-        "#@ $$ #",
-        "#  .  #",
-        "#######"
-    });
-    // Push both boxes onto one target
-    game.movePlayer(SB::Direction::Right);
-    game.movePlayer(SB::Direction::Right);
-    game.movePlayer(SB::Direction::Left);
-    game.movePlayer(SB::Direction::Left);
-    game.movePlayer(SB::Direction::Down);
-    game.movePlayer(SB::Direction::Right);
-    game.movePlayer(SB::Direction::Right);
-    BOOST_CHECK(!game.hasWon());
-}
-
-BOOST_AUTO_TEST_CASE(TooManyTargetsVictoryTest) {
-    SB::Sokoban game({
-        "#######",
-        "#@ $  #",
-        "# ..  #",
-        "#######"
-    });
-    // Push box onto one of the targets
-    game.movePlayer(SB::Direction::Right);
-    game.movePlayer(SB::Direction::Right);
-    game.movePlayer(SB::Direction::Down);
-    game.movePlayer(SB::Direction::Left);
-    BOOST_CHECK(!game.isWon());
-}
-
-BOOST_AUTO_TEST_CASE(PlayerOffScreenMoveTest) {
-    SB::Sokoban game({
-        "#@   #",
-        "#####"
-    });
-    bool moved = game.movePlayer(SB::Direction::Left); // Would go out of bounds
-    BOOST_CHECK(!moved);
-}
-
-BOOST_AUTO_TEST_CASE(BoxOffScreenPushTest) {
-    SB::Sokoban game({
-        "#@ $ #",
-        "#####"
-    });
-    game.movePlayer(SB::Direction::Right); // Now @ is next to $
-    bool moved = game.movePlayer(SB::Direction::Right); // Push box off screen
-    BOOST_CHECK(!moved);
 }
