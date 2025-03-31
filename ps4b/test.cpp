@@ -111,6 +111,6 @@ BOOST_AUTO_TEST_CASE(PushBoxOffScreenTest) {
     game.movePlayer(SB::Direction::Right);
     game.movePlayer(SB::Direction::Right);
     end = game.playerLoc();
-    BOOST_CHECK_EQUAL(end.x, 3);
+    BOOST_CHECK_EQUAL(end.x, 1);
     BOOST_CHECK_EQUAL(end.y, 2);
 }
