@@ -63,20 +63,10 @@ BOOST_AUTO_TEST_CASE(LotsOfBoxesTest) {
     game.movePlayer(SB::Direction::Up);
     game.movePlayer(SB::Direction::Right);
     game.movePlayer(SB::Direction::Up);
-    game.movePlayer(SB::Direction::Up);
-    game.movePlayer(SB::Direction::Left);
-    game.movePlayer(SB::Direction::Left);
-    game.movePlayer(SB::Direction::Left);
     game.movePlayer(SB::Direction::Left);
     game.movePlayer(SB::Direction::Up);
     game.movePlayer(SB::Direction::Right);
-    game.movePlayer(SB::Direction::Up);
-    game.movePlayer(SB::Direction::Right);
-    game.movePlayer(SB::Direction::Down);
-    game.movePlayer(SB::Direction::Down);
-    game.movePlayer(SB::Direction::Down);
     game.movePlayer(SB::Direction::Right);
     game.movePlayer(SB::Direction::Right);
-    game.movePlayer(SB::Direction::Up);
     BOOST_CHECK(game.isWon());
 }
