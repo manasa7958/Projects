@@ -50,3 +50,15 @@ BOOST_AUTO_TEST_CASE(CannotMoveTest) {
 
     BOOST_CHECK_EQUAL(midPos, finalPos);
 }
+
+BOOST_AUTO_TEST_CASE(VictoryConditionTest) {
+    SB::Sokoban game("victory_test.lvl");
+
+    game.movePlayer(SB::Direction::Right);
+    game.movePlayer(SB::Direction::Right);
+    game.movePlayer(SB::Direction::Down);
+    game.movePlayer(SB::Direction::Left);
+    game.movePlayer(SB::Direction::Up);
+
+    BOOST_CHECK(game.isWon());
+}
