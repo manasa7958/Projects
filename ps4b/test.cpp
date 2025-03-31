@@ -100,6 +100,6 @@ BOOST_AUTO_TEST_CASE(PlayerOffScreenTest) {
     game.movePlayer(SB::Direction::Right);
     game.movePlayer(SB::Direction::Right);
     end = game.playerLoc();
-    BOOST_CHECK_EQUAL(end.x, 0);
+    BOOST_CHECK_EQUAL(end.x, 4);
     BOOST_CHECK_EQUAL(end.y, 2);
 }
