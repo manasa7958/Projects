@@ -97,5 +97,5 @@ BOOST_AUTO_TEST_CASE(LotsOfTargetsTest) {
 }
 
 BOOST_AUTO_TEST_CASE(InvalidSymbol){
-    BOOST_CHECK_THROW(SB::Sokoban("autowin2.lvl"), std::invalid_argument);
+    BOOST_CHECK_THROW(SB::Sokoban("autowin2.lvl"), std::runtime_error);
 }
