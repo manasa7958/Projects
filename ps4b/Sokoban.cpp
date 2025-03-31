@@ -4,7 +4,7 @@
 #include <vector>
 #include <string>
 #include <stdexcept>
-#inlcude <limits>
+#include <limits>
 #include "Sokoban.hpp"
 #include <SFML/Graphics.hpp>
 
