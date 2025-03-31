@@ -38,7 +38,7 @@ BOOST_AUTO_TEST_CASE(IgnoreBoxesTest) {
     SB::Sokoban game("level2.lvl");
     sf::Vector2u pos = game.playerLoc();
     game.movePlayer(SB::Direction::Up);
-    expected_position = game.playerLoc();
+    pos = game.playerLoc();
     BOOST_CHECK_EQUAL(pos.x, 8);
     BOOST_CHECK_EQUAL(pos.y, 5);
 }
