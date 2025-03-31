@@ -93,6 +93,17 @@ BOOST_AUTO_TEST_CASE(FileParsingTest) {
     BOOST_CHECK_EQUAL(game.playerLoc().y, 8);
 }
 
+BOOST_AUTO_TEST_CASE(PlayerOffScreenTest) {
+    SB::Sokoban game("pushleft.lvl");
+    sf::Vector2u end = game.playerLoc();
+    game.movePlayer(SB::Direction::Right);
+    game.movePlayer(SB::Direction::Right);
+    game.movePlayer(SB::Direction::Right);
+    end = game.playerLoc();
+    BOOST_CHECK_EQUAL(end.x, 0);
+    BOOST_CHECK_EQUAL(end.y, 2);
+}
+
 BOOST_AUTO_TEST_CASE(PushOffScreenTest) {
     SB::Sokoban game("push_offscreen.lvl");
     auto initialPos = game.playerLoc();
