@@ -50,6 +50,10 @@ sf::Vector2u Sokoban::playerLoc() const {
     return playerPosition;
 }
 
+const std::vector<sf::Vector2u>& SB::Sokoban::boxLocs() const {
+    return boxes;
+}
+
 bool Sokoban::isWon() const {
     for (unsigned int y = 0; y < boardHeight; ++y) {
         for (unsigned int x = 0; x < boardWidth; ++x) {
