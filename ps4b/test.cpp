@@ -73,7 +73,12 @@ BOOST_AUTO_TEST_CASE(IgnoreBoxesTest) {
     BOOST_CHECK(game.isWon());
 }
 
-BOOST_AUTO_TEST_CASE(MultipleBoxVictoryTest) {
-    SB::Sokoban game("autowin2.lvl");
+
+BOOST_AUTO_TEST_CASE(MultipleTargetVictoryTest) {
+    SB::Sokoban game("autowin.lvl");
+    printBoard(game);
+    if (!game.isWon()) {
+        std::cout << "Game not won, inspecting board...\n";
+    }
     BOOST_CHECK(game.isWon());
 }
