@@ -119,6 +119,7 @@ void Sokoban::reset() {
     gameWon = false;
     boardWidth = originalBoard[0].size();
     boardHeight = originalBoard.size();
+    boxes.clear();
     for (unsigned int y = 0; y < board.size(); ++y) {
         for (unsigned int x = 0; x < board[y].size(); ++x) {
             if (board[y][x] == '@') {
@@ -126,6 +127,9 @@ void Sokoban::reset() {
             }
             if (originalBoard[y][x] == 'a' && board[y][x] == 'A') {
                 board[y][x] = 'B';
+            }
+            if (board[y][x] == 'A' || board[y][x] == 'B') {
+                boxes.push_back({x, y});
             }
         }
     }
