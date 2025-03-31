@@ -133,14 +133,12 @@ BOOST_AUTO_TEST_CASE(PlayerOffScreenTest) {
     SB::Sokoban game("offscreen.lvl");
     auto initialPos = game.playerLoc();
     game.movePlayer(SB::Direction::Up);
-    BOOST_CHECK_EQUAL(game.playerLoc().x, initialPos.x);
-    BOOST_CHECK_EQUAL(game.playerLoc().y, initialPos.y);
+    BOOST_CHECK_EQUAL(game.playerLoc(), initialPos);
 }
 
 BOOST_AUTO_TEST_CASE(PushOffScreenTest) {
     SB::Sokoban game("push_offscreen.lvl");
     auto initialPos = game.playerLoc();
     game.movePlayer(SB::Direction::Up);
-    BOOST_CHECK_EQUAL(game.playerLoc().x, initialPos.x);
-    BOOST_CHECK_EQUAL(game.playerLoc().y, initialPos.y);
+    BOOST_CHECK_EQUAL(game.playerLoc(), initialPos);
 }
