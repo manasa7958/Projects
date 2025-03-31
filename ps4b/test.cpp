@@ -106,9 +106,6 @@ BOOST_AUTO_TEST_CASE(FileParsingTest) {
 }
 
 BOOST_AUTO_TEST_CASE(BoxWallCollisionTest) {
-    std::ofstream out("boxwall.lvl");
-    out << "5 5\n.....\n..@A#\n.....\n.....\n.....";
-    out.close();
     SB::Sokoban game("boxwall.lvl");
     auto initialPos = game.playerLoc();
     game.movePlayer(SB::Direction::Right);
@@ -116,9 +113,6 @@ BOOST_AUTO_TEST_CASE(BoxWallCollisionTest) {
 }
 
 BOOST_AUTO_TEST_CASE(BoxBoxCollisionTest) {
-    std::ofstream out("boxbox.lvl");
-    out << "5 5\n.....\n..@AA\n.....\n.....\n.....";
-    out.close();
     SB::Sokoban game("boxbox.lvl");
     auto initialPos = game.playerLoc();
     game.movePlayer(SB::Direction::Right);
