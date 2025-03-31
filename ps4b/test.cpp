@@ -75,7 +75,7 @@ BOOST_AUTO_TEST_CASE(VictoryConditionTest) {
 
 BOOST_AUTO_TEST_CASE(InvalidSymbolTest) {
     {
-        std::ofstream bad("bad_symbol.lvl", true);
+        std::ofstream bad("bad_symbol.lvl");
         bad << "3 3\n";
         bad << "###\n";
         bad << "#@x\n";
