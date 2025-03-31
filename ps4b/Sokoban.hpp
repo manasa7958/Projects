@@ -45,13 +45,13 @@ class Sokoban : public sf::Drawable {
     sf::Vector2u playerPosition;
     std::vector<std::string> board;
     std::vector<std::string> originalBoard;
+    std::vector<sf::Vector2u> boxes;
     std::string originalLevelFile;
     sf::Texture wallTexture;
     sf::Texture boxTexture;
     sf::Texture groundTexture;
     sf::Texture storageTexture;
     sf::Texture playerTexture;
-    std::vector<sf::Vector2u> boxes;
     friend std::ostream& operator<<(std::ostream& out, const Sokoban& s);
     friend std::istream& operator>>(std::istream& in, Sokoban& s);
 };
