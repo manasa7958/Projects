@@ -35,6 +35,20 @@ BOOST_AUTO_TEST_CASE(CannotMoveTest) {
 }
 
 BOOST_AUTO_TEST_CASE(IgnoreBoxesTest) {
+    std::ofstream out("victory_test.lvl");
+    out << "3 5\n#####\n#@Aa#\n#####\n";
+    out.close();
+    SB::Sokoban game("victory_test.lvl");
+    game.movePlayer(SB::Direction::Right);
+    game.movePlayer(SB::Direction::Right);
+    game.movePlayer(SB::Direction::Down);
+    game.movePlayer(SB::Direction::Left);
+    game.movePlayer(SB::Direction::Up);
+
+    BOOST_CHECK(game.isWon());
+}
+
+BOOST_AUTO_TEST_CASE(BoxBoxCollisionTest) {
     SB::Sokoban game("level2.lvl");
     sf::Vector2u pos = game.playerLoc();
     game.movePlayer(SB::Direction::Up);
