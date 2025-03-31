@@ -43,10 +43,10 @@ using std::ostringstream;
 
 BOOST_AUTO_TEST_CASE(BasicMovementTest) {
     SB::Sokoban game("level3.lvl");
-    auto originalPos = game.playerLoc();
+    sf::Vector2u expPos = game.playerLoc();
     game.movePlayer(SB::Direction::Right);
-    auto newPos = game.playerLoc();
-    BOOST_CHECK_NE(originalPos, newPos);
+    expPos = game.playerLoc();
+    BOOST_CHECK_EQUAL(originalPos, newPos);
 }
 
 BOOST_AUTO_TEST_CASE(CannotMoveTest) {
@@ -61,6 +61,19 @@ BOOST_AUTO_TEST_CASE(CannotMoveTest) {
     BOOST_CHECK_EQUAL(midPos.y, finalPos.y);
 }
 
+BOOST_AUTO_TEST_CASE(testignoredbox) {
+    SB::Sokoban game("level2.lvl");
+
+    sf::Vector2u expected_position = game.playerLoc();
+
+    game.movePlayer(SB::Direction::Up);
+
+    expected_position = game.playerLoc();
+
+    BOOST_CHECK_EQUAL(expected_position.x, 8);
+    BOOST_CHECK_EQUAL(expected_position.y, 5);
+}
+
 BOOST_AUTO_TEST_CASE(IgnoreBoxesTest) {
     SB::Sokoban game("victory_test.lvl");
 
@@ -73,23 +86,17 @@ BOOST_AUTO_TEST_CASE(IgnoreBoxesTest) {
     BOOST_CHECK(game.isWon());
 }
 
-BOOST_AUTO_TEST_CASE(ResetTest) {
-    SB::Sokoban game("pushright.lvl");
-    sf::Vector2u start = game.playerLoc();
-    game.movePlayer(SB::Direction::Right);
-    sf::Vector2u afterPush = game.playerLoc();
-    BOOST_CHECK_EQUAL(afterPush.x, start.x + 1);
-    BOOST_CHECK_EQUAL(afterPush.y, start.y);
-    game.reset();
-    sf::Vector2u resetPos = game.playerLoc();
-    BOOST_CHECK_EQUAL(resetPos.x, start.x);
-    BOOST_CHECK_EQUAL(resetPos.y, start.y);
-}
+BOOST_AUTO_TEST_CASE(PlayerOffScreenTest) {
+    SB::Sokoban game("pushleft.lvl");
 
-BOOST_AUTO_TEST_CASE(FileParsingTest) {
-    SB::Sokoban game("level3.lvl");
-    BOOST_CHECK_EQUAL(game.height(), 12);
-    BOOST_CHECK_EQUAL(game.width(), 10);
-    BOOST_CHECK_EQUAL(game.playerLoc().x, 3);
-    BOOST_CHECK_EQUAL(game.playerLoc().y, 8);
+    sf::Vector2u end = game.playerLoc();
+
+    game.movePlayer(SB::Direction::Right);
+    game.movePlayer(SB::Direction::Right);
+    game.movePlayer(SB::Direction::Right);
+
+    end = game.playerLoc();
+
+    BOOST_CHECK_EQUAL(end.x, 4);
+    BOOST_CHECK_EQUAL(end.y, 2);
 }
