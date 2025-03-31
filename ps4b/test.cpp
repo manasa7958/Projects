@@ -41,10 +41,8 @@ using std::cout;
 using std::endl;
 using std::ostringstream;
 
-const std::string testLevel = "level3.lvl";
-
 BOOST_AUTO_TEST_CASE(BasicMovementTest) {
-    SB::Sokoban game(testLevel);
+    SB::Sokoban game("level3.lvl");
     auto originalPos = game.playerLoc();
     game.movePlayer(SB::Direction::Right);
     auto newPos = game.playerLoc();
@@ -52,7 +50,7 @@ BOOST_AUTO_TEST_CASE(BasicMovementTest) {
 }
 
 BOOST_AUTO_TEST_CASE(CannotMoveTest) {
-    SB::Sokoban game(testLevel);
+    SB::Sokoban game("level3.lvl");
     game.movePlayer(SB::Direction::Left);
     game.movePlayer(SB::Direction::Left);
     auto midPos = game.playerLoc();
@@ -97,41 +95,3 @@ BOOST_AUTO_TEST_CASE(FileParsingTest) {
     BOOST_CHECK_EQUAL(game.playerLoc().x, 3);
     BOOST_CHECK_EQUAL(game.playerLoc().y, 8);
 }
-
-/*
-// Breaks Missing Symbols Test
-BOOST_AUTO_TEST_CASE(PlayerMovesAlongBordersTest) {
-    SB::Sokoban game(testLevel);
-    auto startPos = game.playerLoc();
-    BOOST_CHECK_EQUAL(startPos.x, 3);
-    BOOST_CHECK_EQUAL(startPos.y, 8);
-    game.movePlayer(SB::Direction::Up);
-    auto afterUp = game.playerLoc();
-    BOOST_CHECK_EQUAL(afterUp.x, startPos.x);
-    BOOST_CHECK_EQUAL(afterUp.y, startPos.y - 1);
-    game.movePlayer(SB::Direction::Left);
-    auto afterLeft = game.playerLoc();
-    BOOST_CHECK_EQUAL(afterLeft.x, startPos.x - 1);
-    BOOST_CHECK_EQUAL(afterLeft.y, startPos.y - 1);
-}
-
-BOOST_AUTO_TEST_CASE(BoxWallCollisionTest) {
-    SB::Sokoban game("box_wall.lvl");
-    auto initialPos = game.playerLoc();
-    game.movePlayer(SB::Direction::Right);
-    BOOST_CHECK_EQUAL(game.playerLoc().x, initialPos.x);
-}
-
-BOOST_AUTO_TEST_CASE(BoxBoxCollisionTest) {
-    SB::Sokoban game("box_box.lvl");
-    auto initialPos = game.playerLoc();
-    game.movePlayer(SB::Direction::Right);
-    BOOST_CHECK_EQUAL(game.playerLoc().x, initialPos.x);
-}
-
-BOOST_AUTO_TEST_CASE(PushOffScreenTest) {
-    SB::Sokoban game("push_offscreen.lvl");
-    auto initialPos = game.playerLoc();
-    game.movePlayer(SB::Direction::Up);
-    BOOST_CHECK_EQUAL(game.playerLoc(), initialPos);
-}*/
