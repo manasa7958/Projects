@@ -11,31 +11,28 @@ namespace SB {
 
 Sokoban::Sokoban() : boardWidth(0), boardHeight(0) {}
 
-Sokoban::Sokoban(const std::string& filename, bool headless) : headlessMode(headless) {
+Sokoban::Sokoban(const std::string& filename){
     std::ifstream file(filename);
     if (!file) throw std::runtime_error("Unable to open file");
     file >> *this;
     originalBoard = board;
-
-    if (!headless) {
-        if (!wallTexture.loadFromFile("block_06.png")) {
-            throw std::runtime_error("Failed to load wall");
-        }
-        if (!boxTexture.loadFromFile("crate_03.png")) {
-            throw std::runtime_error("Failed to load box");
-        }
-        if (!groundTexture.loadFromFile("ground_01.png")) {
-            throw std::runtime_error("Failed to load ground");
-        }
-        if (!storageTexture.loadFromFile("ground_04.png")) {
-            throw std::runtime_error("Failed to load storage");
-        }
-        if (!playerTexture.loadFromFile("player_05.png")) {
-            throw std::runtime_error("Failed to load player");
-        }
-        if (!font.loadFromFile("/System/Library/Fonts/Supplemental/Arial.ttf")) {
-            throw std::runtime_error("Failed to load font");
-        }
+    if (!wallTexture.loadFromFile("block_06.png")) {
+        throw std::runtime_error("Failed to load wall");
+    }
+    if (!boxTexture.loadFromFile("crate_03.png")) {
+        throw std::runtime_error("Failed to load box");
+    }
+    if (!groundTexture.loadFromFile("ground_01.png")) {
+        throw std::runtime_error("Failed to load ground");
+    }
+    if (!storageTexture.loadFromFile("ground_04.png")) {
+        throw std::runtime_error("Failed to load storage");
+    }
+    if (!playerTexture.loadFromFile("player_05.png")) {
+        throw std::runtime_error("Failed to load player");
+    }
+    if (!font.loadFromFile("/System/Library/Fonts/Supplemental/Arial.ttf")) {
+        throw std::runtime_error("Failed to load font");
     }
 
     reset();
@@ -123,7 +120,6 @@ void Sokoban::reset() {
             if (board[y][x] == '@') {
                 playerPosition = {static_cast<unsigned int>(x), y};
             }
-            // Fix: convert box on goal to 'B'
             if (originalBoard[y][x] == 'a' && board[y][x] == 'A') {
                 board[y][x] = 'B';
             }
