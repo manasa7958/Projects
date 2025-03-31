@@ -80,7 +80,7 @@ BOOST_AUTO_TEST_CASE(InvalidSymbolTest) {
         bad << "###\n";
         bad << "#@x\n";
         bad << "###\n";
-    }  // File is now closed
+    }
 
     BOOST_CHECK_THROW(SB::Sokoban("bad_symbol.lvl", true), std::runtime_error);
 }
