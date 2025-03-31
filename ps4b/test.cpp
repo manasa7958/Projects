@@ -46,8 +46,7 @@ BOOST_AUTO_TEST_CASE(BasicMovementTest) {
     auto originalPos = game.playerLoc();
     game.movePlayer(SB::Direction::Right);
     auto newPos = game.playerLoc();
-    BOOST_CHECK_NE(originalPos.x, newPos.x);
-    BOOST_CHECK_NE(originalPos.y, newPos.y);
+    BOOST_CHECK_NE(originalPos, newPos);
 }
 
 BOOST_AUTO_TEST_CASE(CannotMoveTest) {
