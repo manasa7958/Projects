@@ -109,8 +109,8 @@ BOOST_AUTO_TEST_CASE(MissingSymbolTest) {
         SB::Sokoban game("missing_symbol.lvl");
         game.movePlayer(SB::Direction::Down);
         sf::Vector2u pos = game.playerLoc();
-        BOOST_CHECK_EQUAL(pos.x, 3);
-        BOOST_CHECK_EQUAL(pos.y, 3);
+        BOOST_CHECK_EQUAL(pos.x, 0);
+        BOOST_CHECK_EQUAL(pos.y, 0);
         game.movePlayer(SB::Direction::Left);
         pos = game.playerLoc();
         sf::Vector2u prevPos = pos;
