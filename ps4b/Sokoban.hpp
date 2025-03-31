@@ -33,6 +33,7 @@ class Sokoban : public sf::Drawable {
 
     void undo();  // Optional XC
     void redo();  // Optional XC
+
  protected:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
