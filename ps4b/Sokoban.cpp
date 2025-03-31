@@ -175,11 +175,13 @@ std::istream& operator>>(std::istream& in, Sokoban& s) {
     in >> s.boardHeight >> s.boardWidth;
     s.board.clear();
     s.board.resize(s.boardHeight);
-    in.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    in.ignore();
+
     for (unsigned int i = 0; i < s.boardHeight; ++i) {
         std::getline(in, s.board[i]);
         if (s.board[i].length() != s.boardWidth)
             throw std::runtime_error("Invalid row width");
+
         for (char c : s.board[i]) {
             if (c != '#' && c != '.' && c != ' ' && c != 'a' &&
                 c != 'A' && c != '@') {
@@ -192,6 +194,7 @@ std::istream& operator>>(std::istream& in, Sokoban& s) {
             s.playerPosition = sf::Vector2u(pos, i);
         }
     }
+
     return in;
 }
 
