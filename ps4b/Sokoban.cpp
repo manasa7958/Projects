@@ -53,8 +53,10 @@ sf::Vector2u Sokoban::playerLoc() const {
 bool Sokoban::isWon() const {
     for (unsigned int y = 0; y < boardHeight; ++y) {
         for (unsigned int x = 0; x < boardWidth; ++x) {
-            if (originalBoard[y][x] == 'a' && board[y][x] != 'B' && board[y][x] != 'A') {
-                return false;
+            if (originalBoard[y][x] == 'a') {
+                if (board[y][x] != 'B') {
+                    return false;
+                }
             }
         }
     }
@@ -87,24 +89,22 @@ void Sokoban::movePlayer(Direction dir) {
     if (dest == 'A' || dest == 'B') {
         int nnx = nx + dx;
         int nny = ny + dy;
-
+    
         if (nnx < 0 || nny < 0 || nnx >= static_cast<int>(boardWidth) ||
             nny >= static_cast<int>(boardHeight)) return;
-
         char next = board[nny][nnx];
-
+    
         if (next == '#' || next == 'A' || next == 'B') return;
         board[nny][nnx] = (originalBoard[nny][nnx] == 'a') ? 'B' : 'A';
-        board[ny][nx] = (originalBoard[ny][nx] == 'a') ? 'a' : '.';
-        board[y][x] = (originalBoard[y][x] == 'a') ? 'a' : '.';
         board[ny][nx] = '@';
-        playerPosition = { static_cast<unsigned int>(nx),
-            static_cast<unsigned int>(ny) };
-    } else if (dest == '.' || dest == ' ' || dest == 'a') {
         board[y][x] = (originalBoard[y][x] == 'a') ? 'a' : '.';
-        board[ny][nx] = '@';
         playerPosition = { static_cast<unsigned int>(nx),
-            static_cast<unsigned int>(ny) };
+                          static_cast<unsigned int>(ny) };
+    } else {
+        board[ny][nx] = '@';
+        board[y][x] = (originalBoard[y][x] == 'a') ? 'a' : '.';
+        playerPosition = { static_cast<unsigned int>(nx),
+                          static_cast<unsigned int>(ny) };
     }
 
     gameWon = isWon();
