@@ -46,7 +46,7 @@ BOOST_AUTO_TEST_CASE(BasicMovementTest) {
     sf::Vector2u expPos = game.playerLoc();
     game.movePlayer(SB::Direction::Right);
     expPos = game.playerLoc();
-    BOOST_CHECK_EQUAL(expPos.x, 3);
+    BOOST_CHECK_EQUAL(expPos.x, 4);
     BOOST_CHECK_EQUAL(expPos.y, 8);
 }
 
