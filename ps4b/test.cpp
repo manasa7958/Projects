@@ -72,3 +72,24 @@ BOOST_AUTO_TEST_CASE(IgnoreBoxesTest) {
 
     BOOST_CHECK(game.isWon());
 }
+
+BOOST_AUTO_TEST_CASE(ResetTest) {
+    SB::Sokoban game("pushright.lvl");
+    sf::Vector2u start = game.playerLoc();
+    game.movePlayer(SB::Direction::Right);
+    sf::Vector2u afterPush = game.playerLoc();
+    BOOST_CHECK_EQUAL(afterPush.x, start.x + 1);
+    BOOST_CHECK_EQUAL(afterPush.y, start.y);
+    game.reset();
+    sf::Vector2u resetPos = game.playerLoc();
+    BOOST_CHECK_EQUAL(resetPos.x, start.x);
+    BOOST_CHECK_EQUAL(resetPos.y, start.y);
+}
+
+BOOST_AUTO_TEST_CASE(FileParsingTest) {
+    SB::Sokoban game("level3.lvl");
+    BOOST_CHECK_EQUAL(game.height(), 12);
+    BOOST_CHECK_EQUAL(game.width(), 10);
+    BOOST_CHECK_EQUAL(game.playerLoc().x, 3);
+    BOOST_CHECK_EQUAL(game.playerLoc().y, 8);
+}
