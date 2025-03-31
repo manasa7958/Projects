@@ -55,3 +55,8 @@ BOOST_AUTO_TEST_CASE(PlayerOffScreenTest) {
     BOOST_CHECK_EQUAL(end.x, 4);
     BOOST_CHECK_EQUAL(end.y, 2);
 }
+
+BOOST_AUTO_TEST_CASE(LotsOfBoxesTest) {
+    SB::Sokoban game("level5.lvl");
+    BOOST_CHECK(game.isWon());
+}
