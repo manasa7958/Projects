@@ -97,7 +97,6 @@ BOOST_AUTO_TEST_CASE(LotsOfTargetsTest) {
 }
 
 BOOST_AUTO_TEST_CASE(MissingSymbolTest) {
-    SB::Sokoban game("autowin2.lvl");
     std::ifstream file("autowin2.lvl");
     BOOST_REQUIRE(file);
 
@@ -112,7 +111,6 @@ BOOST_AUTO_TEST_CASE(MissingSymbolTest) {
         for (char c : line) {
             if (c != '#' && c != '.' && c != ' ' && c != 'a' &&
                 c != 'A' && c != '@') {
-                std::cout << "Invalid character found: " << c;
                 hasInvalid = true;
                 break;
             }
