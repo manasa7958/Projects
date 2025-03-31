@@ -85,10 +85,10 @@ BOOST_AUTO_TEST_CASE(TestBoxInteractions) {
 }
 
 BOOST_AUTO_TEST_CASE(TestBorderInteractions) {
-    SB::Sokoban game("level1.lvl");
+    SB::Sokoban game("level3.lvl");
     auto initialPos = game.playerLoc();
     BOOST_CHECK_EQUAL(initialPos.x, 3);
-    BOOST_CHECK_EQUAL(initialPos.y, 6);
+    BOOST_CHECK_EQUAL(initialPos.y, 8);
     game.movePlayer(SB::Direction::Up);
     BOOST_CHECK_EQUAL(game.playerLoc().x, initialPos.x);
     BOOST_CHECK_EQUAL(game.playerLoc().y, initialPos.y - 1);
@@ -98,11 +98,11 @@ BOOST_AUTO_TEST_CASE(TestBorderInteractions) {
 }
 
 BOOST_AUTO_TEST_CASE(FileParsingTest) {
-    SB::Sokoban game("level1.lvl");
-    BOOST_CHECK_EQUAL(game.height(), 10);
+    SB::Sokoban game("level3.lvl");
+    BOOST_CHECK_EQUAL(game.height(), 12);
     BOOST_CHECK_EQUAL(game.width(), 10);
     BOOST_CHECK_EQUAL(game.playerLoc().x, 3);
-    BOOST_CHECK_EQUAL(game.playerLoc().y, 6);
+    BOOST_CHECK_EQUAL(game.playerLoc().y, 8);
 }
 
 BOOST_AUTO_TEST_CASE(BoxWallCollisionTest) {
