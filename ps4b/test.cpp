@@ -130,6 +130,24 @@ BOOST_AUTO_TEST_CASE(BoxWallCollisionTest) {
     BOOST_CHECK_EQUAL(pos.y, 1);
 }
 
+BOOST_AUTO_TEST_CASE(BoxBoxCollisionTest) {
+    std::ofstream out("boxbox.lvl");
+    out << "5 5\n"
+        << ".....\n"
+        << "..@AA\n"
+        << ".....\n"
+        << ".....\n"
+        << ".....\n";
+    out.close();
+
+    SB::Sokoban game("boxbox.lvl");
+    sf::Vector2u pos = game.playerLoc();
+    game.movePlayer(SB::Direction::Right);
+    BOOST_CHECK_EQUAL(pos.x, 2);
+    BOOST_CHECK_EQUAL(pos.y, 1);
+}
+
+
 /*BOOST_AUTO_TEST_CASE(InvalidSymbolTest) {
     std::ofstream out("invalid.lvl");
     out << "3 3\n###\n#@Z\n###\n";
