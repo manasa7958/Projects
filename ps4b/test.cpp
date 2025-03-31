@@ -95,3 +95,10 @@ BOOST_AUTO_TEST_CASE(PlayerOffScreenTest) {
     game.movePlayer(SB::Direction::Up);
     BOOST_CHECK_EQUAL(game.playerLoc(), start);
 }
+
+BOOST_AUTO_TEST_CASE(BoxOffScreenTest) {
+    SB::Sokoban game("edge_push.lvl");
+    auto start = game.playerLoc();
+    game.movePlayer(SB::Direction::Right);
+    BOOST_CHECK_EQUAL(game.playerLoc(), start);
+}
