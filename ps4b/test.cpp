@@ -71,3 +71,19 @@ BOOST_AUTO_TEST_CASE(LotsOfBoxesTest) {
     game.movePlayer(SB::Direction::Right);
     BOOST_CHECK(game.isWon());
 }
+
+BOOST_AUTO_TEST_CASE(LotsOfTargetsTest) {
+    SB::Sokoban game("level6.lvl");
+    game.movePlayer(SB::Direction::Up);
+    game.movePlayer(SB::Direction::Up);
+    game.movePlayer(SB::Direction::Up);
+    game.movePlayer(SB::Direction::Right);
+    game.movePlayer(SB::Direction::Up);
+    game.movePlayer(SB::Direction::Left);
+    game.movePlayer(SB::Direction::Up);
+    game.movePlayer(SB::Direction::Right);
+    game.movePlayer(SB::Direction::Right);
+    game.movePlayer(SB::Direction::Right);
+    game.movePlayer(SB::Direction::Right);
+    BOOST_CHECK(game.isWon());
+}
