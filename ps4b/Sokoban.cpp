@@ -51,6 +51,7 @@ sf::Vector2u Sokoban::playerLoc() const {
 }
 
 bool Sokoban::isWon() const {
+    if (board.empty() || originalBoard.empty()) return false;
     int boxesOnTargets = 0;
     int totalBoxes = 0;
     int totalTargets = 0;
@@ -117,6 +118,7 @@ void Sokoban::movePlayer(Direction dir) {
 }
 
 void Sokoban::reset() {
+    if (originalBoard.empty() || originalBoard[0].empty()) return;
     board = originalBoard;
     gameWon = false;
     boardWidth = originalBoard[0].size();
