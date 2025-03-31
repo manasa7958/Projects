@@ -116,5 +116,5 @@ BOOST_AUTO_TEST_CASE(PushBoxOffScreenTest) {
 
 BOOST_AUTO_TEST_CASE(InvalidSymbolTest){
     SB::Sokoban game("invalid_symbol.lvl");
-    
+    BOOST_CHECK_THROW(SB::Sokoban("invalid_symbol.lvl"), std::runtime_error);
 }
