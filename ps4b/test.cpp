@@ -124,10 +124,10 @@ BOOST_AUTO_TEST_CASE(BoxWallCollisionTest) {
         << ".....\n";
     out.close();
     SB::Sokoban game("boxwall.lvl");
-    auto posBefore = game.playerLoc();
+    sf::Vector2u pos = game.playerLoc();
     game.movePlayer(SB::Direction::Right);
-    auto posAfter = game.playerLoc();
-    BOOST_CHECK_EQUAL(posAfter, posBefore);
+    BOOST_CHECK_EQUAL(pos.x, 2);
+    BOOST_CHECK_EQUAL(pos.y, 1);
 }
 
 /*BOOST_AUTO_TEST_CASE(InvalidSymbolTest) {
