@@ -114,7 +114,25 @@ BOOST_AUTO_TEST_CASE(PushBoxOffScreenTest) {
     BOOST_CHECK_EQUAL(end.y, 2);
 }
 
-BOOST_AUTO_TEST_CASE(InvalidSymbolTest){
-    SB::Sokoban game("invalid_symbol.lvl");
-    BOOST_CHECK_THROW(SB::Sokoban("invalid_symbol.lvl"), std::runtime_error);
+BOOST_AUTO_TEST_CASE(InvalidSymbolTest) {
+    const std::string filename = "invalid.lvl";
+    {
+        std::ofstream out(filename);
+        out << "3 5\n";
+        out << "#####\n";
+        out << "#@Z.#\n";
+        out << "#####\n";
+        out.close();
+    }
+
+    bool exceptionThrown = false;
+    try {
+        SB::Sokoban game(filename);
+    } catch (const std::runtime_error& e) {
+        exceptionThrown = true;
+    }
+
+    BOOST_CHECK_MESSAGE(exceptionThrown, "Expected std::runtime_error for invalid symbol not thrown");
+    
+    std::remove(filename.c_str());
 }
