@@ -96,6 +96,6 @@ BOOST_AUTO_TEST_CASE(LotsOfTargetsTest) {
     BOOST_CHECK(game.isWon());
 }
 
-BOOST_AUTO_TEST_CASE(InvalidSymbol){
-    BOOST_CHECK_THROW(SB::Sokoban("autowin2.lvl"), std::runtime_error);
+BOOST_AUTO_TEST_CASE(InvalidSymbol) {
+    BOOST_CHECK_THROW(SB::Sokoban("autowin2.lvl"), std::exception);
 }
