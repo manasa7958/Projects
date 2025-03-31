@@ -88,11 +88,9 @@ void Sokoban::movePlayer(Direction dir) {
         char next = board[nny][nnx];
         if (next == '#' || next == 'A' || next == 'B') return;
         board[nny][nnx] = (originalBoard[nny][nnx] == 'a') ? 'B' : 'A';
-        board[ny][nx] = (originalBoard[ny][nx] == 'a') ? 'a' : '.';
-        board[y][x] = (originalBoard[y][x] == 'a') ? 'a' : '.';
         board[ny][nx] = '@';
-        playerPosition = { static_cast<unsigned int>(nx),
-                           static_cast<unsigned int>(ny) };
+        board[y][x] = (originalBoard[y][x] == 'a') ? 'a' : '.';
+        playerPosition = { static_cast<unsigned int>(nx), static_cast<unsigned int>(ny) };
         gameWon = isWon();
         return;
     }
