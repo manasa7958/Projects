@@ -106,14 +106,14 @@ BOOST_AUTO_TEST_CASE(FileParsingTest) {
 }
 
 BOOST_AUTO_TEST_CASE(BoxWallCollisionTest) {
-    SB::Sokoban game("boxwall.lvl");
+    SB::Sokoban game("box_wall.lvl");
     auto initialPos = game.playerLoc();
     game.movePlayer(SB::Direction::Right);
     BOOST_CHECK_EQUAL(game.playerLoc().x, initialPos.x);
 }
 
 BOOST_AUTO_TEST_CASE(BoxBoxCollisionTest) {
-    SB::Sokoban game("boxbox.lvl");
+    SB::Sokoban game("box_box.lvl");
     auto initialPos = game.playerLoc();
     game.movePlayer(SB::Direction::Right);
     BOOST_CHECK_EQUAL(game.playerLoc().x, initialPos.x);
