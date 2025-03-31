@@ -97,26 +97,30 @@ BOOST_AUTO_TEST_CASE(LotsOfTargetsTest) {
 }
 
 BOOST_AUTO_TEST_CASE(MissingSymbolTest) {
-    std::ifstream file("autowin2.lvl");
-    BOOST_REQUIRE(file);
-
-    std::string line;
-    int height, width;
-    file >> height >> width;
-    file.ignore();
-
-    bool hasInvalid = false;
-    for (int i = 0; i < height; ++i) {
-        std::getline(file, line);
-        for (char c : line) {
-            if (c != '#' && c != '.' && c != ' ' && c != 'a' &&
-                c != 'A' && c != '@') {
-                hasInvalid = true;
-                break;
-            }
-        }
-        if (hasInvalid) break;
+    std::ofstream testFile("missing_symbol.lvl");
+    testFile << "########\n";
+    testFile << "#  @   #\n";
+    testFile << "# X$%? #\n";
+    testFile << "#      #\n";
+    testFile << "########\n";
+    testFile.close();
+    bool exceptionThrown = false;
+    try {
+        SB::Sokoban game("missing_symbol.lvl");
+        game.movePlayer(SB::Direction::Down);
+        sf::Vector2u pos = game.playerLoc();
+        BOOST_CHECK_EQUAL(pos.x, 3);
+        BOOST_CHECK_EQUAL(pos.y, 3);
+        game.movePlayer(SB::Direction::Left);
+        pos = game.playerLoc();
+        sf::Vector2u prevPos = pos;
+        game.movePlayer(SB::Direction::Right);
+        pos = game.playerLoc();
+        BOOST_CHECK_NE(prevPos.x, pos.x);
     }
-
-    BOOST_CHECK(hasInvalid);
+    catch (std::exception& e) {
+        exceptionThrown = true;
+    }
+    BOOST_CHECK_EQUAL(exceptionThrown, false);
+    std::remove("missing_symbol.lvl");
 }
