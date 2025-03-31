@@ -91,6 +91,13 @@ BOOST_AUTO_TEST_CASE(BoxOffScreenTest) {
     BOOST_CHECK_EQUAL(game.playerLoc(), pos);
 }
 
+BOOST_AUTO_TEST_CASE(PushOffScreenTest) {
+    SB::Sokoban game("push_offscreen.lvl");
+    auto before = game.playerLoc();
+    game.movePlayer(SB::Direction::Down);
+    BOOST_CHECK_EQUAL(game.playerLoc(), before);
+}
+
 BOOST_AUTO_TEST_CASE(PlayerOffScreenTest) {
     SB::Sokoban game("edge_move.lvl");
     auto start = game.playerLoc();
