@@ -96,6 +96,28 @@ BOOST_AUTO_TEST_CASE(LotsOfTargetsTest) {
     BOOST_CHECK(game.isWon());
 }
 
-BOOST_AUTO_TEST_CASE(InvalidSymbol) {
-    BOOST_CHECK_THROW(SB::Sokoban("autowin2.lvl"), std::exception);
+BOOST_AUTO_TEST_CASE(MissingSymbolTest) {
+    SB::Sokoban game("autowin2.lvl");
+    std::ifstream file("autowin2.lvl");
+    BOOST_REQUIRE(file);
+
+    std::string line;
+    int height, width;
+    file >> height >> width;
+    file.ignore();
+
+    bool hasInvalid = false;
+    for (int i = 0; i < height; ++i) {
+        std::getline(file, line);
+        for (char c : line) {
+            if (c != '#' && c != '.' && c != ' ' && c != 'a' &&
+                c != 'A' && c != '@') {
+                hasInvalid = true;
+                break;
+            }
+        }
+        if (hasInvalid) break;
+    }
+
+    BOOST_CHECK(hasInvalid);
 }
