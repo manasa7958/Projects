@@ -120,6 +120,5 @@ BOOST_AUTO_TEST_CASE(InvalidSymbolTest) {
     out.close();
 
     BOOST_CHECK_THROW(SB::Sokoban("invalid.lvl"), std::runtime_error);
-    
     std::remove("invalid.lvl");
 }
