@@ -35,7 +35,6 @@ Sokoban::Sokoban(const std::string& filename) {
     if (!font.loadFromFile("/System/Library/Fonts/Supplemental/Arial.ttf")) {
         throw std::runtime_error("Failed to load font");
     }
-
     reset();
 }
 
@@ -86,7 +85,6 @@ void Sokoban::movePlayer(Direction dir) {
         int nny = ny + dy;
         if (nnx < 0 || nny < 0 || nnx >= static_cast<int>(boardWidth) ||
             nny >= static_cast<int>(boardHeight)) return;
-
         char next = board[nny][nnx];
         if (next == '#' || next == 'A' || next == 'B') return;
         board[nny][nnx] = (originalBoard[nny][nnx] == 'a') ? 'B' : 'A';
@@ -173,22 +171,24 @@ std::ostream& operator<<(std::ostream& out, const Sokoban& s) {
 
 std::istream& operator>>(std::istream& in, Sokoban& s) {
     in >> s.boardHeight >> s.boardWidth;
+    in.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
     s.board.clear();
     s.board.resize(s.boardHeight);
-    in.ignore();
 
     for (unsigned int i = 0; i < s.boardHeight; ++i) {
         std::getline(in, s.board[i]);
-        if (s.board[i].length() != s.boardWidth)
+        if (s.board[i].length() != s.boardWidth) {
             throw std::runtime_error("Invalid row width");
+        }
 
         for (char c : s.board[i]) {
             if (c != '#' && c != '.' && c != ' ' && c != 'a' &&
                 c != 'A' && c != '@') {
-                std::cout << "INVALID CHARACTER: '" << c << "'\n";
                 throw std::runtime_error(std::string("Invalid symbol: ") + c);
             }
         }
+
         auto pos = s.board[i].find('@');
         if (pos != std::string::npos) {
             s.playerPosition = sf::Vector2u(pos, i);
