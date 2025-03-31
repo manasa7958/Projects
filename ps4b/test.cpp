@@ -106,10 +106,11 @@ BOOST_AUTO_TEST_CASE(PlayerOffScreenTest) {
 
 BOOST_AUTO_TEST_CASE(PushBoxOffScreenTest) {
     SB::Sokoban game("push_offscreen.lvl");
+    sf::Vector2u end = game.playerLoc();
     game.movePlayer(SB::Direction::Right);
     game.movePlayer(SB::Direction::Right);
     game.movePlayer(SB::Direction::Right);
-    auto pos = game.playerLoc();
-    BOOST_CHECK_EQUAL(pos.x, 3);
-    BOOST_CHECK_EQUAL(pos.y, 2);
+    end = game.playerLoc();
+    BOOST_CHECK_EQUAL(end.x, 3);
+    BOOST_CHECK_EQUAL(end.y, 2);
 }
