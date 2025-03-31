@@ -46,7 +46,8 @@ BOOST_AUTO_TEST_CASE(BasicMovementTest) {
     sf::Vector2u expPos = game.playerLoc();
     game.movePlayer(SB::Direction::Right);
     expPos = game.playerLoc();
-    BOOST_CHECK_EQUAL(originalPos, newPos);
+    BOOST_CHECK_EQUAL(expPos.x, 3);
+    BOOST_CHECK_EQUAL(expPos.y, 8);
 }
 
 BOOST_AUTO_TEST_CASE(CannotMoveTest) {
@@ -59,19 +60,6 @@ BOOST_AUTO_TEST_CASE(CannotMoveTest) {
 
     BOOST_CHECK_EQUAL(midPos.x, finalPos.x);
     BOOST_CHECK_EQUAL(midPos.y, finalPos.y);
-}
-
-BOOST_AUTO_TEST_CASE(testignoredbox) {
-    SB::Sokoban game("level2.lvl");
-
-    sf::Vector2u expected_position = game.playerLoc();
-
-    game.movePlayer(SB::Direction::Up);
-
-    expected_position = game.playerLoc();
-
-    BOOST_CHECK_EQUAL(expected_position.x, 8);
-    BOOST_CHECK_EQUAL(expected_position.y, 5);
 }
 
 BOOST_AUTO_TEST_CASE(IgnoreBoxesTest) {
@@ -88,13 +76,11 @@ BOOST_AUTO_TEST_CASE(IgnoreBoxesTest) {
 
 BOOST_AUTO_TEST_CASE(PlayerOffScreenTest) {
     SB::Sokoban game("pushleft.lvl");
-
     sf::Vector2u end = game.playerLoc();
 
     game.movePlayer(SB::Direction::Right);
     game.movePlayer(SB::Direction::Right);
     game.movePlayer(SB::Direction::Right);
-
     end = game.playerLoc();
 
     BOOST_CHECK_EQUAL(end.x, 4);
