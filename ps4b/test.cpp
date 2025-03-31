@@ -107,6 +107,6 @@ BOOST_AUTO_TEST_CASE(MissingSymbolTest) {
     bool playerOnUnknownSymbol = (midPos.x == 1 && midPos.y == 3);
     BOOST_CHECK_EQUAL(playerOnUnknownSymbol, false);
     game.movePlayer(SB::Direction::Up);
-    sf::Vector2u end = game.playerLoc();
-    BOOST_CHECK(end.x >= 0 && end.x < 5);
+    sf::Vector2u finalPos = game.playerLoc();
+    BOOST_CHECK(finalPos.x >= 0 && finalPos.x < 5);
 }
