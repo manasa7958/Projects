@@ -58,9 +58,9 @@ BOOST_AUTO_TEST_CASE(PlayerOffScreenTest) {
 
 BOOST_AUTO_TEST_CASE(LotsOfBoxesTest) {
     SB::Sokoban game("level5.lvl");
-    game.movePlayer(SB::Direction::Right);
-    game.movePlayer(SB::Direction::Right);
-    game.movePlayer(SB::Direction::Right);
+    game.movePlayer(SB::Direction::Up);
+    game.movePlayer(SB::Direction::Up);
+    game.movePlayer(SB::Direction::Up);
     game.movePlayer(SB::Direction::Right);
     game.movePlayer(SB::Direction::Up);
     game.movePlayer(SB::Direction::Up);
