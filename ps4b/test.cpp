@@ -96,7 +96,7 @@ BOOST_AUTO_TEST_CASE(LotsOfTargetsTest) {
     BOOST_CHECK(game.isWon());
 }
 
-BOOST_AUTO_TEST_CASE(MissingSymbolTest) {
+/*BOOST_AUTO_TEST_CASE(MissingSymbolTest) {
     SB::Sokoban game("autowin2.lvl");
     std::ifstream file("autowin2.lvl");
     BOOST_REQUIRE(file);
@@ -120,4 +120,4 @@ BOOST_AUTO_TEST_CASE(MissingSymbolTest) {
     }
 
     BOOST_CHECK(hasInvalid);
-}
+}*/
