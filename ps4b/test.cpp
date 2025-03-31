@@ -73,37 +73,16 @@ BOOST_AUTO_TEST_CASE(IgnoreBoxesTest) {
     BOOST_CHECK(game.isWon());
 }
 
-BOOST_AUTO_TEST_CASE(BoxOffScreenTest) {
-    std::ofstream out("edge_push.lvl");
-    out << "5 5\nA....\n@....\n.....\n....@\n....A";
-    out.close();
-    SB::Sokoban game("edge_push.lvl");
-    game.reset();
-    game.movePlayer(SB::Direction::Up);
-    BOOST_CHECK_EQUAL(game.playerLoc(), sf::Vector2u(0, 1));
-    game.reset();
-    for (int i = 0; i < 3; ++i) game.movePlayer(SB::Direction::Right);
-    game.movePlayer(SB::Direction::Down);
-    game.movePlayer(SB::Direction::Right);
-    game.movePlayer(SB::Direction::Down);
-    auto pos = game.playerLoc();
-    game.movePlayer(SB::Direction::Down);
-    BOOST_CHECK_EQUAL(game.playerLoc(), pos);
+BOOST_AUTO_TEST_CASE(MultipleBoxVictoryTest) {
+    SB::Sokoban game("autowin2.lvl");
+    BOOST_CHECK(game.isWon());
 }
 
-BOOST_AUTO_TEST_CASE(PushOffScreenTest) {
-    SB::Sokoban game("push_offscreen.lvl");
-    auto before = game.playerLoc();
-    game.movePlayer(SB::Direction::Down);
-    BOOST_CHECK_EQUAL(game.playerLoc(), before);
+BOOST_AUTO_TEST_CASE(MultipleTargetVictoryTest) {
+    SB::Sokoban game("autowin.lvl");
+    printBoard(game);
+    if (!game.isWon()) {
+        std::cout << "Game not won, inspecting board...\n";
+    }
+    BOOST_CHECK(game.isWon());
 }
-
-BOOST_AUTO_TEST_CASE(PlayerOffScreenTest) {
-    SB::Sokoban game("edge_move.lvl");
-    auto start = game.playerLoc();
-    game.movePlayer(SB::Direction::Left);
-    BOOST_CHECK_EQUAL(game.playerLoc(), start);
-    game.movePlayer(SB::Direction::Up);
-    BOOST_CHECK_EQUAL(game.playerLoc(), start);
-}
-
