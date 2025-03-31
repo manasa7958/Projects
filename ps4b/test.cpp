@@ -98,12 +98,7 @@ BOOST_AUTO_TEST_CASE(FileParsingTest) {
 
 BOOST_AUTO_TEST_CASE(PlayerMovesAlongBordersTest) {
     std::ofstream out("borders_test.lvl");
-    out << "5 5\n"
-           "#####\n"
-           "#.@.#\n"
-           "#...#\n"
-           "#...#\n"
-           "#####\n";
+    out << "5 5\n#####\n#.@.#\n#...#\n#...#\n#####\n";
     out.close();
 
     SB::Sokoban game("borders_test.lvl");
