@@ -68,5 +68,6 @@ BOOST_AUTO_TEST_CASE(LotsOfBoxesTest) {
     game.movePlayer(SB::Direction::Right);
     game.movePlayer(SB::Direction::Right);
     game.movePlayer(SB::Direction::Right);
+    game.movePlayer(SB::Direction::Right);
     BOOST_CHECK(game.isWon());
 }
