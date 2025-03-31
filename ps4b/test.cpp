@@ -93,3 +93,18 @@ BOOST_AUTO_TEST_CASE(FileParsingTest) {
     BOOST_CHECK_EQUAL(game.playerLoc().x, 3);
     BOOST_CHECK_EQUAL(game.playerLoc().y, 8);
 }
+
+BOOST_AUTO_TEST_CASE(PlayerMovesAlongBordersTest) {
+    SB::Sokoban game("level3.lvl");
+    auto startPos = game.playerLoc();
+    BOOST_CHECK_EQUAL(startPos.x, 3);
+    BOOST_CHECK_EQUAL(startPos.y, 8);
+    game.movePlayer(SB::Direction::Up);
+    auto afterUp = game.playerLoc();
+    BOOST_CHECK_EQUAL(afterUp.x, startPos.x);
+    BOOST_CHECK_EQUAL(afterUp.y, startPos.y - 1);
+    game.movePlayer(SB::Direction::Left);
+    auto afterLeft = game.playerLoc();
+    BOOST_CHECK_EQUAL(afterLeft.x, startPos.x - 1);
+    BOOST_CHECK_EQUAL(afterLeft.y, startPos.y - 1);
+}
