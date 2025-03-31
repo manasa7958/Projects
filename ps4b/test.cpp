@@ -79,11 +79,19 @@ BOOST_AUTO_TEST_CASE(LotsOfTargetsTest) {
     game.movePlayer(SB::Direction::Up);
     game.movePlayer(SB::Direction::Right);
     game.movePlayer(SB::Direction::Up);
-    game.movePlayer(SB::Direction::Left);
+    game.movePlayer(SB::Direction::Right);
     game.movePlayer(SB::Direction::Up);
+    game.movePlayer(SB::Direction::Left);
+
+    game.movePlayer(SB::Direction::Down);
+    game.movePlayer(SB::Direction::Down);
+    game.movePlayer(SB::Direction::Down);
     game.movePlayer(SB::Direction::Right);
     game.movePlayer(SB::Direction::Right);
     game.movePlayer(SB::Direction::Right);
+    game.movePlayer(SB::Direction::Down);
+    game.movePlayer(SB::Direction::Left);
+    game.movePlayer(SB::Direction::Down);
     game.movePlayer(SB::Direction::Right);
     BOOST_CHECK(game.isWon());
 }
