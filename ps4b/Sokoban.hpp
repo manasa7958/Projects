@@ -16,7 +16,7 @@ class Sokoban : public sf::Drawable {
     static const int TILE_SIZE = 64;
 
     Sokoban();
-    explicit Sokoban(const std::string& filename, bool headless = false);
+    explicit Sokoban(const std::string& filename);
 
     unsigned int pixelHeight() const;  // Optional
     unsigned int pixelWidth() const;  // Optional
@@ -39,7 +39,6 @@ class Sokoban : public sf::Drawable {
 
  private:
     bool gameWon = false;
-    bool headlessMode = false;
     sf::Font font;
     unsigned int boardWidth;
     unsigned int boardHeight;
