@@ -92,3 +92,11 @@ BOOST_AUTO_TEST_CASE(FileParsingTest) {
     BOOST_CHECK_EQUAL(game.playerLoc().x, 3);
     BOOST_CHECK_EQUAL(game.playerLoc().y, 8);
 }
+
+BOOST_AUTO_TEST_CASE(InvalidSymbolTest) {
+    std::ofstream out("invalid.lvl");
+    out << "3 3\n###\n#@x#\n###\n";
+    out.close();
+
+    BOOST_CHECK_THROW(SB::Sokoban("invalid.lvl"), std::runtime_error);
+}
