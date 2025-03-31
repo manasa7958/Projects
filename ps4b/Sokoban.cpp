@@ -50,28 +50,39 @@ sf::Vector2u Sokoban::playerLoc() const {
     return playerPosition;
 }
 
-bool Sokoban::isWon() const {
-    if (board.empty() || originalBoard.empty()) return false;
-    int boxesOnTargets = 0;
-    int totalBoxes = 0;
-    int totalTargets = 0;
-
-    for (unsigned int y = 0; y < boardHeight; ++y) {
-        for (unsigned int x = 0; x < boardWidth; ++x) {
-            char curr = board[y][x];
-            char original = originalBoard[y][x];
-
-            if (curr == 'B') boxesOnTargets++;
-            if (curr == 'A') totalBoxes++;
-            if (curr == 'B') totalBoxes++;
-
-            if (original == 'a') totalTargets++;
+// >>, << operators
+std::ostream& operator<<(std::ostream& out, const Sokoban& s) {
+    out << s.boardHeight << " " << s.boardWidth << "\n";
+    for (const auto& row : s.board) {
+        out << row << "\n";
+    }
+    return out;
+}
+std::istream& operator>>(std::istream& in, Sokoban& s) {
+    in >> s.boardHeight >> s.boardWidth;
+    s.board.clear();
+    s.board.resize(s.boardHeight);
+    in.ignore();
+    for (unsigned int i = 0; i < s.boardHeight; ++i) {
+        std::getline(in, s.board[i]);
+        if (s.board[i].length() != s.boardWidth)
+            throw std::runtime_error("Invalid row width");
+        for (char c : s.board[i]) {
+            if (c != '#' && c != '.' && c != ' ' && c != 'a' &&
+                c != 'A' && c != '@') {
+                std::cout << "INVALID CHARACTER: '" << c << "'\n";
+                throw std::invalid_argument(std::string("Invalid symbol: ") + c);
+            }
+        }
+        auto pos = s.board[i].find('@');
+        if (pos != std::string::npos) {
+            s.playerPosition = sf::Vector2u(pos, i);
         }
     }
-
-    return boxesOnTargets == totalBoxes || boxesOnTargets == totalTargets;
+    return in;
 }
 
+// Move Function
 void Sokoban::movePlayer(Direction dir) {
     if (gameWon) return;
 
@@ -117,21 +128,50 @@ void Sokoban::movePlayer(Direction dir) {
     gameWon = isWon();
 }
 
+// Check Victory!!
+bool Sokoban::isWon() const {
+    int boxes = 0;
+    int targets = 0;
+    int boxesOnTargets = 0;
+
+    for (unsigned int y = 0; y < boardHeight; ++y) {
+        for (unsigned int x = 0; x < boardWidth; ++x) {
+            char curr = board[y][x];
+            char orig = originalBoard[y][x];
+
+            if (curr == 'A' || curr == 'B') boxes++;
+            if (orig == 'a') targets++;
+            if (curr == 'B') boxesOnTargets++;
+        }
+    }
+    return boxesOnTargets == boxes || boxesOnTargets == targets;
+}
+
+
+// Reset
 void Sokoban::reset() {
     if (originalBoard.empty() || originalBoard[0].empty()) return;
+
     board = originalBoard;
     gameWon = false;
     boardWidth = originalBoard[0].size();
     boardHeight = originalBoard.size();
+    bool foundPlayer = false;
+
     for (unsigned int y = 0; y < board.size(); ++y) {
         for (unsigned int x = 0; x < board[y].size(); ++x) {
             if (board[y][x] == '@') {
-                playerPosition = {static_cast<unsigned int>(x), y};
+                playerPosition = {x, y};
+                foundPlayer = true;
             }
             if (originalBoard[y][x] == 'a' && board[y][x] == 'A') {
                 board[y][x] = 'B';
             }
         }
+    }
+
+    if (!foundPlayer) {
+        throw std::runtime_error("Player position '@' not found in level");
     }
 }
 
@@ -172,38 +212,6 @@ void Sokoban::draw(sf::RenderTarget& target, sf::RenderStates states) const {
             2 - 100, boardHeight * TILE_SIZE / 2 - 50);
         target.draw(winText, states);
     }
-}
-
-std::ostream& operator<<(std::ostream& out, const Sokoban& s) {
-    out << s.boardHeight << " " << s.boardWidth << "\n";
-    for (const auto& row : s.board) {
-        out << row << "\n";
-    }
-    return out;
-}
-
-std::istream& operator>>(std::istream& in, Sokoban& s) {
-    in >> s.boardHeight >> s.boardWidth;
-    s.board.clear();
-    s.board.resize(s.boardHeight);
-    in.ignore();
-    for (unsigned int i = 0; i < s.boardHeight; ++i) {
-        std::getline(in, s.board[i]);
-        if (s.board[i].length() != s.boardWidth)
-            throw std::runtime_error("Invalid row width");
-        for (char c : s.board[i]) {
-            if (c != '#' && c != '.' && c != ' ' && c != 'a' &&
-                c != 'A' && c != '@') {
-                std::cout << "INVALID CHARACTER: '" << c << "'\n";
-                throw std::runtime_error(std::string("Invalid symbol: ") + c);
-            }
-        }
-        auto pos = s.board[i].find('@');
-        if (pos != std::string::npos) {
-            s.playerPosition = sf::Vector2u(pos, i);
-        }
-    }
-    return in;
 }
 
 }  // namespace SB
