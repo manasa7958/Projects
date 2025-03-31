@@ -51,26 +51,26 @@ sf::Vector2u Sokoban::playerLoc() const {
 }
 
 bool Sokoban::isWon() const {
+    int boxesOnTargets = 0;
     int totalBoxes = 0;
     int totalTargets = 0;
-    int placedBoxes = 0;
 
     for (unsigned int y = 0; y < boardHeight; ++y) {
         for (unsigned int x = 0; x < boardWidth; ++x) {
             char curr = board[y][x];
-            char orig = originalBoard[y][x];
+            char original = originalBoard[y][x];
 
+            if (curr == 'B') boxesOnTargets++;
             if (curr == 'A') totalBoxes++;
-            if (curr == 'B') {
-                totalBoxes++;
-                placedBoxes++;
-            }
-            if (orig == 'a') totalTargets++;
+            if (curr == 'B') totalBoxes++;
+
+            if (original == 'a') totalTargets++;
         }
     }
 
-    return placedBoxes == totalBoxes || placedBoxes == totalTargets;
+    return boxesOnTargets == totalBoxes || boxesOnTargets == totalTargets;
 }
+
 void Sokoban::movePlayer(Direction dir) {
     if (gameWon) return;
 
