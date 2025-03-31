@@ -50,21 +50,10 @@ sf::Vector2u Sokoban::playerLoc() const {
     return playerPosition;
 }
 
-/*bool Sokoban::isWon() const {
+bool Sokoban::isWon() const {
     for (unsigned int y = 0; y < boardHeight; ++y) {
         for (unsigned int x = 0; x < boardWidth; ++x) {
-            if (board[y][x] == 'A') {
-                return false;
-            }
-        }
-    }
-    return true;
-}*/
-bool Sokoban::isWon() const {
-    if (board.empty()) return false;
-    for (const auto& row : board) {
-        for (char c : row) {
-            if (c == 'A') {
+            if (originalBoard[y][x] == 'a' && board[y][x] != 'B') {
                 return false;
             }
         }
