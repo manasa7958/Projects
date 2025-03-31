@@ -21,7 +21,7 @@ std::ostream& operator<<(std::ostream& os, const std::vector<sf::Vector2u>& vecs
     os << "]";
     return os;
 }
-}
+} // namespace std
 void printBoard(const SB::Sokoban& game) {
     std::cout << "=== Current Board ===\n";
     std::ostringstream out;
