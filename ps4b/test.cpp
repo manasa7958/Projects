@@ -65,7 +65,7 @@ BOOST_AUTO_TEST_CASE(CannotMoveIntoWallTest) {
         "#@  #",
         "#####"
     });
-    bool moved = game.movePlayer(Direction::Left); // Wall
+    bool moved = game.movePlayer(SB::Direction::Left); // Wall
     BOOST_CHECK(!moved);
 }
 
@@ -75,7 +75,7 @@ BOOST_AUTO_TEST_CASE(IgnoreBoxesNotInDirectionTest) {
         "#@ $#",
         "#####"
     });
-    bool moved = game.movePlayer(Direction::Up); // No box above, should move
+    bool moved = game.movePlayer(SB::Direction::Up); // No box above, should move
     BOOST_CHECK(moved);
 }
 
@@ -85,7 +85,7 @@ BOOST_AUTO_TEST_CASE(BoxBoxCollisionTest) {
         "#@$$ #",
         "######"
     });
-    bool moved = game.movePlayer(Direction::Right); // Box into box
+    bool moved = game.movePlayer(SB::Direction::Right); // Box into box
     BOOST_CHECK(!moved);
 }
 
@@ -95,7 +95,7 @@ BOOST_AUTO_TEST_CASE(BoxWallCollisionTest) {
         "#@$# #",
         "######"
     });
-    bool moved = game.movePlayer(Direction::Right); // Box into wall
+    bool moved = game.movePlayer(SB::Direction::Right); // Box into wall
     BOOST_CHECK(!moved);
 }
 
@@ -114,13 +114,13 @@ BOOST_AUTO_TEST_CASE(TooManyBoxesVictoryTest) {
         "#######"
     });
     // Push both boxes onto one target
-    game.movePlayer(Direction::Right);
-    game.movePlayer(Direction::Right);
-    game.movePlayer(Direction::Left);
-    game.movePlayer(Direction::Left);
-    game.movePlayer(Direction::Down);
-    game.movePlayer(Direction::Right);
-    game.movePlayer(Direction::Right);
+    game.movePlayer(SB::Direction::Right);
+    game.movePlayer(SB::Direction::Right);
+    game.movePlayer(SB::Direction::Left);
+    game.movePlayer(SB::Direction::Left);
+    game.movePlayer(SB::Direction::Down);
+    game.movePlayer(SB::Direction::Right);
+    game.movePlayer(SB::Direction::Right);
     BOOST_CHECK(!game.hasWon());
 }
 
@@ -132,11 +132,11 @@ BOOST_AUTO_TEST_CASE(TooManyTargetsVictoryTest) {
         "#######"
     });
     // Push box onto one of the targets
-    game.movePlayer(Direction::Right);
-    game.movePlayer(Direction::Right);
-    game.movePlayer(Direction::Down);
-    game.movePlayer(Direction::Left);
-    BOOST_CHECK(!game.hasWon());
+    game.movePlayer(SB::Direction::Right);
+    game.movePlayer(SB::Direction::Right);
+    game.movePlayer(SB::Direction::Down);
+    game.movePlayer(SB::Direction::Left);
+    BOOST_CHECK(!game.isWon());
 }
 
 BOOST_AUTO_TEST_CASE(PlayerOffScreenMoveTest) {
@@ -144,7 +144,7 @@ BOOST_AUTO_TEST_CASE(PlayerOffScreenMoveTest) {
         "#@   #",
         "#####"
     });
-    bool moved = game.movePlayer(Direction::Left); // Would go out of bounds
+    bool moved = game.movePlayer(SB::Direction::Left); // Would go out of bounds
     BOOST_CHECK(!moved);
 }
 
@@ -153,7 +153,7 @@ BOOST_AUTO_TEST_CASE(BoxOffScreenPushTest) {
         "#@ $ #",
         "#####"
     });
-    game.movePlayer(Direction::Right); // Now @ is next to $
-    bool moved = game.movePlayer(Direction::Right); // Push box off screen
+    game.movePlayer(SB::Direction::Right); // Now @ is next to $
+    bool moved = game.movePlayer(SB::Direction::Right); // Push box off screen
     BOOST_CHECK(!moved);
 }
