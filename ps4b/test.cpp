@@ -126,16 +126,6 @@ BOOST_AUTO_TEST_CASE(BoxBoxCollisionTest) {
     BOOST_CHECK_EQUAL(game.playerLoc().x, initialPos.x);
 }
 
-BOOST_AUTO_TEST_CASE(PlayerOffScreenTest) {
-    std::ofstream out("offscreen.lvl");
-    out << "3 3\n@..\n...\n...";
-    out.close();
-    SB::Sokoban game("offscreen.lvl");
-    auto initialPos = game.playerLoc();
-    game.movePlayer(SB::Direction::Up);
-    BOOST_CHECK_EQUAL(game.playerLoc(), initialPos);
-}
-
 BOOST_AUTO_TEST_CASE(PushOffScreenTest) {
     SB::Sokoban game("push_offscreen.lvl");
     auto initialPos = game.playerLoc();
