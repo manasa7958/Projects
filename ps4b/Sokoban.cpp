@@ -11,31 +11,32 @@ namespace SB {
 
 Sokoban::Sokoban() : boardWidth(0), boardHeight(0) {}
 
-Sokoban::Sokoban(const std::string& filename) {
+Sokoban::Sokoban(const std::string& filename, bool headless) : headlessMode(headless) {
     std::ifstream file(filename);
     if (!file) {
         throw std::runtime_error("Unable to open file");
     }
     file >> *this;
     originalBoard = board;
-
-    if (!wallTexture.loadFromFile("block_06.png")) {
-        throw std::runtime_error("Failed to load wall texture");
-    }
-    if (!boxTexture.loadFromFile("crate_03.png")) {
-        throw std::runtime_error("Failed to load box texture");
-    }
-    if (!groundTexture.loadFromFile("ground_01.png")) {
-        throw std::runtime_error("Failed to load ground texture");
-    }
-    if (!storageTexture.loadFromFile("ground_04.png")) {
-        throw std::runtime_error("Failed to load storage texture");
-    }
-    if (!playerTexture.loadFromFile("player_05.png")) {
-        throw std::runtime_error("Failed to load player texture");
-    }
-    if (!font.loadFromFile("/System/Library/Fonts/Supplemental/Arial.ttf")) {
-    throw std::runtime_error("Failed to load system font");
+    if (!headless) {
+        if (!wallTexture.loadFromFile("block_06.png")) {
+            throw std::runtime_error("Failed to load wall texture");
+        }
+        if (!boxTexture.loadFromFile("crate_03.png")) {
+            throw std::runtime_error("Failed to load box texture");
+        }
+        if (!groundTexture.loadFromFile("ground_01.png")) {
+            throw std::runtime_error("Failed to load ground texture");
+        }
+        if (!storageTexture.loadFromFile("ground_04.png")) {
+            throw std::runtime_error("Failed to load storage texture");
+        }
+        if (!playerTexture.loadFromFile("player_05.png")) {
+            throw std::runtime_error("Failed to load player texture");
+        }
+        if (!font.loadFromFile("/System/Library/Fonts/Supplemental/Arial.ttf")) {
+            throw std::runtime_error("Failed to load system font");
+        }
     }
     reset();
 }
@@ -112,20 +113,6 @@ void Sokoban::movePlayer(Direction dir) {
     gameWon = isWon();
 }
 
-
-/*void Sokoban::reset() {
-    board = originalBoard;
-    gameWon = false;
-    boardWidth = originalBoard[0].size();
-    boardHeight = originalBoard.size();
-    for (unsigned int y = 0; y < board.size(); ++y) {
-        auto pos = board[y].find('@');
-        if (pos != std::string::npos) {
-            playerPosition = {static_cast<unsigned int>(pos), y};
-            break;
-        }
-    }
-}*/
 void Sokoban::reset() {
     board = originalBoard;
     gameWon = false;
@@ -145,6 +132,7 @@ void Sokoban::reset() {
 }
 
 void Sokoban::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+    if (headlessMode) return;
     for (unsigned int y = 0; y < boardHeight; ++y) {
         for (unsigned int x = 0; x < boardWidth; ++x) {
             char tile = board[y][x];
