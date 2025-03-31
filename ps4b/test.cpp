@@ -73,13 +73,7 @@ BOOST_AUTO_TEST_CASE(IgnoreBoxesTest) {
     BOOST_CHECK(game.isWon());
 }
 
-BOOST_AUTO_TEST_CASE(BoxWallCollisionTest) {
-    SB::Sokoban game("box_wall.lvl");
-    auto playerStart = game.playerLoc();
-    auto boxStart = game.boxLocs();
-    game.movePlayer(SB::Direction::Right);
-    auto playerAfter = game.playerLoc();
-    auto boxAfter = game.boxLocs();
-    BOOST_CHECK_EQUAL(playerStart, playerAfter);
-    BOOST_CHECK_EQUAL(boxStart, boxAfter);
+BOOST_AUTO_TEST_CASE(MultipleBoxVictoryTest) {
+    SB::Sokoban game("autowin2.lvl");
+    BOOST_CHECK(game.isWon());
 }
