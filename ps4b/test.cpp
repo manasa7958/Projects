@@ -87,7 +87,7 @@ BOOST_AUTO_TEST_CASE(MultipleTargetVictoryTest) {
     BOOST_CHECK(game.isWon());
 }
 
-BOOST_AUTO_TEST_CASE(PlayerCannotMoveOffScreen) {
+BOOST_AUTO_TEST_CASE(PlayerOffScreenTest) {
     SB::Sokoban game("edge_move.lvl");
     auto start = game.playerLoc();
     game.movePlayer(SB::Direction::Left);
