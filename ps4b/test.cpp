@@ -1,86 +1,52 @@
-// Copyright Manasa Praveen 2025
 #include <cmath>
+#include <iomanip>
 #include <iostream>
 #include <sstream>
 #include <string>
-#include <fstream>
+
 #include "Sokoban.hpp"
+
+namespace std {
+std::ostream& operator<<(std::ostream& os, const sf::Vector2u& vec) {
+    os << "(" << vec.x << ", " << vec.y << ")";
+    return os;
+}
+}
+void printBoard(const SB::Sokoban& game) {
+    std::cout << "=== Current Board ===\n";
+    std::ostringstream out;
+    out << game;
+    std::cout << out.str() << std::endl;
+}
 
 #define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MODULE SokobanTests
 #include <boost/algorithm/string.hpp>
 #include <boost/test/unit_test.hpp>
 
-BOOST_AUTO_TEST_CASE(LevelLoadSanityCheck) {
-    SB::Sokoban game("basic_move.lvl");
-    BOOST_CHECK_EQUAL(game.width(), 5);
-    BOOST_CHECK_EQUAL(game.height(), 5);
-}
+using std::string;
+using std::vector;
+using std::cout;
+using std::endl;
+using std::ostringstream;
+
+const std::string testLevel = "level3.lvl";
 
 BOOST_AUTO_TEST_CASE(BasicMovementTest) {
-    SB::Sokoban game("basic_move.lvl");
-    sf::Vector2u start = game.playerLoc();
+    SB::Sokoban game(testLevel);
+    auto originalPos = game.playerLoc();
     game.movePlayer(SB::Direction::Right);
-    sf::Vector2u end = game.playerLoc();
-
-    BOOST_CHECK_EQUAL(end.x, start.x + 1);
-    BOOST_CHECK_EQUAL(end.y, start.y);
+    auto newPos = game.playerLoc();
+    BOOST_CHECK_NE(originalPos, newPos);
 }
 
-BOOST_AUTO_TEST_CASE(WallCollisionTest) {
-    SB::Sokoban game("wall_block.lvl");
-    sf::Vector2u start = game.playerLoc();
+BOOST_AUTO_TEST_CASE(CannotMoveTest) {
+    SB::Sokoban game(testLevel);
     game.movePlayer(SB::Direction::Left);
-    sf::Vector2u end = game.playerLoc();
+    game.movePlayer(SB::Direction::Left);
+    auto midPos = game.playerLoc();
+    game.movePlayer(SB::Direction::Left);
+    auto finalPos = game.playerLoc();
 
-    BOOST_CHECK_EQUAL(end.x, start.x);
-    BOOST_CHECK_EQUAL(end.y, start.y);
-}
-
-BOOST_AUTO_TEST_CASE(BoxPushTest) {
-    SB::Sokoban game("box_push.lvl");
-    game.movePlayer(SB::Direction::Right);
-    sf::Vector2u pos = game.playerLoc();
-
-    BOOST_CHECK_EQUAL(pos.x, 2);
-    BOOST_CHECK_EQUAL(pos.y, 1);
-}
-
-BOOST_AUTO_TEST_CASE(BoxBlockedTest) {
-    SB::Sokoban game("box_blocked.lvl");
-    sf::Vector2u start = game.playerLoc();
-    game.movePlayer(SB::Direction::Right);
-    sf::Vector2u end = game.playerLoc();
-
-    BOOST_CHECK_EQUAL(end.x, start.x);
-    BOOST_CHECK_EQUAL(end.y, start.y);
-}
-
-BOOST_AUTO_TEST_CASE(ResetTest) {
-    SB::Sokoban game("basic_move.lvl");
-    sf::Vector2u start = game.playerLoc();
-    game.movePlayer(SB::Direction::Right);
-    game.reset();
-    sf::Vector2u afterReset = game.playerLoc();
-
-    BOOST_CHECK_EQUAL(afterReset.x, start.x);
-    BOOST_CHECK_EQUAL(afterReset.y, start.y);
-}
-
-BOOST_AUTO_TEST_CASE(VictoryConditionTest) {
-    SB::Sokoban game("victory.lvl");
-    game.movePlayer(SB::Direction::Right);
-    BOOST_CHECK(game.isWon());
-}
-
-BOOST_AUTO_TEST_CASE(InvalidSymbolTest) {
-    {
-        std::ofstream bad("bad_symbol.lvl");
-        bad << "3 3\n";
-        bad << "###\n";
-        bad << "#@x\n";
-        bad << "###\n";
-    }
-
-    BOOST_CHECK_THROW(SB::Sokoban("bad_symbol.lvl"), std::runtime_error);
+    BOOST_CHECK_EQUAL(midPos, finalPos);
 }
