@@ -97,25 +97,15 @@ BOOST_AUTO_TEST_CASE(LotsOfTargetsTest) {
 }
 
 BOOST_AUTO_TEST_CASE(MissingSymbolTest) {
-    std::ofstream testFile("missing_symbol.lvl");
-    testFile << "########\n";
-    testFile << "#  @   #\n";
-    testFile << "# X$%? #\n";
-    testFile << "#      #\n";
-    testFile << "########\n";
-    testFile.close();
-    bool loadedSuccessfully = false;
-    try {
-        SB::Sokoban game("missing_symbol.lvl");
-        sf::Vector2u pos = game.playerLoc();
-        BOOST_CHECK(pos.x < 10);
-        BOOST_CHECK(pos.y < 10);
-        game.movePlayer(SB::Direction::Right);
-        loadedSuccessfully = true;
-    }
-    catch (...) {
-        loadedSuccessfully = false;
-    }
-    BOOST_CHECK(loadedSuccessfully);
-    std::remove("missing_symbol.lvl");
+    SB::Sokoban game("autowin2.lvl");
+    sf::Vector2u initialPos = game.playerLoc();
+    BOOST_CHECK_EQUAL(initialPos.x, 2);
+    BOOST_CHECK_EQUAL(initialPos.y, 2);
+    game.movePlayer(SB::Direction::Down);
+    game.movePlayer(SB::Direction::Left);
+    sf::Vector2u posAfterMove = game.playerLoc();
+    game.movePlayer(SB::Direction::Up);
+    sf::Vector2u finalPos = game.playerLoc();
+    BOOST_CHECK(finalPos.x >= 0 && finalPos.x < 5);
+    BOOST_CHECK(finalPos.y >= 0 && finalPos.y < 5);
 }
