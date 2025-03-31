@@ -94,6 +94,24 @@ BOOST_AUTO_TEST_CASE(FileParsingTest) {
     BOOST_CHECK_EQUAL(game.playerLoc().y, 8);
 }
 
+BOOST_AUTO_TEST_CASE(PlayerMovesAlongBordersTest) {
+    SB::Sokoban game("level3.lvl");
+    
+    auto startPos = game.playerLoc();
+    BOOST_CHECK_EQUAL(startPos.x, 3);
+    BOOST_CHECK_EQUAL(startPos.y, 8);
+    
+    game.movePlayer(SB::Direction::Up);
+    auto afterUp = game.playerLoc();
+    BOOST_CHECK_EQUAL(afterUp.x, startPos.x);
+    BOOST_CHECK_EQUAL(afterUp.y, startPos.y - 1);
+    
+    game.movePlayer(SB::Direction::Left);
+    auto afterLeft = game.playerLoc();
+    BOOST_CHECK_EQUAL(afterLeft.x, startPos.x - 1);
+    BOOST_CHECK_EQUAL(afterLeft.y, startPos.y - 1);
+}
+
 BOOST_AUTO_TEST_CASE(BoxWallCollisionTest) {
     SB::Sokoban game("box_wall.lvl");
     auto initialPos = game.playerLoc();
@@ -120,10 +138,7 @@ BOOST_AUTO_TEST_CASE(PlayerOffScreenTest) {
 }
 
 BOOST_AUTO_TEST_CASE(PushOffScreenTest) {
-    std::ofstream out("pushoff.lvl");
-    out << "5 5\n....A\n....@\n.....\n.....\n.....";
-    out.close();
-    SB::Sokoban game("pushoff.lvl");
+    SB::Sokoban game("push_offscreen.lvl");
     auto initialPos = game.playerLoc();
     game.movePlayer(SB::Direction::Up);
     BOOST_CHECK_EQUAL(game.playerLoc().x, initialPos.x);
