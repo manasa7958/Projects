@@ -1,4 +1,4 @@
-//Copyright Manasa Praveen 2025
+// Copyright Manasa Praveen 2025
 #include <cmath>
 #include <iomanip>
 #include <iostream>
@@ -67,7 +67,10 @@ BOOST_AUTO_TEST_CASE(IgnoreBoxesTest) {
 BOOST_AUTO_TEST_CASE(BoxWallCollisionTest) {
     SB::Sokoban game("box_wall.lvl");
     auto playerStart = game.playerLoc();
+    auto boxStart = game.boxLocs();
     game.movePlayer(SB::Direction::Right);
     auto playerAfter = game.playerLoc();
+    auto boxAfter = game.boxLocs();
     BOOST_CHECK_EQUAL(playerStart, playerAfter);
+    BOOST_CHECK_EQUAL(boxStart, boxAfter);
 }
