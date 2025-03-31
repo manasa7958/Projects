@@ -35,15 +35,12 @@ BOOST_AUTO_TEST_CASE(CannotMoveTest) {
 }
 
 BOOST_AUTO_TEST_CASE(IgnoreBoxesTest) {
-    SB::Sokoban game("level3.lvl");
-
-    game.movePlayer(SB::Direction::Right);
-    game.movePlayer(SB::Direction::Right);
-    game.movePlayer(SB::Direction::Down);
-    game.movePlayer(SB::Direction::Left);
+    SB::Sokoban game("level2.lvl");
+    sf::Vector2u pos = game.playerLoc();
     game.movePlayer(SB::Direction::Up);
-
-    BOOST_CHECK(game.isWon());
+    expected_position = game.playerLoc();
+    BOOST_CHECK_EQUAL(pos.x, 8);
+    BOOST_CHECK_EQUAL(pos.y, 5);
 }
 
 BOOST_AUTO_TEST_CASE(PlayerOffScreenTest) {
