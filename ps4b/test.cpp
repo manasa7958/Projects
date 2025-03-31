@@ -96,15 +96,17 @@ BOOST_AUTO_TEST_CASE(LotsOfTargetsTest) {
     BOOST_CHECK(game.isWon());
 }
 
-/*BOOST_AUTO_TEST_CASE(MissingSymbolTest) {
+BOOST_AUTO_TEST_CASE(MissingSymbolTest) {
     SB::Sokoban game("autowin2.lvl");
     sf::Vector2u initialPos = game.playerLoc();
     BOOST_CHECK_EQUAL(initialPos.x, 2);
     BOOST_CHECK_EQUAL(initialPos.y, 2);
     game.movePlayer(SB::Direction::Down);
     game.movePlayer(SB::Direction::Left);
+    sf::Vector2u midPos = game.playerLoc();
+    bool playerOnUnknownSymbol = (midPos.x == 1 && midPos.y == 3);
+    BOOST_CHECK_EQUAL(playerOnUnknownSymbol, false);
     game.movePlayer(SB::Direction::Up);
-    sf::Vector2u finalPos = game.playerLoc();
-    BOOST_CHECK(finalPos.x >= 0 && finalPos.x < 5);
-    BOOST_CHECK(finalPos.y >= 0 && finalPos.y < 5);
-}*/
+    sf::Vector2u end = game.playerLoc();
+    BOOST_CHECK(end.x >= 0 && end.x < 5);
+}
