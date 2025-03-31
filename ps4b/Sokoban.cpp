@@ -176,7 +176,7 @@ std::istream& operator>>(std::istream& in, Sokoban& s) {
     in >> s.boardHeight >> s.boardWidth;
     s.board.clear();
     s.board.resize(s.boardHeight);
-    in.ignore();
+    in.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     for (unsigned int i = 0; i < s.boardHeight; ++i) {
         std::getline(in, s.board[i]);
         if (s.board[i].length() != s.boardWidth)
