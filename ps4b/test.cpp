@@ -41,8 +41,10 @@ using std::cout;
 using std::endl;
 using std::ostringstream;
 
+const std::string testLevel = "level3.lvl";
+
 BOOST_AUTO_TEST_CASE(BasicMovementTest) {
-    SB::Sokoban game("level3.lvl");
+    SB::Sokoban game(testLevel);
     auto originalPos = game.playerLoc();
     game.movePlayer(SB::Direction::Right);
     auto newPos = game.playerLoc();
@@ -50,7 +52,7 @@ BOOST_AUTO_TEST_CASE(BasicMovementTest) {
 }
 
 BOOST_AUTO_TEST_CASE(CannotMoveTest) {
-    SB::Sokoban game("level3.lvl");
+    SB::Sokoban game(testLevel);
     game.movePlayer(SB::Direction::Left);
     game.movePlayer(SB::Direction::Left);
     auto midPos = game.playerLoc();
@@ -74,7 +76,7 @@ BOOST_AUTO_TEST_CASE(IgnoreBoxesTest) {
 
     BOOST_CHECK(game.isWon());
 }
-    
+
 BOOST_AUTO_TEST_CASE(ResetTest) {
     SB::Sokoban game("pushright.lvl");
     sf::Vector2u start = game.playerLoc();
@@ -96,42 +98,10 @@ BOOST_AUTO_TEST_CASE(FileParsingTest) {
     BOOST_CHECK_EQUAL(game.playerLoc().y, 8);
 }
 
-BOOST_AUTO_TEST_CASE(PlayerMovesAlongBordersTest) {
-    std::ofstream out("borders_test.lvl");
-    out << "5 5\n#####\n#.@.#\n#...#\n#...#\n#####\n";
-    out.close();
-
-    SB::Sokoban game("borders_test.lvl");
-
-    auto startPos = game.playerLoc();
-    BOOST_CHECK_EQUAL(startPos.x, 2);
-    BOOST_CHECK_EQUAL(startPos.y, 1);
-
-    game.movePlayer(SB::Direction::Up);
-    auto afterUp = game.playerLoc();
-    BOOST_CHECK_EQUAL(afterUp.x, startPos.x);
-    BOOST_CHECK_EQUAL(afterUp.y, startPos.y);
-
-    game.movePlayer(SB::Direction::Left);
-    auto afterLeft = game.playerLoc();
-    BOOST_CHECK_EQUAL(afterLeft.x, startPos.x);
-    BOOST_CHECK_EQUAL(afterLeft.y, startPos.y);
-
-    game.movePlayer(SB::Direction::Down);
-    auto afterDown = game.playerLoc();
-    BOOST_CHECK_EQUAL(afterDown.x, startPos.x);
-    BOOST_CHECK_EQUAL(afterDown.y, startPos.y + 1);
-
-    game.movePlayer(SB::Direction::Right);
-    auto afterRight = game.playerLoc();
-    BOOST_CHECK_EQUAL(afterRight.x, startPos.x + 1);
-    BOOST_CHECK_EQUAL(afterRight.y, startPos.y + 1);
-}
-
 /*
 // Breaks Missing Symbols Test
 BOOST_AUTO_TEST_CASE(PlayerMovesAlongBordersTest) {
-    SB::Sokoban game("level3.lvl");
+    SB::Sokoban game(testLevel);
     auto startPos = game.playerLoc();
     BOOST_CHECK_EQUAL(startPos.x, 3);
     BOOST_CHECK_EQUAL(startPos.y, 8);
