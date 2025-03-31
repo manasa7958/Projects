@@ -33,7 +33,6 @@ class Sokoban : public sf::Drawable {
 
     void undo();  // Optional XC
     void redo();  // Optional XC
-    const std::vector<sf::Vector2u>& boxLocs() const;
  protected:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
@@ -45,7 +44,6 @@ class Sokoban : public sf::Drawable {
     sf::Vector2u playerPosition;
     std::vector<std::string> board;
     std::vector<std::string> originalBoard;
-    std::vector<sf::Vector2u> boxes;
     std::string originalLevelFile;
     sf::Texture wallTexture;
     sf::Texture boxTexture;
