@@ -128,7 +128,6 @@ void Sokoban::reset() {
 }
 
 void Sokoban::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-    if (headlessMode) return;
     for (unsigned int y = 0; y < boardHeight; ++y) {
         for (unsigned int x = 0; x < boardWidth; ++x) {
             char tile = board[y][x];
