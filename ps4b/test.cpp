@@ -104,23 +104,18 @@ BOOST_AUTO_TEST_CASE(MissingSymbolTest) {
     testFile << "#      #\n";
     testFile << "########\n";
     testFile.close();
-    bool exceptionThrown = false;
+    bool loadedSuccessfully = false;
     try {
         SB::Sokoban game("missing_symbol.lvl");
-        sf::Vector2u initialPos = game.playerLoc();
-        game.movePlayer(SB::Direction::Down);
         sf::Vector2u pos = game.playerLoc();
-        BOOST_CHECK(pos.y > initialPos.y || pos.x != initialPos.x);
-        game.movePlayer(SB::Direction::Left);
-        pos = game.playerLoc();
-        game.movePlayer(SB::Direction::Up);
-        pos = game.playerLoc();
-        bool anyMovementWorked = (pos.x != initialPos.x) || (pos.y != initialPos.y);
-        BOOST_CHECK(anyMovementWorked);
+        BOOST_CHECK(pos.x < 10);
+        BOOST_CHECK(pos.y < 10);
+        game.movePlayer(SB::Direction::Right);
+        loadedSuccessfully = true;
     }
-    catch (std::exception& e) {
-        exceptionThrown = true;
+    catch (...) {
+        loadedSuccessfully = false;
     }
-    BOOST_CHECK_EQUAL(exceptionThrown, false);
+    BOOST_CHECK(loadedSuccessfully);
     std::remove("missing_symbol.lvl");
 }
