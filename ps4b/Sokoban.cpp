@@ -66,47 +66,45 @@ bool Sokoban::isWon() const {
 
 void Sokoban::movePlayer(Direction dir) {
     if (gameWon) return;
-
     int dx = 0, dy = 0;
     switch (dir) {
-        case Direction::Up: dy = -1; break;
-        case Direction::Down: dy = 1; break;
-        case Direction::Left: dx = -1; break;
-        case Direction::Right: dx = 1; break;
+        case Direction::Up:    dy = -1; break;
+        case Direction::Down:  dy = 1;  break;
+        case Direction::Left:  dx = -1; break;
+        case Direction::Right: dx = 1;  break;
     }
-
     int x = playerPosition.x;
     int y = playerPosition.y;
     int nx = x + dx;
     int ny = y + dy;
-
     if (nx < 0 || ny < 0 || nx >= static_cast<int>(boardWidth) ||
         ny >= static_cast<int>(boardHeight)) return;
-
     char dest = board[ny][nx];
-
     if (dest == '#') return;
-
     if (dest == 'A' || dest == 'B') {
         int nnx = nx + dx;
         int nny = ny + dy;
         if (nnx < 0 || nny < 0 || nnx >= static_cast<int>(boardWidth) ||
             nny >= static_cast<int>(boardHeight)) return;
+
         char next = board[nny][nnx];
         if (next == '#' || next == 'A' || next == 'B') return;
         board[nny][nnx] = (originalBoard[nny][nnx] == 'a') ? 'B' : 'A';
-        board[ny][nx] = '@';
+        board[ny][nx] = (originalBoard[ny][nx] == 'a') ? 'a' : '.';
         board[y][x] = (originalBoard[y][x] == 'a') ? 'a' : '.';
-        playerPosition = { static_cast<unsigned int>(nx),
-                          static_cast<unsigned int>(ny) };
-    } else {
         board[ny][nx] = '@';
-        board[y][x] = (originalBoard[y][x] == 'a') ? 'a' : '.';
         playerPosition = { static_cast<unsigned int>(nx),
-                          static_cast<unsigned int>(ny) };
+                           static_cast<unsigned int>(ny) };
+        gameWon = isWon();
+        return;
     }
-
-    gameWon = isWon();
+    if (dest == '.' || dest == ' ' || dest == 'a') {
+        board[y][x] = (originalBoard[y][x] == 'a') ? 'a' : '.';
+        board[ny][nx] = '@';
+        playerPosition = { static_cast<unsigned int>(nx),
+                           static_cast<unsigned int>(ny) };
+        gameWon = isWon();
+    }
 }
 
 void Sokoban::reset() {
