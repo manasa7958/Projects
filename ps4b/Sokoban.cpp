@@ -5,6 +5,7 @@
 #include <string>
 #include <stdexcept>
 #include <algorithm>
+#include "sfml_fix.hpp"
 #include "Sokoban.hpp"
 #include <SFML/Graphics.hpp>
 
