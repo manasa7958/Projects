@@ -159,6 +159,7 @@ void Sokoban::reset() {
     boardWidth = board[0].size();
     moveCount = 0;
     gameWon = false;
+    lastDirection = Direction::Down;
 
     for (unsigned int y = 0; y < board.size(); ++y) {
         for (unsigned int x = 0; x < board[y].size(); ++x) {
