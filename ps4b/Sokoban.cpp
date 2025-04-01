@@ -176,7 +176,7 @@ void Sokoban::movePlayer(Direction dir) {
     gameWon = isWon();
 }
 
-void Sokoban::reset() {
+/*void Sokoban::reset() {
     if (originalBoard.empty()) return;
 
     board = originalBoard;
@@ -194,7 +194,30 @@ void Sokoban::reset() {
             }
         }
     }
+}*/
+
+void Sokoban::reset() {
+    if (originalBoard.empty()) return;
+
+    // Proper initialization of board and other game state variables
+    board = originalBoard;
+    boardHeight = board.size();
+    boardWidth = board[0].size();
+    moveCount = 0;
+    gameWon = false;
+
+    // Ensure player position and box on target positions are correctly set
+    for (unsigned int y = 0; y < board.size(); ++y) {
+        for (unsigned int x = 0; x < board[y].size(); ++x) {
+            if (board[y][x] == '@') {
+                playerPosition = {x, y};
+            } else if (originalBoard[y][x] == 'a' && board[y][x] == 'A') {
+                board[y][x] = 'B';  // Box is on the target
+            }
+        }
+    }
 }
+
 
 void Sokoban::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     for (unsigned int y = 0; y < boardHeight; ++y) {
@@ -243,7 +266,7 @@ std::ostream& operator<<(std::ostream& out, const Sokoban& s) {
     return out;
 }
 
-std::istream& operator>>(std::istream& in, Sokoban& s) {
+/*std::istream& operator>>(std::istream& in, Sokoban& s) {
     in >> s.boardHeight >> s.boardWidth;
     s.board.clear();
     s.board.resize(s.boardHeight);
@@ -267,6 +290,51 @@ std::istream& operator>>(std::istream& in, Sokoban& s) {
     if (!playerFound) {
         throw std::runtime_error("No player '@' found in level file");
     }
+    return in;
+}*/
+std::istream& operator>>(std::istream& in, Sokoban& s) {
+    in >> s.boardHeight >> s.boardWidth;
+    in.ignore();
+    s.board.clear();
+    s.board.resize(s.boardHeight, std::string(s.boardWidth, '.'));  // Initialize with ground ('.')
+
+    bool playerFound = false;
+    
+    for (unsigned int i = 0; i < s.boardHeight; ++i) {
+        std::getline(in, s.board[i]);
+        
+        // Ensure each row is resized properly if it’s shorter than expected
+        if (s.board[i].length() != s.boardWidth) {
+            throw std::runtime_error("Level file row length mismatch");
+        }
+
+        // Find the player position and ensure it's only set once
+        auto pos = s.board[i].find('@');
+        if (pos != std::string::npos) {
+            if (playerFound) {
+                throw std::runtime_error("Multiple players '@' found in level file");
+            }
+            s.playerPosition = {static_cast<unsigned int>(pos), i};
+            playerFound = true;
+        }
+
+        // Check for invalid characters in the level file
+        for (char c : s.board[i]) {
+            if (c != '#' && c != '.' && c != ' ' && c != 'a' &&
+                c != 'A' && c != '@') {
+                std::cout << "INVALID CHARACTER: '" << c << "'\n";
+                throw std::runtime_error(std::string("Invalid symbol: ") + c);
+            }
+        }
+    }
+
+    // If no player found, throw an error
+    if (!playerFound) {
+        throw std::runtime_error("No player '@' found in level file");
+    }
+
+    // Ensure originalBoard matches the loaded board
+    s.originalBoard = s.board;
     return in;
 }
 
