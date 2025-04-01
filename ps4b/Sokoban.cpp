@@ -74,7 +74,7 @@ bool Sokoban::isWon() const {
             char curr = board[y][x];
             char original = originalBoard[y][x];
 
-            std::cout << "At (" << x << ", " << y << "): board=" << curr << " og=" << original << "\n";
+            std::cout << x << ", " << y << ": board=" << curr << " og=" << original << "\n";
 
             if (curr == 'A') totalBoxes++;
             if (curr == 'B') {
