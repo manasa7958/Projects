@@ -16,6 +16,10 @@ sf::Texture Sokoban::groundTexture;
 sf::Texture Sokoban::playerTexture;
 sf::Texture Sokoban::boxTexture;
 sf::Texture Sokoban::storageTexture;
+sf::Texture Sokoban::playerTextureUp;
+sf::Texture Sokoban::playerTextureDown;
+sf::Texture Sokoban::playerTextureLeft;
+sf::Texture Sokoban::playerTextureRight;
 sf::Font Sokoban::font;
 bool Sokoban::texturesLoaded = false;
 
