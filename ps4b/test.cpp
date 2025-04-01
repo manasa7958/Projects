@@ -7,6 +7,7 @@
 #include <string>
 
 #include "Sokoban.hpp"
+#include <SFML/Graphics.hpp>
 
 #define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MODULE SokobanTests
