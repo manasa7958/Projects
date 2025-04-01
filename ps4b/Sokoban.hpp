@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include "sfml_fix.hpp"
 #include <SFML/Graphics.hpp>
 
 namespace SB {
