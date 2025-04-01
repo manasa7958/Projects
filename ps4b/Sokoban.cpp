@@ -10,14 +10,16 @@
 namespace SB {
 
 // Declare static members
-sf::Texture Sokoban::wallTexture, Sokoban::groundTexture, Sokoban::playerTexture,
-            Sokoban::boxTexture, Sokoban::storageTexture;
+sf::Texture Sokoban::wallTexture, Sokoban::groundTexture,
+            Sokoban::playerTexture, Sokoban::boxTexture, 
+            Sokoban::storageTexture;
 sf::Font Sokoban::font;
 bool Sokoban::texturesLoaded = false;
 
 Sokoban::Sokoban() : gameWon(false), moveCount(0) {}
 
-Sokoban::Sokoban(const std::string& filename) : originalLevelFile(filename), gameWon(false), moveCount(0) {
+Sokoban::Sokoban(const std::string& filename) :
+originalLevelFile(filename), gameWon(false), moveCount(0) {
     loadTextures();  // Load textures only once
     std::ifstream file(filename);
     if (!file) throw std::runtime_error("Failed to open level file");
