@@ -5,7 +5,7 @@
 #include <string>
 #include <stdexcept>
 #include <algorithm>
-// #include "sfml_fix.hpp" - IRRELEVANT, using because of problems in terminal
+#include "sfml_fix.hpp" //  IRRELEVANT, using because of problems in terminal
 #include "Sokoban.hpp"
 #include <SFML/Graphics.hpp>
 
@@ -181,6 +181,16 @@ void Sokoban::draw(sf::RenderTarget& target, sf::RenderStates states) const {
                 sprite.setTexture(storageTexture);
             } else if (tile == '@') {
                 sprite.setTexture(playerTexture);
+                switch (lastDirection) {
+                    case Direction::Up:    sprite.setRotation(0); break;
+                    case Direction::Right: sprite.setRotation(90); break;
+                    case Direction::Down:  sprite.setRotation(180); break;
+                    case Direction::Left:  sprite.setRotation(270); break;
+                }
+                
+                // Adjust origin to rotate around center
+                sprite.setOrigin(Sokoban::TILE_SIZE / 2, Sokoban::TILE_SIZE / 2);
+                sprite.setPosition(x * TILE_SIZE + TILE_SIZE / 2, y * TILE_SIZE + TILE_SIZE / 2);
             } else {
                 continue;
             }
