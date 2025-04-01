@@ -5,7 +5,7 @@
 #include <string>
 #include <stdexcept>
 #include <algorithm>
-#include "sfml_fix.hpp"
+// #include "sfml_fix.hpp" - IRRELEVANT, using because of problems in terminal
 #include "Sokoban.hpp"
 #include <SFML/Graphics.hpp>
 
