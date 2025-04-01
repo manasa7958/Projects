@@ -3,6 +3,7 @@
 #include <string>
 // #include "sfml_fix.hpp" - IRRELEVANT, using because of problems in terminal
 #include "Sokoban.hpp"
+#include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 
 int main(int argc, char* argv[]) {
