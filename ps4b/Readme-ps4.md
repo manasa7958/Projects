@@ -24,7 +24,7 @@ In part because of the project we have to implement the movePlayer(), reset(), a
 I stored level data as a std::vector<std::string>. I did not use any dynamic memory allocation so I did not haev any smart pointer (shared or unique).
 
 ### Lambdas
-I used the Lambda expression std::none_of inside of my isWon() function to check if any boxes remained that were not in it's storage position yet. 
+I used the Lambda expressions to count boxesOnTargets, totalBoxes, and totalTargets. Then I utilized these lambda expressions as parameters to the std::count_if function from the algorithm library for my isWon() function. The use of lambdas and the algorithm function makes the code concise and reduces the chance of off-by-one errors in my code. Previously I was creating loops inside of the isWon() function which made the fucntion a lot more lengthy and harder to read. 
 
 ### Issues
 I had issues with my Makefile. I was able to run my program on my personal terminal but the Gradescope autograder was not able to find Sokoban.a. This is because I did not write Sokoban.a in the project root and instead had it inside the build/ subdirectory. However, with a bit of trial and error I was able to fix it.  I also had some trouble with my draw function as I struggled with the placement of the ground tiles. Initially the player did not have the ground background but when I tried fixing that I added the background to the entire screen while in the correct output the ground should not be under the gray walls. So I had to rewrite my if-else statement inside of the draw function a couple of times before I was able to render the correct output.
