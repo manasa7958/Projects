@@ -1,6 +1,6 @@
 CC = g++
 CFLAGS = -std=c++17 -Wall -Werror -pedantic -g
-LIBS = -lsfml-graphics -lsfml-window -lsfml-system
+LIBS = -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 BOOST_LIB = -lboost_unit_test_framework
 
 INCLUDEDIR = -I. -I/opt/homebrew/opt/boost/include/ -I/opt/homebrew/opt/sfml@2/include/
