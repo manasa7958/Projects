@@ -209,7 +209,7 @@ std::istream& operator>>(std::istream& in, Sokoban& s) {
     in >> s.boardHeight >> s.boardWidth;
     in.ignore();
     s.board.clear();
-    s.board.resize(s.boardHeight, std::string(s.boardWidth, '.'));
+    // s.board.resize(s.boardHeight, std::string(s.boardWidth, '.'));
 
     bool playerFound = false;
     for (unsigned int i = 0; i < s.boardHeight; ++i) {
