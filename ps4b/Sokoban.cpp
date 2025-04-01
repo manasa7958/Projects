@@ -193,7 +193,7 @@ void Sokoban::draw(sf::RenderTarget& target, sf::RenderStates states) const {
             target.draw(sprite, states);
         }
     }
-    if (gameWon) {
+    /*if (gameWon) {
         sf::Text winText;
         winText.setFont(font);
         winText.setString("You Win!");
@@ -202,7 +202,7 @@ void Sokoban::draw(sf::RenderTarget& target, sf::RenderStates states) const {
         winText.setPosition(boardWidth * TILE_SIZE /
             2 - 100, boardHeight * TILE_SIZE / 2 - 50);
         target.draw(winText, states);
-    }
+    }*/
 }
 
 std::ostream& operator<<(std::ostream& out, const Sokoban& s) {
