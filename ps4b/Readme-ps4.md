@@ -25,7 +25,7 @@ Collisions are being handled in my code through character-based checks inside of
 Lastly, the isWon() function is used to declare victory. Many things need to taken into consideration when declaring victory because in the case that the number of targets or boxes are greater than the other, we still need to be able to recognize victory. 
 
 ### Memory
-I stored level data as a std::vector<std::string>. I did not use any dynamic memory allocation so I did not haev any smart pointer (shared or unique).
+I stored level data as a std::vector<std::string>. I did not use any dynamic memory allocation so I did not have any smart pointer (shared or unique). I'm also using static texture resources, and they are allocated once and then shared across all instances in the Sokoban class. Inside of my movePlayer() and draw() functions I am mostly only using local variables and modifying the baord I replace the characters within already allocated strings.
 
 ### Lambdas
 I used the Lambda expressions to count boxesOnTargets, totalBoxes, and totalTargets. Then I utilized these lambda expressions as parameters to the std::count_if function from the algorithm library for my isWon() function. The use of lambdas and the algorithm function makes the code concise and reduces the chance of off-by-one errors in my code. Previously I was creating loops inside of the isWon() function which made the fucntion a lot more lengthy and harder to read. 
