@@ -48,6 +48,8 @@ class Sokoban : public sf::Drawable {
     static sf::Font font;
     static bool texturesLoaded;
 
+    Direction lastDirection = Direction::Down;
+
     friend std::ostream& operator<<(std::ostream& out, const Sokoban& s);
     friend std::istream& operator>>(std::istream& in, Sokoban& s);
 };
