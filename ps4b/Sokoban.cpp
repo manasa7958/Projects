@@ -1,3 +1,4 @@
+
 // Copyright Manasa praveen 2025
 #include <iostream>
 #include <fstream>
@@ -336,3 +337,4 @@ std::istream& operator>>(std::istream& in, Sokoban& s) {
 
 
 }  // namespace SB
+
