@@ -125,7 +125,7 @@ void Sokoban::movePlayer(Direction dir) {
             nny >= static_cast<int>(boardHeight)) return;
 
         char next = board[nny][nnx];
-        if (next == '#' || next == 'A' || next == 'B') return;
+        if (next == '.' || next == 'a' || next == ' ') return;
 
         // Move the box
         board[nny][nnx] = (originalBoard[nny][nnx] == 'a') ? 'B' : 'A';
