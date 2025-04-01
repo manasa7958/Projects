@@ -111,7 +111,8 @@ void Sokoban::movePlayer(Direction dir) {
 
     char dest = board[ny][nx];
 
-    if (dest == '#') return;
+    // if (dest == '#') return;
+    if (dest != '.' && dest != 'a' && dest != 'A' && dest != 'B') return;
 
     if (dest == 'A' || dest == 'B') {
         int nnx = nx + dx;
