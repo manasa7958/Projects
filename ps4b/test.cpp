@@ -5,7 +5,7 @@
 #include <sstream>
 #include <fstream>
 #include <string>
-
+#include "sfml_fix.hpp"
 #include "Sokoban.hpp"
 
 #define BOOST_TEST_DYN_LINK
