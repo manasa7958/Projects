@@ -191,15 +191,12 @@ void Sokoban::draw(sf::RenderTarget& target, sf::RenderStates states) const {
             } else if (tile == 'a') {
                 sprite.setTexture(storageTexture);
             } else if (tile == '@') {
-                sf::Sprite sprite;
-                // Choose the texture based on lastDirection
                 switch (lastDirection) {
                     case Direction::Up:    sprite.setTexture(playerTextureUp);    break;
                     case Direction::Down:  sprite.setTexture(playerTextureDown);  break;
                     case Direction::Left:  sprite.setTexture(playerTextureLeft);  break;
                     case Direction::Right: sprite.setTexture(playerTextureRight); break;
                 }
-                sprite.setTexture(playerTexture);
             } else {
                 continue;
             }
