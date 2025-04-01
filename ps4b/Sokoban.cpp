@@ -128,14 +128,12 @@ void Sokoban::movePlayer(Direction dir) {
         char next = board[nny][nnx];
         if (next == '#' || next == 'A' || next == 'B') return;
 
-        // Move the box
         board[nny][nnx] = (originalBoard[nny][nnx] == 'a') ? 'B' : 'A';
         board[ny][nx] = '@';
         board[y][x] = (originalBoard[y][x] == 'a') ? 'a' : '.';
         playerPosition = {static_cast<unsigned int>(nx), static_cast<unsigned int>(ny)};
         moveCount++;
     } else {
-        // Regular move
         board[ny][nx] = '@';
         board[y][x] = (originalBoard[y][x] == 'a') ? 'a' : '.';
         playerPosition = {static_cast<unsigned int>(nx), static_cast<unsigned int>(ny)};
@@ -217,8 +215,7 @@ std::istream& operator>>(std::istream& in, Sokoban& s) {
     in >> s.boardHeight >> s.boardWidth;
     in.ignore();
     s.board.clear();
-    // s.board.resize(s.boardHeight, std::string(s.boardWidth, '.'));
-    s.board.resize(s.boardHeight, std::string(s.boardWidth, static_cast<char>('.')));
+    s.board.resize(s.boardHeight, std::string(s.boardWidth, '.'));
 
     bool playerFound = false;
     for (unsigned int i = 0; i < s.boardHeight; ++i) {
