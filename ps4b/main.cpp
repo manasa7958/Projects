@@ -17,6 +17,17 @@ int main(int argc, char* argv[]) {
     sf::RenderWindow window(sf::VideoMode(game.width() * SB::Sokoban::TILE_SIZE,
         game.height() * SB::Sokoban::TILE_SIZE), "Sokoban");
 
+    // Extra Credit: Victory Fanfare!!
+    sf::SoundBuffer victoryBuffer;
+    if (!victoryBuffer.loadFromFile("victory.wav")) {
+        std::cerr << "Failed to load victory sound\n";
+        return 1;
+    }
+    sf::Sound victorySound;
+    victorySound.setBuffer(victoryBuffer);
+
+    bool playedVictorySound = false;
+    
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
@@ -40,10 +51,14 @@ int main(int argc, char* argv[]) {
                         game.movePlayer(SB::Direction::Right);
                     }
                 }
+            } else if (!playedVictorySound) {
+                victorySound.play();
+                playedVictorySound = true;
             }
 
             if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::R) {
                 game.reset();
+                playedVictorySound = false;
             }
         }
 
