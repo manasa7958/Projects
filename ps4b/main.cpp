@@ -1,7 +1,7 @@
 // Copyright Manasa Praveen 2025
 #include <iostream>
 #include <string>
-#include "sfml_fix.hpp"
+// #include "sfml_fix.hpp" - IRRELEVANT, using because of problems in terminal
 #include "Sokoban.hpp"
 #include <SFML/Graphics.hpp>
 
