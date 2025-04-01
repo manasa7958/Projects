@@ -9,7 +9,7 @@
 
 namespace SB {
 
-Sokoban::Sokoban() : boardWidth(0), boardHeight(0), gameWon(false) {}
+Sokoban::Sokoban() : gameWon(false), boardWidth(0), boardHeight(0) {}
 
 Sokoban::Sokoban(const std::string& filename) {
     std::ifstream file(filename);
