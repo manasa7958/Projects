@@ -29,6 +29,7 @@ class Sokoban : public sf::Drawable {
     bool isWon() const;
 
     void movePlayer(Direction dir);
+    void loadTextures();
     void reset();
 
     void undo();  // Optional XC
