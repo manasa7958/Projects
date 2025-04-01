@@ -15,9 +15,9 @@ sf::Texture Sokoban::wallTexture, Sokoban::groundTexture, Sokoban::playerTexture
 sf::Font Sokoban::font;
 bool Sokoban::texturesLoaded = false;
 
-Sokoban::Sokoban() : moveCount(0), gameWon(false) {}
+Sokoban::Sokoban() : gameWon(false), moveCount(0) {}
 
-Sokoban::Sokoban(const std::string& filename) : originalLevelFile(filename), moveCount(0), gameWon(false) {
+Sokoban::Sokoban(const std::string& filename) : originalLevelFile(filename), gameWon(false), moveCount(0) {
     loadTextures();  // Load textures only once
     std::ifstream file(filename);
     if (!file) throw std::runtime_error("Failed to open level file");
