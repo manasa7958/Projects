@@ -59,36 +59,47 @@ void Sokoban::movePlayer(Direction dir) {
     if (newX < 0 || newX >= static_cast<int>(width()) ||
         newY < 0 || newY >= static_cast<int>(height()) ||
         grid[newY][newX] == '#') {
-        return;
+        return;  // Player can't move into walls or out of bounds
     }
 
     char targetTile = grid[newY][newX];
 
-    if (targetTile == 'A') {
+    if (targetTile == 'A') {  // If the player is trying to push a box
         int boxNewX = newX + dx;
         int boxNewY = newY + dy;
 
         if (boxNewX < 0 || boxNewX >= static_cast<int>(width()) ||
             boxNewY < 0 || boxNewY >= static_cast<int>(height()) ||
             grid[boxNewY][boxNewX] == '#' || grid[boxNewY][boxNewX] == 'A') {
-            return;
+            return;  // Box can't be moved
         }
 
+        // Move the box to the next position
         if (grid[boxNewY][boxNewX] == 'a') {
-            grid[boxNewY][boxNewX] = 'A';
+            grid[boxNewY][boxNewX] = 'A';  // Box is on a storage spot
         } else {
-            grid[boxNewY][boxNewX] = 'A';
+            grid[boxNewY][boxNewX] = 'A';  // Box is on a regular spot
         }
-        grid[newY][newX] = (targetTile == 'a') ? 'a' : '.';
+
+        // The player's new position will become either empty or a storage spot
+        grid[newY][newX] = '@';  // Player occupies the box's old position
     } else if (targetTile == '.' || targetTile == 'a') {
+        // Move the player to the new position (empty space or storage spot)
         grid[newY][newX] = '@';
     } else {
-        return;
+        return;  // Invalid move
     }
+
+    // Set the player's current position to either a storage spot or empty space
     grid[playerPos.y][playerPos.x] = (grid[playerPos.y][playerPos.x] == 'a') ? 'a' : '.';
+
+    // Update player position
     playerPos.x = newX;
     playerPos.y = newY;
+
     moveCount++;
+
+    // Check if all storage spots are filled with boxes
     if (isWon()) {
         gameWon = true;
     }
@@ -103,6 +114,7 @@ int Sokoban::getMoveCount() const { return moveCount; }
 void Sokoban::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     sf::Sprite sprite;
 
+    // Draw the game grid
     for (size_t y = 0; y < grid.size(); ++y) {
         for (size_t x = 0; x < grid[y].size(); ++x) {
             sprite.setPosition(x * TILE_SIZE, y * TILE_SIZE);
@@ -116,6 +128,7 @@ void Sokoban::draw(sf::RenderTarget& target, sf::RenderStates states) const {
         }
     }
 
+    // Draw the entities (player, boxes, storage spots)
     for (size_t y = 0; y < grid.size(); ++y) {
         for (size_t x = 0; x < grid[y].size(); ++x) {
             sprite.setPosition(x * TILE_SIZE, y * TILE_SIZE);
@@ -130,6 +143,7 @@ void Sokoban::draw(sf::RenderTarget& target, sf::RenderStates states) const {
         }
     }
 
+    // Draw move count
     if (fontLoaded) {
         sf::Text moveText("Moves: " + std::to_string(moveCount), font, 20);
         moveText.setPosition(10, 10);
@@ -137,9 +151,10 @@ void Sokoban::draw(sf::RenderTarget& target, sf::RenderStates states) const {
         target.draw(moveText, states);
     }
 
+    // Draw "You Win" message if the game is won
     if (gameWon && fontLoaded) {
         sf::Text winText("You Win!", font, 48);
-        winText.setFillColor(sf::Color::Green);
+        winText.setFillColor(sf::Color::Yellow);  // Victory message in yellow
         winText.setPosition(width() * TILE_SIZE / 2 - winText.getGlobalBounds().width / 2,
                             height() * TILE_SIZE / 2 - winText.getGlobalBounds().height / 2);
         target.draw(winText, states);
