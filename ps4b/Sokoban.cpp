@@ -72,9 +72,11 @@ bool Sokoban::isWon() const {
             char curr = board[y][x];
             char original = originalBoard[y][x];
 
-            if (curr == 'B') boxesOnTargets++;
             if (curr == 'A') totalBoxes++;
-            if (curr == 'B') totalBoxes++;
+            if (curr == 'B') {
+                totalBoxes++;
+                boxesOnTargets++;
+            }
 
             if (original == 'a') totalTargets++;
         }
