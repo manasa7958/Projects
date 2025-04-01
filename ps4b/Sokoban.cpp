@@ -70,7 +70,6 @@ bool Sokoban::isWon() const {
     int totalBoxes = 0;
     int totalTargets = 0;
 
-    // Use lambdas with std::for_each or count_if
     for (unsigned int y = 0; y < boardHeight; ++y) {
         const std::string& currRow = board[y];
         const std::string& origRow = originalBoard[y];
