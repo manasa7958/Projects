@@ -98,8 +98,12 @@ BOOST_AUTO_TEST_CASE(LotsOfTargetsTest) {
 
 BOOST_AUTO_TEST_CASE(MissingSymbolTest) {
     SB::Sokoban game("swapoff.lvl");
+    game.movePlayer(SB::Direction::Right);
+    game.movePlayer(SB::Direction::Right);
+    game.movePlayer(SB::Direction::Up);
     sf::Vector2u initialPos = game.playerLoc();
+    game.movePlayer(SB::Direction::Left);
     sf::Vector2u finalPos = game.playerLoc();
-    BOOST_CHECK_EQUAL(initialPos.x, 2);
-    BOOST_CHECK_EQUAL(initialPos.y, 2);
+    BOOST_CHECK_EQUAL(initialPos.x, finalPos.x);
+    BOOST_CHECK_EQUAL(initialPos.y, finalPos.y);
 }
