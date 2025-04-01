@@ -8,14 +8,14 @@
 
 #include "Sokoban.hpp"
 
-std::ostream& operator<<(std::ostream& os, const sf::Vector2u& v) {
-    return os << "(" << v.x << ", " << v.y << ")";
-}
-
 #define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MODULE SokobanTests
 #include <boost/algorithm/string.hpp>
 #include <boost/test/unit_test.hpp>
+
+std::ostream& operator<<(std::ostream& os, const sf::Vector2u& v) {
+    return os << "(" << v.x << ", " << v.y << ")";
+}
 
 BOOST_AUTO_TEST_CASE(BasicMovementTest) {
     SB::Sokoban game("level3.lvl");
