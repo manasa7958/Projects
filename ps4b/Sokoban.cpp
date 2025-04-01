@@ -2,8 +2,8 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
-#include <string>
 #include <stdexcept>
+#include <algorithm>
 #include "Sokoban.hpp"
 #include <SFML/Graphics.hpp>
 
@@ -63,6 +63,34 @@ int Sokoban::getMoveCount() const {
 
 bool Sokoban::isWon() const {
     if (board.empty() || originalBoard.empty()) return false;
+
+    int boxesOnTargets = 0;
+    int totalBoxes = 0;
+    int totalTargets = 0;
+
+    // Use lambdas with std::for_each or count_if
+    for (unsigned int y = 0; y < boardHeight; ++y) {
+        const std::string& currRow = board[y];
+        const std::string& origRow = originalBoard[y];
+
+        boxesOnTargets += std::count_if(currRow.begin(), currRow.end(), [&](char c) {
+            return c == 'B';
+        });
+
+        totalBoxes += std::count_if(currRow.begin(), currRow.end(), [](char c) {
+            return c == 'A' || c == 'B';
+        });
+
+        totalTargets += std::count_if(origRow.begin(), origRow.end(), [](char c) {
+            return c == 'a';
+        });
+    }
+
+    bool win = (boxesOnTargets == totalBoxes || boxesOnTargets == totalTargets);
+    return win;
+}
+/*bool Sokoban::isWon() const {
+    if (board.empty() || originalBoard.empty()) return false;
     int boxesOnTargets = 0;
     int totalBoxes = 0;
     int totalTargets = 0;
@@ -94,7 +122,7 @@ bool Sokoban::isWon() const {
     std::cout << "isWon() returns: " << (win ? "true" : "false") << "\n";
 
     return win;
-}
+}*/
 
 void Sokoban::movePlayer(Direction dir) {
     if (gameWon) return;
