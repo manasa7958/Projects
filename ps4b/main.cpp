@@ -1,7 +1,7 @@
 // Copyright Manasa Praveen 2025
 #include <iostream>
 #include <string>
-#include "sfml_fix.hpp" // IRRELEVANT, using because of problems in terminal
+// #include "sfml_fix.hpp" - IRRELEVANT, using because of problems in terminal
 #include "Sokoban.hpp"
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
@@ -27,7 +27,7 @@ int main(int argc, char* argv[]) {
     victorySound.setBuffer(victoryBuffer);
 
     bool playedVictorySound = false;
-    
+
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
