@@ -299,16 +299,12 @@ std::istream& operator>>(std::istream& in, Sokoban& s) {
     s.board.resize(s.boardHeight, std::string(s.boardWidth, '.'));  // Initialize with ground ('.')
 
     bool playerFound = false;
-    
     for (unsigned int i = 0; i < s.boardHeight; ++i) {
         std::getline(in, s.board[i]);
-        
-        // Ensure each row is resized properly if it’s shorter than expected
         if (s.board[i].length() != s.boardWidth) {
             throw std::runtime_error("Level file row length mismatch");
         }
 
-        // Find the player position and ensure it's only set once
         auto pos = s.board[i].find('@');
         if (pos != std::string::npos) {
             if (playerFound) {
