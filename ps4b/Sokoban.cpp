@@ -11,8 +11,9 @@ namespace SB {
 
 // Declare static members
 sf::Texture Sokoban::wallTexture, Sokoban::groundTexture,
-            Sokoban::playerTexture, Sokoban::boxTexture, 
-            Sokoban::storageTexture;
+Sokoban::playerTexture, Sokoban::boxTexture,
+Sokoban::storageTexture;
+
 sf::Font Sokoban::font;
 bool Sokoban::texturesLoaded = false;
 
