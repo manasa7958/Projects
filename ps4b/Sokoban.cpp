@@ -145,8 +145,7 @@ void Sokoban::reset() {
         for (unsigned int x = 0; x < board[y].size(); ++x) {
             if (board[y][x] == '@') {
                 playerPosition = {x, y};
-            }
-            if (originalBoard[y][x] == 'a' && board[y][x] == 'A') {
+            } else if (originalBoard[y][x] == 'a' && board[y][x] == 'A') {
                 board[y][x] = 'B';  // Box is on the target
             }
         }
