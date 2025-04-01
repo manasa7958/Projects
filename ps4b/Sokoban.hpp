@@ -7,6 +7,7 @@
 #include <SFML/Graphics.hpp>
 
 namespace SB {
+
 enum class Direction {
     Up, Down, Left, Right
 };
@@ -19,7 +20,7 @@ class Sokoban : public sf::Drawable {
     explicit Sokoban(const std::string& filename);
 
     unsigned int pixelHeight() const;  // Optional
-    unsigned int pixelWidth() const;  // Optional
+    unsigned int pixelWidth() const;   // Optional
 
     unsigned int height() const;
     unsigned int width() const;
@@ -35,24 +36,29 @@ class Sokoban : public sf::Drawable {
     void undo();  // Optional XC
     void redo();  // Optional XC
 
+    int getMoveCount() const;
+
  protected:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
  private:
-    bool gameWon = false;
-    sf::Font font;
-    unsigned int boardWidth;
-    unsigned int boardHeight;
-    sf::Vector2u playerPosition;
-    std::vector<std::string> board;
-    std::vector<std::string> originalBoard;
+    std::vector<std::string> grid;
+    sf::Vector2u playerPos;
     std::string originalLevelFile;
-    sf::Texture wallTexture;
-    sf::Texture boxTexture;
-    sf::Texture groundTexture;
-    sf::Texture storageTexture;
-    sf::Texture playerTexture;
+    bool gameWon = false;
+    int moveCount = 0;
+    bool fontLoaded = true;
+
+    static sf::Texture wallTexture;
+    static sf::Texture groundTexture;
+    static sf::Texture playerTexture;
+    static sf::Texture boxTexture;
+    static sf::Texture storageTexture;
+    static sf::Font font;
+    static bool texturesLoaded;
+
     friend std::ostream& operator<<(std::ostream& out, const Sokoban& s);
     friend std::istream& operator>>(std::istream& in, Sokoban& s);
 };
+
 }  // namespace SB
