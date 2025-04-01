@@ -11,31 +11,30 @@ namespace SB {
 
 Sokoban::Sokoban() : boardWidth(0), boardHeight(0) {}
 
-Sokoban::Sokoban(const std::string& filename) {
+Sokoban::Sokoban(const std::string& filename) : originalLevelFile(filename) {
     std::ifstream file(filename);
     if (!file) throw std::runtime_error("Unable to open file");
+
     file >> *this;
+
     originalBoard = board;
-    if (!wallTexture.loadFromFile("block_06.png")) {
-        throw std::runtime_error("Failed to load wall");
-    }
-    if (!boxTexture.loadFromFile("crate_03.png")) {
-        throw std::runtime_error("Failed to load box");
-    }
-    if (!groundTexture.loadFromFile("ground_01.png")) {
-        throw std::runtime_error("Failed to load ground");
-    }
-    if (!storageTexture.loadFromFile("ground_04.png")) {
-        throw std::runtime_error("Failed to load storage");
-    }
-    if (!playerTexture.loadFromFile("player_05.png")) {
-        throw std::runtime_error("Failed to load player");
-    }
-    if (!font.loadFromFile("/System/Library/Fonts/Supplemental/Arial.ttf")) {
-        throw std::runtime_error("Failed to load font");
+    loadTextures();
+    reset();
+}
+
+void Sokoban::loadTextures() {
+    if (texturesLoaded) return;
+
+    if (!wallTexture.loadFromFile("block_06.png") ||
+        !boxTexture.loadFromFile("crate_03.png") ||
+        !groundTexture.loadFromFile("ground_01.png") ||
+        !storageTexture.loadFromFile("ground_04.png") ||
+        !playerTexture.loadFromFile("player_05.png") ||
+        !font.loadFromFile("/System/Library/Fonts/Supplemental/Arial.ttf")) {
+        throw std::runtime_error("Failed to load one or more textures/fonts");
     }
 
-    reset();
+    texturesLoaded = true;
 }
 
 unsigned int Sokoban::width() const {
