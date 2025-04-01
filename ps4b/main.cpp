@@ -14,7 +14,6 @@ int main(int argc, char* argv[]) {
     sf::RenderWindow window(sf::VideoMode(game.width() * SB::Sokoban::TILE_SIZE,
         game.height() * SB::Sokoban::TILE_SIZE), "Sokoban");
 
-    // Main game loop
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
