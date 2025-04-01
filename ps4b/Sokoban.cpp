@@ -89,40 +89,6 @@ bool Sokoban::isWon() const {
     bool win = (boxesOnTargets == totalBoxes || boxesOnTargets == totalTargets);
     return win;
 }
-/*bool Sokoban::isWon() const {
-    if (board.empty() || originalBoard.empty()) return false;
-    int boxesOnTargets = 0;
-    int totalBoxes = 0;
-    int totalTargets = 0;
-
-    std::cout << "=== Debug isWon() ===\n";
-
-    for (unsigned int y = 0; y < boardHeight; ++y) {
-        for (unsigned int x = 0; x < boardWidth; ++x) {
-            char curr = board[y][x];
-            char original = originalBoard[y][x];
-
-            std::cout << x << ", " << y << ": board=" << curr << " og=" << original << "\n";
-
-            if (curr == 'A') totalBoxes++;
-            if (curr == 'B') {
-                totalBoxes++;
-                boxesOnTargets++;
-            }
-
-            if (original == 'a') totalTargets++;
-        }
-    }
-
-    std::cout << "totalBoxes: " << totalBoxes
-              << " boxesOnTargets: " << boxesOnTargets
-              << " totalTargets: " << totalTargets << "\n";
-
-    bool win = (boxesOnTargets == totalBoxes || boxesOnTargets == totalTargets);
-    std::cout << "isWon() returns: " << (win ? "true" : "false") << "\n";
-
-    return win;
-}*/
 
 void Sokoban::movePlayer(Direction dir) {
     if (gameWon) return;
@@ -154,7 +120,6 @@ void Sokoban::movePlayer(Direction dir) {
             nny >= static_cast<int>(boardHeight)) return;
 
         char next = board[nny][nnx];
-        //if (next == '#' || next == 'A' || next == 'B') return;
         if (next != '.' && next != 'a') return;
 
         board[nny][nnx] = (originalBoard[nny][nnx] == 'a') ? 'B' : 'A';
@@ -220,7 +185,7 @@ void Sokoban::draw(sf::RenderTarget& target, sf::RenderStates states) const {
             target.draw(sprite, states);
         }
     }
-    /*if (gameWon) {
+    if (gameWon) {
         sf::Text winText;
         winText.setFont(font);
         winText.setString("You Win!");
@@ -229,7 +194,7 @@ void Sokoban::draw(sf::RenderTarget& target, sf::RenderStates states) const {
         winText.setPosition(boardWidth * TILE_SIZE /
             2 - 100, boardHeight * TILE_SIZE / 2 - 50);
         target.draw(winText, states);
-    }*/
+    }
 }
 
 std::ostream& operator<<(std::ostream& out, const Sokoban& s) {
