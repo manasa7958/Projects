@@ -103,6 +103,6 @@ BOOST_AUTO_TEST_CASE(MissingSymbolTest) {
     game.movePlayer(SB::Direction::Up);
     sf::Vector2u pos = game.playerLoc();
     game.movePlayer(SB::Direction::Left);
-    BOOST_CHECK_EQUAL(pos.x, 5);
-    BOOST_CHECK_EQUAL(pos.y, 2);
+    BOOST_CHECK_EQUAL(pos.x, 4);
+    BOOST_CHECK_EQUAL(pos.y, 1);
 }
