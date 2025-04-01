@@ -29,7 +29,7 @@ I used the Lambda expression std::none_of inside of my isWon() function to check
 ### Issues
 I had issues with my Makefile. I was able to run my program on my personal terminal but the Gradescope autograder was not able to find Sokoban.a. This is because I did not write Sokoban.a in the project root and instead had it inside the build/ subdirectory. However, with a bit of trial and error I was able to fix it.  I also had some trouble with my draw function as I struggled with the placement of the ground tiles. Initially the player did not have the ground background but when I tried fixing that I added the background to the entire screen while in the correct output the ground should not be under the gray walls. So I had to rewrite my if-else statement inside of the draw function a couple of times before I was able to render the correct output.
 
-In part B I particularly struggled with creating the Missing Symbol Test. In addition to problems with the test, I also had memory allocation problems that caused all new tests in the actual Sokoban assignment to fail. In order to fix this I had to change the memory allocation
+In part B I particularly struggled with creating the Missing Symbol Test. In addition to problems with the test, I also had memory allocation problems that caused all new tests in the actual Sokoban assignment to fail. In order to fix this I had to change the memory allocation and access. I initially had the board stored as a vector string which was most likely the reason memory was violated inside of the isWon() funtion and the reset() function. In order to rectify this problem I changed the vecyor string to use the grid vector instead. 
 
 ### Extra Credit
 Anything special you did.  This is required to earn bonus points.
