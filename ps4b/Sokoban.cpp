@@ -89,9 +89,8 @@ bool Sokoban::isWon() const {
     std::cout << "totalBoxes: " << totalBoxes
               << " boxesOnTargets: " << boxesOnTargets
               << " totalTargets: " << totalTargets << "\n";
-   
-    boxesOnTargets == totalBoxes || boxesOnTargets == totalTargets;
-    bool win = boxesOnTargets
+
+    bool win = (boxesOnTargets == totalBoxes || boxesOnTargets == totalTargets);
     std::cout << "isWon() returns: " << (win ? "true" : "false") << "\n";
 
     return win;
