@@ -5,7 +5,7 @@ Name: Manasa Praveen
 
 Section: 202
 
-Time to Complete: 12 hours
+Time to Complete: 14 hours
 
 
 ## Description
@@ -37,6 +37,9 @@ In part B I particularly struggled with creating the Missing Symbol Test. In add
 
 ### Extra Credit
 I added a victory fanfare that plays when the game is won by the user. In order to use the sf::SoundBuffer and sf::Sound founction I first ahd to add the #include <SFML/Audio.hpp> header. I then loaded the sound in my main.cpp file, and check to see if the game is won. If the game is won and the sound hasn't already been played then the victory sound needs to be played. I also set the playSound to be false if the game is reset so that the sound will stop and play again if the player wins after reseting the game.
+
+I also changed the player image so that it matches the direction of their most recent move. I did this by firstly adding a public variable called lastDirection that saves the direction the player was facing during their last move. I then loaded the different player sprites along with the rest of the sprites inside of the loadTexture() function. I then used switch statements inside of my draw function when loading the player image. I also made sure the default player sprite (in my reset() function) would be the player facing up/front.
+
 
 
 ## Acknowledgements
