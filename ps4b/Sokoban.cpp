@@ -201,7 +201,7 @@ std::ostream& operator<<(std::ostream& out, const Sokoban& s) {
     return out;
 }
 
-std::istream& operator>>(std::istream& in, Sokoban& s) {
+/*std::istream& operator>>(std::istream& in, Sokoban& s) {
     in >> s.boardHeight >> s.boardWidth;
     in.ignore();
     s.board.clear();
@@ -228,6 +228,39 @@ std::istream& operator>>(std::istream& in, Sokoban& s) {
                 c != 'A' && c != '@') {
                 std::cout << "INVALID CHARACTER: '" << c << "'\n";
                 throw std::runtime_error(std::string("Invalid symbol: ") + c);
+            }
+        }
+    }
+
+    if (!playerFound) {
+        throw std::runtime_error("No player '@' found in level file");
+    }
+
+    s.originalBoard = s.board;
+    return in;
+}*/
+std::istream& operator>>(std::istream& in, Sokoban& s) {
+    in >> s.boardHeight >> s.boardWidth;
+    in.ignore();
+    s.board.clear();
+    s.board.resize(s.boardHeight, std::string(s.boardWidth, '.'));
+
+    bool playerFound = false;
+    for (unsigned int i = 0; i < s.boardHeight; ++i) {
+        std::getline(in, s.board[i]);
+        if (s.board[i].length() != s.boardWidth) {
+            throw std::runtime_error("Level file row length mismatch");
+        }
+
+        for (unsigned int j = 0; j < s.boardWidth; ++j) {
+            char c = s.board[i][j];
+
+            if (c == '@') {
+                if (playerFound) {
+                    throw std::runtime_error("Multiple players '@' found in level file");
+                }
+                s.playerPosition = {j, i};
+                playerFound = true;
             }
         }
     }
