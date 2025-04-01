@@ -9,7 +9,6 @@
 
 namespace SB {
 
-// Declare static members
 sf::Texture Sokoban::wallTexture, Sokoban::groundTexture,
 Sokoban::playerTexture, Sokoban::boxTexture,
 Sokoban::storageTexture;
@@ -21,7 +20,7 @@ Sokoban::Sokoban() : gameWon(false), moveCount(0) {}
 
 Sokoban::Sokoban(const std::string& filename) :
 originalLevelFile(filename), gameWon(false), moveCount(0) {
-    loadTextures();  // Load textures only once
+    loadTextures();
     std::ifstream file(filename);
     if (!file) throw std::runtime_error("Failed to open level file");
     file >> *this;
@@ -32,7 +31,6 @@ unsigned int Sokoban::width() const { return grid.empty() ? 0 : grid[0].size(); 
 
 sf::Vector2u Sokoban::playerLoc() const { return playerPos; }
 
-// Win condition: game is won if there are no uncovered storage spots
 bool Sokoban::isWon() const {
     for (const auto& row : grid) {
         for (char tile : row) {
@@ -45,7 +43,7 @@ bool Sokoban::isWon() const {
 }
 
 void Sokoban::movePlayer(Direction dir) {
-    if (gameWon) return;  // Prevent movement after winning
+    if (gameWon) return;
 
     int dx = 0, dy = 0;
     switch (dir) {
@@ -66,7 +64,6 @@ void Sokoban::movePlayer(Direction dir) {
 
     char targetTile = grid[newY][newX];
 
-    // Check if the player is moving onto a box ('A')
     if (targetTile == 'A') {
         int boxNewX = newX + dx;
         int boxNewY = newY + dy;
@@ -74,29 +71,24 @@ void Sokoban::movePlayer(Direction dir) {
         if (boxNewX < 0 || boxNewX >= static_cast<int>(width()) ||
             boxNewY < 0 || boxNewY >= static_cast<int>(height()) ||
             grid[boxNewY][boxNewX] == '#' || grid[boxNewY][boxNewX] == 'A') {
-            return;  // Box can't be moved, so stop the player
+            return;
         }
 
-        // Move the box to the next position
         grid[boxNewY][boxNewX] = (grid[boxNewY][boxNewX] == 'a') ? 'A' : 'A';
-        grid[newY][newX] = '@';  // Move the player to where the box was
+        grid[newY][newX] = '@';
     } else if (targetTile == '.' || targetTile == 'a') {
-        // Move player to the new position
         grid[newY][newX] = '@';
     } else {
         return;
     }
 
-    // Restore the player's previous tile
     grid[playerPos.y][playerPos.x] = (grid[playerPos.y][playerPos.x] == 'a') ? 'a' : '.';
 
-    // Update player position
     playerPos.x = newX;
     playerPos.y = newY;
 
     moveCount++;
 
-    // Check if the game is won
     if (isWon()) {
         gameWon = true;
     }
