@@ -13,6 +13,10 @@
 #include <boost/algorithm/string.hpp>
 #include <boost/test/unit_test.hpp>
 
+std::ostream& operator<<(std::ostream& os, const sf::Vector2u& v) {
+    return os << "(" << v.x << ", " << v.y << ")";
+}
+
 BOOST_AUTO_TEST_CASE(BasicMovementTest) {
     SB::Sokoban game("level3.lvl");
     sf::Vector2u expPos = game.playerLoc();
