@@ -1,4 +1,4 @@
-// Copyright Manasa Praveen 2025
+// Copyright Manasa praveen 2025
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -9,37 +9,67 @@
 
 namespace SB {
 
-sf::Texture Sokoban::wallTexture, Sokoban::groundTexture,
-Sokoban::playerTexture, Sokoban::boxTexture,
-Sokoban::storageTexture;
+Sokoban::Sokoban() : boardWidth(0), boardHeight(0) {}
 
-sf::Font Sokoban::font;
-bool Sokoban::texturesLoaded = false;
-
-Sokoban::Sokoban() : gameWon(false), moveCount(0) {}
-
-Sokoban::Sokoban(const std::string& filename) :
-originalLevelFile(filename), gameWon(false), moveCount(0) {
-    loadTextures();
+Sokoban::Sokoban(const std::string& filename) {
     std::ifstream file(filename);
-    if (!file) throw std::runtime_error("Failed to open level file");
+    if (!file) throw std::runtime_error("Unable to open file");
     file >> *this;
+    originalBoard = board;
+    if (!wallTexture.loadFromFile("block_06.png")) {
+        throw std::runtime_error("Failed to load wall");
+    }
+    if (!boxTexture.loadFromFile("crate_03.png")) {
+        throw std::runtime_error("Failed to load box");
+    }
+    if (!groundTexture.loadFromFile("ground_01.png")) {
+        throw std::runtime_error("Failed to load ground");
+    }
+    if (!storageTexture.loadFromFile("ground_04.png")) {
+        throw std::runtime_error("Failed to load storage");
+    }
+    if (!playerTexture.loadFromFile("player_05.png")) {
+        throw std::runtime_error("Failed to load player");
+    }
+    if (!font.loadFromFile("/System/Library/Fonts/Supplemental/Arial.ttf")) {
+        throw std::runtime_error("Failed to load font");
+    }
+
+    reset();
 }
 
-unsigned int Sokoban::height() const { return grid.size(); }
-unsigned int Sokoban::width() const { return grid.empty() ? 0 : grid[0].size(); }
+unsigned int Sokoban::width() const {
+    return boardWidth;
+}
 
-sf::Vector2u Sokoban::playerLoc() const { return playerPos; }
+unsigned int Sokoban::height() const {
+    return boardHeight;
+}
+
+sf::Vector2u Sokoban::playerLoc() const {
+    return playerPosition;
+}
 
 bool Sokoban::isWon() const {
-    for (const auto& row : grid) {
-        for (char tile : row) {
-            if (tile == 'a') {
-                return false;
-            }
+    if (board.empty() || originalBoard.empty()) return false;
+    int boxesOnTargets = 0;
+    int totalBoxes = 0;
+    int totalTargets = 0;
+
+    for (unsigned int y = 0; y < boardHeight; ++y) {
+        for (unsigned int x = 0; x < boardWidth; ++x) {
+            char curr = board[y][x];
+            char original = originalBoard[y][x];
+
+            if (curr == 'B') boxesOnTargets++;
+            if (curr == 'A') totalBoxes++;
+            if (curr == 'B') totalBoxes++;
+
+            if (original == 'a') totalTargets++;
         }
     }
-    return true;
+
+    return boxesOnTargets == totalBoxes || boxesOnTargets == totalTargets;
 }
 
 void Sokoban::movePlayer(Direction dir) {
@@ -47,152 +77,130 @@ void Sokoban::movePlayer(Direction dir) {
 
     int dx = 0, dy = 0;
     switch (dir) {
-        case Direction::Up:    dy = -1; break;
-        case Direction::Down:  dy = 1; break;
-        case Direction::Left:  dx = -1; break;
+        case Direction::Up: dy = -1; break;
+        case Direction::Down: dy = 1; break;
+        case Direction::Left: dx = -1; break;
         case Direction::Right: dx = 1; break;
     }
 
-    int newX = playerPos.x + dx;
-    int newY = playerPos.y + dy;
+    int x = playerPosition.x;
+    int y = playerPosition.y;
+    int nx = x + dx;
+    int ny = y + dy;
 
-    if (newX < 0 || newX >= static_cast<int>(width()) ||
-        newY < 0 || newY >= static_cast<int>(height()) ||
-        grid[newY][newX] == '#') {
-        return;  // Player can't move into walls or out of bounds
-    }
+    if (nx < 0 || ny < 0 || nx >= static_cast<int>(boardWidth) ||
+        ny >= static_cast<int>(boardHeight)) return;
 
-    char targetTile = grid[newY][newX];
+    char dest = board[ny][nx];
 
-    if (targetTile == 'A') {  // If the player is trying to push a box
-        int boxNewX = newX + dx;
-        int boxNewY = newY + dy;
+    if (dest == '#') return;
 
-        if (boxNewX < 0 || boxNewX >= static_cast<int>(width()) ||
-            boxNewY < 0 || boxNewY >= static_cast<int>(height()) ||
-            grid[boxNewY][boxNewX] == '#' || grid[boxNewY][boxNewX] == 'A') {
-            return;  // Box can't be moved
-        }
-
-        // Move the box to the next position
-        if (grid[boxNewY][boxNewX] == 'a') {
-            grid[boxNewY][boxNewX] = 'A';  // Box is on a storage spot
-        } else {
-            grid[boxNewY][boxNewX] = 'A';  // Box is on a regular spot
-        }
-
-        // The player's new position will become either empty or a storage spot
-        grid[newY][newX] = '@';  // Player occupies the box's old position
-    } else if (targetTile == '.' || targetTile == 'a') {
-        // Move the player to the new position (empty space or storage spot)
-        grid[newY][newX] = '@';
+    if (dest == 'A' || dest == 'B') {
+        int nnx = nx + dx;
+        int nny = ny + dy;
+        if (nnx < 0 || nny < 0 || nnx >= static_cast<int>(boardWidth) ||
+            nny >= static_cast<int>(boardHeight)) return;
+        char next = board[nny][nnx];
+        if (next == '#' || next == 'A' || next == 'B') return;
+        board[nny][nnx] = (originalBoard[nny][nnx] == 'a') ? 'B' : 'A';
+        board[ny][nx] = '@';
+        board[y][x] = (originalBoard[y][x] == 'a') ? 'a' : '.';
+        playerPosition = { static_cast<unsigned int>(nx),
+                          static_cast<unsigned int>(ny) };
     } else {
-        return;  // Invalid move
+        board[ny][nx] = '@';
+        board[y][x] = (originalBoard[y][x] == 'a') ? 'a' : '.';
+        playerPosition = { static_cast<unsigned int>(nx),
+                          static_cast<unsigned int>(ny) };
     }
 
-    // Set the player's current position to either a storage spot or empty space
-    grid[playerPos.y][playerPos.x] = (grid[playerPos.y][playerPos.x] == 'a') ? 'a' : '.';
-
-    // Update player position
-    playerPos.x = newX;
-    playerPos.y = newY;
-
-    moveCount++;
-
-    // Check if all storage spots are filled with boxes
-    if (isWon()) {
-        gameWon = true;
-    }
+    gameWon = isWon();
 }
 
 void Sokoban::reset() {
-    *this = Sokoban(originalLevelFile);
+    if (originalBoard.empty() || originalBoard[0].empty()) return;
+    board = originalBoard;
+    gameWon = false;
+    boardWidth = originalBoard[0].size();
+    boardHeight = originalBoard.size();
+    for (unsigned int y = 0; y < board.size(); ++y) {
+        for (unsigned int x = 0; x < board[y].size(); ++x) {
+            if (board[y][x] == '@') {
+                playerPosition = {static_cast<unsigned int>(x), y};
+            }
+            if (originalBoard[y][x] == 'a' && board[y][x] == 'A') {
+                board[y][x] = 'B';
+            }
+        }
+    }
 }
 
-int Sokoban::getMoveCount() const { return moveCount; }
-
 void Sokoban::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-    sf::Sprite sprite;
+    for (unsigned int y = 0; y < boardHeight; ++y) {
+        for (unsigned int x = 0; x < boardWidth; ++x) {
+            char tile = board[y][x];
 
-    // Draw the game grid
-    for (size_t y = 0; y < grid.size(); ++y) {
-        for (size_t x = 0; x < grid[y].size(); ++x) {
-            sprite.setPosition(x * TILE_SIZE, y * TILE_SIZE);
-
-            if (grid[y][x] == '#') {
+            if (tile != '#') {
+                sf::Sprite groundSprite;
+                groundSprite.setTexture(groundTexture);
+                groundSprite.setPosition(x * TILE_SIZE, y * TILE_SIZE);
+                target.draw(groundSprite, states);
+            }
+            sf::Sprite sprite;
+            if (tile == '#') {
                 sprite.setTexture(wallTexture);
+            } else if (tile == 'A' || tile == 'B') {
+                sprite.setTexture(boxTexture);
+            } else if (tile == 'a') {
+                sprite.setTexture(storageTexture);
+            } else if (tile == '@') {
+                sprite.setTexture(playerTexture);
             } else {
-                sprite.setTexture(groundTexture);
+                continue;
             }
-            target.draw(sprite, states);
-        }
-    }
-
-    // Draw the entities (player, boxes, storage spots)
-    for (size_t y = 0; y < grid.size(); ++y) {
-        for (size_t x = 0; x < grid[y].size(); ++x) {
             sprite.setPosition(x * TILE_SIZE, y * TILE_SIZE);
-
-            switch (grid[y][x]) {
-                case '@': sprite.setTexture(playerTexture); break;
-                case 'A': sprite.setTexture(boxTexture); break;
-                case 'a': sprite.setTexture(storageTexture); break;
-                default: continue;
-            }
             target.draw(sprite, states);
         }
     }
-
-    // Draw move count
-    if (fontLoaded) {
-        sf::Text moveText("Moves: " + std::to_string(moveCount), font, 20);
-        moveText.setPosition(10, 10);
-        moveText.setFillColor(sf::Color::White);
-        target.draw(moveText, states);
-    }
-
-    // Draw "You Win" message if the game is won
-    if (gameWon && fontLoaded) {
-        sf::Text winText("You Win!", font, 120);  // Increased font size to 72
-        winText.setFillColor(sf::Color::Yellow);  // Victory message in yellow
-        winText.setPosition(width() * TILE_SIZE / 2 - winText.getGlobalBounds().width / 2,
-                            height() * TILE_SIZE / 2 - winText.getGlobalBounds().height / 2);
+    if (gameWon) {
+        sf::Text winText;
+        winText.setFont(font);
+        winText.setString("You Win!");
+        winText.setCharacterSize(48);
+        winText.setFillColor(sf::Color::Yellow);
+        winText.setPosition(boardWidth * TILE_SIZE /
+            2 - 100, boardHeight * TILE_SIZE / 2 - 50);
         target.draw(winText, states);
     }
 }
 
-void Sokoban::loadTextures() {
-    if (!texturesLoaded) {
-        if (!wallTexture.loadFromFile("block_06.png") ||
-            !groundTexture.loadFromFile("ground_01.png") ||
-            !playerTexture.loadFromFile("player_05.png") ||
-            !boxTexture.loadFromFile("crate_03.png") ||
-            !storageTexture.loadFromFile("ground_04.png")) {
-            throw std::runtime_error("Failed to load textures");
-        }
-        texturesLoaded = true;
-    }
-}
-
 std::ostream& operator<<(std::ostream& out, const Sokoban& s) {
-    out << s.height() << " " << s.width() << "\n";
-    for (const auto& row : s.grid) {
+    out << s.boardHeight << " " << s.boardWidth << "\n";
+    for (const auto& row : s.board) {
         out << row << "\n";
     }
     return out;
 }
 
 std::istream& operator>>(std::istream& in, Sokoban& s) {
-    size_t h, w;
-    in >> h >> w;
+    in >> s.boardHeight >> s.boardWidth;
+    s.board.clear();
+    s.board.resize(s.boardHeight);
     in.ignore();
-
-    s.grid.resize(h);
-    for (size_t y = 0; y < h; ++y) {
-        std::getline(in, s.grid[y]);
-        auto playerIdx = s.grid[y].find('@');
-        if (playerIdx != std::string::npos) {
-            s.playerPos = {static_cast<unsigned int>(playerIdx), static_cast<unsigned int>(y)};
+    for (unsigned int i = 0; i < s.boardHeight; ++i) {
+        std::getline(in, s.board[i]);
+        if (s.board[i].length() != s.boardWidth)
+            throw std::runtime_error("Invalid row width");
+        for (char c : s.board[i]) {
+            if (c != '#' && c != '.' && c != ' ' && c != 'a' &&
+                c != 'A' && c != '@') {
+                std::cout << "INVALID CHARACTER: '" << c << "'\n";
+                throw std::runtime_error(std::string("Invalid symbol: ") + c);
+            }
+        }
+        auto pos = s.board[i].find('@');
+        if (pos != std::string::npos) {
+            s.playerPosition = sf::Vector2u(pos, i);
         }
     }
     return in;
