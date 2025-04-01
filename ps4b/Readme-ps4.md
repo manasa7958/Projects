@@ -36,12 +36,12 @@ I had issues with my Makefile. I was able to run my program on my personal termi
 In part B I particularly struggled with creating the Missing Symbol Test. In addition to problems with the test, I also had memory allocation problems that caused all new tests in the actual Sokoban assignment to fail. In order to fix this I had to change the memory allocation and access. I initially had the board stored as a vector string which was most likely the reason memory was violated inside of the isWon() funtion and the reset() function. In order to rectify this problem I changed the vecyor string to use the grid vector instead.
 
 ### Extra Credit
-Anything special you did.  This is required to earn bonus points.
+I added a victory fanfare that plays when the game is won by the user. In order to use the sf::SoundBuffer and sf::Sound founction I first ahd to add the #include <SFML/Audio.hpp> header. I then loaded the sound in my main.cpp file, and check to see if the game is won. If the game is won and the sound hasn't already been played then the victory sound needs to be played. I also set the playSound to be false if the game is reset so that the sound will stop and play again if the player wins after reseting the game.
 
 
 ## Acknowledgements
-https://www.sfml-dev.org/documentation/3.0.0/ - referred to the documentation for SFMl when writing functions.
+https://www.sfml-dev.org/documentation/3.0.0/ - referred to the documentation for SFMl when writing functions
 https://www.google.com/search?client=safari&rls=en&q=functions+in+algorithm+library+c%2B%2B&ie=UTF-8&oe=UTF-8 - used to figure out what algorithm library functions to use
-If you used images or other resources than the ones provided, list them here.
+https://mixkit.co/free-sound-effects/win/ - downloaded victory audio from here
 
 Kenney Sokoban Pack (CC0): https://kenney.nl/assets/sokoban
