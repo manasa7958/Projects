@@ -20,7 +20,9 @@ In part A of the project we have to implement the Sokoban class, which is where 
 #### Part b
 In part because of the project we have to implement the movePlayer(), reset(), and isWon() function. The reset function should allow the user to reset (and restart) the game by pressing 'R'. The movePlayer() is the base/fundamental function responsible for programming the movement of the player and boxes. I used the Direction enum and translated it into a 2D vector to handle movement in different directions. 
 
-Collisions are being handled in my code through character-based checks inside of my movePlayer() function. The code first checks for boundary collisions by making sure that nx, and ny are not outside of baord boundaries. Then I check for object collision and ensure that if dest is not equal to either 'a', '.', 'A', or 'B' then movement is blocked.   Lastly, the isWon() function is used to declare victory. Many things need to taken into consideration when declaring victory because in the case that the number of targets or boxes are greater than the other, we still need to be able to recognize victory. 
+Collisions are being handled in my code through character-based checks inside of my movePlayer() function. The code first checks for boundary collisions by making sure that nx, and ny are not outside of baord boundaries. Then I check for object collision and ensure that if dest is not equal to either 'a', '.', 'A', or 'B' then movement is blocked.
+
+Lastly, the isWon() function is used to declare victory. Many things need to taken into consideration when declaring victory because in the case that the number of targets or boxes are greater than the other, we still need to be able to recognize victory. 
 
 ### Memory
 I stored level data as a std::vector<std::string>. I did not use any dynamic memory allocation so I did not haev any smart pointer (shared or unique).
