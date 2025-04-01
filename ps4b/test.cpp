@@ -8,6 +8,10 @@
 
 #include "Sokoban.hpp"
 
+std::ostream& operator<<(std::ostream& os, const sf::Vector2u& v) {
+    return os << "(" << v.x << ", " << v.y << ")";
+}
+
 #define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MODULE SokobanTests
 #include <boost/algorithm/string.hpp>
