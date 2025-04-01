@@ -7,21 +7,29 @@
 #include <string>
 
 #include "Sokoban.hpp"
-#include <SFML/Graphics.hpp>
 
+namespace std {
+std::ostream& operator<<(std::ostream& os, const sf::Vector2u& vec) {
+    os << "(" << vec.x << ", " << vec.y << ")";
+    return os;
+}
+}
+void printBoard(const SB::Sokoban& game) {
+    std::cout << "=== Current Board ===\n";
+    std::ostringstream out;
+    out << game;
+    std::cout << out.str() << std::endl;
+}
 #define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MODULE SokobanTests
 #include <boost/algorithm/string.hpp>
 #include <boost/test/unit_test.hpp>
 
-inline std::ostream& operator<<(std::ostream& os, const sf::Vector2u& v) {
-    os << '(';
-    os << static_cast<unsigned>(v.x);
-    os << ", ";
-    os << static_cast<unsigned>(v.y);
-    os << ')';
-    return os;
-}
+using std::string;
+using std::vector;
+using std::cout;
+using std::endl;
+using std::ostringstream;
 
 BOOST_AUTO_TEST_CASE(BasicMovementTest) {
     SB::Sokoban game("level3.lvl");
