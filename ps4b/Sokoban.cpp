@@ -9,6 +9,14 @@
 
 namespace SB {
 
+sf::Texture Sokoban::wallTexture;
+sf::Texture Sokoban::groundTexture;
+sf::Texture Sokoban::playerTexture;
+sf::Texture Sokoban::boxTexture;
+sf::Texture Sokoban::storageTexture;
+sf::Font Sokoban::font;
+bool Sokoban::texturesLoaded = false;
+
 Sokoban::Sokoban() : boardWidth(0), boardHeight(0) {}
 
 Sokoban::Sokoban(const std::string& filename) : originalLevelFile(filename) {
