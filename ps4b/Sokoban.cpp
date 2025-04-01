@@ -67,10 +67,14 @@ bool Sokoban::isWon() const {
     int totalBoxes = 0;
     int totalTargets = 0;
 
+    std::cout << "=== Debug isWon() ===\n";
+
     for (unsigned int y = 0; y < boardHeight; ++y) {
         for (unsigned int x = 0; x < boardWidth; ++x) {
             char curr = board[y][x];
             char original = originalBoard[y][x];
+
+            std::cout << "At (" << x << ", " << y << "): board=" << curr << " original=" << original << "\n";
 
             if (curr == 'A') totalBoxes++;
             if (curr == 'B') {
@@ -82,7 +86,15 @@ bool Sokoban::isWon() const {
         }
     }
 
-    return boxesOnTargets == totalBoxes || boxesOnTargets == totalTargets;
+    std::cout << "totalBoxes: " << totalBoxes
+              << " boxesOnTargets: " << boxesOnTargets
+              << " totalTargets: " << totalTargets << "\n";
+   
+    boxesOnTargets == totalBoxes || boxesOnTargets == totalTargets;
+    bool win = boxesOnTargets
+    std::cout << "isWon() returns: " << (win ? "true" : "false") << "\n";
+
+    return win;
 }
 
 void Sokoban::movePlayer(Direction dir) {
