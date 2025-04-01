@@ -74,21 +74,21 @@ void Sokoban::movePlayer(Direction dir) {
             return;
         }
 
-        grid[boxNewY][boxNewX] = (grid[boxNewY][boxNewX] == 'a') ? 'A' : 'A';
-        grid[newY][newX] = '@';
+        if (grid[boxNewY][boxNewX] == 'a') {
+            grid[boxNewY][boxNewX] = 'A';
+        } else {
+            grid[boxNewY][boxNewX] = 'A';
+        }
+        grid[newY][newX] = (targetTile == 'a') ? 'a' : '.';
     } else if (targetTile == '.' || targetTile == 'a') {
         grid[newY][newX] = '@';
     } else {
         return;
     }
-
     grid[playerPos.y][playerPos.x] = (grid[playerPos.y][playerPos.x] == 'a') ? 'a' : '.';
-
     playerPos.x = newX;
     playerPos.y = newY;
-
     moveCount++;
-
     if (isWon()) {
         gameWon = true;
     }
