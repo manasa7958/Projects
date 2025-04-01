@@ -92,6 +92,7 @@ bool Sokoban::isWon() const {
 }
 
 void Sokoban::movePlayer(Direction dir) {
+    lastDirection = dir;
     if (gameWon) return;
 
     int dx = 0, dy = 0;
