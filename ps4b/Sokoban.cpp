@@ -153,7 +153,7 @@ void Sokoban::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 
     // Draw "You Win" message if the game is won
     if (gameWon && fontLoaded) {
-        sf::Text winText("You Win!", font, 48);
+        sf::Text winText("You Win!", font, 72);  // Increased font size to 72
         winText.setFillColor(sf::Color::Yellow);  // Victory message in yellow
         winText.setPosition(width() * TILE_SIZE / 2 - winText.getGlobalBounds().width / 2,
                             height() * TILE_SIZE / 2 - winText.getGlobalBounds().height / 2);
