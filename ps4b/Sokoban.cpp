@@ -5,7 +5,7 @@
 #include <string>
 #include <stdexcept>
 #include <algorithm>
-#include "sfml_fix.hpp" //  IRRELEVANT, using because of problems in terminal
+#include "sfml_fix.hpp" // IRRELEVANT, using because of problems in terminal
 #include "Sokoban.hpp"
 #include <SFML/Graphics.hpp>
 
@@ -34,16 +34,17 @@ Sokoban::Sokoban(const std::string& filename) : originalLevelFile(filename) {
 
 void Sokoban::loadTextures() {
     if (texturesLoaded) return;
-
     if (!wallTexture.loadFromFile("block_06.png") ||
         !boxTexture.loadFromFile("crate_03.png") ||
         !groundTexture.loadFromFile("ground_01.png") ||
         !storageTexture.loadFromFile("ground_04.png") ||
-        !playerTexture.loadFromFile("player_05.png") ||
+        !playerTextureDown.loadFromFile("player_05.png") ||
+        !playerTextureUp.loadFromFile("player_08.png")   ||
+        !playerTextureRight.loadFromFile("player_17.png")||
+        !playerTextureLeft.loadFromFile("player_20.png") ||
         !font.loadFromFile("/System/Library/Fonts/Supplemental/Arial.ttf")) {
         throw std::runtime_error("Failed to load one or more textures/fonts");
     }
-
     texturesLoaded = true;
 }
 
@@ -92,7 +93,6 @@ bool Sokoban::isWon() const {
 }
 
 void Sokoban::movePlayer(Direction dir) {
-    lastDirection = dir;
     if (gameWon) return;
 
     int dx = 0, dy = 0;
@@ -181,16 +181,6 @@ void Sokoban::draw(sf::RenderTarget& target, sf::RenderStates states) const {
                 sprite.setTexture(storageTexture);
             } else if (tile == '@') {
                 sprite.setTexture(playerTexture);
-                switch (lastDirection) {
-                    case Direction::Up:    sprite.setRotation(0); break;
-                    case Direction::Right: sprite.setRotation(90); break;
-                    case Direction::Down:  sprite.setRotation(180); break;
-                    case Direction::Left:  sprite.setRotation(270); break;
-                }
-                
-                // Adjust origin to rotate around center
-                sprite.setOrigin(Sokoban::TILE_SIZE / 2, Sokoban::TILE_SIZE / 2);
-                sprite.setPosition(x * TILE_SIZE + TILE_SIZE / 2, y * TILE_SIZE + TILE_SIZE / 2);
             } else {
                 continue;
             }
