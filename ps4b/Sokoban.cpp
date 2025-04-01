@@ -57,6 +57,10 @@ sf::Vector2u Sokoban::playerLoc() const {
     return playerPosition;
 }
 
+int Sokoban::getMoveCount() const {
+    return moveCount;
+}
+
 bool Sokoban::isWon() const {
     if (board.empty() || originalBoard.empty()) return false;
     int boxesOnTargets = 0;
@@ -79,7 +83,7 @@ bool Sokoban::isWon() const {
     return boxesOnTargets == totalBoxes || boxesOnTargets == totalTargets;
 }
 
-void Sokoban::movePlayer(Direction dir) {
+/*void Sokoban::movePlayer(Direction dir) {
     if (gameWon) return;
 
     int dx = 0, dy = 0;
@@ -122,20 +126,70 @@ void Sokoban::movePlayer(Direction dir) {
     }
 
     gameWon = isWon();
+}*/
+void Sokoban::movePlayer(Direction dir) {
+    if (gameWon) return;
+
+    int dx = 0, dy = 0;
+    switch (dir) {
+        case Direction::Up: dy = -1; break;
+        case Direction::Down: dy = 1; break;
+        case Direction::Left: dx = -1; break;
+        case Direction::Right: dx = 1; break;
+    }
+
+    int x = playerPosition.x;
+    int y = playerPosition.y;
+    int nx = x + dx;
+    int ny = y + dy;
+
+    if (nx < 0 || ny < 0 || nx >= static_cast<int>(boardWidth) ||
+        ny >= static_cast<int>(boardHeight)) return;
+
+    char dest = board[ny][nx];
+
+    if (dest == '#') return;
+
+    if (dest == 'A' || dest == 'B') {
+        int nnx = nx + dx;
+        int nny = ny + dy;
+        if (nnx < 0 || nny < 0 || nnx >= static_cast<int>(boardWidth) ||
+            nny >= static_cast<int>(boardHeight)) return;
+
+        char next = board[nny][nnx];
+        if (next == '#' || next == 'A' || next == 'B') return;
+
+        // Move the box
+        board[nny][nnx] = (originalBoard[nny][nnx] == 'a') ? 'B' : 'A';
+        board[ny][nx] = '@';
+        board[y][x] = (originalBoard[y][x] == 'a') ? 'a' : '.';
+        playerPosition = {static_cast<unsigned int>(nx), static_cast<unsigned int>(ny)};
+        moveCount++;
+    } else {
+        // Regular move
+        board[ny][nx] = '@';
+        board[y][x] = (originalBoard[y][x] == 'a') ? 'a' : '.';
+        playerPosition = {static_cast<unsigned int>(nx), static_cast<unsigned int>(ny)};
+        moveCount++;
+    }
+
+    gameWon = isWon();
 }
 
 void Sokoban::reset() {
-    if (originalBoard.empty() || originalBoard[0].empty()) return;
+    if (originalBoard.empty()) return;
+
     board = originalBoard;
+    boardHeight = board.size();
+    boardWidth = board[0].size();
+    moveCount = 0;
     gameWon = false;
-    boardWidth = originalBoard[0].size();
-    boardHeight = originalBoard.size();
+
     for (unsigned int y = 0; y < board.size(); ++y) {
         for (unsigned int x = 0; x < board[y].size(); ++x) {
             if (board[y][x] == '@') {
-                playerPosition = {static_cast<unsigned int>(x), y};
-            }
-            if (originalBoard[y][x] == 'a' && board[y][x] == 'A') {
+                playerPosition = {x, y};
+            } else if (originalBoard[y][x] == 'a' && board[y][x] == 'A') {
                 board[y][x] = 'B';
             }
         }
@@ -194,10 +248,9 @@ std::istream& operator>>(std::istream& in, Sokoban& s) {
     s.board.clear();
     s.board.resize(s.boardHeight);
     in.ignore();
+    bool playerFound = false;
     for (unsigned int i = 0; i < s.boardHeight; ++i) {
         std::getline(in, s.board[i]);
-        if (s.board[i].length() != s.boardWidth)
-            throw std::runtime_error("Invalid row width");
         for (char c : s.board[i]) {
             if (c != '#' && c != '.' && c != ' ' && c != 'a' &&
                 c != 'A' && c != '@') {
@@ -207,10 +260,15 @@ std::istream& operator>>(std::istream& in, Sokoban& s) {
         }
         auto pos = s.board[i].find('@');
         if (pos != std::string::npos) {
-            s.playerPosition = sf::Vector2u(pos, i);
+            s.playerPosition = {static_cast<unsigned int>(pos), i};
+            playerFound = true;
         }
+    }
+    if (!playerFound) {
+        throw std::runtime_error("No player '@' found in level file");
     }
     return in;
 }
+
 
 }  // namespace SB
