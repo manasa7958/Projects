@@ -14,7 +14,12 @@
 #include <boost/test/unit_test.hpp>
 
 inline std::ostream& operator<<(std::ostream& os, const sf::Vector2u& v) {
-    return os << "(" << v.x << ", " << v.y << ")";
+    os << '(';
+    os << static_cast<unsigned>(v.x);
+    os << ", ";
+    os << static_cast<unsigned>(v.y);
+    os << ')';
+    return os;
 }
 
 BOOST_AUTO_TEST_CASE(BasicMovementTest) {
