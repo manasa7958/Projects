@@ -97,12 +97,14 @@ BOOST_AUTO_TEST_CASE(LotsOfTargetsTest) {
 }
 
 BOOST_AUTO_TEST_CASE(MissingSymbolTest) {
-    SB::Sokoban game("swapoff.lvl");
-    game.movePlayer(SB::Direction::Right);
-    game.movePlayer(SB::Direction::Right);
-    game.movePlayer(SB::Direction::Up);
-    sf::Vector2u pos = game.playerLoc();
-    game.movePlayer(SB::Direction::Left);
-    BOOST_CHECK_EQUAL(pos.x, 4);
-    BOOST_CHECK_EQUAL(pos.y, 1);
+    std::ifstream input("swapoff.lvl");
+    SB::Sokoban game;
+    input >> game;
+    std::ostringstream output;
+    output << game;
+    std::ifstream expectedInput("swapoff.lvl");
+    std::ostringstream expectedStream;
+    expectedStream << expectedInput.rdbuf();
+
+    BOOST_CHECK_EQUAL(output.str(), expectedStream.str());
 }
