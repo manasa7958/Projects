@@ -43,11 +43,4 @@ BOOST_AUTO_TEST_CASE(test_tail_present) {
     std::string out = ed.alignment();
     BOOST_CHECK(out.find("C -") != std::string::npos);
 }
-
-BOOST_AUTO_TEST_CASE(test_path_direction) {
-    EDistance ed("GATTACA", "GCATGCU");
-    ed.optDistance();
-    std::string out = ed.alignment();
-    BOOST_CHECK(out.find("T T") != std::string::npos || out.find("A A") != std::string::npos);
-}
 */
