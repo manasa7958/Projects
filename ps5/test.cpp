@@ -11,13 +11,13 @@
 
 /*BOOST_AUTO_TEST_CASE(test_min3) {
     BOOST_CHECK_EQUAL(EDistance::min3(3, 1, 2), 1);
-}
+}*/
 
 BOOST_AUTO_TEST_CASE(test_penalty) {
     BOOST_CHECK_EQUAL(EDistance::penalty('A', 'A'), 0);
     BOOST_CHECK_EQUAL(EDistance::penalty('A', 'T'), 1);
-}*/
-
+}
+/*
 BOOST_AUTO_TEST_CASE(test_alignment_order) {
     EDistance ed("AGT", "AG");
     ed.optDistance();
@@ -27,7 +27,7 @@ BOOST_AUTO_TEST_CASE(test_alignment_order) {
     std::getline(ss, firstLine);
     BOOST_CHECK(firstLine.find("A A") != std::string::npos);
 }
-/*
+
 BOOST_AUTO_TEST_CASE(test_alignment_column_order) {
     EDistance ed("A", "T");
     ed.optDistance();
