@@ -7,7 +7,7 @@ Section: 202
 Partner: Ponita Ty
 Partner Section: 202
 
-Time to Complete: 8 hours
+Time to Complete:
 
 
 ## Description
