@@ -20,6 +20,7 @@ BOOST_AUTO_TEST_CASE(test_penalty) {
 }*/
 
 BOOST_AUTO_TEST_CASE(WrongDirectionTest) {
+    // Tackles Reversed Direction as well
     EDistance ed("AGT", "AG");
     ed.optDistance();
     std::string out = ed.alignment();
