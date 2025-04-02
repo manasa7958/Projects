@@ -1,7 +1,11 @@
+// Copyright Manasa Praveen 2025
+#include <iostream>
+#include <string>
+#include "EDistance.hpp"
+
 #define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MODULE EDistanceTest
 #include <boost/test/unit_test.hpp>
-#include "EDistance.hpp"
 
 BOOST_AUTO_TEST_CASE(test_penalty_function) {
     BOOST_CHECK_EQUAL(EDistance::penalty('A', 'A'), 0);
