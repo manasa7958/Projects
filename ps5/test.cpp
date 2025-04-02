@@ -15,15 +15,11 @@ BOOST_AUTO_TEST_CASE(Min3Test) {
     BOOST_CHECK_EQUAL(EDistance::min3(5, 5, 5), 5);
 }
 
-/*
-BOOST_AUTO_TEST_CASE(test_min3) {
-    BOOST_CHECK_EQUAL(EDistance::min3(3, 1, 2), 1);
+BOOST_AUTO_TEST_CASE(TestPenaltyFunction) {
+    BOOST_CHECK_EQUAL(EDistance::penalty('A', 'A'), 0); // match
+    BOOST_CHECK_EQUAL(EDistance::penalty('C', 'G'), 1); // mismatch
+    BOOST_CHECK_EQUAL(EDistance::penalty('T', 'T'), 0); // match again
 }
-
-BOOST_AUTO_TEST_CASE(test_penalty) {
-    BOOST_CHECK_EQUAL(EDistance::penalty('A', 'A'), 0);
-    BOOST_CHECK_EQUAL(EDistance::penalty('A', 'T'), 1);
-}*/
 
 BOOST_AUTO_TEST_CASE(WrongDirectionTest) {
     // Tackles Reversed Direction as well
