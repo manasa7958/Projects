@@ -16,11 +16,18 @@ BOOST_AUTO_TEST_CASE(Min3Test) {
     BOOST_CHECK_MESSAGE(secondResult == 1, "min3 failed: Expected 1, got " << secondResult);
 }
 
-BOOST_AUTO_TEST_CASE(TestPenaltyFunction) {
+BOOST_AUTO_TEST_CASE(TestPenaltyAllPairs) {
     BOOST_CHECK_EQUAL(EDistance::penalty('A', 'A'), 0);
-    BOOST_CHECK_EQUAL(EDistance::penalty('C', 'G'), 1);
+    BOOST_CHECK_EQUAL(EDistance::penalty('C', 'C'), 0);
+    BOOST_CHECK_EQUAL(EDistance::penalty('G', 'G'), 0);
     BOOST_CHECK_EQUAL(EDistance::penalty('T', 'T'), 0);
+
+    BOOST_CHECK_EQUAL(EDistance::penalty('A', 'T'), 1);
+    BOOST_CHECK_EQUAL(EDistance::penalty('C', 'G'), 1);
+    BOOST_CHECK_EQUAL(EDistance::penalty('G', 'A'), 1);
+    BOOST_CHECK_EQUAL(EDistance::penalty('T', 'C'), 1);
 }
+
 
 BOOST_AUTO_TEST_CASE(WrongDirectionTest) {
     // Tackles Reversed Direction as well
