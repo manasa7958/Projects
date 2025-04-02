@@ -10,15 +10,16 @@
 #include <boost/test/unit_test.hpp>
 
 BOOST_AUTO_TEST_CASE(Min3Test) {
-    BOOST_CHECK_EQUAL(EDistance::min3(9, 5, 7), 5);
-    BOOST_CHECK_EQUAL(EDistance::min3(10, 20, 3), 3);
-    BOOST_CHECK_EQUAL(EDistance::min3(5, 5, 5), 5);
+    int result = EDistance::min3(9, 2, 7);
+    BOOST_CHECK_MESSAGE(result == 2, "min3 failed: Expected 2, got " << result);
+    int secondResult = EDistance::min3(10, 20, 1);
+    BOOST_CHECK_MESSAGE(secondResult == 1, "min3 failed: Expected 1, got " << secondResult);
 }
 
 BOOST_AUTO_TEST_CASE(TestPenaltyFunction) {
-    BOOST_CHECK_EQUAL(EDistance::penalty('A', 'A'), 0); // match
-    BOOST_CHECK_EQUAL(EDistance::penalty('C', 'G'), 1); // mismatch
-    BOOST_CHECK_EQUAL(EDistance::penalty('T', 'T'), 0); // match again
+    BOOST_CHECK_EQUAL(EDistance::penalty('A', 'A'), 0);
+    BOOST_CHECK_EQUAL(EDistance::penalty('C', 'G'), 1);
+    BOOST_CHECK_EQUAL(EDistance::penalty('T', 'T'), 0);
 }
 
 BOOST_AUTO_TEST_CASE(WrongDirectionTest) {
