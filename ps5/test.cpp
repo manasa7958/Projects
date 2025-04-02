@@ -9,15 +9,15 @@
 #define BOOST_TEST_MODULE EDistanceTest
 #include <boost/test/unit_test.hpp>
 
-/*BOOST_AUTO_TEST_CASE(test_min3) {
+BOOST_AUTO_TEST_CASE(test_min3) {
     BOOST_CHECK_EQUAL(EDistance::min3(3, 1, 2), 1);
-}*/
+}
 
-BOOST_AUTO_TEST_CASE(test_penalty) {
+/*BOOST_AUTO_TEST_CASE(test_penalty) {
     BOOST_CHECK_EQUAL(EDistance::penalty('A', 'A'), 0);
     BOOST_CHECK_EQUAL(EDistance::penalty('A', 'T'), 1);
 }
-/*
+
 BOOST_AUTO_TEST_CASE(test_alignment_order) {
     EDistance ed("AGT", "AG");
     ed.optDistance();
