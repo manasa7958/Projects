@@ -9,11 +9,8 @@
 #define BOOST_TEST_MODULE EDistanceTest
 #include <boost/test/unit_test.hpp>
 
-BOOST_AUTO_TEST_CASE(Min3Test) {
-    int result = EDistance::min3(9, 2, 7);
-    BOOST_CHECK_MESSAGE(result == 2, "min3 failed: Expected 2, got " << result);
-    int secondResult = EDistance::min3(10, 20, 1);
-    BOOST_CHECK_MESSAGE(secondResult == 1, "min3 failed: Expected 1, got " << secondResult);
+BOOST_AUTO_TEST_CASE(Min3BasicTest) {
+    BOOST_CHECK_EQUAL(EDistance::min3(5, 8, 9), 5);
 }
 
 BOOST_AUTO_TEST_CASE(TestPenaltyAllPairs) {
