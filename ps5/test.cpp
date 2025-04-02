@@ -26,22 +26,22 @@ BOOST_AUTO_TEST_CASE(test_alignment_order) {
     std::string firstLine;
     std::getline(ss, firstLine);
     BOOST_CHECK(firstLine.find("A A") != std::string::npos);
-}
+}*/
 
 BOOST_AUTO_TEST_CASE(test_alignment_column_order) {
     EDistance ed("A", "T");
     ed.optDistance();
     std::string out = ed.alignment();
     BOOST_CHECK(out.find("A T") != std::string::npos);
-}*/
-
+}
+/*
 BOOST_AUTO_TEST_CASE(test_tail_present) {
     EDistance ed("AC", "A");
     ed.optDistance();
     std::string out = ed.alignment();
     BOOST_CHECK(out.find("C -") != std::string::npos);
 }
-/*
+
 BOOST_AUTO_TEST_CASE(test_path_direction) {
     EDistance ed("GATTACA", "GCATGCU");
     ed.optDistance();
