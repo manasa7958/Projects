@@ -11,6 +11,8 @@
 
 BOOST_AUTO_TEST_CASE(Min3BasicTest) {
     BOOST_CHECK_EQUAL(EDistance::min3(5, 8, 9), 5);
+    BOOST_CHECK_EQUAL(EDistance::min3(8, 5, 9), 5);
+    BOOST_CHECK_EQUAL(EDistance::min3(9, 8, 5), 5);
 }
 
 BOOST_AUTO_TEST_CASE(TestPenaltyAllPairs) {
