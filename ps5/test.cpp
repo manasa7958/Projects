@@ -16,9 +16,9 @@ BOOST_AUTO_TEST_CASE(test_min3) {
 /*BOOST_AUTO_TEST_CASE(test_penalty) {
     BOOST_CHECK_EQUAL(EDistance::penalty('A', 'A'), 0);
     BOOST_CHECK_EQUAL(EDistance::penalty('A', 'T'), 1);
-}
+}*/
 
-BOOST_AUTO_TEST_CASE(test_alignment_order) {
+BOOST_AUTO_TEST_CASE(WrongDirectionTest) {
     EDistance ed("AGT", "AG");
     ed.optDistance();
     std::string out = ed.alignment();
@@ -28,13 +28,13 @@ BOOST_AUTO_TEST_CASE(test_alignment_order) {
     BOOST_CHECK(firstLine.find("A A") != std::string::npos);
 }
 
-BOOST_AUTO_TEST_CASE(test_alignment_column_order) {
+BOOST_AUTO_TEST_CASE(SwappedColsTest) {
     EDistance ed("A", "T");
     ed.optDistance();
     std::string out = ed.alignment();
     BOOST_CHECK(out.find("A T") != std::string::npos);
 }
-
+/*
 BOOST_AUTO_TEST_CASE(test_tail_present) {
     EDistance ed("AC", "A");
     ed.optDistance();
