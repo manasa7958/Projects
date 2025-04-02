@@ -1,13 +1,13 @@
 # PS5: DNA Alignment
 
 ## Contact
-Name:
-Section:
+Name: Manasa Praveen
+Section: 202
 
-Partner:
-Partner Section:
+Partner: Ponita Ty
+Partner Section: 202
 
-Time to Complete:
+Time to Complete: 8 hours
 
 
 ## Description
