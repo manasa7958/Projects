@@ -21,7 +21,8 @@ BOOST_AUTO_TEST_CASE(test_alignment_from_file_lastygap8) {
     int dist = ed.optDistance();
     std::string alignment = ed.alignment();
 
-    BOOST_CHECK(dist > 0); // crude sanity
-    BOOST_CHECK(alignment.find("-") != std::string::npos); // has a gap
-    BOOST_CHECK(alignment.find("a a") != std::string::npos || alignment.find("A A") != std::string::npos);
+    BOOST_CHECK(dist > 0);
+    BOOST_CHECK(alignment.find("-") != std::string::npos);
+    BOOST_CHECK(alignment.find("a a") != std::string::npos ||
+        alignment.find("A A") != std::string::npos);
 }
