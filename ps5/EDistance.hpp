@@ -13,5 +13,4 @@ class EDistance {
     int optDistance();
     std::string alignment();
  private:
-
 };
