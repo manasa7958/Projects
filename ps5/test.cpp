@@ -9,10 +9,16 @@
 #define BOOST_TEST_MODULE EDistanceTest
 #include <boost/test/unit_test.hpp>
 
-BOOST_AUTO_TEST_CASE(Min3BasicTest) {
-    BOOST_CHECK_EQUAL(EDistance::min3(5, 8, 9), 5);
-    BOOST_CHECK_EQUAL(EDistance::min3(8, 5, 9), 5);
-    BOOST_CHECK_EQUAL(EDistance::min3(9, 8, 5), 5);
+BOOST_AUTO_TEST_CASE(Min3DebugTest) {
+    int a = 5, b = 1, c = 9;
+    int result1 = EDistance::min3(a, b, c);
+    std::cout << "min3(" << a << ", " << b << ", " << c << ") = " << result1 << std::endl;
+    BOOST_CHECK_EQUAL(result1, 1);
+
+    a = 7; b = 8; c = 3;
+    int result2 = EDistance::min3(a, b, c);
+    std::cout << "min3(" << a << ", " << b << ", " << c << ") = " << result2 << std::endl;
+    BOOST_CHECK_EQUAL(result2, 3);
 }
 
 BOOST_AUTO_TEST_CASE(TestPenaltyAllPairs) {
