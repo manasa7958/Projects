@@ -1,3 +1,4 @@
+// Copyright 2025 Manasa Praveen
 # Compiler and flags
 CC = g++
 CFLAGS = --std=c++17 -Wall -Werror -pedantic -g
