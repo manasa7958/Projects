@@ -21,8 +21,7 @@ BOOST_AUTO_TEST_CASE(Min3Test) {
                 BOOST_CHECK_MESSAGE(
                     actual == expected,
                     "min3(" << a << ", " << b << ", " << c << ") = "
-                    << actual << ", expected " << expected
-                );
+                    << actual << ", expected " << expected);
             }
         }
     }
@@ -38,8 +37,7 @@ BOOST_AUTO_TEST_CASE(PenaltyAllPairsExhaustive) {
             BOOST_CHECK_MESSAGE(
                 actual == expected,
                 "penalty('" << a << "', '" << b << "') = "
-                << actual << ", expected " << expected
-            );
+                << actual << ", expected " << expected);
         }
     }
 }
