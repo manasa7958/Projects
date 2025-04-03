@@ -65,22 +65,19 @@ BOOST_AUTO_TEST_CASE(SwappedColsTest) {
     BOOST_CHECK(out.find("A T") != std::string::npos);
 }
 
-BOOST_AUTO_TEST_CASE(AlignmentMustHaveTwoLinesTest) {
+BOOST_AUTO_TEST_CASE(AlignmentExactLinesTest) {
     {
         EDistance ed("AC", "A");
         ed.optDistance();
         std::string out = ed.alignment();
         std::cout << "[AC vs A] Alignment output:\n" << out << std::endl;
 
-        std::istringstream ss(out);
-        int lineCount = 0;
-        std::string line;
-        while (std::getline(ss, line)) {
-            if (!line.empty()) ++lineCount;
-        }
+        std::string expected =
+            "A A 0\n"
+            "C - 2";
 
-        BOOST_CHECK_MESSAGE(lineCount >= 2,
-            "[AC vs A] Expected at least 2 lines of alignment, got " << lineCount);
+        BOOST_CHECK_MESSAGE(out.find(expected) != std::string::npos,
+            "[AC vs A] Expected exact alignment:\n" << expected << "\nBut got:\n" << out);
     }
 
     {
@@ -89,14 +86,11 @@ BOOST_AUTO_TEST_CASE(AlignmentMustHaveTwoLinesTest) {
         std::string out = ed.alignment();
         std::cout << "[A vs AC] Alignment output:\n" << out << std::endl;
 
-        std::istringstream ss(out);
-        int lineCount = 0;
-        std::string line;
-        while (std::getline(ss, line)) {
-            if (!line.empty()) ++lineCount;
-        }
+        std::string expected =
+            "A A 0\n"
+            "- C 2";
 
-        BOOST_CHECK_MESSAGE(lineCount >= 2,
-            "[A vs AC] Expected at least 2 lines of alignment, got " << lineCount);
+        BOOST_CHECK_MESSAGE(out.find(expected) != std::string::npos,
+            "[A vs AC] Expected exact alignment:\n" << expected << "\nBut got:\n" << out);
     }
 }
