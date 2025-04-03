@@ -64,11 +64,14 @@ BOOST_AUTO_TEST_CASE(SwappedColsTest) {
     std::string out = ed.alignment();
     BOOST_CHECK(out.find("A T") != std::string::npos);
 }
-/*
-BOOST_AUTO_TEST_CASE(test_tail_present) {
+
+BOOST_AUTO_TEST_CASE(TestAlignmentTailDebug) {
     EDistance ed("AC", "A");
     ed.optDistance();
     std::string out = ed.alignment();
-    BOOST_CHECK(out.find("C -") != std::string::npos);
+
+    std::cout << "Alignment output:\n" << out << std::endl;
+
+    bool tail_found = out.find("C -") != std::string::npos;
+    BOOST_CHECK_MESSAGE(tail_found, "Expected to find 'C -' at the end, but did not.");
 }
-*/
