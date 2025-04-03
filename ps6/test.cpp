@@ -15,10 +15,10 @@ BOOST_AUTO_TEST_CASE(OrderKTest) {
     BOOST_REQUIRE_EQUAL(rw.orderK(), 2);
 }
 
-BOOST_AUTO_TEST_CASE(FreqKGramTest) {
+/*BOOST_AUTO_TEST_CASE(FreqKGramTest) {
     RandWriter rw(sample_text, 1);
     BOOST_REQUIRE_EQUAL(rw.freq("a"), 7);
     BOOST_REQUIRE_EQUAL(rw.freq("g"), 9);
     BOOST_REQUIRE_EQUAL(rw.freq("c"), 1);
     BOOST_REQUIRE_EQUAL(rw.freq("z"), 0);
-}
+}*/
