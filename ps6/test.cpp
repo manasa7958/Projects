@@ -22,7 +22,7 @@ BOOST_AUTO_TEST_CASE(ErrorCheckingTest) {
     BOOST_REQUIRE_THROW(rw.kRand("a"), std::exception);
     BOOST_REQUIRE_THROW(rw.generate("a", 10), std::exception);
 }
-/*
+
 BOOST_AUTO_TEST_CASE(GenerateLengthTest) {
     RandWriter rw(sample_text, 2);
     std::string result = rw.generate("ga", 10);
@@ -34,22 +34,3 @@ BOOST_AUTO_TEST_CASE(GenerateStartTest) {
     std::string result = rw.generate("ga", 10);
     BOOST_REQUIRE_EQUAL(result.substr(0, 2), "ga");
 }
-
-BOOST_AUTO_TEST_CASE(KRandDistributionTest) {
-    RandWriter rw(sample_text, 1);
-
-    std::map<char, int> counts;
-    for (int i = 0; i < 1000; ++i) {
-        char next = rw.kRand("g");
-        counts[next]++;
-    }
-
-    std::set<char> expected = {'a', 'g', 'c'};
-    for (auto& pair : counts) {
-        BOOST_REQUIRE(expected.count(pair.first) == 1);
-    }
-
-    for (char c : expected) {
-        BOOST_REQUIRE(counts[c] > 0);
-    }
-}*/
