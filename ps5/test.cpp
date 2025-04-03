@@ -27,20 +27,25 @@ BOOST_AUTO_TEST_CASE(Min3Test) {
     }
 }
 
-/*BOOST_AUTO_TEST_CASE(PenaltyAllPairsExhaustive) {
-    std::string bases = "ACGT";
-
-    for (char a : bases) {
-        for (char b : bases) {
-            int expected = (a == b) ? 0 : 1;
-            int actual = EDistance::penalty(a, b);
-            BOOST_CHECK_MESSAGE(
-                actual == expected,
-                "penalty('" << a << "', '" << b << "') = "
-                << actual << ", expected " << expected);
-        }
+BOOST_AUTO_TEST_CASE(TestEditDistanceCosts) {
+    {
+        EDistance ed("A", "A");
+        int dist = ed.optDistance();
+        BOOST_CHECK_MESSAGE(dist == 0, "Match: Expected 0, got " << dist);
     }
-}*/
+
+    {
+        EDistance ed("A", "T");
+        int dist = ed.optDistance();
+        BOOST_CHECK_MESSAGE(dist == 1, "Mismatch: Expected 1, got " << dist);
+    }
+
+    {
+        EDistance ed("A", "");
+        int dist = ed.optDistance();
+        BOOST_CHECK_MESSAGE(dist == 2, "Gap: Expected 2, got " << dist);
+    }
+}
 
 BOOST_AUTO_TEST_CASE(WrongDirectionTest) {
     // Tackles Reversed Direction as well
