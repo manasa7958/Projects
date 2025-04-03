@@ -15,20 +15,20 @@ BOOST_AUTO_TEST_CASE(KZeroTest) {
     BOOST_REQUIRE_EQUAL(rw.orderK(), 2);
 }
 
-/*BOOST_AUTO_TEST_CASE(ErrorCheckingTest) {
+BOOST_AUTO_TEST_CASE(ErrorCheckingTest) {
     RandWriter rw(sample_text, 2);
     BOOST_REQUIRE_THROW(rw.freq("a"), std::exception);
     BOOST_REQUIRE_THROW(rw.freq("aaa", 'g'), std::exception);
     BOOST_REQUIRE_THROW(rw.kRand("a"), std::exception);
     BOOST_REQUIRE_THROW(rw.generate("a", 10), std::exception);
-}*/
-
+}
+/*
 BOOST_AUTO_TEST_CASE(GenerateLengthTest) {
     RandWriter rw(sample_text, 2);
     std::string result = rw.generate("ga", 10);
     BOOST_REQUIRE_EQUAL(result.size(), 10);
 }
-/*
+
 BOOST_AUTO_TEST_CASE(GenerateStartTest) {
     RandWriter rw(sample_text, 2);
     std::string result = rw.generate("ga", 10);
