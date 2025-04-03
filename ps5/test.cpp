@@ -27,7 +27,7 @@ BOOST_AUTO_TEST_CASE(Min3Test) {
     }
 }
 
-BOOST_AUTO_TEST_CASE(TestEditDistanceCosts) {
+BOOST_AUTO_TEST_CASE(WringCostTest) {
     {
         EDistance ed("A", "A");
         int dist = ed.optDistance();
