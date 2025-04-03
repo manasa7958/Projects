@@ -9,45 +9,40 @@
 #define BOOST_TEST_MODULE EDistanceTest
 #include <boost/test/unit_test.hpp>
 
-BOOST_AUTO_TEST_CASE(Min3DebugTest) {
-    int a = 5, b = 1, c = 9;
-    int result1 = EDistance::min3(a, b, c);
-    std::cout << "min3(" << a << ", " << b << ", " << c << ") = " << result1 << std::endl;
-    BOOST_CHECK_EQUAL(result1, 1);
 
-    a = 7; b = 8; c = 3;
-    int result2 = EDistance::min3(a, b, c);
-    std::cout << "min3(" << a << ", " << b << ", " << c << ") = " << result2 << std::endl;
-    BOOST_CHECK_EQUAL(result2, 3);
+BOOST_AUTO_TEST_CASE(Min3Test) {
+    std::vector<int> vals = {1, 2, 3};
 
-    a = 3; b = 8; c = 3;
-    int result3 = EDistance::min3(a, b, c);
-    std::cout << "min3(" << a << ", " << b << ", " << c << ") = " << result3 << std::endl;
-    BOOST_CHECK_EQUAL(result3, 3);
-
-    a = 3; b = 3; c = 3;
-    int result4 = EDistance::min3(a, b, c);
-    std::cout << "min3(" << a << ", " << b << ", " << c << ") = " << result4 << std::endl;
-    BOOST_CHECK_EQUAL(result4, 3);
-
-    a = 3; b = 3; c = 5;
-    int result5 = EDistance::min3(a, b, c);
-    std::cout << "min3(" << a << ", " << b << ", " << c << ") = " << result5 << std::endl;
-    BOOST_CHECK_EQUAL(result5, 3);
+    for (int a : vals) {
+        for (int b : vals) {
+            for (int c : vals) {
+                int expected = std::min({a, b, c});
+                int actual = EDistance::min3(a, b, c);
+                BOOST_CHECK_MESSAGE(
+                    actual == expected,
+                    "min3(" << a << ", " << b << ", " << c << ") = "
+                    << actual << ", expected " << expected
+                );
+            }
+        }
+    }
 }
 
-BOOST_AUTO_TEST_CASE(PenaltyDebugTest) {
-    char x = 'A', y = 'A';
-    int result1 = EDistance::penalty(x, y);
-    std::cout << "penalty('" << x << "', '" << y << "') = " << result1 << std::endl;
-    BOOST_CHECK_EQUAL(result1, 0);
+BOOST_AUTO_TEST_CASE(PenaltyAllPairsExhaustive) {
+    std::string bases = "ACGT";
 
-    x = 'C'; y = 'G';
-    int result2 = EDistance::penalty(x, y);
-    std::cout << "penalty('" << x << "', '" << y << "') = " << result2 << std::endl;
-    BOOST_CHECK_EQUAL(result2, 1);
+    for (char a : bases) {
+        for (char b : bases) {
+            int expected = (a == b) ? 0 : 1;
+            int actual = EDistance::penalty(a, b);
+            BOOST_CHECK_MESSAGE(
+                actual == expected,
+                "penalty('" << a << "', '" << b << "') = "
+                << actual << ", expected " << expected
+            );
+        }
+    }
 }
-
 
 BOOST_AUTO_TEST_CASE(WrongDirectionTest) {
     // Tackles Reversed Direction as well
