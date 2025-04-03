@@ -10,7 +10,7 @@
 
 const std::string sample_text = "gagggagaggcgagaaa";
 
-BOOST_AUTO_TEST_CASE(OrderKTest) {
+BOOST_AUTO_TEST_CASE(KZeroTest) {
     RandWriter rw(sample_text, 2);
     BOOST_REQUIRE_EQUAL(rw.orderK(), 2);
 }
