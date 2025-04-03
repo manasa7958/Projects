@@ -1,3 +1,5 @@
+// Copyright Manasa Praveen 2025
+#include <iostream>
 #include <string>
 
 class RandWriter {
@@ -6,7 +8,7 @@ class RandWriter {
     // Assume that text has length at least k.
     RandWriter(const std::string& str, size_t k);
 
-    size_t orderK() const; // Order k of Markov model
+    size_t orderK() const;  // Order k of Markov model
 
     // Number of occurences of kgram in text
     // Throw an exception if kgram is not length k
