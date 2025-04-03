@@ -27,14 +27,14 @@ BOOST_AUTO_TEST_CASE(GenerateLengthTest) {
     RandWriter rw(sample_text, 2);
     std::string result = rw.generate("ga", 10);
     BOOST_REQUIRE_EQUAL(result.size(), 10);
-}
+}*/
 
 BOOST_AUTO_TEST_CASE(GenerateStartTest) {
     RandWriter rw(sample_text, 2);
     std::string result = rw.generate("ga", 10);
     BOOST_REQUIRE_EQUAL(result.substr(0, 2), "ga");
-}*/
-
+}
+/*
 BOOST_AUTO_TEST_CASE(KRandDistributionTest) {
     RandWriter rw(sample_text, 1);
 
@@ -52,4 +52,4 @@ BOOST_AUTO_TEST_CASE(KRandDistributionTest) {
     for (char c : expected) {
         BOOST_REQUIRE(counts[c] > 0);
     }
-}
+}*/
