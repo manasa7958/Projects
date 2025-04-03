@@ -19,18 +19,33 @@ BOOST_AUTO_TEST_CASE(Min3DebugTest) {
     int result2 = EDistance::min3(a, b, c);
     std::cout << "min3(" << a << ", " << b << ", " << c << ") = " << result2 << std::endl;
     BOOST_CHECK_EQUAL(result2, 3);
+
+    a = 3; b = 8; c = 3;
+    int result2 = EDistance::min3(a, b, c);
+    std::cout << "min3(" << a << ", " << b << ", " << c << ") = " << result2 << std::endl;
+    BOOST_CHECK_EQUAL(result2, 3);
+
+    a = 3; b = 3; c = 3;
+    int result2 = EDistance::min3(a, b, c);
+    std::cout << "min3(" << a << ", " << b << ", " << c << ") = " << result2 << std::endl;
+    BOOST_CHECK_EQUAL(result2, 3);
+
+    a = 3; b = 3; c = 5;
+    int result2 = EDistance::min3(a, b, c);
+    std::cout << "min3(" << a << ", " << b << ", " << c << ") = " << result2 << std::endl;
+    BOOST_CHECK_EQUAL(result2, 3);
 }
 
-BOOST_AUTO_TEST_CASE(TestPenaltyAllPairs) {
-    BOOST_CHECK_EQUAL(EDistance::penalty('A', 'A'), 0);
-    BOOST_CHECK_EQUAL(EDistance::penalty('C', 'C'), 0);
-    BOOST_CHECK_EQUAL(EDistance::penalty('G', 'G'), 0);
-    BOOST_CHECK_EQUAL(EDistance::penalty('T', 'T'), 0);
+BOOST_AUTO_TEST_CASE(PenaltyDebugTest) {
+    char x = 'A', y = 'A';
+    int result1 = EDistance::penalty(x, y);
+    std::cout << "penalty('" << x << "', '" << y << "') = " << result1 << std::endl;
+    BOOST_CHECK_EQUAL(result1, 0);
 
-    BOOST_CHECK_EQUAL(EDistance::penalty('A', 'T'), 1);
-    BOOST_CHECK_EQUAL(EDistance::penalty('C', 'G'), 1);
-    BOOST_CHECK_EQUAL(EDistance::penalty('G', 'A'), 1);
-    BOOST_CHECK_EQUAL(EDistance::penalty('T', 'C'), 1);
+    x = 'C'; y = 'G';
+    int result2 = EDistance::penalty(x, y);
+    std::cout << "penalty('" << x << "', '" << y << "') = " << result2 << std::endl;
+    BOOST_CHECK_EQUAL(result2, 1);
 }
 
 
