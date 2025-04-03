@@ -65,7 +65,7 @@ BOOST_AUTO_TEST_CASE(SwappedColsTest) {
     BOOST_CHECK(out.find("A T") != std::string::npos);
 }
 
-BOOST_AUTO_TEST_CASE(TestAlignmentTailDebug) {
+BOOST_AUTO_TEST_CASE(TailAlignmentTest) {
     EDistance ed("AC", "A");
     ed.optDistance();
     std::string out = ed.alignment();
@@ -76,7 +76,7 @@ BOOST_AUTO_TEST_CASE(TestAlignmentTailDebug) {
     BOOST_CHECK_MESSAGE(tail_found, "Expected to find 'C -' at the end, but did not.");
 }
 
-BOOST_AUTO_TEST_CASE(TestAlignmentTailRightSideGap) {
+BOOST_AUTO_TEST_CASE(TailAlignmentTest2) {
     EDistance ed("A", "AC");
     ed.optDistance();
     std::string out = ed.alignment();
@@ -85,4 +85,26 @@ BOOST_AUTO_TEST_CASE(TestAlignmentTailRightSideGap) {
 
     bool tail_found = out.find("- C") != std::string::npos;
     BOOST_CHECK_MESSAGE(tail_found, "Expected to find '- C' at the end, but did not.");
+}
+
+BOOST_AUTO_TEST_CASE(HeadAlignmentTest) {
+    EDistance ed("AC", "A");
+    ed.optDistance();
+    std::string out = ed.alignment();
+
+    std::cout << "Alignment output:\n" << out << std::endl;
+
+    bool head_found = out.find("A A") != std::string::npos;
+    BOOST_CHECK_MESSAGE(head_found, "Expected to find 'A A' at the start, but did not.");
+}
+
+BOOST_AUTO_TEST_CASE(HeadAlignmentTest2) {
+    EDistance ed("A", "AC");
+    ed.optDistance();
+    std::string out = ed.alignment();
+
+    std::cout << "Alignment output:\n" << out << std::endl;
+    
+    bool head_found = out.find("A A") != std::string::npos;
+    BOOST_CHECK_MESSAGE(head_found, "Expected to find 'A A' at the start, but did not.");
 }
