@@ -1,3 +1,4 @@
+// Copyright Manasa Praveen and Ponita Ty 2025
 CC = g++
 CFLAGS = -std=c++17 -Wall -Werror -pedantic -g
 LIBS = -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
