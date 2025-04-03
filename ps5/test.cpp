@@ -78,8 +78,7 @@ BOOST_AUTO_TEST_CASE(HeadCutDetectionTest) {
 
         BOOST_CHECK_MESSAGE(
             firstLine.find("-") == std::string::npos,
-            "[AC vs A] Head alignment line is missing — starts with a gap instead of A A"
-        );
+            "[AC vs A] Head alignment line is missing — starts with a gap instead of A A");
     }
 
     {
@@ -94,7 +93,6 @@ BOOST_AUTO_TEST_CASE(HeadCutDetectionTest) {
 
         BOOST_CHECK_MESSAGE(
             firstLine.find("-") == std::string::npos,
-            "[A vs AC] Head alignment line is missing — starts with a gap instead of A A"
-        );
+            "[A vs AC] Head alignment line is missing — starts with a gap instead of A A");
     }
 }
