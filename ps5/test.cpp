@@ -65,7 +65,7 @@ BOOST_AUTO_TEST_CASE(SwappedColsTest) {
     BOOST_CHECK(out.find("A T") != std::string::npos);
 }
 
-BOOST_AUTO_TEST_CASE(HeadAndTailStrictTest) {
+BOOST_AUTO_TEST_CASE(HeadAndTailExactLineTest) {
     {
         EDistance ed("AC", "A");
         ed.optDistance();
@@ -76,8 +76,8 @@ BOOST_AUTO_TEST_CASE(HeadAndTailStrictTest) {
         std::string firstLine;
         std::getline(ss, firstLine);
 
-        BOOST_CHECK_MESSAGE(firstLine.find("A A") != std::string::npos,
-            "[AC vs A] Expected 'A A' on first line for head alignment");
+        BOOST_CHECK_MESSAGE(firstLine == "A A 0",
+            "[AC vs A] Expected exact first line 'A A 0', got '" << firstLine << "'");
         BOOST_CHECK_MESSAGE(out.find("C -") != std::string::npos,
             "[AC vs A] Expected to find 'C -' for tail gap");
     }
@@ -92,8 +92,8 @@ BOOST_AUTO_TEST_CASE(HeadAndTailStrictTest) {
         std::string firstLine;
         std::getline(ss, firstLine);
 
-        BOOST_CHECK_MESSAGE(firstLine.find("A A") != std::string::npos,
-            "[A vs AC] Expected 'A A' on first line for head alignment");
+        BOOST_CHECK_MESSAGE(firstLine == "A A 0",
+            "[A vs AC] Expected exact first line 'A A 0', got '" << firstLine << "'");
         BOOST_CHECK_MESSAGE(out.find("- C") != std::string::npos,
             "[A vs AC] Expected to find '- C' for tail gap");
     }
