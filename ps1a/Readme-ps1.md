@@ -18,7 +18,7 @@ I had to brainstorm what kind of tests I want to implement, I made an LFSROutput
 I made an LFSROutput test, noThrow test, wrongInsert test and modified the GeneratInstr test.
 
 My LFSR is represented using a 16-bit string because this makes the indexing of the tap positions a lot more simpler. I specifically store it as an std::string so I do not need to worry about using bitwise operations or bitmasking. I think this benefitted my code implmentation allowing for it to be easier to utilize when validating inputs and tracking changes over time. 
-The way I stored my LFSR also made debugging a lot more simpler, becuase I previosuly tried storing as integers but soon realized it would be very complicated.
+The way I stored my LFSR also made debugging a lot more simpler, because I previously tried storing it as integers but soon realized that would be make it a lot more complicated.
 
 #### Part b
 In the second part of the project I defined necessary function and modfied the private class in the hpp file. I had to write code for the generate and step functions mainly. I did have to rework my step function multiple times because i had been trying to declare my tap positions instead if using their indexes. This had caused quite a bit of errors but then I chose to directly use the indexes and that made my program compile correctly.
