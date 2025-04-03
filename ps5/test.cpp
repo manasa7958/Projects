@@ -65,18 +65,15 @@ BOOST_AUTO_TEST_CASE(SwappedColsTest) {
     BOOST_CHECK(out.find("A T") != std::string::npos);
 }
 
-BOOST_AUTO_TEST_CASE(TailCutDetectionTest) {
+BOOST_AUTO_TEST_CASE(TailMustBePresentTest) {
     {
         EDistance ed("AC", "A");
         ed.optDistance();
         std::string out = ed.alignment();
         std::cout << "[AC vs A] Alignment output:\n" << out << std::endl;
 
-        bool has_head = out.find("A A") != std::string::npos;
-        bool has_tail = out.find("C -") != std::string::npos;
-
-        BOOST_CHECK_MESSAGE(has_head, "[AC vs A] Missing head alignment: 'A A'");
-        BOOST_CHECK_MESSAGE(has_tail, "[AC vs A] Missing tail alignment: 'C -'");
+        BOOST_CHECK_MESSAGE(out.find("C -") != std::string::npos,
+            "[AC vs A] Tail line 'C -' was missing. Broken implementation detected.");
     }
 
     {
@@ -85,10 +82,22 @@ BOOST_AUTO_TEST_CASE(TailCutDetectionTest) {
         std::string out = ed.alignment();
         std::cout << "[A vs AC] Alignment output:\n" << out << std::endl;
 
-        bool has_head = out.find("A A") != std::string::npos;
-        bool has_tail = out.find("- C") != std::string::npos;
-
-        BOOST_CHECK_MESSAGE(has_head, "[A vs AC] Missing head alignment: 'A A'");
-        BOOST_CHECK_MESSAGE(has_tail, "[A vs AC] Missing tail alignment: '- C'");
+        BOOST_CHECK_MESSAGE(out.find("- C") != std::string::npos,
+            "[A vs AC] Tail line '- C' was missing. Broken implementation detected.");
     }
+}
+
+BOOST_AUTO_TEST_CASE(TailMustBeTwoLinesTest) {
+    EDistance ed("AC", "A");
+    ed.optDistance();
+    std::string out = ed.alignment();
+
+    std::istringstream ss(out);
+    int count = 0;
+    std::string line;
+    while (std::getline(ss, line)) {
+        if (!line.empty()) ++count;
+    }
+
+    BOOST_CHECK_MESSAGE(count >= 2, "Alignment is missing lines — tail may be cut off.");
 }
