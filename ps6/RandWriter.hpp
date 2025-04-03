@@ -28,6 +28,7 @@ class RandWriter {
     // Throw an exception if kgram is not of length k.
     // Assume that L is at least k
     std::string generate(const std::string& kgram, size_t l);
+
  private:
     // Private member variables go here
 };
