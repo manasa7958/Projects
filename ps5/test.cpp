@@ -21,19 +21,19 @@ BOOST_AUTO_TEST_CASE(Min3DebugTest) {
     BOOST_CHECK_EQUAL(result2, 3);
 
     a = 3; b = 8; c = 3;
-    int result2 = EDistance::min3(a, b, c);
-    std::cout << "min3(" << a << ", " << b << ", " << c << ") = " << result2 << std::endl;
-    BOOST_CHECK_EQUAL(result2, 3);
+    int result3 = EDistance::min3(a, b, c);
+    std::cout << "min3(" << a << ", " << b << ", " << c << ") = " << result3 << std::endl;
+    BOOST_CHECK_EQUAL(result3, 3);
 
     a = 3; b = 3; c = 3;
-    int result2 = EDistance::min3(a, b, c);
-    std::cout << "min3(" << a << ", " << b << ", " << c << ") = " << result2 << std::endl;
-    BOOST_CHECK_EQUAL(result2, 3);
+    int result4 = EDistance::min3(a, b, c);
+    std::cout << "min3(" << a << ", " << b << ", " << c << ") = " << result4 << std::endl;
+    BOOST_CHECK_EQUAL(result4, 3);
 
     a = 3; b = 3; c = 5;
-    int result2 = EDistance::min3(a, b, c);
-    std::cout << "min3(" << a << ", " << b << ", " << c << ") = " << result2 << std::endl;
-    BOOST_CHECK_EQUAL(result2, 3);
+    int result5 = EDistance::min3(a, b, c);
+    std::cout << "min3(" << a << ", " << b << ", " << c << ") = " << result5 << std::endl;
+    BOOST_CHECK_EQUAL(result5, 3);
 }
 
 BOOST_AUTO_TEST_CASE(PenaltyDebugTest) {
