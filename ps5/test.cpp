@@ -75,3 +75,14 @@ BOOST_AUTO_TEST_CASE(TestAlignmentTailDebug) {
     bool tail_found = out.find("C -") != std::string::npos;
     BOOST_CHECK_MESSAGE(tail_found, "Expected to find 'C -' at the end, but did not.");
 }
+
+BOOST_AUTO_TEST_CASE(TestAlignmentTailRightSideGap) {
+    EDistance ed("A", "AC");
+    ed.optDistance();
+    std::string out = ed.alignment();
+
+    std::cout << "Alignment output:\n" << out << std::endl;
+
+    bool tail_found = out.find("- C") != std::string::npos;
+    BOOST_CHECK_MESSAGE(tail_found, "Expected to find '- C' at the end, but did not.");
+}
