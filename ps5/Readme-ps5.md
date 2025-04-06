@@ -9,15 +9,18 @@ Partner Section: 202
 
 Time to Complete: 6 hours
 
-
 ## Description
 Explain what the project does
+The PS5 is meant to create a DNA sequence alignment tool using edit distance. The edit distance calculates the minmum cost of aligning two different DNA strings by assigning different cost values for different operations. In the case of insertion or deletion the cost is 2, for subsitution the cost varies between 1 and 0 depending on whether or not the characters differ or matcht. The program then also reconstructs the optimal alignment path and reports the time it had taken to do so.
 
 ### Features
 Explain how you did the actual alignment including the data structures used.
+We needed to implement the Hirschberg's Algorithm as indicated in the instructions to create an efficient algorithm that computer the DNA sequence alignments in linear space. We used the std::vector for scoring the matrices and linear space-array, as well as the std::ostringstream for efficienct string building. 
 
 ### Testing
 Describe what the unit tests you wrote check for and why you picked them.
+Our unit tests checked to kae sure our min3 function works optimally by making sure the distance is calculated properly. We also tested edge/unusual cases like empty string, strings of unequal length, head/tail deletions, reversed strings, and cut ends. We also created a nothrow test to make sure that an error is not thrown in the case that a valid input is being run.
+These tests should ensure the correctness of our functions from the EDistance.cpp file by catching off-by-one bugs and ensuring the algorithm handles simple and tricky strings without crashing.
 
 ### Issues
 What did you have trouble with?  What did you learn?  What doesn't work?  Be honest.  You might be penalized if you claim something works and it doesn't.
@@ -40,20 +43,20 @@ Memory: 8 GB, 2133 MHz, LPDDR3
 Processors: 1.4 GHz Quad-Core Intel Core i5
 
 Partner's Computer
-Memory: (ex: 8gb, DDR4)
-Processors: (ex: i5-8500 @ 3.00 GHz x6)
+Memory: 8 GB, unified memory
+Processors: Apple M2 (8-core CPU, 2022 MacBook Air)
 
 ### Runs
 Fill in the table with the results of running your code on both your and your partner's computers.
 
 | data file     | distance | memory (mb) | time (seconds) | partner time |
 |---------------|----------|-------------|----------------|--------------|
-|ecoli2500.txt  | 118      |             | 0.87279        |              |
-|ecoli5000.txt  | 160      |             | 3.56677        |              |
-|ecoli10000.txt | 223      |             | 14.1065        |              |
-|ecoli20000.txt | 3135     |             | 70.7839        |              |
-|ecoli50000.txt | 19485    |             | 443.296        |              |
-|ecoli100000.txt| 24166    |             | 1788.53        |              |
+|ecoli2500.txt  | 118      |             | 0.87279        |  0.422032    |
+|ecoli5000.txt  | 160      |             | 3.56677        |  1.68111     |
+|ecoli10000.txt | 223      |             | 14.1065        |  6.70453     |
+|ecoli20000.txt | 3135     |             | 70.7839        |  33.4179     |
+|ecoli50000.txt | 19485    |             | 443.296        |  211.453     |
+|ecoli100000.txt| 24166    |             | 1788.53        |  843.177     |
 
 Here is an example from another computer for some of the files.
 
@@ -66,7 +69,7 @@ Here is an example from another computer for some of the files.
 |ecoli20000.txt|     3135 |    7.730 |
 
 ### Time
-Assume the two strings are the same length (M = N).  By applying the doubling method to the data points that you obtained, estimate the running time of youu program in seconds as a polynomial function of N, in the form a * N^b for some constants a and b.  Determine the largest input your program can handle if it is limited to one day of computation.
+Assume the two strings are the same length (M = N).  By applying the doubling method to the data points that you obtained, estimate the running time of youu program in seconds as a polynomial function of N, in the form a * N^b for some constants a and b. Determine the largest input your program can handle if it is limited to one day of computation.
 
 Provide a brief justification/explanation of how you applied the doubling method, and if you data seems not to work, describe what went wrong and use the sample data instead.
  - a = 
