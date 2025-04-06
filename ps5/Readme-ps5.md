@@ -1,13 +1,13 @@
 # PS5: DNA Alignment
 
 ## Contact
-Name: Manasa Praveen
+Name: Ponita Ty
 Section: 202
 
-Partner: Ponita Ty
+Partner: Manasa Praveen
 Partner Section: 202
 
-Time to Complete:
+Time to Complete: 5 hours
 
 
 ## Description
@@ -36,8 +36,8 @@ Please list:
 
 ### Specs
 Your Computer
-Memory: (ex: 8gb, DDR4)
-Processors: (ex: i5-8500 @ 3.00 GHz x6)
+Memory: 8 GB, 2133 MHz, LPDDR3
+Processors: 1.4 GHz Quad-Core Intel Core i5
 
 Partner's Computer
 Memory: (ex: 8gb, DDR4)
@@ -48,12 +48,12 @@ Fill in the table with the results of running your code on both your and your pa
 
 | data file     | distance | memory (mb) | time (seconds) | partner time |
 |---------------|----------|-------------|----------------|--------------|
-|ecoli2500.txt  |          |             |                |              |
-|ecoli5000.txt  |          |             |                |              |
-|ecoli10000.txt |          |             |                |              |
-|ecoli20000.txt |          |             |                |              |
-|ecoli50000.txt |          |             |                |              |
-|ecoli100000.txt|          |             |                |              |
+|ecoli2500.txt  | 118      |             | 0.87279        |              |
+|ecoli5000.txt  | 160      |             | 3.56677        |              |
+|ecoli10000.txt | 223      |             | 14.1065        |              |
+|ecoli20000.txt | 3135     |             | 70.7839        |              |
+|ecoli50000.txt | 19485    |             | 443.296        |              |
+|ecoli100000.txt| 24166    |             | 1788.53        |              |
 
 Here is an example from another computer for some of the files.
 
