@@ -7,7 +7,7 @@ Section: 202
 Partner: Manasa Praveen
 Partner Section: 202
 
-Time to Complete: 5 hours
+Time to Complete: 6 hours
 
 
 ## Description
