@@ -77,7 +77,8 @@ void EDistance::hirschbergAlign(
             int bestJ = start2;
             int bestScore = 2 * (end2 - start2 - 1) + penalty(s1[start1], s2[start2]);
             for (int j = start2 + 1; j < end2; j++) {
-                int currentScore = 2 * (j - start2) + penalty(s1[start1], s2[j]) + 2 * (end2 - j - 1);
+                int currentScore = 2 * (j - start2) + penalty(s1[start1],
+                s2[j]) + 2 * (end2 - j - 1);
                 if (currentScore < bestScore) {
                     bestScore = currentScore;
                     bestJ = j;
