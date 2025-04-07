@@ -10,10 +10,12 @@ OBJECTS = $(BUILD_DIR)/Sokoban.o $(BUILD_DIR)/main.o
 PROGRAM = Sokoban
 STATIC_LIB = Sokoban.a
 
-$(BUILD_DIR):
-	mkdir -p $(BUILD_DIR)
+.PHONY: all clean lint
 
 all: $(PROGRAM) $(STATIC_LIB)
+
+$(BUILD_DIR):
+	mkdir -p $(BUILD_DIR)
 
 $(BUILD_DIR)/%.o: %.cpp $(DEPS) | $(BUILD_DIR)
 	$(CC) $(CFLAGS) $(INCLUDEDIR) -c $< -o $@
