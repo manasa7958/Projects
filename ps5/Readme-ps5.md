@@ -19,7 +19,7 @@ We needed to implement the Hirschberg's Algorithm as indicated in the instructio
 
 ### Testing
 Describe what the unit tests you wrote check for and why you picked them.
-Our unit tests checked to kae sure our min3 function works optimally by making sure the distance is calculated properly. We also tested edge/unusual cases like empty string, strings of unequal length, head/tail deletions, reversed strings, and cut ends. We also created a nothrow test to make sure that an error is not thrown in the case that a valid input is being run.
+Our unit tests checked to make sure our min3 function works optimally by making sure the distance is calculated properly. We also tested edge/unusual cases like empty string, strings of unequal length, head/tail deletions, reversed strings, and cut ends. We also created a no throw test to make sure that an error is not thrown in the case that a valid input is being run.
 These tests should ensure the correctness of our functions from the EDistance.cpp file by catching off-by-one bugs and ensuring the algorithm handles simple and tricky strings without crashing.
 
 ### Issues
@@ -87,12 +87,12 @@ Run valgrind and list any errors you see.  Identify whether the memory usage rep
 
 | data file     | Calculated (mb) | Measured (mb) | Difference (%) |
 |---------------|-----------------|---------------|----------------|
-|ecoli2500.txt  |                 |               |                |
-|ecoli5000.txt  |                 |               |                |
-|ecoli10000.txt |                 |               |                |
-|ecoli20000.txt |                 |               |                |
-|ecoli50000.txt |                 |               |                |
-|ecoli100000.txt|                 |               |                |
+|ecoli2500.txt  |                 |  32.29        |                |
+|ecoli5000.txt  |                 |  105.25       |                |
+|ecoli10000.txt |                 |  522.92       |                |
+|ecoli20000.txt |                 |  9.84         |                |
+|ecoli50000.txt |                 |  12.03        |                |
+|ecoli100000.txt|                 |  11.85        |                |
 
 ## Pair Programming
 If you worked with a partner, do you have any remarks on the pair programming method? E.g., how many times did you switch, what are the tradeoffs of driving vs. navigating, etc.?
