@@ -33,10 +33,10 @@ Also, the both of us own Mac's and neither of our laptops support valgrind which
 ### Example
 Do one additional test case by hand. It should be constructed in such a way that you know the correct  output before running your program on it, and it should be a "corner case" that helps check if your program handles all special situations correctly. 
 
-Please list:
+Please list: example.txt
  - a copy of the test case input
-   Input 1: TGCA
-   Input 2: ACGT
+   TGCA
+   ACGT
  - the expected test case output
    Edit distance = 4
    T A 1
