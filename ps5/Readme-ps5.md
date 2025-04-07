@@ -33,6 +33,8 @@ Also, the both of us own Mac's and neither of our laptops support valgrind which
 ### Example
 Do one additional test case by hand. It should be constructed in such a way that you know the correct  output before running your program on it, and it should be a "corner case" that helps check if your program handles all special situations correctly. 
 
+We used example.txt, the rason we decided on this test case because it is indeed a     corner case that checks the alignment of two strings that have the same size but       are in reverse order of one another. Also, this test case helps check for cost         accuracy, and shows a preference for mismatch over insertion/deletion. 
+
 Please list: example.txt
  - a copy of the test case input
    TGCA
@@ -44,6 +46,7 @@ Please list: example.txt
    C G 1
    A T 1
  - whether your program ran correctly on it or not
+   Yes, the program did indeed run correctly and produced the expected output with an     execution time of 2.6e-05 seconds.
  - optionally, any other remarks
 
 ### Specs
@@ -60,12 +63,12 @@ Fill in the table with the results of running your code on both your and your pa
 
 | data file     | distance | memory (mb) | time (seconds) | partner time |
 |---------------|----------|-------------|----------------|--------------|
-|ecoli2500.txt  | 118      |             | 0.87279        |  0.422032    |
-|ecoli5000.txt  | 160      |             | 3.56677        |  1.68111     |
-|ecoli10000.txt | 223      |             | 14.1065        |  6.70453     |
-|ecoli20000.txt | 3135     |             | 70.7839        |  33.4179     |
-|ecoli50000.txt | 19485    |             | 443.296        |  211.453     |
-|ecoli100000.txt| 24166    |             | 1788.53        |  843.177     |
+|ecoli2500.txt  | 118      |  32.29      | 0.87279        |  0.422032    |
+|ecoli5000.txt  | 160      |  105.25     | 3.56677        |  1.68111     |
+|ecoli10000.txt | 223      |  522.92     | 14.1065        |  6.70453     |
+|ecoli20000.txt | 3135     |  9.84       | 70.7839        |  33.4179     |
+|ecoli50000.txt | 19485    |  12.03      | 443.296        |  211.453     |
+|ecoli100000.txt| 24166    |  11.85      | 1788.53        |  843.177     |
 
 Here is an example from another computer for some of the files.
 
@@ -84,7 +87,7 @@ Provide a brief justification/explanation of how you applied the doubling method
  - a = 3.7359e-8
  - b = 2.0757
  - largest N = 905,171
-I used the doubling method to calculate the constant b. In the doubling method we use pairs of input with them being N and 2N. Once we repeated this process pf calculting b for pairs (ecoli2500, ecoli5000), (ecoli5000, ecoli10000), and so on we then averaged the answer to find our general value for the constant b. Once we solved for the constant b, we were able to substitute it into the formula while plugging a known point and love for constant a as well. Lastly, in order to estimate the largest N, we used 86400 (# of seconds in a day) as the time, while using the constants a and b we previously calculated to find N. We were also able to ensure our data works because the constant b we calculated is very close to 2, therefore closely modeling a quadratic formula and confirming our implementation works as expected.
+We used the doubling method to calculate the constant b. In the doubling method we use pairs of input with them being N and 2N. Once we repeated this process pf calculting b for pairs (ecoli2500, ecoli5000), (ecoli5000, ecoli10000), and so on we then averaged the answer to find our general value for the constant b. Once we solved for the constant b, we were able to substitute it into the formula while plugging a known point and love for constant a as well. Lastly, in order to estimate the largest N, we used 86400 (# of seconds in a day) as the time, while using the constants a and b we previously calculated to find N. We were also able to ensure our data works because the constant b we calculated is very close to 2, therefore closely modeling a quadratic formula and confirming our implementation works as expected.
 
 ### Memory
 Assume the two strings are the same length (M = N).  Look at your code and determine how much memory it requires as a polynomial function of N, in the form a * N^b for some constants a and b.  Determine the largest input size your computer can handle if limited to 8GiB of RAM.
@@ -111,7 +114,7 @@ As can be seen by the calculated percentage differences in the case of the large
 
 ## Pair Programming
 If you worked with a partner, do you have any remarks on the pair programming method? E.g., how many times did you switch, what are the tradeoffs of driving vs. navigating, etc.?
-I think working with a partner helped both of us. I think when we struggled with different things we were able to brainstorm and form ideas a lot more quickly because we were working with one another. It also definitely helped lessen the workload and helped make the project feel less overwhelming. We switched a couple of different times, with one of us getting started on the testing first after which the other started building the base of the program. 
+I think working with a partner helped both of us. I think when we struggled with different things we were able to brainstorm and form ideas a lot more quickly because we were working with one another. It also definitely helped lessen the workload and helped make the project feel less overwhelming. We switched a couple of different times, with one of us getting started on the testing first after which the other started building the base of the program. Driving and navigating can both have their own drawbacks. When writing th code, oftentimes one has to go and change things based on errors or new ideas, etc. and this can be particualrly hard for the navigator to keep up with. However, we were able to talk through most of the things and took breaks and started early on the project so it would not get too overwhelming or confusing. 
 
 
 ## Extra Credit
