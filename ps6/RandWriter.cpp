@@ -8,20 +8,33 @@
 #include <unordered_map>
 #include "RandWriter.hpp"
 
-RandWriter::RandWriter(const std::string& str, size_t k) : text(str), k(k), gen(std::mt19937(42)) {
-    if (str.length() < k) throw std::invalid_argument("Text length must be at least k");
+RandWriter::RandWriter(const std::string& str, size_t k)
+    : text(str), k(k), gen(std::mt19937(42)) {
+    if (str.length() < k) {
+        throw std::invalid_argument("Text length must be at least k");
+    }
 
-    // Make it circular
     std::string circular_text = str + str.substr(0, k);
 
-    for (size_t i = 0; i < str.size(); ++i) {
-        std::string kgram = circular_text.substr(i, k);
-        char next_char = circular_text[i + k];
+    if (k == 0) {
+        for (char c : str) {
+            kgram_map[""][c]++;
+            kgram_count[""]++;
+            if (alphabet.find(c) == std::string::npos) {
+                alphabet += c;
+            }
+        }
+    } else {
+        for (size_t i = 0; i < str.size(); ++i) {
+            std::string kgram = circular_text.substr(i, k);
+            char next_char = circular_text[i + k];
 
-        kgram_count[kgram]++;
-        kgram_map[kgram][next_char]++;
-        if (alphabet.find(next_char) == std::string::npos)
-            alphabet += next_char;
+            kgram_map[kgram][next_char]++;
+            kgram_count[kgram]++;
+            if (alphabet.find(next_char) == std::string::npos) {
+                alphabet += next_char;
+            }
+        }
     }
 }
 
@@ -30,29 +43,57 @@ size_t RandWriter::orderK() const {
 }
 
 int RandWriter::freq(const std::string& kgram) const {
-    if (kgram.length() != k) throw std::invalid_argument("kgram must be of length k");
+    if (kgram.length() != k) {
+        throw std::invalid_argument("kgram must be of length k");
+    }
+    if (k == 0) {
+        return static_cast<int>(text.length());
+    }
+
     auto it = kgram_count.find(kgram);
     return (it != kgram_count.end()) ? it->second : 0;
 }
 
 int RandWriter::freq(const std::string& kgram, char c) const {
-    if (kgram.length() != k) throw std::invalid_argument("kgram must be of length k");
+    if (kgram.length() != k) {
+        throw std::invalid_argument("kgram must be of length k");
+    }
+
+    if (k == 0) {
+        return static_cast<int>(std::count(text.begin(), text.end(), c));
+    }
+
     auto it = kgram_map.find(kgram);
-    if (it == kgram_map.end()) return 0;
+    if (it == kgram_map.end()) {
+        return 0;
+    }
     auto cit = it->second.find(c);
     return (cit != it->second.end()) ? cit->second : 0;
 }
 
 char RandWriter::kRand(const std::string& kgram) {
-    if (kgram.length() != k) throw std::invalid_argument("kgram must be of length k");
-    auto it = kgram_map.find(kgram);
-    if (it == kgram_map.end()) throw std::invalid_argument("kgram not found");
+    if (kgram.length() != k) {
+        throw std::invalid_argument("kgram must be of length k");
+    }
 
-    const auto& freq_map = it->second;
+    std::unordered_map<char, int> dist_map;
+
+    if (k == 0) {
+        for (char c : text) {
+            dist_map[c]++;
+        }
+    } else {
+        auto it = kgram_map.find(kgram);
+        if (it == kgram_map.end()) {
+            throw std::invalid_argument("kgram not found");
+        }
+        dist_map = it->second;
+    }
+
     std::vector<char> chars;
     std::vector<int> weights;
 
-    for (const auto& pair : freq_map) {
+    for (const auto& pair : dist_map) {
         chars.push_back(pair.first);
         weights.push_back(pair.second);
     }
@@ -62,8 +103,12 @@ char RandWriter::kRand(const std::string& kgram) {
 }
 
 std::string RandWriter::generate(const std::string& kgram, size_t l) {
-    if (kgram.length() != k) throw std::invalid_argument("kgram must be of length k");
-    if (l < k) throw std::invalid_argument("Length must be at least k");
+    if (kgram.length() != k) {
+        throw std::invalid_argument("kgram must be of length k");
+    }
+    if (l < k) {
+        throw std::invalid_argument("Length must be at least k");
+    }
 
     std::string result = kgram;
     std::string current = kgram;
@@ -71,7 +116,9 @@ std::string RandWriter::generate(const std::string& kgram, size_t l) {
     while (result.length() < l) {
         char next = kRand(current);
         result += next;
-        current = result.substr(result.length() - k, k);
+        if (k > 0) {
+            current = result.substr(result.length() - k, k);
+        }
     }
 
     return result;
