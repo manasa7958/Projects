@@ -1,7 +1,4 @@
 // Copyright Manasa Praveen 2025
-#ifndef RANDWRITER_HPP
-#define RANDWRITER_HPP
-
 #include <iostream>
 #include <string>
 #include <unordered_map>
@@ -47,5 +44,3 @@ class RandWriter {
     std::string alphabet;
     std::mt19937 gen;
 };
-
-#endif  // RANDWRITER_HPP
