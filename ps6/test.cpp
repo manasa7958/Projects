@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <set>
+#include <map>
 #include "RandWriter.hpp"
 
 #define BOOST_TEST_DYN_LINK
