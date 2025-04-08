@@ -1,6 +1,11 @@
 // Copyright Manasa Praveen 2025
+#ifndef RANDWRITER_HPP
+#define RANDWRITER_HPP
+
 #include <iostream>
 #include <string>
+#include <unordered_map>
+#include <random>
 
 class RandWriter {
  public:
@@ -13,6 +18,7 @@ class RandWriter {
     // Number of occurences of kgram in text
     // Throw an exception if kgram is not length k
     int freq(const std::string& kgram) const;
+
     // Number of times that character c follows kgram
     // if order=0, return num of times that char c appears
     // (throw an exception if kgram is not of length k)
@@ -22,6 +28,7 @@ class RandWriter {
     // (throw an exception if kgram is not of length k)
     // (throw an exception if no such kgram)
     char kRand(const std::string& kgram);
+
     // Generate a string of length L characters by simulating a trajectory
     // through the corresponding Markov chain. The first k characters of
     // the newly generated string should be the argument kgram.
@@ -29,6 +36,16 @@ class RandWriter {
     // Assume that L is at least k
     std::string generate(const std::string& kgram, size_t l);
 
+    // Print internal state (order, alphabet, frequencies)
+    friend std::ostream& operator<<(std::ostream& os, const RandWriter& rw);
+
  private:
-    // Private member variables go here
+    std::string text;
+    size_t k;
+    std::unordered_map<std::string, std::unordered_map<char, int>> kgram_map;
+    std::unordered_map<std::string, int> kgram_count;
+    std::string alphabet;
+    std::mt19937 gen; // random number generator
 };
+
+#endif // RANDWRITER_HPP
