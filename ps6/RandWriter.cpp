@@ -1,6 +1,8 @@
 // Copyright Manasa Praveen 2025
 
 #include <iostream>
+#include <string>
+#include <vector>
 #include <random>
 #include <stdexcept>
 #include <sstream>
