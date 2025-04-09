@@ -1,13 +1,12 @@
 # PS6: RandWriter
 
 ## Contact
-Name:
-Section:
-Time to Complete:
+Name: Manasa Praveen
+Section: 202
+Time to Complete: 7 hours
 
 
 ## Description
-Explain what the project does.
 
 ### Features
 Describe what your major decisions were and why you did things that way.
