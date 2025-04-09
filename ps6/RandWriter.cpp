@@ -8,7 +8,7 @@
 #include <sstream>
 #include <set>
 #include <unordered_map>
-#include <algorithm> 
+#include <algorithm>
 #include "RandWriter.hpp"
 
 RandWriter::RandWriter(const std::string& str, size_t k)
