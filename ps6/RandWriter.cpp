@@ -12,7 +12,7 @@
 #include "RandWriter.hpp"
 
 RandWriter::RandWriter(const std::string& str, size_t k)
-    : text(str), k(k), gen(std::mt19937(42)) {
+    : text(str), k(k), gen(42) {
     if (str.length() < k) {
         throw std::invalid_argument("Text length must be at least k");
     }
