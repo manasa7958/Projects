@@ -42,5 +42,5 @@ class RandWriter {
     std::unordered_map<std::string, std::unordered_map<char, int>> kgram_map;
     std::unordered_map<std::string, int> kgram_count;
     std::string alphabet;
-    std::mt19937 gen;
+    mutable std::mt19937 gen;
 };
