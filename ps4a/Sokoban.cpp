@@ -172,7 +172,7 @@ void Sokoban::reset() {
         }
     }
 
-    // Set up move counter text
+    // Extra Credit - Move Counter
     moveCounterText.setFont(font);
     moveCounterText.setCharacterSize(24);
     moveCounterText.setFillColor(sf::Color::White);
