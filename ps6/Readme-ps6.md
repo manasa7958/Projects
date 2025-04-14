@@ -29,6 +29,7 @@ There are no problems in program and it should all be working correctly.
 
 ### Extra Credit
 Anything special you did.  This is required to earn bonus points.
+I made a sperate version of this program that uses words instead of characters. I created a new class (WordWriter.cpp and WordWriter.hpp) that recognizes the input file as words instead of a string of characters this time around. Then I had to create a WordTextWriter.cpp (similar to the TextWriter.cpp) which reads the user input, runs the program, and generates the desired output using k order and L length. This new program is very similar to the original TextWriter program but instead of storing the characters as std::string, here I had to write a std::istringstream function that will extract the words. Additionally, when generating the ouput unlike before the ouput can no longer be generated as a string but rather as separate words and in order to do that I had to convert the std::vector<std::string> into ostringstream. 
 
 ## Acknowledgements
 List all sources of help including the instructor or TAs, classmates, and web pages.
