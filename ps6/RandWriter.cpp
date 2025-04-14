@@ -1,5 +1,4 @@
 // Copyright Manasa Praveen 2025
-
 #include <iostream>
 #include <string>
 #include <vector>
@@ -28,7 +27,7 @@ RandWriter::RandWriter(const std::string& str, size_t k)
             }
         });
     } else {
-        std::for_each(size_t{0}, size_t{str.size()}, [&](size_t i) {
+        auto process_kgram = [&](size_t i) {
             std::string kgram = circular_text.substr(i, k);
             char next_char = circular_text[i + k];
 
@@ -37,7 +36,11 @@ RandWriter::RandWriter(const std::string& str, size_t k)
             if (alphabet.find(next_char) == std::string::npos) {
                 alphabet += next_char;
             }
-        });
+        };
+
+        for (size_t i = 0; i < str.size(); ++i) {
+            process_kgram(i);
+        }
     }
 }
 
@@ -63,7 +66,9 @@ int RandWriter::freq(const std::string& kgram, char c) const {
     }
 
     if (k == 0) {
-        return static_cast<int>(std::count_if(text.begin(), text.end(), [&](char ch) { return ch == c; }));
+        return static_cast<int>(std::count_if(text.begin(), text.end(), [&](char ch) {
+            return ch == c;
+        }));
     }
 
     auto it = kgram_map.find(kgram);
