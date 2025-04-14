@@ -222,7 +222,7 @@ void Sokoban::draw(sf::RenderTarget& target, sf::RenderStates states) const {
             2 - 100, boardHeight * TILE_SIZE / 2 - 50);
         target.draw(winText, states);
     }
-    target.draw(moveCounterText, states); // AFTER the IF BLOCK or INSIDE??
+    target.draw(moveCounterText, states);
 }
 
 std::ostream& operator<<(std::ostream& out, const Sokoban& s) {
