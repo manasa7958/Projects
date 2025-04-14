@@ -161,6 +161,7 @@ void Sokoban::reset() {
     gameWon = false;
     lastDirection = Direction::Down;
 
+    // Setup player and boxes on targets
     for (unsigned int y = 0; y < board.size(); ++y) {
         for (unsigned int x = 0; x < board[y].size(); ++x) {
             if (board[y][x] == '@') {
@@ -170,8 +171,14 @@ void Sokoban::reset() {
             }
         }
     }
-}
 
+    // Set up move counter text
+    moveCounterText.setFont(font);
+    moveCounterText.setCharacterSize(24);
+    moveCounterText.setFillColor(sf::Color::White);
+    moveCounterText.setPosition(10.f, boardHeight * TILE_SIZE + 10.f);
+    moveCounterText.setString("Moves: 0");
+}
 
 void Sokoban::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     for (unsigned int y = 0; y < boardHeight; ++y) {
