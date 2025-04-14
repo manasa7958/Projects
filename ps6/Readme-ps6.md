@@ -20,6 +20,7 @@ In the case that the wrong output is being generated, I used the general std::ex
 
 ### Lambda
 What does your lambda expression do?  What function did you pass it to?
+I used the std::for_each lambda functions several times throughout my code to replace loops. This made my code a lot more easily readable, and debuggable. I also used the std::count_if lambda expression for character counting inside of the RandWriter::freq() funciton. 
 
 ### Issues
 What did you have trouble with?  What did you learn?  What doesn't work?  Be honest.  You might be penalized if you claim something works and it doesn't.
