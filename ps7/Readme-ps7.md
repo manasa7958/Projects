@@ -1,8 +1,8 @@
 # PS7: Kronos Log Parsing
 
 ## Contact
-Name:
-Section:
+Name: Manasa Praveen
+Section: 202
 Time to Complete:
 
 
