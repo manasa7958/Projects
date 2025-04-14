@@ -1,6 +1,7 @@
 // Copyright Manasa Praveen 2025
 #include <iostream>
 #include <string>
+#include <sstream>
 #include "WordWriter.hpp"
 
 int main(int argc, char* argv[]) {
