@@ -50,5 +50,10 @@ class Sokoban : public sf::Drawable {
     sf::Texture playerTexture;
     friend std::ostream& operator<<(std::ostream& out, const Sokoban& s);
     friend std::istream& operator>>(std::istream& in, Sokoban& s);
+
+    // PSXc - Extra Credit
+    unsigned int moveCount;
+    sf::Font font;
+    sf::Text moveText;
 };
 }  // namespace SB
