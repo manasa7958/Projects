@@ -101,7 +101,7 @@ std::ostream& operator<<(std::ostream& os, const WordWriter& ww) {
     for (const auto& word : ww.alphabet) os << word << " ";
     os << "\n";
     for (const auto& pair : ww.kgram_map) {
-        os << '"' << pair.first << "" : ";
+        os << '"' << pair.first << "\" : ";
         for (const auto& freq : pair.second) {
             os << freq.first << " -> " << freq.second << ", ";
         }
