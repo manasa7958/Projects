@@ -4,7 +4,6 @@
 #include <iostream>
 #include <vector>
 #include <string>
-// #include "sfml_fix.hpp" - IRRELEVANT, using because of problems in terminal
 #include <SFML/Graphics.hpp>
 
 namespace SB {
