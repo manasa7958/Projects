@@ -19,13 +19,13 @@ RandWriter::RandWriter(const std::string& str, size_t k)
     std::string circular_text = str + str.substr(0, k);
 
     if (k == 0) {
-        std::for_each(str.begin(), str.end(), [&](char c) {
+        kgram_count[""] = str.size();
+        for (char c : str) {
             kgram_map[""][c]++;
-            kgram_count[""]++;
             if (alphabet.find(c) == std::string::npos) {
                 alphabet += c;
             }
-        });
+        }
     } else {
         auto process_kgram = [&](size_t i) {
             std::string kgram = circular_text.substr(i, k);
