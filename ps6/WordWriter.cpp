@@ -56,10 +56,10 @@ std::string WordWriter::kRand(const std::string& kgram) {
     const auto& dist_map = it->second;
     std::vector<std::string> words;
     std::vector<int> weights;
-    for (const auto& pair : dist_map) {
+    std::for_each(dist_map.begin(), dist_map.end(), [&](const auto& pair) {
         words.push_back(pair.first);
         weights.push_back(pair.second);
-    }
+    });
 
     std::discrete_distribution<> dist(weights.begin(), weights.end());
     return words[dist(gen)];
@@ -98,15 +98,16 @@ std::string WordWriter::generate(const std::string& kgram, size_t L) {
 std::ostream& operator<<(std::ostream& os, const WordWriter& ww) {
     os << "Order: " << ww.k << "\n";
     os << "Alphabet: ";
-    for (const auto& word : ww.alphabet) os << word << " ";
-    os << "\n";
-    for (const auto& pair : ww.kgram_map) {
+    std::for_each(ww.alphabet.begin(), ww.alphabet.end(), [&](const std::string& word) {
+        os << word << " ";
+    });
+    std::for_each(ww.kgram_map.begin(), ww.kgram_map.end(), [&](const auto& pair) {
         os << '"' << pair.first << "\" : ";
-        for (const auto& freq : pair.second) {
+        std::for_each(pair.second.begin(), pair.second.end(), [&](const auto& freq) {
             os << freq.first << " -> " << freq.second << ", ";
-        }
+        });
         os << "\n";
-    }
+    });
     return os;
 }
 
