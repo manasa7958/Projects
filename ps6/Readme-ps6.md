@@ -33,3 +33,4 @@ I made a sperate version of this program that uses words instead of characters. 
 
 ## Acknowledgements
 List all sources of help including the instructor or TAs, classmates, and web pages.
+Used the How to loop through a map pdf provided by the instructor to undertsand and implement wraparound logic.
