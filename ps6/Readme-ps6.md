@@ -11,11 +11,12 @@ The project implements a Random Writer that predicts the characters while mimici
 
 ### Features
 Describe what your major decisions were and why you did things that way.
-I chose to use an unordered_map with string keys to rpresent the kgrams and string values to represent each new character following the kgram. This supports random selection and allows for more efficient lookups. I used a single mt19937 object to generate randomness in this program.
+I chose to use an unordered_map with string keys to represent the kgrams and string values to represent each new character following the kgram. This supports random selection and allows for more efficient lookups. I used a single mt19937 object to generate randomness in this program.
 
 ### Testing
 What tests did you write?  What exceptions did you use?  Does your code pass the tests?
 I had five different tests. These tests look to ensure the basic functionality of the program is running correctly, then it also tests edge cases such as when unvalid k values are used in the input. Lastly, the tests also make sure the program doesn't make any errors while generating ouput. I particularly test to make sure the correct length string is generated, and the correct prefix is used. 
+In the case that the wrong output is being generated, I used the general std::exception class to handle errors. All of my tests sucessfully passed.
 
 ### Lambda
 What does your lambda expression do?  What function did you pass it to?
