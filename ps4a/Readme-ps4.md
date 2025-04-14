@@ -32,7 +32,9 @@ I had issues with my Makefile. I was able to run my program on my personal termi
 Anything special you did.  This is required to earn bonus points.
 
 ### Change (PSXc)
-Previously I lost a lot of points on my ps4a project because the make command did not do anything. This is because all was not my first rule inside my Makefile. Hence, the only way to produce the output was to manually type make all in the terminal. To improve the project I added this line .PHONY: all clean lint into my Makefile which ensures that all is indeed my first rule and hence, the command make will compile all of the files. In addition, to tweaking my Makefile I also did the extra credit for ps4a by adding a turn counter.
+Previously I lost a lot of points on my ps4a project because the make command did not do anything. This is because all was not my first rule inside my Makefile. Hence, the only way to produce the output was to manually type make all in the terminal. To improve the project I added this line .PHONY: all clean lint into my Makefile which ensures that all is indeed my first rule and hence, the command make will compile all of the files. In addition, to tweaking my Makefile I also did the extra credit for ps4a by adding a turn counter. I used my base code from ps4b and added sf::Text moveCounterText, and int moveCount as private member of the Sokoban class to implement the move counter function. I initialized the moveCounterText inside of the reset() function. Inside of this reset function I manually set the position, font, size, and color. The moveCount should increment everytime the player moves which is why it is nested inside of the movePlayer() function. The move count should be displayed at the top left corner of the screen, and should automatically reset to 0 every time the user resets as well.
+In order to accomodate for the change in ouput caused by the inclusion of the moveCounterText, I also updated my screenshot.png to display the appropriate output.
+
 
 ## Acknowledgements
 https://www.sfml-dev.org/documentation/3.0.0/ - referred to the documentation for SFMl when writing functions.
