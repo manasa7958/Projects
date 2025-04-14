@@ -7,11 +7,11 @@ Time to Complete: 7 hours
 
 
 ## Description
-The project implements a Random Writer that predicts the characters
-This project implements a Random Writer using a Markov model of order k to generate text that mimics the statistical structure of a source input. The model builds a frequency table of kgrams and the characters that follow them, and uses this to stochastically generate new text of a specified length
+The project implements a Random Writer that predicts the characters while mimicing the structure of the input file. The program uses a Markov model to generate the text of the length that the user inputs.
 
 ### Features
 Describe what your major decisions were and why you did things that way.
+I chose to use an unordered_map with string keys to rpresent the kgrams and string values to represent each new character following the kgram. This supports random selection and allows for more efficient lookups. I used a single mt19937 object to generate randomness in this program.
 
 ### Testing
 What tests did you write?  What exceptions did you use?  Does your code pass the tests?
