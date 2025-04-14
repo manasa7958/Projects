@@ -20,15 +20,15 @@ RandWriter::RandWriter(const std::string& str, size_t k)
     std::string circular_text = str + str.substr(0, k);
 
     if (k == 0) {
-        for (char c : str) {
+        std::for_each(str.begin(), str.end(), [&](char c) {
             kgram_map[""][c]++;
             kgram_count[""]++;
             if (alphabet.find(c) == std::string::npos) {
                 alphabet += c;
             }
-        }
+        });
     } else {
-        for (size_t i = 0; i < str.size(); ++i) {
+        std::for_each(size_t{0}, size_t{str.size()}, [&](size_t i) {
             std::string kgram = circular_text.substr(i, k);
             char next_char = circular_text[i + k];
 
@@ -37,7 +37,7 @@ RandWriter::RandWriter(const std::string& str, size_t k)
             if (alphabet.find(next_char) == std::string::npos) {
                 alphabet += next_char;
             }
-        }
+        });
     }
 }
 
@@ -63,7 +63,7 @@ int RandWriter::freq(const std::string& kgram, char c) const {
     }
 
     if (k == 0) {
-        return static_cast<int>(std::count(text.begin(), text.end(), c));
+        return static_cast<int>(std::count_if(text.begin(), text.end(), [&](char ch) { return ch == c; }));
     }
 
     auto it = kgram_map.find(kgram);
@@ -82,9 +82,9 @@ char RandWriter::kRand(const std::string& kgram) {
     std::unordered_map<char, int> dist_map;
 
     if (k == 0) {
-        for (char c : text) {
+        std::for_each(text.begin(), text.end(), [&](char c) {
             dist_map[c]++;
-        }
+        });
     } else {
         auto it = kgram_map.find(kgram);
         if (it == kgram_map.end()) {
@@ -96,10 +96,10 @@ char RandWriter::kRand(const std::string& kgram) {
     std::vector<char> chars;
     std::vector<int> weights;
 
-    for (const auto& pair : dist_map) {
+    std::for_each(dist_map.begin(), dist_map.end(), [&](const auto& pair) {
         chars.push_back(pair.first);
         weights.push_back(pair.second);
-    }
+    });
 
     std::discrete_distribution<> dist(weights.begin(), weights.end());
     return chars[dist(gen)];
@@ -130,12 +130,14 @@ std::string RandWriter::generate(const std::string& kgram, size_t l) {
 std::ostream& operator<<(std::ostream& os, const RandWriter& rw) {
     os << "Order: " << rw.k << "\n";
     os << "Alphabet: " << rw.alphabet << "\n";
-    for (const auto& pair : rw.kgram_map) {
+
+    std::for_each(rw.kgram_map.begin(), rw.kgram_map.end(), [&](const auto& pair) {
         os << "\"" << pair.first << "\" : ";
-        for (const auto& freq_pair : pair.second) {
+        std::for_each(pair.second.begin(), pair.second.end(), [&](const auto& freq_pair) {
             os << freq_pair.first << " -> " << freq_pair.second << ", ";
-        }
+        });
         os << "\n";
-    }
+    });
+
     return os;
 }
