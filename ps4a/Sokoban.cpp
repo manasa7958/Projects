@@ -176,7 +176,7 @@ void Sokoban::reset() {
     moveCounterText.setFont(font);
     moveCounterText.setCharacterSize(24);
     moveCounterText.setFillColor(sf::Color::White);
-    moveCounterText.setPosition(10.f, boardHeight * TILE_SIZE + 10.f);
+    moveCounterText.setPosition(10.f, 10.f);
     moveCounterText.setString("Moves: 0");
 }
 
