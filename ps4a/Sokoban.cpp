@@ -146,6 +146,7 @@ void Sokoban::movePlayer(Direction dir) {
 
     if (moved) {
         lastDirection = dir;
+        moveCounterText.setString("Moves: " + std::to_string(moveCount));
     }
 
     gameWon = isWon();
@@ -222,6 +223,7 @@ void Sokoban::draw(sf::RenderTarget& target, sf::RenderStates states) const {
             2 - 100, boardHeight * TILE_SIZE / 2 - 50);
         target.draw(winText, states);
     }
+    target.draw(moveCounterText, states); // AFTER the IF BLOCK or INSIDE??
 }
 
 std::ostream& operator<<(std::ostream& out, const Sokoban& s) {
