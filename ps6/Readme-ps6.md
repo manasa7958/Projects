@@ -20,10 +20,12 @@ In the case that the wrong output is being generated, I used the general std::ex
 
 ### Lambda
 What does your lambda expression do?  What function did you pass it to?
-I used the std::for_each lambda functions several times throughout my code to replace loops. This made my code a lot more easily readable, and debuggable. I also used the std::count_if lambda expression for character counting inside of the RandWriter::freq() funciton. 
+I used the std::for_each lambda functions several times throughout my code to replace loops within the RandWriter::kRand(), and ostream& operator<< functions. This made my code a lot more easily readable, and debuggable. I also used the std::count_if lambda expression for character counting inside of the RandWriter::freq() funciton. 
 
 ### Issues
 What did you have trouble with?  What did you learn?  What doesn't work?  Be honest.  You might be penalized if you claim something works and it doesn't.
+I think one of the main issues was when handling k = 0. I had to adjust how the frequencies and kgrams were stored when dealing with k  = 0. I also initally had some off-by-one error when generating output that I later had to debug to make sure my program ran correctly. 
+There are no problems in program and it should all be working correctly. 
 
 ### Extra Credit
 Anything special you did.  This is required to earn bonus points.
