@@ -54,6 +54,10 @@ class Sokoban : public sf::Drawable {
 
     friend std::ostream& operator<<(std::ostream& out, const Sokoban& s);
     friend std::istream& operator>>(std::istream& in, Sokoban& s);
+
+    // PSXc - Extra Credit
+    unsigned int moveCount;
+    sf::Text moveCounterText;
 };
 
 }  // namespace SB
