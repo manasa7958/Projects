@@ -42,7 +42,6 @@ class Sokoban : public sf::Drawable {
     unsigned int boardHeight;
     std::string originalLevelFile;
     bool gameWon = false;
-    int moveCount = 0;
 
     static sf::Texture wallTexture, groundTexture, playerTexture, boxTexture, storageTexture;
     static sf::Font font;
@@ -56,7 +55,7 @@ class Sokoban : public sf::Drawable {
     friend std::istream& operator>>(std::istream& in, Sokoban& s);
 
     // PSXc - Extra Credit
-    unsigned int moveCount;
+    int moveCount = 0;
     sf::Text moveCounterText;
 };
 
