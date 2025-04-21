@@ -7,7 +7,7 @@
 #include <string>
 #include <regex>
 
-int main () {
+int main() {
   string s, rs;
   regex e;
 
@@ -54,8 +54,8 @@ int main () {
 
     if (sm.size() > 0) {
       std::cout << "the matches were: ";
-      for (unsigned i=0; i<sm.size(); ++i) {
-	      std::cout << "[" << sm[i] << "] " << endl;
+      for (unsigned i=0; i < sm.size(); ++i) {
+	std::cout << "[" << sm[i] << "] " << endl;
       }
     }
 
