@@ -67,7 +67,6 @@ int main(int argc, char* argv[]) {
       R"((\w{3} +\d{1,2} \d{2}:\d{2}:\d{2}).*oejs\.AbstractConnector:Started SelectChannelConnector)");
 
   std::string line;
-  int line_number = 0;
   boost::posix_time::ptime start_time;
   bool waiting_for_end = false;
 
