@@ -10,6 +10,7 @@
 #include <iomanip>
 #include <cstdint>
 #include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/date_time/gregorian/gregorian.hpp>
 
 boost::posix_time::ptime parse_timestamp(const std::string& ts, int year) {
   std::stringstream ss;
@@ -19,6 +20,12 @@ boost::posix_time::ptime parse_timestamp(const std::string& ts, int year) {
   boost::posix_time::ptime pt;
   ss >> pt;
   return pt;
+}
+
+std::string format_datetime(const boost::posix_time::ptime& pt) {
+  std::string date = boost::gregorian::to_iso_extended_string(pt.date());
+  std::string time = boost::posix_time::to_simple_string(pt.time_of_day());
+  return date + " " + time;
 }
 
 struct BootRecord {
@@ -31,7 +38,6 @@ struct BootRecord {
   boost::posix_time::ptime end_time;
 
   bool complete = false;
-  std::vector<std::pair<std::string, int>> services;
 };
 
 int main(int argc, char* argv[]) {
@@ -54,15 +60,13 @@ int main(int argc, char* argv[]) {
       R"((\w{3} \d{1,2} \d{2}:\d{2}:\d{2}).*\(log\.c\.166\) server started)");
   std::regex end_re(
       R"((\w{3} \d{1,2} \d{2}:\d{2}:\d{2}).*oejs\.AbstractConnector:Started SelectChannelConnector)");
-  std::regex service_re(R"((\w+)\s*\([^)]*?(\d+)\s*ms\))");
-  std::regex startupservlet_re(R"(StartupServlet Time\s*==>\s*(\d+)\s*ms)");
 
   std::string line;
   int line_number = 0;
   std::vector<BootRecord> boots;
   BootRecord current_boot;
   bool waiting_for_end = false;
-  const int inferred_year = 2014;  // Hardcoded year for autograder
+  const int inferred_year = 2014;
 
   while (std::getline(infile, line)) {
     ++line_number;
@@ -82,13 +86,6 @@ int main(int argc, char* argv[]) {
       current_boot.complete = true;
       boots.push_back(current_boot);
       waiting_for_end = false;
-    } else if (waiting_for_end && std::regex_search(line, match, service_re)) {
-      std::string name = match[1];
-      int duration = std::stoi(match[2]);
-      current_boot.services.emplace_back(name, duration);
-    } else if (waiting_for_end &&
-               std::regex_search(line, match, startupservlet_re)) {
-      current_boot.services.emplace_back("StartupServlet", std::stoi(match[1]));
     }
   }
 
@@ -96,53 +93,19 @@ int main(int argc, char* argv[]) {
     boots.push_back(current_boot);
   }
 
-  int total = static_cast<int>(boots.size());
-  int successes = 0;
-  int64_t total_seconds = 0;
-  int64_t max_seconds = 0;
+  outfile << "InTouch log file: " << input_filename << std::endl;
 
   for (const auto& b : boots) {
+    outfile << format_datetime(b.start_time) << " Boot Start" << std::endl;
     if (b.complete) {
       boost::posix_time::time_duration diff = b.end_time - b.start_time;
-      int64_t seconds = diff.total_seconds();
-      total_seconds += seconds;
-      if (seconds > max_seconds) max_seconds = seconds;
-      ++successes;
-    }
-  }
-
-  outfile << "Device Boot Report" << std::endl;
-  outfile << "Total Boots: " << total << std::endl;
-  outfile << "Successful Boots: " << successes << std::endl;
-  outfile << "Failed Boots: " << total - successes << std::endl;
-  if (successes > 0) {
-    outfile << "Average Boot Time: " << std::fixed << std::setprecision(1)
-            << static_cast<double>(total_seconds) / successes << " seconds"
-            << std::endl;
-    outfile << "Longest Boot Time: " << max_seconds << " seconds" << std::endl;
-  }
-  outfile << std::endl;
-
-  for (const auto& b : boots) {
-    outfile << "Line " << b.start_line << ": " << b.start_ts_str
-            << " Boot Start" << std::endl;
-
-    for (const auto& s : b.services) {
-      outfile << "    " << s.first << " - " << s.second << " ms" << std::endl;
-    }
-
-    if (b.complete) {
-      boost::posix_time::time_duration diff = b.end_time - b.start_time;
-      outfile << "Line " << b.end_line << ": " << b.end_ts_str
-              << " Boot Complete - " << diff.total_seconds() << " seconds"
-              << std::endl;
+      outfile << format_datetime(b.end_time) << " Boot Complete - "
+              << diff.total_seconds() << " seconds" << std::endl;
     } else {
-      outfile << "Line " << b.start_line
-              << ": Boot Failure - No boot complete before next start or EOF"
+      outfile << format_datetime(b.start_time)
+              << " Boot Failure - No boot complete before next start or EOF"
               << std::endl;
     }
-
-    outfile << std::endl;
   }
 
   std::cout << "Report written to " << output_filename << std::endl;
