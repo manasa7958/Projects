@@ -12,7 +12,6 @@
 using namespace std;
 using namespace boost::posix_time;
 
-// Struct to hold a boot event
 struct BootEvent {
     int line_number;
     string timestamp_str;
@@ -20,7 +19,6 @@ struct BootEvent {
 };
 
 ptime parse_timestamp(const string& ts) {
-    // Example: Apr 21 17:37:46 => "%b %d %H:%M:%S"
     stringstream ss(ts);
     ss.imbue(locale(locale::classic(), new time_input_facet("%b %d %H:%M:%S")));
     ptime pt;
@@ -41,7 +39,6 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    // Output file: append .rpt
     string output_filename = input_filename + ".rpt";
     ofstream outfile(output_filename);
 
@@ -60,7 +57,6 @@ int main(int argc, char* argv[]) {
         smatch match;
 
         if (regex_search(line, match, start_re)) {
-            // Found a new start
             if (waiting_for_end) {
                 outfile << "Line " << current_start.line_number << ": " << current_start.timestamp_str
                         << " Boot Failure - No boot complete before next start" << endl;
@@ -76,7 +72,6 @@ int main(int argc, char* argv[]) {
             outfile << "Line " << current_start.line_number << ": " << current_start.timestamp_str << " Boot Start" << endl;
         }
         else if (waiting_for_end && regex_search(line, match, end_re)) {
-            // Found end after start
             string end_ts_str = match[1];
             ptime end_time = parse_timestamp(end_ts_str);
             time_duration diff = end_time - current_start.timestamp;
