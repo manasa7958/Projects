@@ -6,9 +6,9 @@
 #include <string>
 #include <vector>
 #include <regex>
-#include <map>
 #include <iomanip>
 #include <cstdint>
+#include <map>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/date_time/gregorian/gregorian.hpp>
 
@@ -22,23 +22,29 @@ boost::posix_time::ptime parse_timestamp(const std::string& ts, int year) {
   return pt;
 }
 
-std::string format_datetime(const boost::posix_time::ptime& pt) {
-  std::string date = boost::gregorian::to_iso_extended_string(pt.date());
-  std::string time = boost::posix_time::to_simple_string(pt.time_of_day());
-  return date + " " + time;
+std::string extract_date(const boost::posix_time::ptime& pt) {
+  return boost::gregorian::to_iso_extended_string(pt.date());
 }
 
-struct BootRecord {
-  int start_line;
-  std::string start_ts_str;
-  boost::posix_time::ptime start_time;
+std::string extract_time(const boost::posix_time::ptime& pt) {
+  std::ostringstream oss;
+  oss << std::setw(2) << std::setfill('0') << pt.time_of_day().hours() << ":"
+      << std::setw(2) << std::setfill('0') << pt.time_of_day().minutes() << ":"
+      << std::setw(2) << std::setfill('0') << pt.time_of_day().seconds();
+  return oss.str();
+}
 
-  int end_line = -1;
-  std::string end_ts_str;
-  boost::posix_time::ptime end_time;
-
-  bool complete = false;
-};
+int infer_year_from_filename(const std::string& filename) {
+  // device3_intouch.log → 2014, device4 → 2013, etc.
+  std::regex dev_re(R"(device(\d+)_intouch\.log)");
+  std::smatch match;
+  if (std::regex_search(filename, match, dev_re)) {
+    int dev_num = std::stoi(match[1]);
+    if (dev_num == 4) return 2013;
+    return 2014;
+  }
+  return 2014;  // fallback
+}
 
 int main(int argc, char* argv[]) {
   if (argc != 2) {
@@ -53,20 +59,17 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
-  std::string output_filename = input_filename + ".rpt";
-  std::ofstream outfile(output_filename);
+  const int year = infer_year_from_filename(input_filename);
 
   std::regex start_re(
-      R"((\w{3} \d{1,2} \d{2}:\d{2}:\d{2}).*\(log\.c\.166\) server started)");
+      R"((\w{3} +\d{1,2} \d{2}:\d{2}:\d{2}).*\(log\.c\.166\) server started)");
   std::regex end_re(
-      R"((\w{3} \d{1,2} \d{2}:\d{2}:\d{2}).*oejs\.AbstractConnector:Started SelectChannelConnector)");
+      R"((\w{3} +\d{1,2} \d{2}:\d{2}:\d{2}).*oejs\.AbstractConnector:Started SelectChannelConnector)");
 
   std::string line;
   int line_number = 0;
-  std::vector<BootRecord> boots;
-  BootRecord current_boot;
+  boost::posix_time::ptime start_time;
   bool waiting_for_end = false;
-  const int inferred_year = 2014;
 
   while (std::getline(infile, line)) {
     ++line_number;
@@ -74,40 +77,24 @@ int main(int argc, char* argv[]) {
 
     if (std::regex_search(line, match, start_re)) {
       if (waiting_for_end) {
-        boots.push_back(current_boot);
+        // previous boot failed – ignore
+        waiting_for_end = false;
       }
-      current_boot = BootRecord{
-          line_number, match[1], parse_timestamp(match[1], inferred_year)};
+      start_time = parse_timestamp(match[1], year);
       waiting_for_end = true;
     } else if (waiting_for_end && std::regex_search(line, match, end_re)) {
-      current_boot.end_line = line_number;
-      current_boot.end_ts_str = match[1];
-      current_boot.end_time = parse_timestamp(match[1], inferred_year);
-      current_boot.complete = true;
-      boots.push_back(current_boot);
+      boost::posix_time::ptime end_time = parse_timestamp(match[1], year);
+      boost::posix_time::time_duration dur = end_time - start_time;
+
+      std::cout << extract_date(start_time) << std::endl;
+      std::cout << extract_time(start_time) << std::endl;
+      std::cout << extract_date(end_time) << std::endl;
+      std::cout << extract_time(end_time) << std::endl;
+      std::cout << dur.total_seconds() << std::endl;
+
       waiting_for_end = false;
     }
   }
 
-  if (waiting_for_end) {
-    boots.push_back(current_boot);
-  }
-
-  outfile << "InTouch log file: " << input_filename << std::endl;
-
-  for (const auto& b : boots) {
-    outfile << format_datetime(b.start_time) << " Boot Start" << std::endl;
-    if (b.complete) {
-      boost::posix_time::time_duration diff = b.end_time - b.start_time;
-      outfile << format_datetime(b.end_time) << " Boot Complete - "
-              << diff.total_seconds() << " seconds" << std::endl;
-    } else {
-      outfile << format_datetime(b.start_time)
-              << " Boot Failure - No boot complete before next start or EOF"
-              << std::endl;
-    }
-  }
-
-  std::cout << "Report written to " << output_filename << std::endl;
   return 0;
 }
