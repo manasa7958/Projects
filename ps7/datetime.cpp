@@ -48,5 +48,4 @@ int main() {
 
   cout << "duration in hours " << td.hours() << endl;
   cout << "duration in ms " << td.total_milliseconds() << endl;
-
 }
