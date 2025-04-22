@@ -1,100 +1,95 @@
 // Copyright Manasa Praveen 2025
-
 #include <iostream>
 #include <fstream>
-#include <sstream>
+#include <regex>
 #include <string>
 #include <vector>
-#include <regex>
-#include <iomanip>
-#include <cstdint>
-#include <map>
 #include <boost/date_time/posix_time/posix_time.hpp>
-#include <boost/date_time/gregorian/gregorian.hpp>
 
-boost::posix_time::ptime parse_timestamp(const std::string& ts, int year) {
-  std::stringstream ss;
-  ss << year << " " << ts;
-  ss.imbue(std::locale(std::locale::classic(),
-                       new boost::posix_time::time_input_facet("%Y %b %d %H:%M:%S")));
-  boost::posix_time::ptime pt;
-  ss >> pt;
-  return pt;
-}
+using namespace std;
+using namespace boost::posix_time;
+using namespace boost::gregorian;
 
-std::string extract_date(const boost::posix_time::ptime& pt) {
-  return boost::gregorian::to_iso_extended_string(pt.date());
-}
+struct BootEntry {
+    int startLine;
+    string startTimestamp;
+    int endLine;
+    string endTimestamp;
+    bool success;
+};
 
-std::string extract_time(const boost::posix_time::ptime& pt) {
-  std::ostringstream oss;
-  oss << std::setw(2) << std::setfill('0') << pt.time_of_day().hours() << ":"
-      << std::setw(2) << std::setfill('0') << pt.time_of_day().minutes() << ":"
-      << std::setw(2) << std::setfill('0') << pt.time_of_day().seconds();
-  return oss.str();
-}
-
-int infer_year_from_filename(const std::string& filename) {
-  // device3_intouch.log → 2014, device4 → 2013, etc.
-  std::regex dev_re(R"(device(\d+)_intouch\.log)");
-  std::smatch match;
-  if (std::regex_search(filename, match, dev_re)) {
-    int dev_num = std::stoi(match[1]);
-    if (dev_num == 4) return 2013;
-    return 2014;
-  }
-  return 2014;  // fallback
+ptime parse_timestamp(const string& line) {
+    static const regex timestamp_pattern(R"((\w{3}\s+\d{1,2}\s\d{2}:\d{2}:\d{2}))");
+    smatch match;
+    if (regex_search(line, match, timestamp_pattern)) {
+        string timestamp = match.str(1);
+        stringstream ss("2013 " + timestamp); // Year fixed from the context
+        tm t{};
+        ss >> get_time(&t, "%Y %b %d %H:%M:%S");
+        if (!ss.fail()) {
+            return ptime_from_tm(t);
+        }
+    }
+    return ptime(not_a_date_time);
 }
 
 int main(int argc, char* argv[]) {
-  if (argc != 2) {
-    std::cerr << "Usage: ./ps7 <input_log_file>" << std::endl;
-    return 1;
-  }
-
-  std::string input_filename = argv[1];
-  std::ifstream infile(input_filename);
-  if (!infile.is_open()) {
-    std::cerr << "Error: Cannot open file " << input_filename << std::endl;
-    return 1;
-  }
-
-  const int year = infer_year_from_filename(input_filename);
-
-  std::regex start_re(
-      R"((\w{3} +\d{1,2} \d{2}:\d{2}:\d{2}).*\(log\.c\.166\) server started)");
-  std::regex end_re(
-      R"((\w{3} +\d{1,2} \d{2}:\d{2}:\d{2}).*oejs\.AbstractConnector:Started SelectChannelConnector)");
-
-  std::string line;
-  [[maybe_unused]] int line_number = 0;
-  boost::posix_time::ptime start_time;
-  bool waiting_for_end = false;
-
-  while (std::getline(infile, line)) {
-    ++line_number;
-    std::smatch match;
-
-    if (std::regex_search(line, match, start_re)) {
-      if (waiting_for_end) {
-        // previous boot failed – ignore
-        waiting_for_end = false;
-      }
-      start_time = parse_timestamp(match[1], year);
-      waiting_for_end = true;
-    } else if (waiting_for_end && std::regex_search(line, match, end_re)) {
-      boost::posix_time::ptime end_time = parse_timestamp(match[1], year);
-      boost::posix_time::time_duration dur = end_time - start_time;
-
-      std::cout << extract_date(start_time) << std::endl;
-      std::cout << extract_time(start_time) << std::endl;
-      std::cout << extract_date(end_time) << std::endl;
-      std::cout << extract_time(end_time) << std::endl;
-      std::cout << dur.total_seconds() << std::endl;
-
-      waiting_for_end = false;
+    if (argc != 2) {
+        cerr << "Usage: ./ps7 <logfile>\n";
+        return 1;
     }
-  }
 
-  return 0;
+    ifstream infile(argv[1]);
+    if (!infile.is_open()) {
+        cerr << "Could not open file: " << argv[1] << endl;
+        return 1;
+    }
+
+    string line;
+    int lineNum = 0;
+    vector<BootEntry> entries;
+    BootEntry current = {-1, "", -1, "", false};
+
+    const regex start_pattern(R"(server started)");
+    const regex end_pattern(R"(oejs\.AbstractConnector:Started SelectChannelConnector)");
+
+    while (getline(infile, line)) {
+        ++lineNum;
+        if (regex_search(line, start_pattern)) {
+            if (current.startLine != -1 && !current.success) {
+                // Last boot failed
+                entries.push_back(current);
+            }
+            current = {lineNum, line, -1, "", false};
+        } else if (regex_search(line, end_pattern)) {
+            if (current.startLine != -1 && !current.success) {
+                current.endLine = lineNum;
+                current.endTimestamp = line;
+                current.success = true;
+                entries.push_back(current);
+                current = {-1, "", -1, "", false};
+            }
+        }
+    }
+
+    if (current.startLine != -1 && !current.success) {
+        entries.push_back(current);
+    }
+
+    string outName = string(argv[1]) + ".rpt";
+    ofstream outfile(outName);
+
+    for (const auto& entry : entries) {
+        outfile << entry.startLine << " " << entry.startTimestamp << " Boot Start\n";
+        if (entry.success) {
+            ptime t1 = parse_timestamp(entry.startTimestamp);
+            ptime t2 = parse_timestamp(entry.endTimestamp);
+            time_duration duration = t2 - t1;
+            outfile << entry.endLine << " " << entry.endTimestamp << " Boot Complete: " << duration.total_seconds() << " seconds\n";
+        } else {
+            outfile << "Boot Failure\n";
+        }
+    }
+
+    return 0;
 }
