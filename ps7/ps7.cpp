@@ -106,31 +106,47 @@ int main(int argc, char* argv[]) {
             }
         }
     }
-
+    
     vector<BootSequence> sequences;
-    for (size_t i = 0; i < events.size(); i++) {
-        if (events[i].isStart) {
-            BootSequence seq;
-            seq.startLine = events[i].lineNumber;
-            seq.startTimestamp = events[i].timestamp;
-            seq.startTime = events[i].parsedTime;
-            seq.success = false;
-
-            for (size_t j = i + 1; j < events.size(); j++) {
-                if (!events[j].isStart && !seq.success) {
-                    seq.endLine = events[j].lineNumber;
-                    seq.endTimestamp = events[j].timestamp;
-                    seq.endTime = events[j].parsedTime;
-                    seq.success = true;
-                    seq.duration = seq.endTime - seq.startTime;
-                    break;
-                } else if (events[j].isStart) {
-                    break;
-                }
+    BootEvent pendingStart;
+    bool hasPending = false;
+    
+    for (const auto& event : events) {
+        if (event.isStart) {
+            if (hasPending) {
+                BootSequence seq;
+                seq.startLine = pendingStart.lineNumber;
+                seq.startTimestamp = pendingStart.timestamp;
+                seq.startTime = pendingStart.parsedTime;
+                seq.success = false;
+                sequences.push_back(seq);
             }
-     
+            pendingStart = event;
+            hasPending = true;
+        } else if (hasPending) {
+            BootSequence seq;
+            seq.startLine = pendingStart.lineNumber;
+            seq.startTimestamp = pendingStart.timestamp;
+            seq.startTime = pendingStart.parsedTime;
+    
+            seq.endLine = event.lineNumber;
+            seq.endTimestamp = event.timestamp;
+            seq.endTime = event.parsedTime;
+            seq.success = true;
+            seq.duration = seq.endTime - seq.startTime;
+    
             sequences.push_back(seq);
+            hasPending = false;
         }
+    }
+    
+    if (hasPending) {
+        BootSequence seq;
+        seq.startLine = pendingStart.lineNumber;
+        seq.startTimestamp = pendingStart.timestamp;
+        seq.startTime = pendingStart.parsedTime;
+        seq.success = false;
+        sequences.push_back(seq);
     }
 
     string outFileName = string(argv[1]) + ".rpt";
@@ -140,19 +156,34 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    for (const auto& seq : sequences) {
-        auto [startDate, startTime] = extractDateAndTime(seq.startTimestamp);
+        int initiated_count = 0, completed_count = 0;
 
-        outfile << seq.startLine << " " << seq.startTimestamp << " Boot Start" << endl;
+    outfile << "Device Boot Report\n\n";
+    outfile << "InTouch log file: " << argv[1] << '\n';
+    outfile << "Lines Scanned: " << lineNum << "\n\n";
+    
+    for (const auto& seq : sequences) {
+        outfile << "=== Device boot ===\n";
+
+        outfile << seq.startLine << "(" << argv[1] << "): "
+                << to_iso_extended_string(seq.startTime.date()) << ' '
+                << seq.startTime.time_of_day() << " Boot Start\n";
+
+        ++initiated_count;
 
         if (seq.success) {
-            outfile << seq.endLine << " " << seq.endTimestamp << " Boot Complete: " 
-                   << seq.duration.total_seconds() << " seconds" << endl;
+            outfile << seq.endLine << "(" << argv[1] << "): "
+                    << to_iso_extended_string(seq.endTime.date()) << ' '
+                    << seq.endTime.time_of_day() << " Boot Completed\n";
+
+            outfile << "\tBoot Time: " << seq.duration.total_milliseconds() << "ms\n\n";
+            ++completed_count;
         } else {
-            outfile << "Boot Failure" << endl;
+            outfile << "**** Incomplete boot ****\n\n";
         }
     }
 
-    cout << "Report generated: " << outFileName << endl;
+    outfile << "\nDevice boot count: initiated = " << initiated_count
+            << ", completed: " << completed_count << "\n\n";
     return 0;
 }
