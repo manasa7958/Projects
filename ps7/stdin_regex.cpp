@@ -51,12 +51,11 @@ int main() {
     // uses constant iterators so requires -std=gnu++0x
     //    regex_match ( s.cbegin(), s.cend(), sm, e);
     //    cout << "range on \"" << s << "\" with " << sm.size() << " matches\n";
-
     if (sm.size() > 0) {
-      std::cout << "the matches were: ";
-      for (unsigned i=0; i < sm.size(); ++i) {
-	std::cout << "[" << sm[i] << "] " << endl;
-      }
+	    std::cout << "the matches were: ";
+	    for (unsigned i=0; i < sm.size(); ++i) {
+		    std::cout << "[" << sm[i] << "] " << endl;
+	    }
     }
 
     std::cout << endl << endl;
