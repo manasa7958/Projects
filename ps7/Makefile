@@ -10,7 +10,7 @@ SRCS = ps7.cpp
 OBJS = $(BUILD_DIR)/ps7.o
 EXEC = ps7
 
-.PHONY: all clean lint
+.PHONY: all clean lint ps7
 
 all: $(EXEC)
 
