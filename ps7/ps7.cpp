@@ -44,7 +44,8 @@ int main(int argc, char* argv[]) {
             }
 
             date log_date(stoi(match[1]), stoi(match[2]), stoi(match[3]));
-            start_time = ptime(log_date, time_duration(stoi(match[4]), stoi(match[5]), stoi(match[6])));
+            start_time = ptime(log_date, time_duration(stoi(match[4]),
+                stoi(match[5]), stoi(match[6])));
 
             report << "=== Device boot ===\n";
             report << line_number << "(" << input_path << "): "
@@ -56,7 +57,8 @@ int main(int argc, char* argv[]) {
         } else if (boost::regex_match(line, match, end_regex)) {
             if (awaiting) {
                 date log_date(stoi(match[1]), stoi(match[2]), stoi(match[3]));
-                ptime end_time(log_date, time_duration(stoi(match[4]), stoi(match[5]), stoi(match[6])));
+                ptime end_time(log_date, time_duration(stoi(match[4]),
+                stoi(match[5]), stoi(match[6])));
                 time_duration dur = end_time - start_time;
 
                 report << line_number << "(" << input_path << "): "
