@@ -1,7 +1,7 @@
 CC = g++
 CFLAGS = -std=c++17 -Wall -Werror -pedantic -g
 
-BOOST_LIB = -lboost_date_time
+BOOST_LIB = -lboost_date_time -lboost_regex
 INCLUDEDIR = -I. -I/opt/homebrew/opt/boost/include/
 LIBDIR = -L/opt/homebrew/opt/boost/lib/
 BUILD_DIR = build
