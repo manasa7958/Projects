@@ -175,7 +175,7 @@ void Sokoban::undoMove() {
 
     board = lastState.board;
     playerPosition = lastState.playerPosition;
-    moveCount = lastState.moveCount;
+    moveCount = lastState.moveCount + 2;
     moveCounterText.setString("Moves: " + std::to_string(moveCount));
 
     gameWon = isWon();
