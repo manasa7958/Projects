@@ -35,7 +35,7 @@ class Sokoban : public sf::Drawable {
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
  private:
-    // Undo Many Moves
+    // PSXb - Extra Credit
     struct GameState {
     std::vector<std::string> board;
     sf::Vector2u playerPosition;
@@ -65,6 +65,10 @@ class Sokoban : public sf::Drawable {
 
     friend std::ostream& operator<<(std::ostream& out, const Sokoban& s);
     friend std::istream& operator>>(std::istream& in, Sokoban& s);
+
+    // PSXc - Extra Credit
+    int moveCount = 0;
+    sf::Text moveCounterText;
 };
 
 }  // namespace SB
