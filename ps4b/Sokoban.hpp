@@ -29,6 +29,8 @@ class Sokoban : public sf::Drawable {
     void reset();
     int getMoveCount() const;
 
+    void undoMove();
+
  protected:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
@@ -41,7 +43,6 @@ class Sokoban : public sf::Drawable {
     };
     std::vector<GameState> history;
     void saveState();
-    void undoMove();
 
     void loadTextures();
 
