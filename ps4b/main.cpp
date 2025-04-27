@@ -59,6 +59,8 @@ int main(int argc, char* argv[]) {
             if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::R) {
                 game.reset();
                 playedVictorySound = false;
+            } else if (event.key.code == sf::Keyboard::U) {
+                game.undoMove();
             }
         }
 
