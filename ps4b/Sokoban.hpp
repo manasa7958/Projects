@@ -1,9 +1,10 @@
 // Copyright Manasa Praveen 2025
 #pragma once
 
-#include <SFML/Graphics.hpp>
 #include <vector>
 #include <string>
+#include <SFML/Audio.hpp>
+#include <SFML/Graphics.hpp>
 
 namespace SB {
 
