@@ -23,7 +23,10 @@ public:
     sf::Vector2u playerLoc() const;
     unsigned int width() const;
     unsigned int height() const;
-    void undoMove(); // <-- Now public!
+    void undoMove();  // Undo feature!
+
+    friend std::ostream& operator<<(std::ostream& out, const Sokoban& s);
+    friend std::istream& operator>>(std::istream& in, Sokoban& s);
 
 private:
     struct GameState {
@@ -36,6 +39,7 @@ private:
 
     std::vector<std::string> board;
     std::vector<std::string> originalBoard;
+    std::string originalLevelFile;
     unsigned int boardWidth;
     unsigned int boardHeight;
     sf::Vector2u playerPosition;
@@ -49,6 +53,7 @@ private:
     static sf::Texture groundTexture;
     static sf::Texture boxTexture;
     static sf::Texture storageTexture;
+    static sf::Texture playerTexture;
     static sf::Texture playerTextureUp;
     static sf::Texture playerTextureDown;
     static sf::Texture playerTextureLeft;
@@ -62,7 +67,4 @@ private:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 };
 
-std::ostream& operator<<(std::ostream& out, const Sokoban& s);
-std::istream& operator>>(std::istream& in, Sokoban& s);
-
-}  // namespace SB
+} // namespace SB
