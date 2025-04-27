@@ -4,7 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
-// #include "sfml_fix.hpp" - IRRELEVANT, using because of problems in terminal
+#include <stack>
 #include <SFML/Graphics.hpp>
 
 namespace SB {
@@ -33,6 +33,16 @@ class Sokoban : public sf::Drawable {
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
  private:
+    // Undo Many Moves
+    struct GameState {
+    std::vector<std::string> board;
+    sf::Vector2u playerPosition;
+    int moveCount;
+    };
+    std::vector<GameState> history;
+    void saveState();
+    void undoMove();
+
     void loadTextures();
 
     std::vector<std::string> board;
