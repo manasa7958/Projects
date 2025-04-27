@@ -1,74 +1,68 @@
 // Copyright Manasa Praveen 2025
 #pragma once
 
-#include <iostream>
+#include <SFML/Graphics.hpp>
 #include <vector>
 #include <string>
-#include <stack>
-#include <SFML/Graphics.hpp>
 
 namespace SB {
 
-enum class Direction {
-    Up, Down, Left, Right
-};
+enum class Direction { Up, Down, Left, Right };
 
 class Sokoban : public sf::Drawable {
- public:
-    static const int TILE_SIZE = 64;
+public:
+    static const unsigned int TILE_SIZE = 64;
 
     Sokoban();
-    explicit Sokoban(const std::string& filename);
-
-    unsigned int width() const;
-    unsigned int height() const;
-    sf::Vector2u playerLoc() const;
-    bool isWon() const;
+    Sokoban(const std::string& filename);
 
     void movePlayer(Direction dir);
     void reset();
+    bool isWon() const;
     int getMoveCount() const;
+    sf::Vector2u playerLoc() const;
+    unsigned int width() const;
+    unsigned int height() const;
+    void undoMove(); // <-- Now public!
 
-    void undoMove();
-
- protected:
-    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-
- private:
-    // PSXb - Extra Credit
+private:
     struct GameState {
-    std::vector<std::string> board;
-    sf::Vector2u playerPosition;
-    int moveCount;
+        std::vector<std::string> board;
+        sf::Vector2u playerPosition;
+        int moveCount;
     };
-    std::vector<GameState> history;
-    void saveState();
 
-    void loadTextures();
+    std::vector<GameState> history;
 
     std::vector<std::string> board;
     std::vector<std::string> originalBoard;
-    sf::Vector2u playerPosition;
     unsigned int boardWidth;
     unsigned int boardHeight;
-    std::string originalLevelFile;
-    bool gameWon = false;
+    sf::Vector2u playerPosition;
     int moveCount = 0;
+    Direction lastDirection;
+    bool gameWon = false;
 
-    static sf::Texture wallTexture, groundTexture, playerTexture, boxTexture, storageTexture;
+    sf::Text moveCounterText;
+
+    static sf::Texture wallTexture;
+    static sf::Texture groundTexture;
+    static sf::Texture boxTexture;
+    static sf::Texture storageTexture;
+    static sf::Texture playerTextureUp;
+    static sf::Texture playerTextureDown;
+    static sf::Texture playerTextureLeft;
+    static sf::Texture playerTextureRight;
     static sf::Font font;
     static bool texturesLoaded;
 
-    static sf::Texture playerTextureUp, playerTextureDown;
-    static sf::Texture playerTextureLeft, playerTextureRight;
-    Direction lastDirection = Direction::Down;
+    void loadTextures();
+    void saveState();
 
-    friend std::ostream& operator<<(std::ostream& out, const Sokoban& s);
-    friend std::istream& operator>>(std::istream& in, Sokoban& s);
-
-    // PSXc - Extra Credit
-    int moveCount = 0;
-    sf::Text moveCounterText;
+    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 };
+
+std::ostream& operator<<(std::ostream& out, const Sokoban& s);
+std::istream& operator>>(std::istream& in, Sokoban& s);
 
 }  // namespace SB
