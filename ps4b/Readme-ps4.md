@@ -42,6 +42,7 @@ I also changed the player image so that it matches the direction of their most r
 
 ### Changes
 I build my new PS4b on the modified PS4a that also has a move counter already implemented inside of it. I have described the specific mechanics in my Readme file for PS4a (in PSXc). In addition to the movecounter being displayed I also added code so that the player is now able to Undo move using the 'u' button from the keboard. Players can undo several moves and this is reflected in the movecounter as -1 move for each move that is undone. I created a saveState() method that pushes a history of the board, player location, and move count so that the current state is not forgotten. I then created an undoMove() function inside of which I look at the last saved state and move back there and then pop it once the last saved state has been accessed. 
+My TestSwap still continues to fail and I am unable to debug it unfortunately. 
 
 ## Acknowledgements
 https://www.sfml-dev.org/documentation/3.0.0/ - referred to the documentation for SFMl when writing functions
