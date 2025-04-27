@@ -161,6 +161,9 @@ void Sokoban::movePlayer(Direction dir) {
     }
 
     gameWon = isWon();
+    if (gameWon) {
+        victorySound.play();
+    }
 }
 
 void Sokoban::undoMove() {
