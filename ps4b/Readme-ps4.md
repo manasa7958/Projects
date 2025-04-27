@@ -40,7 +40,8 @@ I added a victory fanfare that plays when the game is won by the user. In order 
 
 I also changed the player image so that it matches the direction of their most recent move. I did this by firstly adding a public variable called lastDirection that saves the direction the player was facing during their last move. I then loaded the different player sprites along with the rest of the sprites inside of the loadTexture() function. I then used switch statements inside of my draw function when loading the player image. I also made sure the default player sprite (in my reset() function) would be the player facing up/front.
 
-
+### Changes
+I build my new PS4b on the modified PS4a that also has a move counter already implemented inside of it. I have described the specific mechanics in my Readme file for PS4a (in PSXc). In addition to the movecounter being displayed I also added code so that the player is now able to Undo move using the 'u' button from the keboard. Players can undo several moves and this is reflected in the movecounter as -1 move as well. 
 
 ## Acknowledgements
 https://www.sfml-dev.org/documentation/3.0.0/ - referred to the documentation for SFMl when writing functions
