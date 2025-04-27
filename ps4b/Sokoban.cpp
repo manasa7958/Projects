@@ -22,7 +22,6 @@ sf::Texture Sokoban::playerTextureLeft;
 sf::Texture Sokoban::playerTextureRight;
 sf::Font Sokoban::font;
 bool Sokoban::texturesLoaded = false;
-bool Sokoban::audioAvailable = true;
 
 Sokoban::Sokoban() : boardWidth(0), boardHeight(0) {}
 
@@ -50,16 +49,59 @@ void Sokoban::loadTextures() {
         !font.loadFromFile("/System/Library/Fonts/Supplemental/Arial.ttf")) {
         throw std::runtime_error("Failed to load one or more textures/fonts");
     }
-    try {
-        if (!victoryBuffer.loadFromFile("victory.wav")) {
-            audioAvailable = false;
-        } else {
-            victorySound.setBuffer(victoryBuffer);
-        }
-    } catch (...) {
-        audioAvailable = false;
+    if (!victoryBuffer.loadFromFile("victory.wav")) {
+        throw std::runtime_error("Failed to load victory.wav");
     }
+    victorySound.setBuffer(victoryBuffer);
     texturesLoaded = true;
+}
+
+unsigned int Sokoban::width() const {
+    return boardWidth;
+}
+
+unsigned int Sokoban::height() const {
+    return boardHeight;
+}
+
+sf::Vector2u Sokoban::playerLoc() const {
+    return playerPosition;
+}
+
+int Sokoban::getMoveCount() const {
+    return moveCount;
+}
+
+bool Sokoban::isWon() const {
+    if (board.empty() || originalBoard.empty()) return false;
+
+    int boxesOnTargets = 0;
+    int totalBoxes = 0;
+    int totalTargets = 0;
+
+    for (unsigned int y = 0; y < boardHeight; ++y) {
+        const std::string& currRow = board[y];
+        const std::string& origRow = originalBoard[y];
+
+        boxesOnTargets += std::count_if(currRow.begin(), currRow.end(), [&](char c) {
+            return c == 'B';
+        });
+
+        totalBoxes += std::count_if(currRow.begin(), currRow.end(), [](char c) {
+            return c == 'A' || c == 'B';
+        });
+
+        totalTargets += std::count_if(origRow.begin(), origRow.end(), [](char c) {
+            return c == 'a';
+        });
+    }
+
+    bool win = (boxesOnTargets == totalBoxes || boxesOnTargets == totalTargets);
+    return win;
+}
+
+void Sokoban::saveState() {
+    history.push_back(GameState{board, playerPosition, moveCount});
 }
 
 void Sokoban::movePlayer(Direction dir) {
@@ -120,9 +162,137 @@ void Sokoban::movePlayer(Direction dir) {
     }
 
     gameWon = isWon();
-    if (gameWon && audioAvailable) {
+    if (gameWon) {
         victorySound.play();
     }
 }
 
-} // namespace SB
+void Sokoban::undoMove() {
+    if (history.empty()) return;
+
+    GameState lastState = history.back();
+    history.pop_back();
+
+    board = lastState.board;
+    playerPosition = lastState.playerPosition;
+    moveCount = lastState.moveCount;
+    moveCounterText.setString("Moves: " + std::to_string(moveCount));
+
+    gameWon = isWon();
+}
+
+void Sokoban::reset() {
+    if (originalBoard.empty()) return;
+
+    board = originalBoard;
+    boardHeight = board.size();
+    boardWidth = board[0].size();
+    moveCount = 0;
+    gameWon = false;
+    lastDirection = Direction::Down;
+    history.clear();
+
+    for (unsigned int y = 0; y < board.size(); ++y) {
+        for (unsigned int x = 0; x < board[y].size(); ++x) {
+            if (board[y][x] == '@') {
+                playerPosition = {x, y};
+            } else if (originalBoard[y][x] == 'a' && board[y][x] == 'A') {
+                board[y][x] = 'B';
+            }
+        }
+    }
+
+    moveCounterText.setFont(font);
+    moveCounterText.setCharacterSize(24);
+    moveCounterText.setFillColor(sf::Color::White);
+    moveCounterText.setPosition(10.f, 10.f);
+    moveCounterText.setString("Moves: 0");
+}
+
+void Sokoban::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+    for (unsigned int y = 0; y < boardHeight; ++y) {
+        for (unsigned int x = 0; x < boardWidth; ++x) {
+            char tile = board[y][x];
+
+            if (tile != '#') {
+                sf::Sprite groundSprite;
+                groundSprite.setTexture(groundTexture);
+                groundSprite.setPosition(x * TILE_SIZE, y * TILE_SIZE);
+                target.draw(groundSprite, states);
+            }
+            sf::Sprite sprite;
+            if (tile == '#') {
+                sprite.setTexture(wallTexture);
+            } else if (tile == 'A' || tile == 'B') {
+                sprite.setTexture(boxTexture);
+            } else if (tile == 'a') {
+                sprite.setTexture(storageTexture);
+            } else if (tile == '@') {
+                switch (lastDirection) {
+                    case Direction::Up:    sprite.setTexture(playerTextureUp);    break;
+                    case Direction::Down:  sprite.setTexture(playerTextureDown);  break;
+                    case Direction::Left:  sprite.setTexture(playerTextureLeft);  break;
+                    case Direction::Right: sprite.setTexture(playerTextureRight); break;
+                }
+            } else {
+                continue;
+            }
+            sprite.setPosition(x * TILE_SIZE, y * TILE_SIZE);
+            target.draw(sprite, states);
+        }
+    }
+    if (gameWon) {
+        sf::Text winText;
+        winText.setFont(font);
+        winText.setString("You Win!");
+        winText.setCharacterSize(48);
+        winText.setFillColor(sf::Color::Yellow);
+        winText.setPosition(boardWidth * TILE_SIZE / 2 - 100, boardHeight * TILE_SIZE / 2 - 50);
+        target.draw(winText, states);
+    }
+    target.draw(moveCounterText, states);
+}
+
+std::ostream& operator<<(std::ostream& out, const Sokoban& s) {
+    out << s.boardHeight << " " << s.boardWidth << "\n";
+    for (const auto& row : s.board) {
+        out << row << "\n";
+    }
+    return out;
+}
+
+std::istream& operator>>(std::istream& in, Sokoban& s) {
+    in >> s.boardHeight >> s.boardWidth;
+    in.ignore();
+    s.board.clear();
+    s.board.resize(s.boardHeight, std::string(s.boardWidth, '.'));
+
+    bool playerFound = false;
+    for (unsigned int i = 0; i < s.boardHeight; ++i) {
+        std::getline(in, s.board[i]);
+        if (s.board[i].length() != s.boardWidth) {
+            throw std::runtime_error("Level file row length mismatch");
+        }
+
+        for (unsigned int j = 0; j < s.boardWidth; ++j) {
+            char c = s.board[i][j];
+
+            if (c == '@') {
+                if (playerFound) {
+                    throw std::runtime_error("Multiple players '@' found in level file");
+                }
+                s.playerPosition = {j, i};
+                playerFound = true;
+            }
+        }
+    }
+
+    if (!playerFound) {
+        throw std::runtime_error("No player '@' found in level file");
+    }
+
+    s.originalBoard = s.board;
+    return in;
+}
+
+}  // namespace SB
