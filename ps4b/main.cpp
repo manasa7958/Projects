@@ -1,7 +1,6 @@
 // Copyright Manasa Praveen 2025
 #include <iostream>
 #include <string>
-// #include "sfml_fix.hpp" - IRRELEVANT, using because of problems in terminal
 #include "Sokoban.hpp"
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
@@ -16,17 +15,6 @@ int main(int argc, char* argv[]) {
 
     sf::RenderWindow window(sf::VideoMode(game.width() * SB::Sokoban::TILE_SIZE,
         game.height() * SB::Sokoban::TILE_SIZE), "Sokoban");
-
-    // Extra Credit: Victory Fanfare!!
-    sf::SoundBuffer victoryBuffer;
-    if (!victoryBuffer.loadFromFile("victory.wav")) {
-        std::cerr << "Failed to load victory sound\n";
-        return 1;
-    }
-    sf::Sound victorySound;
-    victorySound.setBuffer(victoryBuffer);
-
-    bool playedVictorySound = false;
 
     while (window.isOpen()) {
         sf::Event event;
@@ -49,18 +37,14 @@ int main(int argc, char* argv[]) {
                     } else if (event.key.code == sf::Keyboard::D ||
                         event.key.code == sf::Keyboard::Right) {
                         game.movePlayer(SB::Direction::Right);
+                    } else if (event.key.code == sf::Keyboard::U) { 
+                        game.undoMove();  // 🔥 UNDO feature
                     }
                 }
-            } else if (!playedVictorySound) {
-                victorySound.play();
-                playedVictorySound = true;
             }
 
             if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::R) {
                 game.reset();
-                playedVictorySound = false;
-            } else if (event.key.code == sf::Keyboard::U) {
-                game.undoMove();
             }
         }
 
