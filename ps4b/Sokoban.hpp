@@ -11,7 +11,7 @@ namespace SB {
 enum class Direction { Up, Down, Left, Right };
 
 class Sokoban : public sf::Drawable {
-    public:
+ public:
      static const unsigned int TILE_SIZE = 64;
 
      Sokoban();
@@ -29,7 +29,7 @@ class Sokoban : public sf::Drawable {
      friend std::ostream& operator<<(std::ostream& out, const Sokoban& s);
      friend std::istream& operator>>(std::istream& in, Sokoban& s);
 
-    private:
+ private:
      struct GameState {
         std::vector<std::string> board;
         sf::Vector2u playerPosition;
