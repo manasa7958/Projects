@@ -1,4 +1,4 @@
-// Copyright Manasa praveen 2025
+// Copyright Manasa Praveen 2025
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -95,8 +95,14 @@ bool Sokoban::isWon() const {
     return win;
 }
 
+void Sokoban::saveState() {
+    history.push_back(GameState{board, playerPosition, moveCount});
+}
+
 void Sokoban::movePlayer(Direction dir) {
     if (gameWon) return;
+
+    saveState();  // SAVE BEFORE MOVING
 
     int dx = 0, dy = 0;
     switch (dir) {
@@ -150,6 +156,18 @@ void Sokoban::movePlayer(Direction dir) {
     gameWon = isWon();
 }
 
+void Sokoban::undoMove() {
+    if (history.empty()) return;  // Nothing to undo
+
+    GameState lastState = history.back();
+    history.pop_back();
+
+    board = lastState.board;
+    playerPosition = lastState.playerPosition;
+    moveCount = lastState.moveCount;
+    gameWon = isWon();
+}
+
 void Sokoban::reset() {
     if (originalBoard.empty()) return;
 
@@ -159,18 +177,18 @@ void Sokoban::reset() {
     moveCount = 0;
     gameWon = false;
     lastDirection = Direction::Down;
+    history.clear();
 
     for (unsigned int y = 0; y < board.size(); ++y) {
         for (unsigned int x = 0; x < board[y].size(); ++x) {
             if (board[y][x] == '@') {
                 playerPosition = {x, y};
             } else if (originalBoard[y][x] == 'a' && board[y][x] == 'A') {
-                board[y][x] = 'B';  // Box is on the target
+                board[y][x] = 'B';
             }
         }
     }
 }
-
 
 void Sokoban::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     for (unsigned int y = 0; y < boardHeight; ++y) {
@@ -210,8 +228,7 @@ void Sokoban::draw(sf::RenderTarget& target, sf::RenderStates states) const {
         winText.setString("You Win!");
         winText.setCharacterSize(48);
         winText.setFillColor(sf::Color::Yellow);
-        winText.setPosition(boardWidth * TILE_SIZE /
-            2 - 100, boardHeight * TILE_SIZE / 2 - 50);
+        winText.setPosition(boardWidth * TILE_SIZE / 2 - 100, boardHeight * TILE_SIZE / 2 - 50);
         target.draw(winText, states);
     }
 }
@@ -257,6 +274,5 @@ std::istream& operator>>(std::istream& in, Sokoban& s) {
     s.originalBoard = s.board;
     return in;
 }
-
 
 }  // namespace SB
