@@ -7,6 +7,7 @@
 #include <algorithm>
 #include "Sokoban.hpp"
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 
 namespace SB {
 
