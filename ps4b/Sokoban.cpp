@@ -102,8 +102,6 @@ void Sokoban::saveState() {
 void Sokoban::movePlayer(Direction dir) {
     if (gameWon) return;
 
-    saveState();  // SAVE BEFORE MOVING
-
     int dx = 0, dy = 0;
     switch (dir) {
         case Direction::Up: dy = -1; break;
@@ -135,6 +133,8 @@ void Sokoban::movePlayer(Direction dir) {
         char next = board[nny][nnx];
         if (next != '.' && next != 'a') return;
 
+        saveState();
+
         board[nny][nnx] = (originalBoard[nny][nnx] == 'a') ? 'B' : 'A';
         board[ny][nx] = '@';
         board[y][x] = (originalBoard[y][x] == 'a') ? 'a' : '.';
@@ -142,6 +142,8 @@ void Sokoban::movePlayer(Direction dir) {
         moveCount++;
         moved = true;
     } else {
+        saveState();
+
         board[ny][nx] = '@';
         board[y][x] = (originalBoard[y][x] == 'a') ? 'a' : '.';
         playerPosition = {static_cast<unsigned int>(nx), static_cast<unsigned int>(ny)};
