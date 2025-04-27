@@ -37,8 +37,8 @@ int main(int argc, char* argv[]) {
                     } else if (event.key.code == sf::Keyboard::D ||
                         event.key.code == sf::Keyboard::Right) {
                         game.movePlayer(SB::Direction::Right);
-                    } else if (event.key.code == sf::Keyboard::U) { 
-                        game.undoMove();  // 🔥 UNDO feature
+                    } else if (event.key.code == sf::Keyboard::U) {
+                        game.undoMove();
                     }
                 }
             }
