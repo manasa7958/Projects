@@ -133,7 +133,7 @@ void Sokoban::movePlayer(Direction dir) {
         char next = board[nny][nnx];
         if (next != '.' && next != 'a') return;
 
-        saveState();
+        saveState(); // Save only if move possible!
 
         board[nny][nnx] = (originalBoard[nny][nnx] == 'a') ? 'B' : 'A';
         board[ny][nx] = '@';
@@ -142,7 +142,7 @@ void Sokoban::movePlayer(Direction dir) {
         moveCount++;
         moved = true;
     } else {
-        saveState();
+        saveState(); // Save only if move possible!
 
         board[ny][nx] = '@';
         board[y][x] = (originalBoard[y][x] == 'a') ? 'a' : '.';
@@ -153,13 +153,14 @@ void Sokoban::movePlayer(Direction dir) {
 
     if (moved) {
         lastDirection = dir;
+        moveCounterText.setString("Moves: " + std::to_string(moveCount));
     }
 
     gameWon = isWon();
 }
 
 void Sokoban::undoMove() {
-    if (history.empty()) return;  // Nothing to undo
+    if (history.empty()) return;
 
     GameState lastState = history.back();
     history.pop_back();
@@ -167,6 +168,8 @@ void Sokoban::undoMove() {
     board = lastState.board;
     playerPosition = lastState.playerPosition;
     moveCount = lastState.moveCount;
+    moveCounterText.setString("Moves: " + std::to_string(moveCount));
+
     gameWon = isWon();
 }
 
@@ -190,6 +193,12 @@ void Sokoban::reset() {
             }
         }
     }
+
+    moveCounterText.setFont(font);
+    moveCounterText.setCharacterSize(24);
+    moveCounterText.setFillColor(sf::Color::White);
+    moveCounterText.setPosition(10.f, 10.f);
+    moveCounterText.setString("Moves: 0");
 }
 
 void Sokoban::draw(sf::RenderTarget& target, sf::RenderStates states) const {
@@ -233,6 +242,7 @@ void Sokoban::draw(sf::RenderTarget& target, sf::RenderStates states) const {
         winText.setPosition(boardWidth * TILE_SIZE / 2 - 100, boardHeight * TILE_SIZE / 2 - 50);
         target.draw(winText, states);
     }
+    target.draw(moveCounterText, states);
 }
 
 std::ostream& operator<<(std::ostream& out, const Sokoban& s) {
@@ -277,4 +287,4 @@ std::istream& operator>>(std::istream& in, Sokoban& s) {
     return in;
 }
 
-}  // namespace SB
+} // namespace SB
