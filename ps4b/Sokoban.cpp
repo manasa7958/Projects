@@ -48,6 +48,10 @@ void Sokoban::loadTextures() {
         !font.loadFromFile("/System/Library/Fonts/Supplemental/Arial.ttf")) {
         throw std::runtime_error("Failed to load one or more textures/fonts");
     }
+    if (!victoryBuffer.loadFromFile("victory.wav")) {
+        throw std::runtime_error("Failed to load victory.wav");
+    }
+    victorySound.setBuffer(victoryBuffer);
     texturesLoaded = true;
 }
 
